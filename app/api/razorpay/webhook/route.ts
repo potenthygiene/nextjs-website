@@ -811,3 +811,11 @@ export async function POST(req: Request) {
     result,
   });
 }
+
+export async function GET() {
+  return NextResponse.json({
+    status: "ok",
+    message: "Razorpay webhook endpoint is live and waiting for POST requests.",
+  });
+}
+
