@@ -195,7 +195,7 @@ export default function MenstrualCupPageClient({
         name: "Medium · Rainbow",
         size: "Medium",
         color: "Rainbow",
-        image: "/products/cup-rbw.jpg",
+        image: "/product-images/cup-rbw.jpg",
         price: Number(productInfo?.price || 459),
         strikethroughPrice: Number(
           productInfo?.strikethroughPrice || productInfo?.mrp || 399,
@@ -316,11 +316,11 @@ export default function MenstrualCupPageClient({
       if (v?.bannerImage) return getImageUrl(v.bannerImage);
       if (v?.image) return getImageUrl(v.image);
       const name = `${v?.name || ""} ${v?.color || ""} ${v?.size || ""}`.toLowerCase();
-      if (name.includes("rainbow")) return "/products/cup-rbw.jpg";
+      if (name.includes("rainbow")) return "/product-images/cup-rbw.jpg";
       if (name.includes("purple") || name.includes("medium")) return "/ovy/cup-m.jpg";
       if (name.includes("large") || name.includes("white")) return "/ovy/cup-l.jpg";
       if (name.includes("teen") || name.includes("xs") || name.includes("pink")) return "/ovy/cup-xs.jpg";
-      return "/products/cup.jpg";
+      return "/product-images/cup.jpg";
     };
 
     const activeImg = getVarImg(activeVariant);
@@ -344,12 +344,12 @@ export default function MenstrualCupPageClient({
       });
     }
     const unique = Array.from(new Set(list.filter(Boolean)));
-    return unique.length > 0 ? unique : ["/products/cup.jpg"];
+    return unique.length > 0 ? unique : ["/product-images/cup.jpg"];
   }, [productInfo, activeVariant, variantsList]);
 
   const [activeImage, setActiveImage] = useState<string>("");
   const currentDisplayImage =
-    activeImage || productImages[0] || "/products/cup.jpg";
+    activeImage || productImages[0] || "/product-images/cup.jpg";
 
   // Phone Swipe & Tap-to-Zoom lightbox state
   const [isZoomOpen, setIsZoomOpen] = useState(false);
@@ -492,7 +492,7 @@ export default function MenstrualCupPageClient({
           name: productInfo?.name || "Ovy Reusable Menstrual Cup",
           selectedVariant: activeVariant,
           price: price,
-          image: currentDisplayImage || "/products/cup.jpg",
+          image: currentDisplayImage || "/product-images/cup.jpg",
           hasVarientBox: true,
           slug: targetSlug,
         });

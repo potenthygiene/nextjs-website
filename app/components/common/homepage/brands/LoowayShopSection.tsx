@@ -71,7 +71,7 @@ const LOOWAY_PRODUCTS: ProductCard[] = [
     badgeBg: "bg-white text-gray-700",
     taglineColor: "text-[#0B6E7D]",
     footerNote: "Western seats only. Fold it, bin it, never flush it.",
-    fallbackImage: "/products/seatcovers.jpg",
+    fallbackImage: "/product-images/seatcovers.jpg",
   },
   {
     id: "funnel",
@@ -80,7 +80,7 @@ const LOOWAY_PRODUCTS: ProductCard[] = [
     badgeBg: "bg-white text-gray-700",
     taglineColor: "text-[#C02670]",
     footerNote: "External use only. Nothing goes inside.",
-    fallbackImage: "/products/funnel.jpg",
+    fallbackImage: "/product-images/funnel.jpg",
   },
   {
     id: "pukebags",
@@ -90,7 +90,7 @@ const LOOWAY_PRODUCTS: ProductCard[] = [
     taglineColor: "text-[#1E5E41]",
     footerNote:
       "Seal it, bin it, never flush it. Harmful if swallowed; keep used bags away from children and pets.",
-    fallbackImage: "/products/pukebags.jpg",
+    fallbackImage: "/product-images/pukebags.jpg",
   },
 ];
 
@@ -656,7 +656,7 @@ export function LoowayShopSection({
                 <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-yellow-200 bg-white p-1 shadow-2xs">
                   <Image
                     src={
-                      renderedProducts[0]?.image || "/products/seatcovers.jpg"
+                      renderedProducts[0]?.image || "/product-images/seatcovers.jpg"
                     }
                     alt={renderedProducts[0]?.title || "Seat covers"}
                     fill
@@ -665,7 +665,7 @@ export function LoowayShopSection({
                 </div>
                 <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-yellow-200 bg-white p-1 shadow-2xs">
                   <Image
-                    src={renderedProducts[1]?.image || "/products/funnel.jpg"}
+                    src={renderedProducts[1]?.image || "/product-images/funnel.jpg"}
                     alt={renderedProducts[1]?.title || "Pee funnel"}
                     fill
                     className="object-contain"
@@ -673,7 +673,7 @@ export function LoowayShopSection({
                 </div>
                 <div className="relative h-12 w-12 overflow-hidden rounded-xl border border-yellow-200 bg-white p-1 shadow-2xs">
                   <Image
-                    src={renderedProducts[2]?.image || "/products/pukebags.jpg"}
+                    src={renderedProducts[2]?.image || "/product-images/pukebags.jpg"}
                     alt={renderedProducts[2]?.title || "Pee and puke bags"}
                     fill
                     className="object-contain"

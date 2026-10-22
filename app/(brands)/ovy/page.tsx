@@ -90,7 +90,7 @@ export default async function OvyPage() {
         kickerColor="#602E55"
         accentColor="#602E55"
         buttonColor="#602E55"
-        imageSrc="/products/pads-l.jpg"
+        imageSrc="/product-images/pads-l.jpg"
         hideOnMobile={true}
       />
 

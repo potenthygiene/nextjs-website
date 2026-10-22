@@ -89,7 +89,7 @@ const KITS_DATA: Record<string, any> = {
     flow: "First-period kit",
     name: "Ovy Organic Teen Pads — Starter Pack",
     badge: "25-piece kit · 10 L + 11 XL + 4 Liners",
-    image: "/products/teen.jpg",
+    image: "/product-images/teen.jpg",
     short:
       "Big changes need a gentle start. The Ovy Teen Starter Pack is your first-period kit — 25 essentials curated for unpredictable early cycles, with feather-soft organic pads that will not rash, will not show under a school uniform, and will not make the first time any harder than it needs to be.",
     box: [
@@ -131,7 +131,7 @@ const KITS_DATA: Record<string, any> = {
     flow: "Sports & travel kit",
     name: "Ovy Organic Teen Pads — Pro-Active Sports Pack",
     badge: "25-piece kit · 7 L + 7 XL + 7 XL+ + 4 Liners",
-    image: "/products/teen-pro.jpg",
+    image: "/product-images/teen-pro.jpg",
     short:
       "Don’t let your period bench you. Bleed. Conquer. Slay. The Ovy Teen Pro-Active Pack is engineered for the girl who refuses to hit pause — sprinting on the field, dancing on stage, travelling for tournaments. Three pad sizes. Maximum movement. Zero leaks.",
     box: [
@@ -181,7 +181,7 @@ const KITS_DATA: Record<string, any> = {
     name: "Ovy Organic Teen Pads — First Period Box",
     isComingSoon: true,
     badge: "Coming Soon · 50-piece milestone kit",
-    image: "/products/teen_model.jpg",
+    image: "/product-images/teen_model.jpg",
     short:
       "The ultimate first-period milestone gift box. Packed with 50 premium organic pads across three sizes, panty liners, period panty, toilet seat covers, wipes, pain relief patches, and a friendly step-by-step guidebook.",
     box: [
@@ -361,7 +361,7 @@ export default function OvyTeenPageClient({
       fallbackTitle: "Ovy Menstrual Cup",
       fallbackDesc: "Organic & rash-free menstrual hygiene care.",
       fallbackPrice: 459,
-      fallbackImg: "/products/cup-rbw.jpg",
+      fallbackImg: "/product-images/cup-rbw.jpg",
       bg: "bg-[#F3E6F0]",
       tag: "OVY",
     },
@@ -370,7 +370,7 @@ export default function OvyTeenPageClient({
       fallbackTitle: "Ovy Organic Sanitary Pads",
       fallbackDesc: "Organic & rash-free menstrual hygiene care.",
       fallbackPrice: 378,
-      fallbackImg: "/products/pads-l.jpg",
+      fallbackImg: "/product-images/pads-l.jpg",
       bg: "bg-[#E4F1F1]",
       tag: "OVY",
     },
@@ -379,7 +379,7 @@ export default function OvyTeenPageClient({
       fallbackTitle: "Ovy Daily Liners",
       fallbackDesc: "Organic & rash-free menstrual hygiene care.",
       fallbackPrice: 269,
-      fallbackImg: "/products/liners.jpg",
+      fallbackImg: "/product-images/liners.jpg",
       bg: "bg-[#FBF1FB]",
       tag: "OVY",
     },
@@ -388,7 +388,7 @@ export default function OvyTeenPageClient({
       fallbackTitle: "Looway Toilet Seat Covers",
       fallbackDesc: "Wet-proof disposable covers for school and public toilets.",
       fallbackPrice: 549,
-      fallbackImg: "/products/seatcovers.jpg",
+      fallbackImg: "/product-images/seatcovers.jpg",
       bg: "bg-[#F4F1E8]",
       tag: "LOOWAY",
     },
@@ -806,7 +806,7 @@ export default function OvyTeenPageClient({
         }
       });
     }
-    if (images.length === 0) images.push("/products/teen.jpg");
+    if (images.length === 0) images.push("/product-images/teen.jpg");
     return Array.from(new Set(images));
   }, [product, variantsList, currentVariant, selectedKitKey]);
 
@@ -899,7 +899,7 @@ export default function OvyTeenPageClient({
         slug: product?.slug || "ovy-teen",
         title: `${product?.name || "Ovy Organic Soft Sanitary Pads — Teen"} (${activeKit.label})`,
         variantName: activeKit.label,
-        image: mediaList[0] || "/products/teen.jpg",
+        image: mediaList[0] || "/product-images/teen.jpg",
         price: unitPrice,
         quantity: quantity,
         isQuantityChangable: true,
@@ -952,7 +952,7 @@ export default function OvyTeenPageClient({
         slug: product?.slug || "ovy-teen",
         title: `${product?.name || "Ovy Organic Soft Sanitary Pads — Teen"} (${activeKit.label})`,
         variantName: activeKit.label,
-        image: mediaList[0] || "/products/teen.jpg",
+        image: mediaList[0] || "/product-images/teen.jpg",
         price: unitPrice,
         quantity: quantity,
         isQuantityChangable: true,

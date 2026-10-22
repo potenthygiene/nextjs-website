@@ -71,7 +71,7 @@ export function OurStory(_props: Props) {
     cupVariant?.bannerImage ||
       cupVariant?.image ||
       cupProduct?.bannerImage ||
-      "/products/cup-rbw.jpg",
+      "/product-images/cup-rbw.jpg",
   );
   const canAddToCart = Boolean(cupProductId && cupVariantId && cupPrice > 0);
 

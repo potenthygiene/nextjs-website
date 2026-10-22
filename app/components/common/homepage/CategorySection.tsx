@@ -12,19 +12,19 @@ const MOMENTS = [
     label: "Her first period",
     body: "A kit that explains itself, with a wrapper that stays silent at school.",
     href: "/product-detail/ovy-teen",
-    image: "/products/teen.jpg",
+    image: "/product-images/teen.jpg",
   },
   {
     label: "Heavy nights",
     body: "A 320mm pad with a widened back, because night leaks travel backwards.",
     href: "/product-detail/ovy-pads?size=xlplus#xlplus",
-    image: "/products/pads-xlplus.jpg",
+    image: "/product-images/pads-xlplus.jpg",
   },
   {
     label: "The seven-hour train",
     body: "Stand, go, touch nothing. The funnel that ends the dirty-toilet dread.",
     href: "/product-detail/looway-pee-funnel",
-    image: "/products/funnel.jpg",
+    image: "/product-images/funnel.jpg",
   },
   {
     label: "Car sick. Morning sick.",
@@ -42,7 +42,7 @@ const MOMENTS = [
     label: "Travelling light",
     body: "One cup, up to 12 hours, nothing to carry and nothing to throw away.",
     href: "/menstrual-cup",
-    image: "/products/cup.jpg",
+    image: "/product-images/cup.jpg",
   },
 ];
 

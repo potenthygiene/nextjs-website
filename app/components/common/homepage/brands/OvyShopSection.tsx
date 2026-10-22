@@ -147,28 +147,28 @@ const PRODUCTS_DATA: ProductCardConfig[] = [
     slug: "ovy-pads",
     badge: "OVY",
     borderColor: "#8C4F7C",
-    fallbackImage: "/products/pads-l.jpg",
+    fallbackImage: "/product-images/pads-l.jpg",
   },
   {
     id: "ovy-teen",
     slug: "ovy-teen",
     badge: "OVY",
     borderColor: "#8C4F7C",
-    fallbackImage: "/products/teen.jpg",
+    fallbackImage: "/product-images/teen.jpg",
   },
   {
     id: "ovy-cup",
     slug: "ovy-cup",
     badge: "OVY",
     borderColor: "#C42B5B",
-    fallbackImage: "/products/cup-rbw.jpg",
+    fallbackImage: "/product-images/cup-rbw.jpg",
   },
   {
     id: "ovy-liners",
     slug: "ovy-liners",
     badge: "OVY",
     borderColor: "#1B6A85",
-    fallbackImage: "/products/liners.jpg",
+    fallbackImage: "/product-images/liners.jpg",
   },
 ];
 
@@ -663,7 +663,7 @@ export function OvyShopSection({
             <div className="flex shrink-0 items-center -space-x-3">
               <div className="relative h-14 w-12 overflow-hidden rounded-xl border-2 border-white shadow-md sm:h-16 sm:w-14">
                 <Image
-                  src="/products/pads-l.jpg"
+                  src="/product-images/pads-l.jpg"
                   alt="Pad 1"
                   fill
                   className="object-cover"
@@ -671,7 +671,7 @@ export function OvyShopSection({
               </div>
               <div className="relative z-10 h-14 w-12 overflow-hidden rounded-xl border-2 border-white shadow-md sm:h-16 sm:w-14">
                 <Image
-                  src="/products/teen.jpg"
+                  src="/product-images/teen.jpg"
                   alt="Pad 2"
                   fill
                   className="object-cover"
@@ -679,7 +679,7 @@ export function OvyShopSection({
               </div>
               <div className="relative z-20 h-14 w-12 overflow-hidden rounded-xl border-2 border-white shadow-md sm:h-16 sm:w-14">
                 <Image
-                  src="/products/pads-l.jpg"
+                  src="/product-images/pads-l.jpg"
                   alt="Pad 3"
                   fill
                   className="object-cover"

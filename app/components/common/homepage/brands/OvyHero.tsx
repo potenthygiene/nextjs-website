@@ -67,7 +67,7 @@ export function OvyHero() {
 
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-purple-50 z-10 sm:rounded-2xl">
                     <Image
-                      src="/products/teen.jpg"
+                      src="/product-images/teen.jpg"
                       alt="Teen kits"
                       fill
                       className="object-cover transition-transform duration-500 group-hover/card:scale-105"
@@ -114,7 +114,7 @@ export function OvyHero() {
 
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-purple-50 z-10 sm:rounded-2xl">
                     <Image
-                      src="/products/pads-l.jpg"
+                      src="/product-images/pads-l.jpg"
                       alt="Pads, 3 sizes"
                       fill
                       className="object-cover transition-transform duration-500 group-hover/card:scale-105"
@@ -161,7 +161,7 @@ export function OvyHero() {
 
                   <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-purple-50 z-10 sm:rounded-2xl">
                     <Image
-                      src="/products/cup-rbw.jpg"
+                      src="/product-images/cup-rbw.jpg"
                       alt="Menstrual cup"
                       fill
                       className="object-cover transition-transform duration-500 group-hover/card:scale-105"

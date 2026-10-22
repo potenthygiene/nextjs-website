@@ -167,7 +167,7 @@ export function LoowayYatraKitSection() {
                   </svg>
                   <div className="relative h-full w-full overflow-hidden rounded-xl bg-white p-1">
                     <Image
-                      src="/products/seatcovers.jpg"
+                      src="/product-images/seatcovers.jpg"
                       alt="Seat covers"
                       fill
                       className="object-contain"
@@ -196,7 +196,7 @@ export function LoowayYatraKitSection() {
                   </svg>
                   <div className="relative h-full w-full overflow-hidden rounded-xl bg-white p-1">
                     <Image
-                      src="/products/funnel.jpg"
+                      src="/product-images/funnel.jpg"
                       alt="Pee funnel"
                       fill
                       className="object-contain"
@@ -225,7 +225,7 @@ export function LoowayYatraKitSection() {
                   </svg>
                   <div className="relative h-full w-full overflow-hidden rounded-xl bg-white p-1">
                     <Image
-                      src="/products/pukebags.jpg"
+                      src="/product-images/pukebags.jpg"
                       alt="Pee and puke bags"
                       fill
                       className="object-contain"

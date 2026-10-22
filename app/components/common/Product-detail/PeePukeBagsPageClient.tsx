@@ -186,7 +186,7 @@ export default function PeePukeBagsPageClient({
           productId: product?.id || "looway-pee-puke",
           name: product?.name || "Looway Pee & Puke Bags",
           selectedVariant: selectedPack,
-          image: selectedPack?.image || "/products/pukebags.jpg",
+          image: selectedPack?.image || "/product-images/pukebags.jpg",
           slug: product?.slug || "looway-pee-puke",
         });
       }
@@ -491,10 +491,10 @@ export default function PeePukeBagsPageClient({
 
     // Default Fallback Images & Cards
     const fallbackUrls = [
-      "/products/pukebags.jpg",
-      "/products/pukebags.jpg",
-      "/products/pukebags.jpg",
-      "/products/pukebags.jpg",
+      "/product-images/pukebags.jpg",
+      "/product-images/pukebags.jpg",
+      "/product-images/pukebags.jpg",
+      "/product-images/pukebags.jpg",
     ];
 
     const result: { url: string; label: string }[] = [];
@@ -679,7 +679,7 @@ export default function PeePukeBagsPageClient({
         slug: product?.slug || "looway-pee-puke-bags",
         title: `${product?.name || "Looway Pee & Puke Bags"} (${selectedPack?.name || "Pack"})`,
         variantName: selectedPack?.name,
-        image: mediaList[0] || "/products/pukebags.jpg",
+        image: mediaList[0] || "/product-images/pukebags.jpg",
         price: unitPrice,
         quantity: quantity,
         isQuantityChangable: true,
@@ -732,7 +732,7 @@ export default function PeePukeBagsPageClient({
       slug: product?.slug || "looway-pee-puke-bags",
       title: `${product?.name || "Looway Pee & Puke Bags"} (${selectedPack?.name || "Pack"})`,
       variantName: selectedPack?.name,
-      image: mediaList[0] || "/products/pukebags.jpg",
+      image: mediaList[0] || "/product-images/pukebags.jpg",
       price: unitPrice,
       quantity: quantity,
       isQuantityChangable: true,
@@ -865,7 +865,7 @@ export default function PeePukeBagsPageClient({
                 <div className="relative h-full w-full">
                   <Image
                     src={
-                      mediaList[selectedImageIndex] || "/products/pukebags.jpg"
+                      mediaList[selectedImageIndex] || "/product-images/pukebags.jpg"
                     }
                     alt={product?.name || "Looway Pee & Puke Bags"}
                     fill

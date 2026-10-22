@@ -45,7 +45,7 @@ const STEP_1_OPTIONS: QuizOption[] = [
       name: "Ovy Daily Panty Liners",
       description: "Ultra-thin 1mm daily liners to stay fresh between periods.",
       price: 269,
-      image: "/products/liners.jpg",
+      image: "/product-images/liners.jpg",
     },
   },
   {
@@ -58,7 +58,7 @@ const STEP_1_OPTIONS: QuizOption[] = [
       name: "Ovy Teen Starter Kit",
       description: "Two pad sizes, 4 liners, and a disposal bag for her first period.",
       price: 378,
-      image: "/products/teen.jpg",
+      image: "/product-images/teen.jpg",
     },
   },
 ];
@@ -74,7 +74,7 @@ const STEP_2_OPTIONS: QuizOption[] = [
       name: "Ovy Organic Sanitary Pads (L & XL)",
       description: "Rash-free organic cotton pads sized to your actual flow.",
       price: 378,
-      image: "/products/pads-l.jpg",
+      image: "/product-images/pads-l.jpg",
     },
   },
   {
@@ -87,7 +87,7 @@ const STEP_2_OPTIONS: QuizOption[] = [
       name: "Ovy XL+ Night Heavy Pads",
       description: "320mm XL+ extra wide back coverage for zero night leaks.",
       price: 398,
-      image: "/products/pads-xlplus.jpg",
+      image: "/product-images/pads-xlplus.jpg",
     },
   },
   {
@@ -100,7 +100,7 @@ const STEP_2_OPTIONS: QuizOption[] = [
       name: "Ovy Reusable Menstrual Cup",
       description: "100% medical-grade silicone cup that lasts for years.",
       price: 459,
-      image: "/products/cup-rbw.jpg",
+      image: "/product-images/cup-rbw.jpg",
     },
   },
 ];

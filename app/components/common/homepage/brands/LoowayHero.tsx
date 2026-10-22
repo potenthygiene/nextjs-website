@@ -25,19 +25,19 @@ const HERO_CARD_CONFIG = [
     slug: "looway-toilet-seat-covers",
     href: "/product-detail/looway-toilet-seat-covers",
     label: "Seat covers",
-    fallbackImage: "/products/seatcovers.jpg",
+    fallbackImage: "/product-images/seatcovers.jpg",
   },
   {
     slug: "looway-pee-funnel",
     href: "/product-detail/looway-pee-funnel",
     label: "Pee funnel",
-    fallbackImage: "/products/funnel.jpg",
+    fallbackImage: "/product-images/funnel.jpg",
   },
   {
     slug: "looway-pee-puke",
     href: "/product-detail/looway-pee-puke",
     label: "Pee and puke bags",
-    fallbackImage: "/products/pukebags.jpg",
+    fallbackImage: "/product-images/pukebags.jpg",
   },
 ] as const;
 

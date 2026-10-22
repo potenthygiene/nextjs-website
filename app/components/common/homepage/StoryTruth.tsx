@@ -91,7 +91,7 @@ const StoryTruth = (_props: Props) => {
               <div className="bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col h-full border border-purple-100/60">
                 <div className="relative w-full aspect-[4/3] bg-purple-50">
                   <Image
-                    src="/products/teen.jpg"
+                    src="/product-images/teen.jpg"
                     alt="Starter Pack"
                     fill
                     className="object-cover object-center"
@@ -121,7 +121,7 @@ const StoryTruth = (_props: Props) => {
               <div className="bg-white rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col h-full border border-purple-100/60">
                 <div className="relative w-full aspect-[4/3] bg-purple-50">
                   <Image
-                    src="/products/teen-pro.jpg"
+                    src="/product-images/teen-pro.jpg"
                     alt="Pro-Active Pack"
                     fill
                     className="object-cover object-center"

@@ -37,28 +37,28 @@ const OVY_PRESET_METADATA: Record<
     overrideName: "Ovy Organic Sanitary Pads",
     shortDesc: "Rash-free, organic, sized to your actual flow",
     infoText: "L, XL and XL+. 21 pads and 4 liners. · 3 sizes",
-    overrideImage: "/products/pads.jpg",
+    overrideImage: "/product-images/pads.jpg",
   },
   "ovy-teen-starter-pack": {
     badge: "For first periods",
     overrideName: "Ovy Teen Kits",
     shortDesc: "Makes a first period calm instead of frightening",
     infoText: "Starter and Pro-Active packs · 2 kits",
-    overrideImage: "/products/teen.jpg",
+    overrideImage: "/product-images/teen.jpg",
   },
   "menstrual-cup": {
     badge: "Reusable",
     overrideName: "Ovy Reusable Menstrual Cup",
     shortDesc: "One cup, years of periods, up to 12 hours at a time",
     infoText: "Teen XS, Medium and Large · 3 sizes, 4 options",
-    overrideImage: "/products/cup.jpg",
+    overrideImage: "/product-images/cup.jpg",
   },
   "ovy-daily-panty-liners": {
     badge: "Daily Care",
     overrideName: "Ovy Daily Liners",
     shortDesc: "Keeps you fresh between periods. Not for period flow.",
     infoText: "Packs of 40, 60 and 80 · 3 packs",
-    overrideImage: "/products/liners.jpg",
+    overrideImage: "/product-images/liners.jpg",
   },
 };
 
@@ -71,7 +71,7 @@ const DEFAULT_OVY_PRODUCTS = [
     infoText: "L, XL and XL+. 21 pads and 4 liners. · 3 sizes",
     startingPrice: 378,
     badge: "Bestseller",
-    image: "/products/pads.jpg",
+    image: "/product-images/pads.jpg",
     brand: "ovy",
   },
   {
@@ -82,7 +82,7 @@ const DEFAULT_OVY_PRODUCTS = [
     infoText: "Starter and Pro-Active packs · 2 kits",
     startingPrice: 378,
     badge: "For first periods",
-    image: "/products/teen.jpg",
+    image: "/product-images/teen.jpg",
     brand: "ovy",
   },
   {
@@ -93,7 +93,7 @@ const DEFAULT_OVY_PRODUCTS = [
     infoText: "Teen XS, Medium and Large · 3 sizes, 4 options",
     startingPrice: 459,
     badge: "Reusable",
-    image: "/products/cup.jpg",
+    image: "/product-images/cup.jpg",
     brand: "ovy",
   },
   {
@@ -104,7 +104,7 @@ const DEFAULT_OVY_PRODUCTS = [
     infoText: "Packs of 40, 60 and 80 · 3 packs",
     startingPrice: 269,
     badge: "Daily Care",
-    image: "/products/liners.jpg",
+    image: "/product-images/liners.jpg",
     brand: "ovy",
   },
 ];
@@ -207,7 +207,7 @@ export default function BestsellingProducts({
           meta?.overrideImage ||
           p.image ||
           p.bannerImage ||
-          "/products/pads.jpg",
+          "/product-images/pads.jpg",
       });
     });
 

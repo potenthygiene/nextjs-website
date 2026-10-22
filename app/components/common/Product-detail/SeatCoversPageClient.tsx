@@ -292,7 +292,7 @@ export default function SeatCoversPageClient({
         if (v.bannerImage) images.push(getImageUrl(v.bannerImage));
       });
     }
-    images.push("/products/seatcovers.jpg");
+    images.push("/product-images/seatcovers.jpg");
     images.push("/looway/lw-howto-seat.jpg");
     images.push("/looway/scen-seat.jpg");
     return Array.from(new Set(images.filter(Boolean)));
