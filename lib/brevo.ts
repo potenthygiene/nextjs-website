@@ -31,7 +31,8 @@ export async function addToBrevoList(email: string): Promise<boolean> {
                   process.env.BREVO_DOI_REDIRECT_URL ||
                   "https://www.potenthygiene.com/",
               }
-            : { email, listIds: [listId], updateEnabled: true },
+            : // Signing up again re-subscribes someone who unsubscribed before.
+              { email, listIds: [listId], updateEnabled: true, emailBlacklisted: false },
         ),
         cache: "no-store",
       },
