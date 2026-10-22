@@ -186,7 +186,7 @@ export default function PeePukeBagsPageClient({
           productId: product?.id || "looway-pee-puke",
           name: product?.name || "Looway Pee & Puke Bags",
           selectedVariant: selectedPack,
-          image: selectedPack?.image || "/products/peepuke/hero.jpg",
+          image: selectedPack?.image || "/products/pukebags.jpg",
           slug: product?.slug || "looway-pee-puke",
         });
       }

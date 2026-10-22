@@ -106,7 +106,7 @@ export default function PeeFunnelPageClient({
           productId: product?.id || "looway-pee-funnel",
           name: product?.name || "Looway Reusable Female Pee Funnel",
           selectedVariant: selectedPack,
-          image: selectedPack?.image || "/products/funnel/hero.jpg",
+          image: selectedPack?.image || "/products/funnel.jpg",
           slug: product?.slug || "looway-pee-funnel",
         });
       }
