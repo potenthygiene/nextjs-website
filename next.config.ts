@@ -4,6 +4,10 @@ import type { NextConfig } from "next";
 // should land on the matching page instead of a 404.
 const OLD_ADDRESS_REDIRECTS = [
   { source: "/register", destination: "/signup" },
+  { source: "/b2b", destination: "/business" },
+  { source: "/bulk-orders", destination: "/business" },
+  { source: "/corporate", destination: "/business" },
+  { source: "/wholesale", destination: "/business" },
   { source: "/forgot-password", destination: "/reset-password-email" },
   { source: "/account/login", destination: "/login" },
   { source: "/account/register", destination: "/signup" },

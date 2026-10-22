@@ -19,6 +19,7 @@ const FOOTER_SECTIONS: FooterSection[] = [
       { name: "Looway travel hygiene", href: "/looway" },
       { name: "Teen kits", href: "/product-detail/ovy-teen" },
       { name: "Build a Yatra Kit", href: "/looway-yatra-kit" },
+      { name: "Bulk & corporate orders", href: "/business" },
     ],
   },
   {
@@ -124,7 +125,13 @@ export default function Footer() {
 
             <div className="space-y-1.5 pt-1 text-xs text-white/70 sm:text-sm">
               <p>
-                Business &amp; bulk orders:{" "}
+                <Link
+                  href="/business"
+                  className="text-white/85 underline-offset-2 transition-colors hover:text-white hover:underline"
+                >
+                  Business &amp; bulk orders
+                </Link>
+                :{" "}
                 <a
                   href="mailto:info@potenthygiene.com"
                   className="text-white/85 transition-colors hover:text-white"

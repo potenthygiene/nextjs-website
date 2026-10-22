@@ -240,7 +240,8 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         id: "bulk",
         q: "Do you take bulk or corporate orders?",
-        a: "Yes. For offices, schools, colleges, hotels, travel and yatra groups, events and gifting, email info@potenthygiene.com and tell us what you need.",
+        a: "Yes. For offices, schools, colleges, hotels, travel and yatra groups, hospitals, events, gifting and CSR programmes, tell us what you need on our business page or email info@potenthygiene.com. We reply within one working day.",
+        links: [{ label: "Bulk & corporate orders", href: "/business" }],
       },
       {
         id: "careers",

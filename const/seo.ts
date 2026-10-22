@@ -83,6 +83,12 @@ const PAGES: Record<string, PageSeo> = {
       "Potent Hygiene is a woman-founded brand from Jaipur, building Ovy period care and Looway travel hygiene for Indian bodies, Indian toilets and Indian journeys.",
     path: "/about",
   },
+  business: {
+    title: "Bulk & Corporate Orders: Period Care and Travel Hygiene",
+    description:
+      "Bulk Ovy pads, teen kits and cups, and Looway seat covers, pee and puke bags and Yatra Kits for offices, travel groups, hotels, schools, hospitals, events and CSR. Quote in one working day.",
+    path: "/business",
+  },
   "shipping-policy": {
     title: "Shipping Policy",
     description:
