@@ -20,7 +20,9 @@ const OLD_ADDRESS_REDIRECTS = [
   { source: "/policies/terms-of-service", destination: "/terms-condition" },
   { source: "/policies/:path*", destination: "/" },
   { source: "/collections/:path*", destination: "/shop" },
-  { source: "/products/:path*", destination: "/shop" },
+  // Old Shopify product links only: no dot in the path, so the site's own
+  // pictures in public/products (e.g. /products/pads.jpg) are never redirected.
+  { source: "/products/:handle([^.]+)", destination: "/shop" },
   { source: "/blogs/:path*", destination: "/blog" },
 ];
 
