@@ -385,12 +385,12 @@ export default function OvyTeenPageClient({
     },
     {
       slug: "looway-toilet-seat-covers",
-      fallbackTitle: "Ovy Super Slim Period Panties",
-      fallbackDesc: "Organic & rash-free menstrual hygiene care.",
-      fallbackPrice: 479,
-      fallbackImg: "/products/teen.jpg",
+      fallbackTitle: "Looway Toilet Seat Covers",
+      fallbackDesc: "Wet-proof disposable covers for school and public toilets.",
+      fallbackPrice: 549,
+      fallbackImg: "/products/seatcovers.jpg",
       bg: "bg-[#F4F1E8]",
-      tag: "OVY",
+      tag: "LOOWAY",
     },
   ];
 
@@ -417,7 +417,11 @@ export default function OvyTeenPageClient({
           desc:
             prod.description || "Organic & rash-free menstrual hygiene care.",
           price,
-          tag: prod.brand ? String(prod.brand).toUpperCase() : "ORGANIC",
+          tag: prod.brand
+            ? prod.brand === "loway"
+              ? "LOOWAY"
+              : String(prod.brand).toUpperCase()
+            : "ORGANIC",
           bg: bgTints[idx % bgTints.length],
           image: banner,
           slug: prod.slug ? `/product-detail/${prod.slug}` : "#",

@@ -427,7 +427,7 @@ export default function SizeSelectorBox({
 
           <div className="mt-3 rounded-xl border border-gray-200/80 bg-white/80 p-3 text-xs leading-relaxed text-gray-600">
             <span className="font-bold text-[#1A150F]">Subscriptions:</span>{" "}
-            Monthly and Cycle Sync: 1 box per delivery. Every 2 months: up to 2 boxes. The split stays fixed; to change it she cancels and starts again.
+            Monthly and Cycle Sync: 1 box per delivery. Every 2 months: up to 2 boxes. The split stays fixed; to change it, cancel and start a new subscription.
           </div>
         </div>
       )}
