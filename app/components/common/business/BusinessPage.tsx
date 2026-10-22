@@ -87,7 +87,7 @@ const RANGE = [
     href: "/ovy",
     items: [
       { name: "Organic sanitary pads (L, XL, XL+)", image: "/product-images/pads.jpg" },
-      { name: "Teen first-period kits", image: "/product-images/teen.jpg" },
+      { name: "Teen first-period kits", image: "/product-images/teen-pro.jpg" },
       { name: "Daily panty liners", image: "/product-images/liners.jpg" },
       { name: "Menstrual cups", image: "/product-images/cup.jpg" },
     ],
@@ -465,7 +465,7 @@ export default function BusinessPage() {
             </ul>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            {["/product-images/pads.jpg", "/product-images/seatcovers.jpg", "/product-images/teen.jpg", "/product-images/pukebags.jpg"].map(
+            {["/product-images/pads.jpg", "/product-images/seatcovers.jpg", "/product-images/teen-pro.jpg", "/product-images/pukebags.jpg"].map(
               (src, i) => (
                 <div
                   key={src}
