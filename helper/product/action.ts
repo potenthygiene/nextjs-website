@@ -18,6 +18,7 @@ import {
   sql,
 } from "drizzle-orm";
 import { generateUniqueSlug } from "../slug/generateUniqueSlug";
+import { fixProductFaq, fixProductText } from "@/lib/contentFixes";
 
 import {
   category,
@@ -567,13 +568,14 @@ export async function getFullProductDetails(identifier: string) {
 
     return {
       ...productDeails,
+      description: fixProductText(productDeails.description),
       isInStock,
       hasVarientBox: productDeails.isMixBox,
       prodcutVarientBoxRes: productVariantsRes,
       productVariants: productVariantsRes,
       categoryRes,
       productAttributeRes: [],
-      productFaqRes,
+      productFaqRes: productFaqRes.map(fixProductFaq),
       productMediaRes,
       filters: [],
     };
