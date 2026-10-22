@@ -1337,10 +1337,6 @@ export default function PeePukeBagsPageClient({
                     Free shipping over ₹399 • ships in 24 hrs • secure checkout
                   </p>
                   <p>
-                    If something&apos;s wrong with your order,{" "}
-                    <strong className="text-[#0A4A2E]">
-                      we&apos;ll make it right.
-                    </strong>{" "}
                     Questions? Email{" "}
                     <a
                       href="mailto:care@potenthygiene.com"
@@ -1419,9 +1415,9 @@ export default function PeePukeBagsPageClient({
                   <div className="flex items-start gap-2.5">
                     <Truck className="mt-0.5 h-4 w-4 shrink-0 text-[#0E5C3A]" />
                     <span>
-                      Get it by{" "}
+                      Usually delivered in{" "}
                       <strong className="font-bold text-[#0A4A2E]">
-                        Mon, 12 Oct
+                        5 to 7 days
                       </strong>{" "}
                       • ships in 24 hrs, tracked
                     </span>
@@ -1430,8 +1426,8 @@ export default function PeePukeBagsPageClient({
                     <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#0E5C3A]" />
                     <span>
                       For hygiene & safety, this personal-care product
-                      can&apos;t be returned or exchanged once shipped • damaged
-                      or wrong items are replaced free
+                      can&apos;t be returned, exchanged, refunded or replaced
+                      once shipped
                     </span>
                   </div>
                 </div>

@@ -1,4 +1,7 @@
 import { inArray } from "drizzle-orm";
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("yatra-kit");
 import YatraKitPageClient from "@/app/components/common/yatra/YatraKitPageClient";
 import { loowayYatraKit } from "@/const/productsContent";
 import { getImageUrl } from "@/lib/imageUrl";

@@ -5,6 +5,42 @@ import Link from "next/link";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const blog = await getBlogBySlug(slug);
+  if (!blog) return { title: "Journal" };
+
+  const description = String(blog.metaDescription || blog.data || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 155);
+  const path = `/blog/${slug}`;
+  const image =
+    blog.image && !String(blog.image).includes("placeholder")
+      ? getImageUrl(blog.image)
+      : "/og-image.jpg";
+
+  return {
+    title: blog.title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      title: blog.title,
+      description,
+      url: path,
+      type: "article",
+      images: [{ url: image }],
+    },
+  };
+}
 
 export default async function BlogDetailPage({
   params,
@@ -42,10 +78,12 @@ export default async function BlogDetailPage({
                 src={blog.userImage || "/author-placeholder.jpg"}
                 alt={blog.userName || "Author"}
               />
-              <AvatarFallback>{blog.userName?.charAt(0) || "U"}</AvatarFallback>
+              <AvatarFallback>{blog.userName?.charAt(0) || "P"}</AvatarFallback>
             </Avatar>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-black font-semibold">{blog.userName}</span>
+              <span className="text-black font-semibold">
+                {blog.userName || "Team Potent Hygiene"}
+              </span>
               <span>|</span>
               <span>{blog.date}</span>
               <span>|</span>

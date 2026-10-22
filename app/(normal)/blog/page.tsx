@@ -2,6 +2,9 @@ import BlogHeader from "@/app/components/common/BlogHeader";
 import Footer from "@/app/components/common/Footer";
 import BlogListClient from "./BlogListClient"; // Aapka client component
 import { getBlogs } from "@/helper/blog/action";
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("blog");
 import { Suspense } from "react";
 import { BlogListSkeleton } from "@/app/components/common/skeletons";
 

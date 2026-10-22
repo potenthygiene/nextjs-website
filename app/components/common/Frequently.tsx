@@ -75,7 +75,7 @@ Practise at home on a light flow day before using it in public for the first tim
       {
         question: "What is the Ovy Cup made of? Is it safe?",
         answer:
-          "The Ovy Menstrual Cup is made from 100% biocompatible, medical-grade VI silicone — the same class of silicone used in surgical implants. It contains absolutely no heavy metals (Chromium, Mercury, Lead, Arsenic), no latex, no BPA, no dyes, no fragrances, and no animal-origin materials. It has been independently lab-tested and certified as: non-cytotoxic, non-sensitising, and non-irritating. Safe for all body types including those with sensitive skin or latex allergies.",
+          "The Ovy Menstrual Cup is made from 100% biocompatible, medical-grade Class VI silicone — the same class of silicone used in surgical implants. It contains absolutely no heavy metals (Chromium, Mercury, Lead, Arsenic), no latex, no BPA, no dyes, no fragrances, and no animal-origin materials. It has been independently lab-tested and certified as: non-cytotoxic, non-sensitising, and non-irritating. Safe for all body types including those with sensitive skin or latex allergies.",
       },
       {
         question: "Does using a menstrual cup affect my virginity?",
@@ -107,9 +107,9 @@ Practise at home on a light flow day before using it in public for the first tim
     "Return & Replacement": [],
     "Subscription & Offers": [
       {
-        question: "Can I subscribe to receive cup accessories regularly?",
+        question: "Can I subscribe to the menstrual cup?",
         answer:
-          "Yes — subscribe to receive a fresh Ovy Menstrual Cup or cleaning accessories on a schedule that suits you. Subscribers receive up to 15% off and free shipping on every delivery. Manage, pause, or cancel your subscription anytime from your account page. No fees. No commitment period.",
+          "No. One Ovy Menstrual Cup lasts for years with proper care, so it is a one-time buy and is not sold on subscription.",
       },
     ],
   },
@@ -376,7 +376,7 @@ The Beginner Pack remains the right choice for a first period and early irregula
         question:
           " Can I subscribe to the Ovy Teen Beginner Pack for regular delivery?",
         answer:
-          "Yes — subscribe to receive the pack every 1, 2, or 3 months at up to 15% off with free shipping. As your daughter's cycle becomes more regular, you can switch to the Pro-Active Pack or Ovy XL Pack from your account. Manage, pause, or cancel your subscription anytime — no fees.",
+          "Yes — subscribe monthly or every 2 months at up to 15% off, or choose Cycle Sync so each pack arrives about 5 days before her period. Pause or cancel anytime from your account, with no fees. To change to a different pack, cancel and start a new subscription on that product's page.",
       },
     ],
   },
@@ -452,8 +452,8 @@ Use your Pro-Active pad before and after swimming sessions.
       {
         question:
           "Can I subscribe to the Pro-Active Pack for the whole sports season?",
-        answer: `Yes — subscribe monthly, every 2 months, or every 3 months at up to 15% off with free shipping.
-You can pause during the off-season and restart when training resumes — all from your account page. No cancellation fees.
+        answer: `Yes — subscribe monthly or every 2 months at up to 15% off, or choose Cycle Sync. Free delivery on orders of ₹399 and above.
+You can pause during the off-season and resume when training starts again — all from your account page. No cancellation fees.
 `,
       },
     ],
@@ -524,9 +524,9 @@ The Pack of 2 is ideal for keeping one at home and one always in your travel bag
     "Subscription & Offers": [
       {
         question:
-          " Can I subscribe to receive replacement funnels or travel hygiene products?",
-        answer: `Yes — subscribe to receive a new Looway Pee Funnel every 3 or 6 months at a discount. You can also add Looway Pee & Puke Bags or Looway Toilet Seat Covers to build a complete auto-replenished travel hygiene kit.
-Manage, pause, or cancel any subscription anytime from your account page.
+          "Can I subscribe to the funnel or other travel hygiene products?",
+        answer: `The Looway Pee Funnel is reusable, so it is a one-time buy and is not sold on subscription. Looway Pee & Puke Bags and Looway Toilet Seat Covers can be subscribed monthly or every 2 months at up to 15% off.
+Pause or cancel any subscription anytime from your account page.
 `,
       },
     ],
@@ -573,9 +573,8 @@ The water-resistant barrier keeps the seat surface completely away from skin con
     "Sizing & Variations": [
       {
         question: "How many covers do I get per order?",
-        answer: `Each order contains 30 toilet seat covers, supplied as 2 resealable packs of 15 sheets each.
-The resealable pouch keeps unused covers flat, dry, and clean until each individual use.
-Note for developer: Please ensure the listing displays "30 covers (2 × 15 sheets)". The previous listing incorrectly showed 60 — this has been corrected.
+        answer: `Each box has 25 covers. Choose the 2-Pack (2 boxes, 50 covers) or the 4-Pack (4 boxes, 100 covers).
+The resealable box keeps unused covers flat, dry, and clean until each individual use.
 `,
       },
       {
@@ -590,7 +589,7 @@ Note for developer: Please ensure the listing displays "30 covers (2 × 15 sheet
       {
         question:
           "Can I subscribe to receive toilet seat covers automatically?",
-        answer: `Yes — subscribe for monthly, every 2 months, or every 3 months delivery at up to 15% off with free shipping.
+        answer: `Yes — subscribe monthly or every 2 months at up to 15% off. Free delivery on orders of ₹399 and above.
 Ideal for frequent travellers, daily commuters, or families who want to always be prepared. Cancel or pause anytime from your account page.
 `,
       },

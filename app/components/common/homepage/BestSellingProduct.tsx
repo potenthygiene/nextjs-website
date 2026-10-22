@@ -7,6 +7,7 @@ import Image from "next/image";
 import { ArrowRight, X, Plus, Check } from "lucide-react";
 import BestsellingCard, {
   formatProductPrice,
+  getDefaultBadge,
   getProductNumericPrice,
 } from "./BestSellingCard";
 import { useCatalogStore } from "@/store/catalogStore";
@@ -471,7 +472,7 @@ export default function BestsellingProducts({
             {/* Modal Content */}
             <div className="flex flex-col space-y-2.5 sm:space-y-3.5 text-left sm:col-span-7">
               <span className="w-fit rounded-full bg-[#016271]/10 px-2.5 py-0.5 text-[11px] font-bold text-[#016271] sm:px-3 sm:py-1 sm:text-xs">
-                {quickViewProduct.badge || "Bestseller"}
+                {quickViewProduct.badge || getDefaultBadge(quickViewProduct)}
               </span>
 
               <h3 className="font-serif text-lg font-bold text-gray-900 sm:text-2xl leading-tight">

@@ -1,6 +1,9 @@
 import React from "react";
 import Footer from "../components/common/Footer";
 import { Navbar } from "../components/common/Navbar";
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("privacy-policy");
 
 const Page = () => {
   return (

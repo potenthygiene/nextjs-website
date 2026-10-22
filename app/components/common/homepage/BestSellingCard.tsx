@@ -82,6 +82,19 @@ const getCompactVariantLabel = (variant: any) => {
     : compactLabel;
 };
 
+// Badge shown when a product has none of its own, chosen from what the
+// product is (not its position in the grid).
+export const getDefaultBadge = (product: any): string => {
+  const s = String(product?.slug || product?.name || "").toLowerCase();
+  if (s.includes("cup") || s.includes("funnel")) return "Reusable";
+  if (s.includes("teen")) return "For first periods";
+  if (s.includes("liner")) return "Daily Care";
+  if (s.includes("pant")) return "Super slim";
+  if (s.includes("seat")) return "Public toilets";
+  if (s.includes("bag") || s.includes("puke")) return "Travel essential";
+  return "Bestseller";
+};
+
 export default function BestsellingCard({
   product,
   index = 0,
@@ -146,13 +159,7 @@ export default function BestsellingCard({
   const bgTint = CARD_TINTS[index % CARD_TINTS.length];
 
   // Badge label fallback
-  const badgeLabel =
-    product.badge ||
-    (index % 3 === 0
-      ? "Bestseller"
-      : index % 3 === 1
-        ? "Reusable"
-        : "For first periods");
+  const badgeLabel = product.badge || getDefaultBadge(product);
 
   const isOutOfStock = Boolean(
     selectedVariant

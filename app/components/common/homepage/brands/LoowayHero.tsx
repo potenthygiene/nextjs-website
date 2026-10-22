@@ -166,7 +166,7 @@ export function LoowayHero({
               </div>
               <div className="flex items-center gap-1.5">
                 <Check className="h-4 w-4 stroke-[2.5] text-[#0B6E7D]" />
-                <span>Damaged or wrong? Replaced free</span>
+                <span>Tracked to your door</span>
               </div>
             </div>
           </div>

@@ -41,7 +41,7 @@ const CONTACT_INFO = [
     id: "whatsapp",
     icon: MessageSquare,
     title: "WhatsApp Chat",
-    subtitle: "Fastest response & product advice",
+    subtitle: "Mon - Sat: 10:00 AM - 7:00 PM IST · product advice",
     value: "+91 63758 81514",
     href: "https://wa.me/916375881514",
     btnText: "Chat on WhatsApp",
@@ -58,22 +58,21 @@ const CONTACT_INFO = [
     value: "care@potenthygiene.com",
     href: "mailto:care@potenthygiene.com",
     btnText: "Send Email",
-    badge: "24/7 Mail Box",
+    badge: "Email Support",
     accentBg: "bg-teal-50 border-teal-200 text-teal-800",
     iconBg: "bg-[#075965] text-white",
   },
   {
-    id: "location",
-    icon: MapPin,
-    title: "Headquarters & Dispatch",
-    subtitle: "Made in Jaipur, built for Indian journeys",
-    value: "Jaipur, Rajasthan, India",
-    href: "https://maps.google.com/?q=Jaipur+Rajasthan+India",
-    btnText: "Jaipur, RJ",
-    badge: "Origin",
+    id: "business",
+    icon: Mail,
+    title: "Business & Bulk Orders",
+    subtitle: "Corporate gifting, events and wholesale",
+    value: "info@potenthygiene.com",
+    href: "mailto:info@potenthygiene.com",
+    btnText: "Email Us",
+    badge: "B2B",
     accentBg: "bg-amber-50 border-amber-200 text-amber-800",
     iconBg: "bg-[#D97706] text-white",
-    isExternal: true,
   },
 ];
 
@@ -86,17 +85,17 @@ const FAQS = [
   {
     question: "Are Ovy & Looway products safe for sensitive skin?",
     answer:
-      "Yes! All Ovy period care products and Looway hygiene items are dermatologically tested, toxin-free, hypoallergenic, and crafted specially for Indian body needs.",
+      "Yes. Ovy period care products are dermatologically tested, toxin-free and hypoallergenic, and made for Indian bodies. Looway travel products are made for hygienic, single use on the go.",
   },
   {
     question: "Do you offer corporate or bulk event orders?",
     answer:
-      "We love partnering for travel kits, office hygiene setups, and women's wellness events! Please select 'B2B & Bulk Orders' in the form or WhatsApp us directly.",
+      "We love partnering for travel kits, office hygiene setups, and women's wellness events! Please select 'B2B & Bulk Orders' in the form, email info@potenthygiene.com or WhatsApp us directly.",
   },
   {
     question: "What is your return or exchange policy?",
     answer:
-      "Due to strict hygiene safety standards, opened hygiene products cannot be returned. However, if you receive a damaged or wrong item, we offer hassle-free replacements within 7 days.",
+      "As personal hygiene products, our products can't be returned, exchanged, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full.",
   },
 ];
 

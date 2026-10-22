@@ -1,5 +1,8 @@
 import Image from "next/image";
+import { pageMetadata } from "@/const/seo";
 import { BlogSection } from "@/app/components/common/homepage/Blogs";
+
+export const metadata = pageMetadata("ovy");
 import { InstagramFeed } from "@/app/components/common/homepage/InstaFeed";
 import { Newsletter } from "@/app/components/common/homepage/NewsLetter";
 import { OurStory } from "@/app/components/common/homepage/OurStory";

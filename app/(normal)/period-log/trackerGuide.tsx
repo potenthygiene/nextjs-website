@@ -49,10 +49,10 @@ export default function TrackerGuide() {
             </ul>
           </div>
 
-          {/* Wowpad Section */}
+          {/* Ovy Section */}
           <div>
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-              Track Your Period and Stay Prepared with Wowpad
+              Track Your Period and Stay Prepared with Ovy
             </h2>
 
             <ul className="mt-3 space-y-2 list-disc pl-5 text-sm sm:text-base">
@@ -78,7 +78,7 @@ export default function TrackerGuide() {
           {/* Final Note */}
           <div>
             <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
-              Stay Comfortable with Wowpad
+              Stay Comfortable with Ovy
             </h2>
 
             <p className="mt-3 text-sm sm:text-base text-gray-600">

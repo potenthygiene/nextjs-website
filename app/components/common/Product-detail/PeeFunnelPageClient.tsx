@@ -837,8 +837,8 @@ export default function PeeFunnelPageClient({
                 <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-[#5A0E30]/80">
                   <Truck className="h-4 w-4 shrink-0 text-[#C21E63]" />
                   <span>
-                    <strong>Ships in 24 hrs</strong> · get it by{" "}
-                    <strong>Mon, 12 Oct – Wed, 14 Oct</strong>
+                    <strong>Ships in 24 hrs</strong> · usually delivered in{" "}
+                    <strong>5 to 7 days</strong>
                   </span>
                 </div>
 
@@ -886,17 +886,13 @@ export default function PeeFunnelPageClient({
                 {/* Shipping Micro-copy */}
                 <p className="mt-3 text-center text-[11px] leading-relaxed text-[#5A0E30]/60">
                   Free shipping over ₹399 · ships in 24 hrs · secure checkout.
-                  If it&apos;s not right,{" "}
-                  <strong>we&apos;ll make it right</strong>. Questions? Email{" "}
+                  Questions? Email{" "}
                   <a
                     href="mailto:care@potenthygiene.com"
                     className="text-[#C21E63] underline"
                   >
                     care@potenthygiene.com
                   </a>
-                  <span className="mt-1 block font-bold text-[#C21E63]">
-                    📈 Add ₹300 for free shipping
-                  </span>
                 </p>
 
                 {/* Potent Rewards Banner */}
@@ -935,14 +931,14 @@ export default function PeeFunnelPageClient({
 
                   <div className="mt-3 space-y-1.5 rounded-xl border border-[#EAD6DC] bg-[#fcf8f3] p-3 text-[11.5px] text-[#5A0E30]/75">
                     <div className="flex items-center gap-2 font-bold text-[#5A0E30]">
-                      <Truck className="h-4 w-4 text-[#C21E63]" /> Get it by
-                      Mon, 12 Oct – Wed, 14 Oct · ships in 24 hrs, tracked
+                      <Truck className="h-4 w-4 text-[#C21E63]" /> Usually
+                      delivered in 5 to 7 days · ships in 24 hrs, tracked
                     </div>
                     <div className="flex items-start gap-2 text-[11px] leading-snug text-[#5A0E30]/65">
                       <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#C21E63]" />
                       For hygiene &amp; safety, this personal-care product
-                      can&apos;t be returned or exchanged once shipped - damaged
-                      or wrong items are replaced free
+                      can&apos;t be returned, exchanged, refunded or replaced
+                      once shipped
                     </div>
                   </div>
                 </div>

@@ -60,6 +60,10 @@ export function Newsletter({
       toast.error("Please enter your email address");
       return;
     }
+    if (!agreed) {
+      toast.error("Please tick the box to agree to receive our emails");
+      return;
+    }
 
     try {
       setLoading(true);

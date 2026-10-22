@@ -168,7 +168,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "What is your returns policy?",
-          a: "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          a: "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         },
         {
           q: "Do you offer bulk or wholesale orders?",

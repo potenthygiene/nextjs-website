@@ -1,5 +1,6 @@
 import { InstagramFeed } from "@/app/components/common/homepage/InstaFeed";
 import { Newsletter } from "@/app/components/common/homepage/NewsLetter";
+import { pageMetadata } from "@/const/seo";
 import { LoowayHero } from "@/app/components/common/homepage/brands/LoowayHero";
 import { LoowayShopSection } from "@/app/components/common/homepage/brands/LoowayShopSection";
 import { LoowayShopByTrip } from "@/app/components/common/homepage/brands/LoowayShopByTrip";
@@ -14,6 +15,8 @@ import { brandDataMap } from "@/const/globalconst";
 import { getFullProductDetails } from "@/helper/product/action";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = pageMetadata("looway");
 
 export default async function LowayPage() {
   const data = brandDataMap.loway;

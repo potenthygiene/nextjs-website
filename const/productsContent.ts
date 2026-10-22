@@ -659,7 +659,7 @@ export const loowayPeeFunnel: Record<string, any> = {
         ],
         [
           "What is your returns policy?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
         [
           "Do you offer bulk or wholesale orders?",
@@ -787,7 +787,7 @@ export const loowayPeeFunnel: Record<string, any> = {
           b: "Angle the spout down and away, feet slightly apart. Start your stream gently until the seal feels solid — then relax and go normally.",
         },
         {
-          h: "4 · Finish &amp; store",
+          h: "4 · Finish & store",
           b: "Slide the funnel forward along the skin to catch the last drops, shake it dry, and slip it back into its cotton pouch.",
           tip: "One practice run in the shower at home and you'll trust it completely — most women get it on the first or second try.",
         },
@@ -869,7 +869,7 @@ export const loowayPeeFunnel: Record<string, any> = {
         },
         {
           h: "No toilet at all",
-          b: "Outdoors, aim onto the ground away from you. In a car, direct it into a bottle or a Looway Pee &amp; Puke bag.",
+          b: "Outdoors, aim onto the ground away from you. In a car, direct it into a bottle or a Looway Pee & Puke bag.",
           cta: {
             label: "See where you'll be glad you packed one",
             go: "where-to-use",
@@ -910,9 +910,9 @@ export const loowayPeeFunnel: Record<string, any> = {
     },
     {
       id: "outdoors",
-      rail: "Treks &amp; festivals",
+      rail: "Treks & festivals",
       ch: "Where it works",
-      t: "Treks, camping &amp; festivals",
+      t: "Treks, camping & festivals",
       ic: "mountain",
       slides: [
         {
@@ -968,7 +968,7 @@ export const loowayPeeFunnel: Record<string, any> = {
       id: "mobility",
       rail: "Sore knees",
       ch: "Made for you",
-      t: "Seniors &amp; sore knees",
+      t: "Seniors & sore knees",
       ic: "senior",
       slides: [
         {
@@ -1024,7 +1024,7 @@ export const loowayPeeFunnel: Record<string, any> = {
       id: "clean",
       rail: "Keep it clean",
       ch: "Clean & discreet",
-      t: "Cleaning &amp; care",
+      t: "Cleaning & care",
       ic: "heart",
       slides: [
         {
@@ -1049,9 +1049,9 @@ export const loowayPeeFunnel: Record<string, any> = {
     },
     {
       id: "discreet",
-      rail: "Discreet &amp; calm",
+      rail: "Discreet & calm",
       ch: "Clean & discreet",
-      t: "Discreet &amp; first-time nerves",
+      t: "Discreet & first-time nerves",
       ic: "wave",
       slides: [
         {
@@ -1831,7 +1831,7 @@ export const loowayPeePuke: Record<string, any> = {
         ],
         [
           "What is your returns policy?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
         [
           "Do you offer bulk or wholesale orders?",
@@ -1943,7 +1943,7 @@ export const loowayPeePuke: Record<string, any> = {
         {
           ic: "wave",
           h: "Cleaner than you'd think",
-          b: "Four simple steps, about ten seconds. Here's exactly how a Looway urine &amp; vomit bag works.",
+          b: "Four simple steps, about ten seconds. Here's exactly how a Looway urine & vomit bag works.",
         },
         {
           h: "1 · Open the mouth wide",
@@ -1952,14 +1952,14 @@ export const loowayPeePuke: Record<string, any> = {
         {
           ph: "Photo: positioning — men hold the soft foam high side up",
           h: "2 · Position by the high side",
-          b: "The soft white foam rim is cut on a slant, so one edge sits higher — the high side. Men &amp; boys hold it UP. Women &amp; girls hold it DOWN, pressed close to the body.",
+          b: "The soft white foam rim is cut on a slant, so one edge sits higher — the high side. Men & boys hold it UP. Women & girls hold it DOWN, pressed close to the body.",
         },
         {
           h: "3 · Let it go",
           b: "Aim straight in. The super-absorbent strip at the base turns up to 700 ml of liquid into firm gel within seconds — no sloshing, no spills.",
         },
         {
-          h: "4 · Seal &amp; bin",
+          h: "4 · Seal & bin",
           b: "Press the sealable closure firmly until it locks — leak-proof and odour-locked — then drop it in any bin.",
           tip: "Keep two per traveller within easy reach — a bag you can't grab in five seconds won't help in a hurry.",
         },
@@ -1969,7 +1969,7 @@ export const loowayPeePuke: Record<string, any> = {
       id: "motion",
       rail: "Motion sickness",
       ch: "How to use",
-      t: "For nausea &amp; vomiting",
+      t: "For nausea & vomiting",
       ic: "car",
       slides: [
         {
@@ -1986,7 +1986,7 @@ export const loowayPeePuke: Record<string, any> = {
           b: "The bag takes up to 700 ml, and the super-absorbent strip gels vomit just like liquid — no splashback, and the smell stays locked in.",
         },
         {
-          h: "Seal &amp; carry on",
+          h: "Seal & carry on",
           b: "Press the closure firmly until it locks, then slip it into the seat pocket or a side bin until you can dispose of it properly.",
         },
       ],
@@ -1995,7 +1995,7 @@ export const loowayPeePuke: Record<string, any> = {
       id: "dispose",
       rail: "Dispose it",
       ch: "After use",
-      t: "Sealing &amp; binning",
+      t: "Sealing & binning",
       ic: "heart",
       slides: [
         {
@@ -2040,7 +2040,7 @@ export const loowayPeePuke: Record<string, any> = {
         },
         {
           h: "Build a little kit",
-          b: "Pair Looway with seat covers for dodgy public loos and a reusable pee funnel for women &amp; girls — a complete travel-hygiene kit.",
+          b: "Pair Looway with seat covers for dodgy public loos and a reusable pee funnel for women & girls — a complete travel-hygiene kit.",
           cta: {
             label: "See what goes well with it",
             go: "xsell",
@@ -2052,7 +2052,7 @@ export const loowayPeePuke: Record<string, any> = {
       id: "yatra",
       rail: "Teerth yatra",
       ch: "On the road",
-      t: "Teerth yatra &amp; pilgrimage",
+      t: "Teerth yatra & pilgrimage",
       ic: "temple",
       slides: [
         {
@@ -2072,7 +2072,7 @@ export const loowayPeePuke: Record<string, any> = {
         },
         {
           ic: "bus",
-          h: "Overnight buses &amp; sleeper trains",
+          h: "Overnight buses & sleeper trains",
           b: "Yatra coaches run six to eight hours between stops. Everyone rests easier with a clean, sealable backup within reach of the seat or berth.",
         },
         {
@@ -2113,9 +2113,9 @@ export const loowayPeePuke: Record<string, any> = {
     },
     {
       id: "pregnancy",
-      rail: "Pregnancy &amp; care",
+      rail: "Pregnancy & care",
       ch: "Care",
-      t: "Pregnancy &amp; bedside",
+      t: "Pregnancy & bedside",
       ic: "preg",
       slides: [
         {
@@ -2128,7 +2128,7 @@ export const loowayPeePuke: Record<string, any> = {
           b: "A growing bump and a smaller bladder make travel stressful. Looway means never being caught out between stops.",
         },
         {
-          h: "Hospice &amp; bedside dignity",
+          h: "Hospice & bedside dignity",
           b: "For someone bedridden or in palliative care, a clean, private option at the bedside protects their dignity and eases the carer's load.",
         },
         {
@@ -2139,9 +2139,9 @@ export const loowayPeePuke: Record<string, any> = {
     },
     {
       id: "women",
-      rail: "Women &amp; girls",
+      rail: "Women & girls",
       ch: "For her",
-      t: "Women &amp; girls on the go",
+      t: "Women & girls on the go",
       ic: "senior",
       slides: [
         {
@@ -2152,13 +2152,13 @@ export const loowayPeePuke: Record<string, any> = {
         {
           ph: "Photo: positioning — women hold the soft foam high side down",
           h: "Hold the high side down",
-          b: "Women &amp; girls hold the soft white foam high side (the taller foam edge) DOWN, pressed gently and securely against the body.",
+          b: "Women & girls hold the soft white foam high side (the taller foam edge) DOWN, pressed gently and securely against the body.",
         },
         {
           h: "Pair it with a pee funnel",
           b: "A reusable funnel makes standing use easy and mess-free. Together they're a small-space game-changer.",
           cta: {
-            label: "Shop funnels &amp; seat covers",
+            label: "Shop funnels & seat covers",
             go: "xsell",
           },
         },
@@ -2216,7 +2216,7 @@ export const loowayPeePuke: Record<string, any> = {
           tip: "Keep a small sanitiser bottle and a few wet wipes in the same pouch as your bags.",
         },
         {
-          h: "Keep the car &amp; bag clean",
+          h: "Keep the car & bag clean",
           b: "Because the contents gel solid and the top locks, nothing leaks onto seats, floors or luggage.",
         },
         {
@@ -3006,7 +3006,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
         ],
         [
           "What is your returns policy?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
         [
           "Do you offer bulk or wholesale orders?",
@@ -3026,7 +3026,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
     [
       "Ovy",
       "Ultra-Thin Sanitary Pads",
-      "From our sister brand Ovy. On your period you're in and out of public loos to change — so covers &amp; pads are the perfect pair.",
+      "From our sister brand Ovy. On your period you're in and out of public loos to change — so covers & pads are the perfect pair.",
       249,
       "pad",
     ],
@@ -3121,7 +3121,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
           b: "No technique, no learning curve. Here's exactly how a Looway cover works, start to finish.",
         },
         {
-          h: "1 · Open &amp; take one",
+          h: "1 · Open & take one",
           b: "Slide the box open and pull out a single cover. It's folded flat, so it comes out clean and dry.",
         },
         {
@@ -3133,7 +3133,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
           b: "Spread it across the seat, water-resistant side up, edge to edge with no gaps at the front, sides or back.",
         },
         {
-          h: "4 · Sit, then fold &amp; bin",
+          h: "4 · Sit, then fold & bin",
           b: "Sit down normally on a clean, dry surface. When you're done, fold the cover and bin it — never flush.",
           tip: "Close the box afterwards to keep the rest flat and dry.",
         },
@@ -3211,7 +3211,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
         },
         {
           h: "No toilet at all?",
-          b: "On a long drive or in traffic, the Looway Pee &amp; Puke bags handle it. Many people carry all three.",
+          b: "On a long drive or in traffic, the Looway Pee & Puke bags handle it. Many people carry all three.",
           cta: {
             label: "See where you'll be glad you packed one",
             go: "where-to-use",
@@ -3252,9 +3252,9 @@ export const loowayToiletSeatCovers: Record<string, any> = {
     },
     {
       id: "outdoors",
-      rail: "Events &amp; trips",
+      rail: "Events & trips",
       ch: "Where it works",
-      t: "Events, festivals &amp; trips",
+      t: "Events, festivals & trips",
       ic: "mountain",
       slides: [
         {
@@ -3310,7 +3310,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
       id: "mobility",
       rail: "Sore knees",
       ch: "Made for you",
-      t: "Seniors &amp; sore knees",
+      t: "Seniors & sore knees",
       ic: "senior",
       slides: [
         {
@@ -3349,7 +3349,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
           b: "We won't pretend paper blocks every germ — toilet seats rarely spread infection anyway. What it does is keep your skin off a wet, dirty, shared seat.",
         },
         {
-          h: "Water-resistant &amp; plastic-free",
+          h: "Water-resistant & plastic-free",
           b: "Moisture stays on the seat, not on you — and it's biodegradable paper you bin, never flush.",
         },
         {
@@ -3366,7 +3366,7 @@ export const loowayToiletSeatCovers: Record<string, any> = {
       id: "clean",
       rail: "Germs, honestly",
       ch: "Good to know",
-      t: "Germs &amp; seats, honestly",
+      t: "Germs & seats, honestly",
       ic: "cross",
       slides: [
         {
@@ -3394,9 +3394,9 @@ export const loowayToiletSeatCovers: Record<string, any> = {
     },
     {
       id: "discreet",
-      rail: "Quick &amp; easy",
+      rail: "Quick & easy",
       ch: "Good to know",
-      t: "Quick, one-handed &amp; easy",
+      t: "Quick, one-handed & easy",
       ic: "wave",
       slides: [
         {
@@ -4070,7 +4070,7 @@ export const loowayYatraKit: Record<string, any> = {
         ],
         [
           "Can I return it?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
         [
           "Do you deliver across India, and how do I pay?",
@@ -4138,7 +4138,7 @@ export const ovyCup: Record<string, any> = {
       forWho: "Teens & first-timers",
       colors: ["pink"],
       bullets: [
-        "Our softest, smallest cup — built for teens &amp; first-timers",
+        "Our softest, smallest cup — built for teens & first-timers",
         "Up to 12 hours of leak-free wear — empty more often on heavy days",
         "Reusable for years — body-safe medical-grade silicone",
       ],
@@ -4162,7 +4162,7 @@ export const ovyCup: Record<string, any> = {
       forWho: "Heavier flow or after birth",
       colors: ["white"],
       bullets: [
-        "Holds 35 ml — for heavier days &amp; a higher cervix",
+        "Holds 35 ml — for heavier days & a higher cervix",
         "Up to 12 hours of leak-free wear — empty more often on heavy days",
         "Reusable for years — body-safe medical-grade silicone",
       ],
@@ -4263,11 +4263,11 @@ export const ovyCup: Record<string, any> = {
         ],
         [
           "Can I use it after childbirth?",
-          "Yes, once your doctor has cleared you to use internal products again (usually after your postnatal check). After a <b>vaginal</b> birth the pelvic floor is often more relaxed and the cervix can sit lower, so many people size up to our Large (35 ml). After a <b>C-section</b>, your vaginal canal and pelvic floor aren't stretched the same way — most people stay with the Medium, and choose by cervix height and flow as usual.",
+          "Yes, once your doctor has cleared you to use internal products again (usually after your postnatal check). After a vaginal birth the pelvic floor is often more relaxed and the cervix can sit lower, so many people size up to our Large (35 ml). After a C-section, your vaginal canal and pelvic floor aren't stretched the same way — most people stay with the Medium, and choose by cervix height and flow as usual.",
         ],
         [
           "Is the material safe for sensitive skin?",
-          "Yes. The cup is 100% medical-grade VI silicone — the same biocompatible material used in implants — and is free from BPA, latex, dyes, fragrance and heavy metals. It's hypoallergenic, vegan, and lab-tested as non-cytotoxic, non-sensitising and non-irritating.",
+          "Yes. The cup is 100% medical-grade Class VI silicone — the same biocompatible material used in implants — and is free from BPA, latex, dyes, fragrance and heavy metals. It's hypoallergenic, vegan, and lab-tested as non-cytotoxic, non-sensitising and non-irritating.",
         ],
       ],
     ],
@@ -4288,12 +4288,12 @@ export const ovyCup: Record<string, any> = {
         ],
         [
           "What if it doesn't work out for me?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
       ],
     ],
     [
-      "Everyday life &amp; on the go",
+      "Everyday life & on the go",
       [
         [
           "Can I sleep, swim and play sport with it in?",
@@ -4318,7 +4318,7 @@ export const ovyCup: Record<string, any> = {
       ],
     ],
     [
-      "Choosing &amp; buying",
+      "Choosing & buying",
       [
         [
           "How many cups do I need?",
@@ -4920,7 +4920,7 @@ export const ovyLiners: Record<string, any> = {
         ],
         [
           "What is your returns and refund policy?",
-          "As a hygiene product, returns and refunds don’t apply once a pack is opened. If your order arrives damaged, incomplete or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
       ],
     ],
@@ -5459,7 +5459,7 @@ export const ovyPads: Record<string, any> = {
         ],
         [
           "What is your returns and refund policy?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
       ],
     ],
@@ -6561,7 +6561,7 @@ export const ovyPanty: Record<string, any> = {
         ],
         [
           "What is your returns and refund policy?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
       ],
     ],
@@ -7123,7 +7123,7 @@ export const ovyTeen: Record<string, any> = {
         ],
         [
           "25 Biodegradable Disposal Bags",
-          "pads &amp; liners",
+          "pads & liners",
           "Easy, private clean-up anywhere",
           "BAG",
         ],
@@ -7192,7 +7192,7 @@ export const ovyTeen: Record<string, any> = {
         ],
         [
           "25 Biodegradable Disposal Bags",
-          "pads &amp; liners",
+          "pads & liners",
           "Clean-up in any washroom",
           "BAG",
         ],
@@ -7201,7 +7201,7 @@ export const ovyTeen: Record<string, any> = {
       subCopy:
         "Tournament season doesn’t wait. Subscribe to the Ovy Teen Pro-Active Pack and have your complete kit restocked automatically — at 15% off, on your schedule. Pause or cancel anytime.",
       bullets: [
-        "25-piece sports &amp; travel kit — 7 L, 7 XL, and 7 XL+ pads + 4 liners",
+        "25-piece sports & travel kit — 7 L, 7 XL, and 7 XL+ pads + 4 liners",
         "Gravity-defying fit — extra-wide wings move with you, not against you",
         "Sweat-wicking and breathable — soft fibres, no sticky humid feeling",
         "Silent wrapper — no crinkle noise in the locker room",
@@ -7236,15 +7236,15 @@ export const ovyTeen: Record<string, any> = {
         "The one box that turns a nervous first period into a calm, even exciting, milestone. Inside: organic pads in every size she might need, reusable period panties, soothing extras, and a warm little guidebook that answers the questions she might be too shy to ask. Everything for the big day — and the cycles after.",
       box: [
         [
-          "10 Organic Pads (L, XL &amp; XL+)",
+          "10 Organic Pads (L, XL & XL+)",
           "mixed",
-          "4 light-day L, 3 medium XL, 3 heavy &amp; overnight XL+",
+          "4 light-day L, 3 medium XL, 3 heavy & overnight XL+",
           "MIXPAD",
         ],
         [
           "5 Toilet Seat Covers",
           "disposable",
-          "Hygienic protection in school &amp; public washrooms",
+          "Hygienic protection in school & public washrooms",
           "SEAT",
         ],
         [
@@ -7267,7 +7267,7 @@ export const ovyTeen: Record<string, any> = {
         ],
         [
           "14 Biodegradable Disposal Bags",
-          "pads &amp; liners",
+          "pads & liners",
           "Easy, private clean-up anywhere",
           "BAG",
         ],
@@ -7291,7 +7291,7 @@ export const ovyTeen: Record<string, any> = {
       bullets: [
         "A complete first-period milestone box — 50 thoughtfully chosen pieces",
         "10 organic pads in a smart light-to-heavy mix, so any first day is covered",
-        "5 disposable toilet seat covers for hygienic changes in school &amp; public washrooms",
+        "5 disposable toilet seat covers for hygienic changes in school & public washrooms",
         "4 reusable period panties (L–XL) for leak-proof confidence at school and overnight",
         "Soothing extras — warming pain-relief patches and gentle, fragrance-free wet wipes",
         "14 biodegradable disposal bags — easy, private clean-up anywhere",
@@ -7358,7 +7358,7 @@ export const ovyTeen: Record<string, any> = {
         "Top sheet — 100% organic cottony-soft layer, hypoallergenic and rash-free",
         "Absorbent core — organic, rash-free soft materials with Gel-Lock technology for instant absorption",
         "Back sheet — breathable layer that prevents stuffiness and sweating",
-        "Wrapper &amp; disposal bag — 100% compostable and biodegradable, one bag included per pad",
+        "Wrapper & disposal bag — 100% compostable and biodegradable, one bag included per pad",
         "Wings — secure adhesive wings that stay put during PE class, dance, or sports",
         "Free from chlorine, parabens, artificial fragrances, dyes, and synthetic plastics",
       ],
@@ -7451,7 +7451,7 @@ export const ovyTeen: Record<string, any> = {
       [
         [
           "What is the difference between the three kits?",
-          "All are organic-pad kits for teens. The <b>Starter Pack</b> (25 pieces) is a gentle two-size start for first or early periods. The <b>Pro-Active Pack</b> (25 pieces) adds the XL+ size and sport-tested wings for active, sporty or travelling teens and heavier days. The <b>First Period Box</b> (50 pieces) is the complete milestone gift — pads in all three sizes, period panties, toilet seat covers, wipes, disposal bags, pain-relief patches and a guidebook.",
+          "All are organic-pad kits for teens. The Starter Pack (25 pieces) is a gentle two-size start for first or early periods. The Pro-Active Pack (25 pieces) adds the XL+ size and sport-tested wings for active, sporty or travelling teens and heavier days. The First Period Box (50 pieces) is the complete milestone gift — pads in all three sizes, period panties, toilet seat covers, wipes, disposal bags, pain-relief patches and a guidebook.",
         ],
         [
           "Which one should I choose?",
@@ -7481,19 +7481,19 @@ export const ovyTeen: Record<string, any> = {
       ],
     ],
     [
-      "Subscriptions, Cycle Sync &amp; payment",
+      "Subscriptions, Cycle Sync & payment",
       [
         [
-          "What is the difference between Subscribe &amp; Save and Cycle Sync?",
-          "Both repeat your kit at up to 15% off and can be paused or cancelled anytime, with no lock-in. <b>Subscribe &amp; Save</b> delivers on a fixed calendar (monthly or every 2 months). <b>Cycle Sync</b> times each delivery to arrive about 5 days before your period, based on your cycle dates.",
+          "What is the difference between Subscribe & Save and Cycle Sync?",
+          "Both repeat your kit at up to 15% off and can be paused or cancelled anytime, with no lock-in. Subscribe & Save delivers on a fixed calendar (monthly or every 2 months). Cycle Sync times each delivery to arrive about 5 days before your period, based on your cycle dates.",
         ],
         [
           "How does Cycle Sync timing and charging work?",
-          "You enter your last period date and cycle length. We schedule each box to arrive ~5 days before your period. Your <b>first payment is taken today</b> when you start, and every later box is charged about 10 days before it ships. The confirmation shows the exact arrival, charge and period-due dates for your next 3 boxes.",
+          "You enter your last period date and cycle length. We schedule each box to arrive ~5 days before your period. Your first payment is taken today when you start, and every later box is charged about 10 days before it ships. The confirmation shows the exact arrival, charge and period-due dates for your next 3 boxes.",
         ],
         [
           "What if my next period is very soon?",
-          'If your next period is <b>less than 7 days away</b>, there is not enough time to schedule a synced box, so we place a <b>one-time order now</b> instead and you can start Cycle Sync again after your period. The button changes to "Add to Cart" automatically in that case.',
+          'If your next period is less than 7 days away, there is not enough time to schedule a synced box, so we place a one-time order now instead and you can start Cycle Sync again after your period. The button changes to "Add to Cart" automatically in that case.',
         ],
         [
           "Can I pause or cancel my subscription?",
@@ -7513,16 +7513,16 @@ export const ovyTeen: Record<string, any> = {
         ],
         [
           "Is my cycle data private?",
-          "Yes. The dates you enter for Cycle Sync are used <b>only</b> to time your deliveries — never sold, shared or used for advertising. You can view, edit or delete them anytime, and you can use the rest of the site without entering any of it.",
+          "Yes. The dates you enter for Cycle Sync are used only to time your deliveries — never sold, shared or used for advertising. You can view, edit or delete them anytime, and you can use the rest of the site without entering any of it.",
         ],
       ],
     ],
     [
-      "Gifting, impact &amp; care",
+      "Gifting, impact & care",
       [
         [
           "What if there is a problem with my order?",
-          "As a hygiene product, returns and refunds don’t apply. If your order arrives damaged or incorrect, email care@potenthygiene.com and we’ll make it right.",
+          "As a personal hygiene product, it can’t be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
         ],
         [
           "Can I send a kit as a gift?",
@@ -7633,7 +7633,7 @@ export const ovyTeen: Record<string, any> = {
         "Everything was in one box on my first day — pads, panties, even toilet seat covers for school. The guidebook explained it all so I was not scared.",
     },
     {
-      name: "Mr. &amp; Mrs. Rao (parents)",
+      name: "Mr. & Mrs. Rao (parents)",
       city: "Visakhapatnam",
       plan: "First Period Box · gift",
       stars: 5,
@@ -8435,7 +8435,7 @@ export const ovyTeen: Record<string, any> = {
       "Athletics",
       "M6 20l4-9 4 3 4-8M4 13l4-2",
       "Pads",
-      "Track &amp; field days",
+      "Track & field days",
       "All-day meets mean sprints, jumps and long gaps between events. Your pack has every size, so use a heavier one through the busy blocks; add a disposable period panty (L–XL or XXL–3XL) for back-to-back events when there is no time to change.",
       ["PRO", "panty", "liners"],
       "Pro-Active Pack — every size for an all-day meet",
@@ -8509,7 +8509,7 @@ export const ovyTeen: Record<string, any> = {
       "Period",
       "Days 1–5",
       "You may feel low-energy or crampy. Be kind to yourself — rest, warmth and a comfy pad help most.",
-      "Rest &amp; recharge",
+      "Rest & recharge",
     ],
     [
       "#E1A93A",
@@ -8620,7 +8620,7 @@ export const ovyTeen: Record<string, any> = {
     "dos-donts":
       '<path d="M12 3l9 16H3z" stroke-linejoin="round"/><path d="M12 10v4M12 17v.3" stroke-linecap="round"/>',
   },
-  cols: '<div class="shm-col"><h4>Learn the basics</h4><button data-topic="first-period-101"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h11l3 3v13H5z" stroke-linejoin="round"/><path d="M9 10h7M9 14h5" stroke-linecap="round"/></svg></span><span class="shm-tx"><b>First-period 101</b><small>What nobody explains</small></span></button><button data-topic="how-to-use"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.5a2.8 2.8 0 015.5.6c0 1.8-2.7 2.2-2.7 4M12 17v.3" stroke-linecap="round"/></svg></span><span class="shm-tx"><b>How to use a pad</b><small>6 quick steps</small></span></button><button data-topic="is-this-normal"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l2.5 5.2 5.5.8-4 3.9 1 5.6L12 16.9 6 18.5l1-5.6-4-3.9 5.5-.8z" stroke-linejoin="round"/></svg></span><span class="shm-tx"><b>Myth or fact?</b><small>Spot the myths</small></span></button></div><div class="shm-col"><h4>Plan & track</h4><button data-topic="cycle-tracker"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="shm-tx"><b>Track my cycle</b><small>Next-period window</small></span></button><button data-topic="energy-month"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12h4l2-7 3 14 2-7h4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="shm-tx"><b>Energy by phase</b><small>Week to week</small></span></button><button data-topic="confidence-quiz"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.5a2.8 2.8 0 015.5.6c0 1.8-2.7 2.2-2.7 4M12 17v.3" stroke-linecap="round"/></svg></span><span class="shm-tx"><b>Period-ready quiz</b><small>2-min check-in</small></span></button><button data-topic="prep-checklist"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="shm-tx"><b>Pack my kit</b><small>Pack your essentials</small></span></button></div><div class="shm-col"><h4>Feel good</h4><button data-topic="nutrition"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v6M9 3v5a3 3 0 006 0V3M7 13h10l-1 7a2 2 0 01-2 2h-4a2 2 0 01-2-2z" stroke-linejoin="round"/></svg></span><span class="shm-tx"><b>Fuel & food</b><small>Eat to feel better</small></span></button><button data-topic="self-care"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20.3l-1.45-1.32C5.4 14.3 2 11.2 2 7.5 2 4.4 4.4 2 7.5 2a4.5 4.5 0 014.5 2.6A4.5 4.5 0 0116.5 2 4.5 4.5 0 0122 7.5c0 3.7-3.4 6.8-8.55 11.48z" stroke-linejoin="round"/></svg></span><span class="shm-tx"><b>Cramps & self-care</b><small>Feel-better toolkit</small></span></button><button data-topic="dos-donts"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l9 16H3z" stroke-linejoin="round"/><path d="M12 10v4M12 17v.3" stroke-linecap="round"/></svg></span><span class="shm-tx"><b>Do’s, don’ts & safety</b><small>Good-to-know habits</small></span></button></div>',
+  cols: '<div class="shm-col"><h4>Learn the basics</h4><button data-topic="first-period-101"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h11l3 3v13H5z" stroke-linejoin="round"/><path d="M9 10h7M9 14h5" stroke-linecap="round"/></svg></span><span class="shm-tx">First-period 101<small>What nobody explains</small></span></button><button data-topic="how-to-use"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.5a2.8 2.8 0 015.5.6c0 1.8-2.7 2.2-2.7 4M12 17v.3" stroke-linecap="round"/></svg></span><span class="shm-tx">How to use a pad<small>6 quick steps</small></span></button><button data-topic="is-this-normal"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l2.5 5.2 5.5.8-4 3.9 1 5.6L12 16.9 6 18.5l1-5.6-4-3.9 5.5-.8z" stroke-linejoin="round"/></svg></span><span class="shm-tx">Myth or fact?<small>Spot the myths</small></span></button></div><div class="shm-col"><h4>Plan & track</h4><button data-topic="cycle-tracker"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="shm-tx">Track my cycle<small>Next-period window</small></span></button><button data-topic="energy-month"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12h4l2-7 3 14 2-7h4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="shm-tx">Energy by phase<small>Week to week</small></span></button><button data-topic="confidence-quiz"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.5a2.8 2.8 0 015.5.6c0 1.8-2.7 2.2-2.7 4M12 17v.3" stroke-linecap="round"/></svg></span><span class="shm-tx">Period-ready quiz<small>2-min check-in</small></span></button><button data-topic="prep-checklist"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="shm-tx">Pack my kit<small>Pack your essentials</small></span></button></div><div class="shm-col"><h4>Feel good</h4><button data-topic="nutrition"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v6M9 3v5a3 3 0 006 0V3M7 13h10l-1 7a2 2 0 01-2 2h-4a2 2 0 01-2-2z" stroke-linejoin="round"/></svg></span><span class="shm-tx">Fuel & food<small>Eat to feel better</small></span></button><button data-topic="self-care"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20.3l-1.45-1.32C5.4 14.3 2 11.2 2 7.5 2 4.4 4.4 2 7.5 2a4.5 4.5 0 014.5 2.6A4.5 4.5 0 0116.5 2 4.5 4.5 0 0122 7.5c0 3.7-3.4 6.8-8.55 11.48z" stroke-linejoin="round"/></svg></span><span class="shm-tx">Cramps & self-care<small>Feel-better toolkit</small></span></button><button data-topic="dos-donts"><span class="shm-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l9 16H3z" stroke-linejoin="round"/><path d="M12 10v4M12 17v.3" stroke-linecap="round"/></svg></span><span class="shm-tx">Do’s, don’ts & safety<small>Good-to-know habits</small></span></button></div>',
 };
 
 export const PRODUCTS_STATIC_CONTENT: Record<string, any> = {

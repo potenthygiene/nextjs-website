@@ -5,6 +5,7 @@ import { address, contactUs, users } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { emailRegex } from "@/const/globalconst";
 import { getAuthSession } from "@/helper/auth/session";
+import { addToBrevoList } from "@/lib/brevo";
 
 type NewAddressInput = {
   fullName: string;
@@ -308,12 +309,19 @@ export async function subscribeEmail(email: string) {
     return { success: false, message: "Please enter a valid email" };
   }
 
+  const cleanEmail = email.trim().toLowerCase();
+
   await db.insert(contactUs).values({
-    email,
+    email: cleanEmail,
     message: "Newsletter",
   });
 
-  return { success: true, message: "Subscribed successfully 🎉" };
+  await addToBrevoList(cleanEmail);
+
+  return {
+    success: true,
+    message: "Thank you for subscribing! Please check your inbox.",
+  };
 }
 
 export async function submitContactMessage(data: {

@@ -1,4 +1,7 @@
 import React, { Suspense } from "react";
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("shop");
 import FilterBar from "../../components/common/category/filterTopBar";
 import FiltersSidebar from "../../components/common/category/filterSideBar";
 import CategoryProducts from "../../components/common/category/categoryProducts";

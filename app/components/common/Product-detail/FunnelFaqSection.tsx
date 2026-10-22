@@ -87,15 +87,15 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "Do you deliver across India, and how do I pay?",
-          a: "We deliver across all pin codes in India within 3–6 business days with free shipping. We accept all major payment methods including UPI (GPay, PhonePe, Paytm), Credit/Debit Cards, Net Banking, and Cash on Delivery (COD).",
+          a: "We deliver across India, usually in about 5 to 7 days (faster to metro cities), with free delivery on orders of ₹399 and above. You can pay by UPI (GPay, PhonePe, Paytm), credit or debit card, or net banking.",
         },
         {
           q: "What is your returns policy?",
-          a: "Due to the intimate personal hygiene nature of this product, we cannot accept returns once opened. However, if your order arrives damaged, defective, or incorrect, contact our customer support within 7 days for a hassle-free replacement.",
+          a: "As a personal hygiene product, it can't be returned, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions? Email care@potenthygiene.com.",
         },
         {
           q: "Do you offer bulk or wholesale orders?",
-          a: "Yes! We supply bulk orders for travel groups, corporate wellness kits, wedding hampers, trekking clubs, and retailers. Reach out to us via our contact page or email for custom bulk pricing.",
+          a: "Yes! We supply bulk orders for travel groups, corporate wellness kits, wedding hampers, trekking clubs, and retailers. Email info@potenthygiene.com for custom bulk pricing.",
         },
       ],
     },

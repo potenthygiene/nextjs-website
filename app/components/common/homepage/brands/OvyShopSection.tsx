@@ -769,7 +769,7 @@ export function OvyShopSection({
                 Ships within 24 hours
               </h4>
               <p className="mt-0.5 text-[10px] leading-tight text-purple-200/80 sm:text-[11px]">
-                Damaged or wrong? Replaced free
+                Tracked to your door, free over ₹399
               </p>
             </div>
           </div>

@@ -41,7 +41,7 @@ export const CATEGORY_2 = [
 export const quizQuestions = [
   {
     id: 1,
-    question: "What describe your flow ?",
+    question: "What describes your flow?",
     options: [
       { icon: User2, label: "light flow", slug: "ligth_flow" },
       { icon: User2, label: "medium flow", slug: "medium_flow" },
@@ -67,7 +67,7 @@ export const quizQuestions = [
       { icon: User2, label: "Synthetic Blend", slug: "synthetic_blend" },
       {
         icon: User2,
-        label: "Medical Grade Silicon",
+        label: "Medical Grade Silicone",
         slug: "medical_grade_silicon",
       },
       { icon: User2, label: "Unsure", slug: "unsure" },

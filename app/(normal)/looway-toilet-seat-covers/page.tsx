@@ -2,8 +2,12 @@ import SeatCoversPageClient from "@/app/components/common/Product-detail/SeatCov
 import { loowayToiletSeatCovers } from "@/const/productsContent";
 import { getProductReviews } from "@/helper";
 import { getFullProductDetails } from "@/helper/product/action";
+import { productMetadata } from "@/const/seo";
 
 export const dynamic = "force-dynamic";
+
+// Same page as /product-detail/looway-toilet-seat-covers, so it points Google there.
+export const metadata = productMetadata("looway-toilet-seat-covers");
 
 export default async function LoowayToiletSeatCoversPage() {
   const slug = "looway-toilet-seat-covers";

@@ -56,7 +56,7 @@ const OVY_FAQS: FAQItem[] = [
     id: 8,
     question: "What is the return/exchange policy for hygiene products?",
     answer:
-      "Due to strict intimate hygiene safety standards, opened hygiene products cannot be returned. However, if your order arrives damaged or defective, contact our support team within 7 days for a hassle-free replacement.",
+      "As personal hygiene products, Ovy products can’t be returned, exchanged, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
   },
 ];
 

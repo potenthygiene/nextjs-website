@@ -1,4 +1,5 @@
 import { Hero } from "@/app/components/common/homepage/HeroSection";
+import { pageMetadata } from "@/const/seo";
 import { BrandAccordion } from "@/app/components/common/homepage/Brand";
 import { CategoryGrid } from "@/app/components/common/homepage/CategorySection";
 import BestsellingProducts from "@/app/components/common/homepage/BestSellingProduct";
@@ -18,6 +19,8 @@ import StoryTruth from "../components/common/homepage/StoryTruth";
 import AboutStory from "../components/common/homepage/AboutStory";
 import { ProductCategories } from "../components/common/homepage/ProductCategories";
 import { YatraKitPromo } from "../components/common/homepage/YatraKitPromo";
+
+export const metadata = pageMetadata("home");
 
 export default function Home() {
   return (

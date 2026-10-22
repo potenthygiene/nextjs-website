@@ -6,6 +6,9 @@ import {
   IconHome,
   IconMapPin,
 } from "@tabler/icons-react";
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("shipping-policy");
 
 const Page = () => {
   return (

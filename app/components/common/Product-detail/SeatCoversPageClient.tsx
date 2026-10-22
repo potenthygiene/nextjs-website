@@ -995,10 +995,6 @@ export default function SeatCoversPageClient({
                 {/* Image 2: Support & Guarantee Banner */}
                 <div className="py-1 text-xs text-slate-600 sm:text-sm">
                   <span>
-                    If it's not right,{" "}
-                    <strong className="font-bold text-[#083B5C]">
-                      we'll make it right.
-                    </strong>{" "}
                     Questions? Email{" "}
                     <a
                       href="mailto:care@potenthygiene.com"

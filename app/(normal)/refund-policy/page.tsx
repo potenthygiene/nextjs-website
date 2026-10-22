@@ -1,4 +1,6 @@
+import { pageMetadata } from "@/const/seo";
 
+export const metadata = pageMetadata("refund-policy");
 
 const Page = () => {
   return (

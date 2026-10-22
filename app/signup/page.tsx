@@ -300,7 +300,7 @@ const Page = () => {
             <input
               type="text"
               name="ref"
-              placeholder="Referal Code"
+              placeholder="Referral code (optional)"
               value={formData.ref}
               onChange={handleChange}
               className="w-full border-b border-gray-400 bg-transparent px-1 py-2 text-sm outline-none focus:border-gray-600"

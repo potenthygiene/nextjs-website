@@ -43,7 +43,7 @@ const FAQS_DATA: FaqItem[] = [
   },
   {
     q: "What if my order arrives damaged?",
-    a: "We replace anything damaged or wrong, free. Email a photo and your order number to care@potenthygiene.com. For hygiene reasons, Looway can’t be returned or exchanged once shipped.",
+    a: "For hygiene reasons, Looway products can’t be returned, exchanged, refunded or replaced once delivered. You can cancel an order until it ships, and a cancelled order is refunded in full. Questions about your order? Email care@potenthygiene.com.",
   },
 ];
 

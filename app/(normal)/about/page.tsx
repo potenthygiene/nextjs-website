@@ -15,6 +15,9 @@ import PlanetSection from './PlanetSection'
 import RoshniSection from './RoshniSection'
 import NumbersSection from './NumbersSection'
 import Marquee from './Marquee'
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("about");
 
 const page = () => {
   return (

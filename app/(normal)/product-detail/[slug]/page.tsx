@@ -23,9 +23,15 @@ import {
   ovyTeen,
   PRODUCTS_STATIC_CONTENT,
 } from "@/const/productsContent";
+import { productMetadata } from "@/const/seo";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+export async function generateMetadata({ params }: any) {
+  const { slug } = await params;
+  return productMetadata(resolveCanonicalSlug(slug));
+}
 
 function resolveCanonicalSlug(s: string): string {
   const lower = (s || "").toLowerCase();

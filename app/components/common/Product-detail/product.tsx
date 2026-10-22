@@ -1846,8 +1846,6 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
 
               {/* Satisfaction Guarantee */}
               <div className="text-center text-xs text-gray-700 sm:text-sm">
-                If it’s not right,{" "}
-                <b className="font-bold text-[#1A150F]">we’ll make it right</b>.
                 Questions? Email{" "}
                 <a
                   href="mailto:care@potenthygiene.com"

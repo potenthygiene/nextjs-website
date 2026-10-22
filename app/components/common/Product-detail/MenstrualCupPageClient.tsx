@@ -1137,8 +1137,7 @@ export default function MenstrualCupPageClient({
                     Ships in 24 hrs · secure checkout
                   </p>
                   <p>
-                    Arrives damaged or the wrong size? <b>We'll replace it</b> —
-                    just email a photo within 12 hrs. Questions?{" "}
+                    Not sure which size? Use the size finder above. Questions?{" "}
                     <a
                       href="mailto:care@potenthygiene.com"
                       className="font-semibold text-[#7E4D77] underline"
@@ -1168,20 +1167,20 @@ export default function MenstrualCupPageClient({
                     </span>
                     <span className="flex items-center gap-1">
                       <CreditCard className="h-3.5 w-3.5 text-purple-600" />{" "}
-                      Easy returns on damage
+                      Secure payments
                     </span>
                   </div>
 
                   <div className="space-y-1.5 rounded-xl border border-gray-100 bg-gray-50/80 p-3 text-xs text-gray-600">
                     <p className="flex items-center gap-1.5 font-bold text-gray-800">
                       <Truck className="h-4 w-4 text-teal-600" /> Usually
-                      delivered in 2–6 days · ships in 24 hrs, tracked
+                      delivered in 5 to 7 days · ships in 24 hrs, tracked
                     </p>
                     <p className="text-[11px] leading-relaxed">
-                      ✓ A cup is a hygiene product, so it can't be returned —
-                      but if it arrives <b>damaged or the wrong size</b>, send
-                      us a photo within <b>12 hours</b> of delivery and we'll
-                      replace it.
+                      ✓ A cup is a personal hygiene product, so it can't be
+                      returned, exchanged, refunded or replaced once delivered.
+                      Please check your size with the size finder before you
+                      order.
                     </p>
                   </div>
                 </div>

@@ -1,3 +1,6 @@
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("terms-condition");
 
 const Page = () => {
   return (

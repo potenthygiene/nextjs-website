@@ -48,6 +48,14 @@ const FOOTER_SECTIONS: FooterSection[] = [
   },
 ];
 
+const MARKETPLACES = [
+  {
+    name: "Amazon",
+    href: "https://www.amazon.in/stores/PotentHygiene/page/18678868-B6F1-4388-A566-62231A1FE8D5",
+  },
+  { name: "Myntra", href: "https://www.myntra.com/potent-hygiene" },
+];
+
 const PAYMENT_METHODS = [
   "UPI",
   "Visa",
@@ -112,6 +120,43 @@ export default function Footer() {
               >
                 WhatsApp us
               </a>
+            </div>
+
+            <div className="space-y-1.5 pt-1 text-xs text-white/70 sm:text-sm">
+              <p>
+                Business &amp; bulk orders:{" "}
+                <a
+                  href="mailto:info@potenthygiene.com"
+                  className="text-white/85 transition-colors hover:text-white"
+                >
+                  info@potenthygiene.com
+                </a>
+              </p>
+              <p>
+                Work with us:{" "}
+                <a
+                  href="mailto:careers@potenthygiene.com"
+                  className="text-white/85 transition-colors hover:text-white"
+                >
+                  careers@potenthygiene.com
+                </a>
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 pt-2 text-xs text-white/80 sm:text-sm">
+              <span>Also on</span>
+              {MARKETPLACES.map((store) => (
+                <a
+                  key={store.name}
+                  href={store.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Shop Potent Hygiene on ${store.name}`}
+                  className="rounded-full border border-white/25 px-3 py-1 font-medium text-white transition-colors hover:bg-white hover:text-[#075965]"
+                >
+                  {store.name}
+                </a>
+              ))}
             </div>
           </div>
 

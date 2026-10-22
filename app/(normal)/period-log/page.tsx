@@ -1,5 +1,8 @@
 import LogEntry from "./logEntry";
 import TrackerGuide from "./trackerGuide";
+import { pageMetadata } from "@/const/seo";
+
+export const metadata = pageMetadata("period-log");
 
 const Page = () => {
   return (
