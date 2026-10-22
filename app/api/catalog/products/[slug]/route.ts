@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getFullProductDetails } from "@/helper/product/action";
+import { resolveCanonicalSlug } from "@/lib/productSlugs";
 
 export async function GET(
   _request: Request,
@@ -8,7 +9,7 @@ export async function GET(
 ) {
   try {
     const { slug } = await params;
-    const product = await getFullProductDetails(slug);
+    const product = await getFullProductDetails(resolveCanonicalSlug(slug));
 
     if (!product) {
       return NextResponse.json(

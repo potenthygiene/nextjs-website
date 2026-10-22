@@ -24,6 +24,7 @@ import {
   PRODUCTS_STATIC_CONTENT,
 } from "@/const/productsContent";
 import { productMetadata } from "@/const/seo";
+import { resolveCanonicalSlug } from "@/lib/productSlugs";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -33,62 +34,30 @@ export async function generateMetadata({ params }: any) {
   return productMetadata(resolveCanonicalSlug(slug));
 }
 
-function resolveCanonicalSlug(s: string): string {
-  const lower = (s || "").toLowerCase();
-  if (
-    lower === "looway-pee-funnel" ||
-    lower === "pee-funnel" ||
-    lower === "looway-funnel" ||
-    lower === "looway-reusable-female-pee-funnel"
-  ) {
-    return "looway-pee-funnel";
-  }
-  if (
-    lower === "looway-pee-puke" ||
-    lower === "looway-pee-puke-bags" ||
-    lower === "pee-puke-bags" ||
-    lower === "looway-pee-and-puke-bags" ||
-    lower === "pee-puke"
-  ) {
-    return "looway-pee-puke";
-  }
-  if (lower === "looway-toilet-seat-covers" || lower === "toilet-seat-covers") {
-    return "looway-toilet-seat-covers";
-  }
-  if (
-    lower === "ovy-cup" ||
-    lower === "menstrual-cup" ||
-    lower === "ovy-reusable-menstrual-cup"
-  ) {
-    return "ovy-cup";
-  }
-  if (
-    lower === "ovy-teen" ||
-    lower === "ovy-teen-pads" ||
-    lower === "ovy-teen-starter-pack" ||
-    lower === "ovy-organic-teen-sanitary-pads"
-  ) {
-    return "ovy-teen";
-  }
-  if (lower === "ovy-pads" || lower === "sanitary-pads") {
-    return "ovy-pads";
-  }
-  if (lower === "ovy-liners" || lower === "panty-liners") {
-    return "ovy-liners";
-  }
-  if (lower === "ovy-panty" || lower === "period-panty") {
-    return "ovy-panty";
-  }
-  return s;
-}
-
 export default async function Page({ params }: any) {
   const { slug } = await params;
   const canonicalSlug = resolveCanonicalSlug(slug);
 
-  const product = await getFullProductDetails(canonicalSlug);
-  const reviewWithMedia = await getProductReviews(canonicalSlug);
-  const similarProducts = await getProductSimilarProducts(canonicalSlug);
+  // The teen page also shows four other products; start loading them now.
+  const routineSlugs = ["ovy-cup", "ovy-pads", "ovy-liners", "looway-toilet-seat-covers"];
+  const routineEntriesPromise =
+    canonicalSlug === "ovy-teen"
+      ? Promise.all(
+          routineSlugs.map(async (rSlug) => {
+            try {
+              return [rSlug, await getFullProductDetails(rSlug)] as const;
+            } catch {
+              return [rSlug, null] as const;
+            }
+          }),
+        )
+      : null;
+
+  const [product, reviewWithMedia, similarProducts] = await Promise.all([
+    getFullProductDetails(canonicalSlug),
+    getProductReviews(canonicalSlug),
+    getProductSimilarProducts(canonicalSlug),
+  ]);
 
   if (canonicalSlug === "looway-pee-funnel") {
     return (
@@ -140,17 +109,8 @@ export default async function Page({ params }: any) {
     );
   }
 
-  if (canonicalSlug === "ovy-teen") {
-    const routineSlugs = ["ovy-cup", "ovy-pads", "ovy-liners", "looway-toilet-seat-covers"];
-    const routineEntries = await Promise.all(
-      routineSlugs.map(async (rSlug) => {
-        try {
-          return [rSlug, await getFullProductDetails(rSlug)] as const;
-        } catch {
-          return [rSlug, null] as const;
-        }
-      })
-    );
+  if (canonicalSlug === "ovy-teen" && routineEntriesPromise) {
+    const routineEntries = await routineEntriesPromise;
     const ovyProductsMap = Object.fromEntries(routineEntries);
 
     return (

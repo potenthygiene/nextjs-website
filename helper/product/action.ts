@@ -536,30 +536,38 @@ export async function getFullProductDetails(identifier: string) {
       .limit(1);
     if (!productDeails) return null;
 
-    const productVariantsRes = await db
-      .select()
-      .from(productVariant)
-      .where(eq(productVariant.productId, productDeails.id))
-      .orderBy(asc(productVariant.priority), asc(productVariant.name));
+    // Run the independent lookups at the same time instead of one after another.
+    const variantsWithMedia = (async () => {
+      const variants = await db
+        .select()
+        .from(productVariant)
+        .where(eq(productVariant.productId, productDeails.id))
+        .orderBy(asc(productVariant.priority), asc(productVariant.name));
+      const variantIds = variants.map((variant) => variant.id);
+      const media = variantIds.length
+        ? await db
+            .select()
+            .from(productMedia)
+            .where(inArray(productMedia.productVariantId, variantIds))
+        : [];
+      return [variants, media] as const;
+    })();
 
-    const variantIds = productVariantsRes.map((variant) => variant.id);
-    const productMediaRes = variantIds.length
-      ? await db
+    const [[productVariantsRes, productMediaRes], categoryRes, productFaqRes] =
+      await Promise.all([
+        variantsWithMedia,
+        productDeails.categoryId
+          ? db
+              .select({ categories: category })
+              .from(category)
+              .where(eq(category.id, productDeails.categoryId))
+          : Promise.resolve([]),
+        db
           .select()
-          .from(productMedia)
-          .where(inArray(productMedia.productVariantId, variantIds))
-      : [];
-    const categoryRes = productDeails.categoryId
-      ? await db
-          .select({ categories: category })
-          .from(category)
-          .where(eq(category.id, productDeails.categoryId))
-      : [];
-    const productFaqRes = await db
-      .select()
-      .from(productFaq)
-      .where(eq(productFaq.productId, productDeails.id))
-      .orderBy(asc(productFaq.priority));
+          .from(productFaq)
+          .where(eq(productFaq.productId, productDeails.id))
+          .orderBy(asc(productFaq.priority)),
+      ]);
 
     const isInStock =
       productVariantsRes.length > 0
