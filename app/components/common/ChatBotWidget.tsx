@@ -829,7 +829,7 @@ export function ChatBotWidget() {
         key: "last",
         icon: Package,
         title: t("Your last order: {date}", { date: latest.date }),
-        text: t("{n} items · {status}", { n: latest.items, status: t(latest.status) }),
+        text: latest.items ? t("{n} items · {status}", { n: latest.items, status: t(latest.status) }) : t(latest.status),
         actions: latest.lines.length ? [{ label: t("Buy again"), action: { type: "reorder", orderId: latest.id } }] : [],
         links: [{ label: t("View order"), href: `/dashboard/orders/${latest.id}` }],
       });
