@@ -247,7 +247,7 @@ export const EmailVerificationClient = () => {
                 <div className="mt-4 rounded-xl border border-dashed border-[#9FD3D6] bg-[#F3FAFB] px-3 py-2.5 text-left">
                   <p className="text-[11px] font-bold uppercase tracking-wider text-[#016271]">Your welcome gift</p>
                   <p className="mt-0.5 text-sm text-gray-700">
-                    ₹50 credit in your Rewards, plus <strong className="font-mono">WELCOME15</strong> for 15% off your first order of ₹399 or more.
+                    Credit in your Rewards, plus <strong className="font-mono">FIRSTCARE15</strong> for 15% off your first order of ₹399 or more. Joined with a friend&apos;s link? Use <strong className="font-mono">SAATHI20</strong> for 20% off instead.
                   </p>
                 </div>
 

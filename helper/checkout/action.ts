@@ -9,8 +9,9 @@ import {
   order,
   product,
   productVariant,
+  referralCoinHistory,
 } from "@/db/schema";
-import { BLOCKED_CODES, couponRules, isCouponLive } from "@/const/coupons";
+import { couponRules, isCouponLive, RETIRED_CODES } from "@/const/coupons";
 import { db } from "@/lib/db";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { requireUserWithRefresh } from "../user/action";
@@ -106,7 +107,7 @@ async function getValidCoupon({
   const normalizedCode = code?.trim().toUpperCase();
   if (!normalizedCode) return { couponInfo: null, error: null };
 
-  if (BLOCKED_CODES.includes(normalizedCode)) {
+  if (RETIRED_CODES.includes(normalizedCode)) {
     return { couponInfo: null, error: "Invalid coupon code" };
   }
 
@@ -135,6 +136,45 @@ async function getValidCoupon({
         .limit(1);
       if (previous.length) {
         return { couponInfo: null, error: `${normalizedCode} is for your first order only` };
+      }
+    }
+    // Friends who joined with someone's referral link.
+    if (rules.referredOnly) {
+      const joined = userId
+        ? await db
+            .select({ id: referralCoinHistory.id })
+            .from(referralCoinHistory)
+            .where(eq(referralCoinHistory.newUserId, userId))
+            .limit(1)
+        : [];
+      if (!joined.length) {
+        return { couponInfo: null, error: `${normalizedCode} is for friends who joined with a referral link` };
+      }
+    }
+    // Once for every referred friend whose first order has been delivered.
+    if (rules.referrerOnly) {
+      const friends = userId
+        ? await db
+            .selectDistinct({ id: referralCoinHistory.newUserId })
+            .from(referralCoinHistory)
+            .where(eq(referralCoinHistory.userId, userId))
+        : [];
+      const friendIds = friends.map((f) => f.id).filter((id): id is string => !!id && id !== userId);
+      const delivered = friendIds.length
+        ? await db
+            .selectDistinct({ userId: order.userId })
+            .from(order)
+            .where(and(inArray(order.userId, friendIds), inArray(order.status, ["delivered", "completed"])))
+        : [];
+      const [used] = await db
+        .select({ n: sql<number>`count(*)` })
+        .from(couponTransaction)
+        .where(and(eq(couponTransaction.userId, userId), eq(couponTransaction.code, normalizedCode)));
+      if (delivered.length <= Number(used?.n || 0)) {
+        return {
+          couponInfo: null,
+          error: `${normalizedCode} unlocks when a friend you referred gets their first order delivered`,
+        };
       }
     }
   }
@@ -411,9 +451,11 @@ export async function calculateCheckoutPricingForUser({
     activeCoupon = null;
   }
 
-  // Delivery charge is separate; credits do NOT pay for delivery
+  // Delivery charge is separate; credits do NOT pay for delivery. Free
+  // delivery is decided on the bag before any coupon, so a coupon never
+  // makes an order cost more.
   const productAfterCoupon = roundMoney(Math.max(subtotal - safeDiscount, 0));
-  const shipping = calculateShipping(productAfterCoupon);
+  const shipping = calculateShipping(subtotal);
   const discountedSubtotal = roundMoney(Math.max(productAfterCoupon - rewardsUsed, 0));
   const gst = 0;
   const final = roundMoney(discountedSubtotal + shipping);

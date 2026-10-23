@@ -770,7 +770,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["coupon code", "offer", "discount", "promo", "first order", "koi offer"],
     answer:
-      "Yes. Today's coupon codes show in your bag under **Available offers**, and I can list them for you: tap **See all offers**. New customers get **WELCOME15** on their first order, and buying 2 or more different products unlocks a combo coupon. One coupon per order, and coupons don't combine with Rewards credits.",
+      "Yes. Today's coupon codes show in your bag under **Available offers**, and I can list them for you: tap **See all offers**. New customers get **FIRSTCARE15** on their first order (friends who join with a referral link get **SAATHI20**), **PAIRUP10** works when your bag has 2 or more different products, and bigger bags unlock **STOCKUP80** on ₹799+, **STOCKUP130** on ₹1099+, **STOCKUP200** on ₹1499+ and **STOCKUP300** on ₹1999+. One coupon per order, and coupons don't combine with Rewards credits.",
     links: [{ label: "Join Potent Rewards", href: "/signup" }],
     related: ["ord-rewards-what", "ord-referral-how", "ord-sub-saving"],
   },
@@ -1562,7 +1562,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["refer", "referral", "invite", "friend", "dost", "referral code"],
     answer:
-      "Share your code or link from **Account → Referral Program**, by copy or WhatsApp. Your friend gets a discount on their first order, and you earn credit once their first order of ₹399 or more is delivered. Your friend must be new to Potent Hygiene, and you can earn for up to 5 referrals a month.",
+      "Share your code or link from **Account → Referral Program**, by copy or WhatsApp. Your friend gets **20% off their first order with SAATHI20** plus joining credit, and once their first order of ₹399 or more is delivered you earn credit and **15% off with SHARECARE15**, once for every friend. Your friend must be new to Potent Hygiene, and you can earn for up to 5 referrals a month.",
     links: [{ label: "Referral Program", href: "/dashboard/referral" }],
     related: ["ord-referral-not-credited", "ord-rewards-what", "ord-rewards-cash"],
   },

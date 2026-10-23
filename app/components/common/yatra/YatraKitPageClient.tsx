@@ -41,6 +41,7 @@ import {
   type YatraKitRecipe,
   type YatraMappedProduct,
 } from "@/lib/yatraKit";
+import { OffersForYou } from "@/app/components/common/offers/Offers";
 
 const IconMap: Record<string, React.ComponentType<any>> = {
   plane: Plane,
@@ -1166,6 +1167,8 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                               : "Pick at least 2 products for a kit"
                             : "Add Kit Products to Cart"}
                       </button>
+                      {/* Offers from const/coupons.ts */}
+                      <OffersForYou brand="looway" className="mt-3 w-full" />
                     </div>
                   </div>
                 )}

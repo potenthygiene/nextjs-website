@@ -70,6 +70,7 @@ import ProductFaqSection from "./ProductFaqSection";
 import ImageZoomModal from "./ImageZoomModal";
 import { ovyProductDetailsPage } from "@/const/globalconst";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
+import { OffersForYou } from "@/app/components/common/offers/Offers";
 
 type Props = {
   product: any;
@@ -1998,6 +1999,9 @@ export default function OvyTeenPageClient({
                   </div>
                 </>
               )}
+
+              {/* Offers from const/coupons.ts */}
+              <OffersForYou brand="teen" className="mt-4" />
 
               {/* Trust Badges */}
               <div className="mt-5 flex flex-wrap items-center justify-center gap-4 border-t border-[#1A150F]/5 pt-4 text-[11px] font-medium text-[#1A150F]/70">

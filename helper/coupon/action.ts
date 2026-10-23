@@ -4,9 +4,9 @@
 import { coupon, couponTransaction } from "@/db/schema";
 import { db } from "@/lib/db";
 import { paginate } from "@/lib/pagination";
-import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { STORE_COUPONS } from "@/const/coupons";
+import { RETIRED_CODES, STORE_COUPONS } from "@/const/coupons";
 
 interface GetCouponsOptions {
   page?: number;
@@ -126,37 +126,38 @@ export async function ensureDefaultCoupons() {
       existing.map((c) => String(c.code || "").trim().toUpperCase()),
     );
 
-    // The store coupons from const/coupons.ts (plus the original teen
-    // coupon). Old test coupons are no longer created and are blocked at checkout.
-    const defaults = [
-      {
-        name: "Teen First 10%",
-        code: "TEENFIRST10",
-        description: "10% off your teen essentials order",
-        isDiscountPercentage: true,
-        discountPercentage: 10,
-        discountFixedAmount: null,
-        minimumOrderValue: 0,
-        maximumDiscountAmount: 500,
-        useOnce: false,
-      },
-      ...STORE_COUPONS.map((c) => ({
-        name: c.name,
-        code: c.code,
-        description: c.description,
-        isDiscountPercentage: c.percent !== undefined,
-        discountPercentage: c.percent ?? null,
-        discountFixedAmount: c.percent !== undefined ? null : (c.flat ?? 0),
-        minimumOrderValue: c.minimumOrderValue,
-        maximumDiscountAmount: c.maximumDiscountAmount,
-        useOnce: c.useOnce,
-      })),
-    ];
+    // The 12 store coupons from const/coupons.ts.
+    const defaults = STORE_COUPONS.map((c) => ({
+      name: c.name,
+      code: c.code,
+      description: c.description,
+      isDiscountPercentage: c.percent !== undefined,
+      discountPercentage: c.percent ?? null,
+      discountFixedAmount: c.percent !== undefined ? null : (c.flat ?? 0),
+      minimumOrderValue: c.minimumOrderValue,
+      maximumDiscountAmount: c.maximumDiscountAmount,
+      useOnce: c.useOnce,
+    }));
 
     for (const item of defaults) {
       if (!existingCodes.has(item.code)) {
         await db.insert(coupon).values(item);
       }
+    }
+
+    // Old test coupons and replaced versions: remove the ones never used.
+    // Used ones stay for order history; checkout refuses them anyway.
+    const retired = await db
+      .select({ id: coupon.id, code: coupon.code })
+      .from(coupon)
+      .where(inArray(coupon.code, RETIRED_CODES));
+    for (const row of retired) {
+      const [used] = await db
+        .select({ id: couponTransaction.id })
+        .from(couponTransaction)
+        .where(eq(couponTransaction.couponId, row.id))
+        .limit(1);
+      if (!used) await db.delete(coupon).where(eq(coupon.id, row.id));
     }
     hasEnsuredDefaultCoupons = true;
   } catch (err) {

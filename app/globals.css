@@ -350,3 +350,13 @@
 @media (prefers-reduced-motion: reduce) {
   .chat-sheet, .chat-in { animation: none; }
 }
+
+/* Offers strip and coupon cards */
+@keyframes offerFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.offer-fade { animation: offerFade 0.35s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .offer-fade { animation: none; }
+}

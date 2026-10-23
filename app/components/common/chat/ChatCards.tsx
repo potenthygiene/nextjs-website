@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AlertTriangle, ArrowUpRight, CalendarCheck, Gift, Home, Phone, ShieldCheck, Stethoscope, Tag, Truck } from "lucide-react";
+import { AlertTriangle, ArrowUpRight, CalendarCheck, Check, Gift, Home, Phone, ShieldCheck, Stethoscope, Tag, Truck } from "lucide-react";
 import { PRODUCT_META } from "@/const/chatbot/products";
 import type { ProductKey, SymptomOutcome } from "@/const/chatbot/symptomTypes";
 
@@ -32,6 +32,13 @@ export type LiveCoupon = {
   conditionsHi?: string;
   minDifferentProducts: number;
   firstOrderOnly: boolean;
+  kind?: "welcome" | "friend" | "referrer" | "festival" | "combo" | "tier";
+  minimumOrderValue?: number;
+  percent?: number | null;
+  flat?: number | null;
+  maximumDiscountAmount?: number;
+  pitch?: string;
+  pitchHi?: string;
 };
 
 /** Translates the cards' own text; English when no translation is given. */
@@ -141,7 +148,20 @@ export function PriceDetails({ info, onAdd, t = fill }: { info: LiveProduct; onA
   );
 }
 
-export function CouponList({ coupons, highlight, hindi, t = fill }: { coupons: LiveCoupon[]; highlight?: string; hindi?: boolean; t?: Translate }) {
+export function CouponList({
+  coupons,
+  highlight,
+  hindi,
+  t = fill,
+  onApply,
+}: {
+  coupons: LiveCoupon[];
+  highlight?: string;
+  hindi?: boolean;
+  t?: Translate;
+  /** Opens the bag with this coupon applied. */
+  onApply?: (code: string) => void;
+}) {
   const [copied, setCopied] = useState<string | null>(null);
   if (!coupons.length) return null;
   return (
@@ -161,9 +181,18 @@ export function CouponList({ coupons, highlight, hindi, t = fill }: { coupons: L
           >
             {copied === c.code ? t("Copied") : t("Copy")}
           </button>
+          {onApply && c.kind !== "referrer" && (
+            <button
+              type="button"
+              onClick={() => onApply(c.code)}
+              className="min-h-9 shrink-0 rounded-full bg-gradient-to-r from-[#7E4D77] to-[#AF71A7] px-3 text-[12px] font-semibold text-white active:scale-[0.97]"
+            >
+              {t("Apply")}
+            </button>
+          )}
         </div>
       ))}
-      <p className="border-t border-[#f3e0ec] px-4 py-2 text-[11.5px] text-[#a08a99]">{t("One coupon per order. Tap Apply in your bag, under Available offers.")}</p>
+      <p className="border-t border-[#f3e0ec] px-4 py-2 text-[11.5px] text-[#a08a99]">{t("One coupon per order. Tap Apply and I'll open your bag with it applied.")}</p>
     </div>
   );
 }
@@ -274,3 +303,23 @@ function Section({ title, items, Rich }: { title: string; items: string[]; Rich:
 }
 
 export { rupees };
+
+/** A packing list or step list from a planner or quiz. */
+export function Checklist({ items, title, Rich, t = fill }: { items: string[]; title?: string; Rich: (p: { text: string }) => React.ReactNode; t?: Translate }) {
+  if (!items.length) return null;
+  return (
+    <div className="mt-3 overflow-hidden rounded-2xl border border-[#d9ece6] bg-white">
+      <p className="border-b border-[#e8f3ef] px-4 pb-2 pt-3 text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#0E5C3A]">{t(title || "Your checklist")}</p>
+      <ul className="space-y-2 px-4 py-3 text-[14px] leading-snug text-[#2b3a33]">
+        {items.map((it, i) => (
+          <li key={i} className="flex gap-2.5">
+            <span className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-md bg-[#E9F6EE] text-[#0E5C3A]">
+              <Check className="h-3 w-3" aria-hidden />
+            </span>
+            <span><Rich text={it} /></span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

@@ -1,7 +1,13 @@
 import type { SymptomFlow } from "../symptomTypes";
+import { ADULT_AGES, FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO } from "../applies";
 
 // Life-stage check-ins: first periods, perimenopause and menopause, breast
-// changes, bleeding after birth, and pelvic pain outside a period.
+// changes, bleeding after birth, and pelvic pain outside a period. Each
+// flow says who it fits (showIf, ageOptions); pregnancy, birth, sex and
+// contraception only come up for women 18 to 44 (REPRO in ../applies).
+
+/** Bleeding and period-pattern questions only once periods have started. */
+const NOT_YET = { notAnswers: { stage: ["not-yet", "not-yet-15"] } };
 
 export const FLOWS: SymptomFlow[] = [
   // 1. First period worries
@@ -26,13 +32,18 @@ export const FLOWS: SymptomFlow[] = [
       "15 saal period nahi aaya",
     ],
     needs: { who: true },
+    whoOptions: ["daughter", "me"],
+    ageOptions: ["5-12", "13-17"],
+    showIf: { ages: ["5-12", "13-17"], sex: ["female", "other"], who: ["me", "daughter", "someone"] },
+    notFor:
+      "This check-in is for girls of about 8 to 17 who are getting ready for or starting periods, so it doesn't fit the details you gave: if periods haven't started by 16 or older, please see a doctor, and any bleeding in a child under 8 needs a doctor soon.",
     questions: [
       {
         id: "stage",
         text: "Where are things right now?",
         options: [
           { id: "not-yet", label: "Periods have not started yet" },
-          { id: "not-yet-15", label: "Not started yet, at age 15 or older" },
+          { id: "not-yet-15", label: "Not started yet, at age 15 or older", showIf: { ages: ["13-17"] } },
           { id: "new", label: "The first period came in the last few months" },
           { id: "settling", label: "Periods started within the last 2 years" },
           { id: "settled", label: "Periods started more than 2 years ago" },
@@ -41,6 +52,7 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "puberty",
         text: "When did the first signs of puberty start, like breast buds or underarm and pubic hair?",
+        showIf: { notAnswers: { stage: ["settled"] } },
         options: [
           { id: "before8", label: "Before age 8" },
           { id: "usual", label: "Between 8 and 13" },
@@ -51,8 +63,9 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "bleeding",
         text: "On the heaviest day, how is the bleeding?",
+        showIf: { notAnswers: { stage: ["not-yet", "not-yet-15"] } },
         options: [
-          { id: "na", label: "No period yet" },
+          { id: "na", label: "No period yet", showIf: { answers: { stage: ["not-yet", "not-yet-15"] } } },
           { id: "light", label: "Light or moderate: a pad lasts 3 to 6 hours" },
           { id: "heavy", label: "A pad soaked every 1 to 2 hours, or clots bigger than a ₹5 coin", flag: "amber" },
           { id: "very-heavy", label: "A pad soaked in under an hour, for several hours in a row", flag: "red" },
@@ -64,10 +77,10 @@ export const FLOWS: SymptomFlow[] = [
         text: "Anything else going on? Pick all that fit.",
         multi: true,
         options: [
-          { id: "faint", label: "Feeling faint, dizzy, or very tired and breathless", flag: "red" },
-          { id: "pain", label: "Pain that means missing school, even with heat and rest", flag: "amber" },
-          { id: "long", label: "Bleeding for more than 7 days", flag: "amber" },
-          { id: "irregular", label: "Periods come early, late or skip a month" },
+          { id: "faint", label: "Feeling faint, dizzy, or very tired and breathless", flag: "red", showIf: NOT_YET },
+          { id: "pain", label: "Pain that means missing school, even with heat and rest", flag: "amber", showIf: NOT_YET },
+          { id: "long", label: "Bleeding for more than 7 days", flag: "amber", showIf: NOT_YET },
+          { id: "irregular", label: "Periods come early, late or skip a month", showIf: NOT_YET },
           { id: "nervous", label: "Feeling nervous or shy about periods" },
           { id: "none", label: "None of these" },
         ],
@@ -255,6 +268,10 @@ export const FLOWS: SymptomFlow[] = [
       "raat ko garmi lagti hai",
     ],
     needs: {},
+    ageOptions: MIDLIFE_AGES,
+    showIf: { ...FEMALE, ages: MIDLIFE_AGES },
+    notFor:
+      "Perimenopause usually starts in the 40s, so this check-in doesn't fit the details you gave: if periods are changing or have stopped before 40, the irregular or late period check-ins fit better, and a doctor's check is worthwhile.",
     questions: [
       {
         id: "periods",
@@ -272,11 +289,12 @@ export const FLOWS: SymptomFlow[] = [
         text: "Have you noticed any of these? Pick all that fit.",
         multi: true,
         options: [
-          { id: "after12", label: "Any bleeding or spotting after 12 months without a period", flag: "red" },
+          { id: "after12", label: "Any bleeding or spotting after 12 months without a period", flag: "red", showIf: { answers: { periods: ["stopped", "unsure"] } } },
           { id: "faint", label: "Heavy bleeding with feeling faint, dizzy or breathless", flag: "red" },
-          { id: "heavy", label: "Soaking a pad every 1 to 2 hours, or clots bigger than a ₹5 coin", flag: "amber" },
-          { id: "between", label: "Bleeding between periods or after sex", flag: "amber" },
-          { id: "short", label: "Periods less than 21 days apart, or lasting more than 7 days", flag: "amber" },
+          { id: "heavy", label: "Soaking a pad every 1 to 2 hours, or clots bigger than a ₹5 coin", flag: "amber", showIf: { notAnswers: { periods: ["stopped"] } } },
+          { id: "between", label: "Bleeding between periods", flag: "amber", showIf: { notAnswers: { periods: ["stopped"] } } },
+          { id: "after-sex", label: "Bleeding after sex", flag: "amber", showIf: REPRO },
+          { id: "short", label: "Periods less than 21 days apart, or lasting more than 7 days", flag: "amber", showIf: { notAnswers: { periods: ["stopped", "recent-stop"] } } },
           { id: "none", label: "None of these" },
         ],
       },
@@ -392,31 +410,6 @@ export const FLOWS: SymptomFlow[] = [
         readMore: [{ label: "Perimenopause symptoms and when to worry", href: "/blog/perimenopause-symptoms-early-signs" }],
       },
       {
-        id: "mp-under40",
-        match: {
-          answers: { periods: ["changing", "recent-stop", "stopped"] },
-          ages: ["18-29", "30-39"],
-        },
-        urgency: "checkup",
-        title: "Periods changing or stopping before 40 is worth a check",
-        summary:
-          "Most Indian women reach menopause somewhere between about 42 and 49, so big changes before 40 deserve a proper look rather than being put down to early menopause. A doctor can check your hormones and talk about bone and heart health.",
-        oftenLinkedTo: [
-          "Stress, weight change or very intense exercise",
-          "Thyroid changes or PCOS",
-          "Pregnancy, so a home test is worth doing first",
-          "Less often, the ovaries slowing down early, which a doctor can check",
-        ],
-        whatHelps: [
-          "Do a home pregnancy test if there's any chance",
-          "Log your periods in the free [period tracker](/period-log)",
-          "Note any other changes, such as hot flushes, or skin and hair changes",
-        ],
-        seeDoctor:
-          "Book a routine visit; periods stopping early can affect bones and heart over time, so it's worth checking.",
-        products: ["period-tracker"],
-      },
-      {
         id: "mp-impact",
         match: { answers: { impact: ["lot"] } },
         urgency: "checkup",
@@ -440,7 +433,30 @@ export const FLOWS: SymptomFlow[] = [
         readMore: [{ label: "Perimenopause symptoms and when to worry", href: "/blog/perimenopause-symptoms-early-signs" }],
       },
       {
-        id: "mp-common",
+        id: "mp-after",
+        match: { answers: { periods: ["stopped"] } },
+        urgency: "selfcare",
+        title: "These sound like common changes after menopause",
+        summary:
+          "Once periods have stopped for a year, hot flushes, poor sleep, aches and dryness can carry on for a few years, and many women don't connect them to menopause. Simple changes help, and a doctor can help more if you need it.",
+        oftenLinkedTo: [
+          "Lower oestrogen after menopause, which can bring flushes, joint aches and vaginal dryness",
+          "Broken sleep from night sweats, which makes mood and aches feel worse",
+          "Bones getting thinner after menopause, which is worth talking to a doctor about",
+        ],
+        whatHelps: [
+          "For flushes: light cotton, a fan, a cool room, and fewer triggers like spicy food, very hot drinks, caffeine and alcohol",
+          "For bones and joints: daily walking or yoga, strength exercise two or three times a week, and calcium-rich food like milk, curd, paneer and ragi",
+          "For dryness or stinging when peeing, tell a doctor: there are simple, effective treatments",
+          "Remember that any bleeding at all after a year without periods needs a doctor",
+        ],
+        seeDoctor:
+          "See a doctor if symptoms affect your daily life, you notice palpitations, or there is any bleeding at all.",
+        readMore: [{ label: "Perimenopause symptoms and when to worry", href: "/blog/perimenopause-symptoms-early-signs" }],
+      },
+      {
+        id: "mp-common-early",
+        match: { ages: ["40-44"] },
         urgency: "selfcare",
         title: "These sound like common perimenopause changes",
         summary:
@@ -455,6 +471,28 @@ export const FLOWS: SymptomFlow[] = [
           "For sleep: a regular bedtime and a cool, dark room",
           "For aches and mood: daily walking or yoga, plus strength exercise two or three times a week",
           "Track periods in the free [period tracker](/period-log); pregnancy is still possible until 12 months without a period, so keep using contraception",
+        ],
+        seeDoctor:
+          "See a doctor if symptoms affect your daily life, you notice palpitations, or there is any bleeding after 12 months without a period.",
+        products: ["period-tracker", "ovy-pads"],
+        readMore: [{ label: "Perimenopause symptoms and when to worry", href: "/blog/perimenopause-symptoms-early-signs" }],
+      },
+      {
+        id: "mp-common",
+        urgency: "selfcare",
+        title: "These sound like common perimenopause changes",
+        summary:
+          "Perimenopause often starts in the 40s, and it is much more than periods changing: sleep, mood, memory and joints are all commonly affected, and many women don't connect them. Simple changes help, and a doctor can help more if you need it.",
+        oftenLinkedTo: [
+          "Hormone levels rising and falling as the ovaries slow down",
+          "Hot flushes and night sweats breaking sleep",
+          "Lower oestrogen, which can bring joint aches and vaginal dryness",
+        ],
+        whatHelps: [
+          "For flushes: light cotton, a fan, a cool room, and fewer triggers like spicy food, very hot drinks, caffeine and alcohol",
+          "For sleep: a regular bedtime and a cool, dark room",
+          "For aches and mood: daily walking or yoga, plus strength exercise two or three times a week",
+          "Track periods in the free [period tracker](/period-log) to spot patterns and show your doctor",
         ],
         seeDoctor:
           "See a doctor if symptoms affect your daily life, you notice palpitations, or there is any bleeding after 12 months without a period.",
@@ -491,6 +529,10 @@ export const FLOWS: SymptomFlow[] = [
       "nipple se paani aa raha hai",
     ],
     needs: {},
+    ageOptions: PERIOD_AGES,
+    showIf: { ...FEMALE, ages: PERIOD_AGES },
+    notFor:
+      "This check-in is written for girls and women, so it doesn't fit the details you gave: a lump, swelling or pain in the chest or breast of a boy, a man or a young child is worth showing a doctor, and it's often harmless.",
     questions: [
       {
         id: "concern",
@@ -498,6 +540,7 @@ export const FLOWS: SymptomFlow[] = [
         options: [
           { id: "pain", label: "Pain or tenderness, but no lump" },
           { id: "lumpy", label: "A general lumpy feel, similar in both breasts" },
+          { id: "bud", label: "A small, tender lump just under the nipple as breasts start to grow", showIf: { ages: ["5-12", "13-17"] } },
           { id: "lump", label: "A new lump or thickening in one place", flag: "amber" },
           { id: "discharge", label: "Nipple discharge" },
           { id: "change", label: "A change in the skin, the nipple or the shape", flag: "amber" },
@@ -509,7 +552,7 @@ export const FLOWS: SymptomFlow[] = [
         options: [
           { id: "cyclical", label: "Worse in the 1 to 2 weeks before my period, better after" },
           { id: "constant", label: "No, it stays the same through the month" },
-          { id: "feeding", label: "I'm pregnant or breastfeeding" },
+          { id: "feeding", label: "I'm pregnant or breastfeeding", showIf: REPRO },
           { id: "noperiods", label: "I don't have periods now" },
           { id: "unsure", label: "Not sure" },
         ],
@@ -530,6 +573,7 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "family",
         text: "Has your mother, sister or daughter had breast or ovarian cancer?",
+        showIf: { ages: ["18-29", "30-39", "40-44", "45-49", "50+"] },
         options: [
           { id: "yes", label: "Yes" },
           { id: "no", label: "No" },
@@ -538,6 +582,27 @@ export const FLOWS: SymptomFlow[] = [
       },
     ],
     outcomes: [
+      {
+        id: "br-infection-np",
+        match: { flag: "red", ages: NO_PREG_AGES },
+        urgency: "soon",
+        title: "A red, hot, sore area with fever needs a doctor today",
+        summary:
+          "A hot, red, swollen patch with fever or chills is often linked to an infection, and it usually settles quickly with the right treatment. **Please see a doctor today.**",
+        oftenLinkedTo: [
+          "A breast infection",
+          "Less often, a collection of pus (an abscess) that a doctor needs to treat",
+          "An infected hair follicle or cyst in the skin",
+        ],
+        whatHelps: [
+          "A cold compress for 10 minutes at a time can ease the pain",
+          "Rest, drink plenty of fluids and wear a soft, supportive bra",
+          "Don't squeeze or press the area",
+          "A doctor or pharmacist can advise on pain relief that's right for you",
+        ],
+        seeDoctor:
+          "See a doctor today, and go to emergency if you feel very unwell or confused, or the redness spreads fast.",
+      },
       {
         id: "br-infection",
         match: { flag: "red" },
@@ -581,6 +646,28 @@ export const FLOWS: SymptomFlow[] = [
         readMore: [{ label: "Breast self-exam at home", href: "/blog/breast-self-exam-at-home-guide" }],
       },
       {
+        id: "br-check-young",
+        match: { flag: "amber", ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "A new breast change is worth showing a doctor",
+        summary:
+          "In girls and teens, breast lumps are almost always harmless: often a breast bud, a cyst or a fibroadenoma. Still, a new lump, discharge with blood, or a skin or nipple change should be checked by a doctor, who may suggest an ultrasound.",
+        oftenLinkedTo: [
+          "A breast bud, if breasts are just starting to grow",
+          "A fibroadenoma, a harmless lump that's common in teens and young women",
+          "A small cyst or an infected gland",
+        ],
+        whatHelps: [
+          "Book a visit with a doctor or gynaecologist this week: a parent or trusted adult can go too",
+          "Note when it was first noticed and whether it changes with periods",
+          "You can ask for a female doctor",
+          "Try not to keep squeezing or prodding the area to check it",
+        ],
+        seeDoctor:
+          "See a doctor within the next week or two, and the same day if the area becomes red, hot and painful with a fever.",
+        readMore: [{ label: "Breast self-exam at home", href: "/blog/breast-self-exam-at-home-guide" }],
+      },
+      {
         id: "br-check",
         match: { flag: "amber" },
         urgency: "soon",
@@ -601,6 +688,50 @@ export const FLOWS: SymptomFlow[] = [
         ],
         seeDoctor:
           "See a doctor within the next few days; they will examine you and may suggest an ultrasound or mammogram, which is routine.",
+        readMore: [{ label: "Breast self-exam at home", href: "/blog/breast-self-exam-at-home-guide" }],
+      },
+      {
+        id: "br-bud",
+        match: { answers: { concern: ["bud"] } },
+        urgency: "selfcare",
+        title: "A tender lump under the nipple is often a breast bud",
+        summary:
+          "When breasts start to develop, a small, firm, tender lump often appears just under one or both nipples. It's called a breast bud, it's a normal first sign of puberty, and one side often starts a few months before the other.",
+        oftenLinkedTo: [
+          "Breast buds, which usually appear between about 8 and 13",
+          "Normal growth, with one side often a few months ahead",
+          "Tenderness that comes and goes as breasts grow",
+        ],
+        whatHelps: [
+          "A soft cotton crop top or starter bra can make it more comfortable",
+          "Keep it calm and matter of fact: her body is doing exactly what it should",
+          "Periods usually start about 2 years after breast buds, so it's a good time to get ready",
+          "Note when it was first noticed",
+        ],
+        seeDoctor:
+          "See a doctor if breast buds appear before age 8, or the lump is hard, red, hot or growing fast, or there is nipple discharge.",
+        products: ["ovy-teen"],
+      },
+      {
+        id: "br-discharge-np",
+        match: { answers: { concern: ["discharge"] }, ages: NO_PREG_AGES },
+        urgency: "checkup",
+        title: "Nipple discharge is worth a routine check",
+        summary:
+          "Clear or milky discharge from the nipple is often harmless, but it's always worth getting checked at a routine visit, and sooner if there is blood.",
+        oftenLinkedTo: [
+          "Changes in the milk ducts that come with age or hormones",
+          "Some medicines",
+          "Hormone changes that a doctor can check with a blood test",
+          "A small growth in a milk duct, which is usually harmless",
+        ],
+        whatHelps: [
+          "Note the colour, whether it comes from one or both sides, and whether it comes on its own",
+          "Avoid squeezing the nipple to check, as that can keep it going",
+          "Wear a soft, comfortable bra",
+        ],
+        seeDoctor:
+          "Book a routine visit, and see a doctor sooner if there is blood, a lump or a skin change.",
         readMore: [{ label: "Breast self-exam at home", href: "/blog/breast-self-exam-at-home-guide" }],
       },
       {
@@ -656,7 +787,6 @@ export const FLOWS: SymptomFlow[] = [
         oftenLinkedTo: [
           "Normal hormone changes across the menstrual cycle",
           "The natural lumpiness of breast tissue, which is more noticeable before a period",
-          "Hormonal contraception, which can make breasts tender",
         ],
         whatHelps: [
           "Wear a well-fitted, supportive bra in the day and a soft one to sleep in",
@@ -678,13 +808,12 @@ export const FLOWS: SymptomFlow[] = [
         oftenLinkedTo: [
           "Strain in the chest muscles, neck or back, felt in the breast",
           "A bra that doesn't fit well",
-          "Pregnancy, or hormone changes around menopause",
-          "Some medicines, including hormonal contraception",
+          "Hormone changes, such as around periods or menopause",
+          "Some medicines",
         ],
         whatHelps: [
           "Try a well-fitted, supportive bra, and a soft one at night",
           "Ease off heavy lifting or new workouts for a few days",
-          "Take a home pregnancy test if there's any chance",
           "Get to know your normal with a [breast self-exam](/blog/breast-self-exam-at-home-guide)",
         ],
         seeDoctor:
@@ -720,7 +849,13 @@ export const FLOWS: SymptomFlow[] = [
       "delivery ke baad period kab aayega",
       "bachcha hone ke baad periods",
     ],
-    needs: {},
+    // Also for a parent asking about a grown-up daughter who has just had a baby.
+    needs: { who: true },
+    whoOptions: ["me", "daughter", "someone"],
+    ageOptions: ADULT_AGES,
+    showIf: { ages: ADULT_AGES, sex: ["female", "other"], who: ["me", "daughter", "someone"] },
+    notFor:
+      "This check-in doesn't fit the details you gave, so let's try another one: the heavy bleeding or bleeding between periods check-ins may help, and if bleeding is very heavy or there is faintness, call 112.",
     questions: [
       {
         id: "weeks",
@@ -947,6 +1082,10 @@ export const FLOWS: SymptomFlow[] = [
       "peshab mein jalan aur pet dard",
     ],
     needs: {},
+    ageOptions: PERIOD_AGES,
+    showIf: { ...FEMALE, ages: PERIOD_AGES },
+    notFor:
+      "This check-in is written for girls and women, so it doesn't fit the details you gave: for tummy pain in a young child, a boy or a man, see a doctor today if it's severe, getting worse, or comes with fever or vomiting, and call 112 in an emergency.",
     questions: [
       {
         id: "onset",
@@ -973,6 +1112,7 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "pregnant",
         text: "Could you be pregnant?",
+        showIf: REPRO,
         options: [
           { id: "yes", label: "Yes, I'm pregnant or had a positive test", flag: "red" },
           { id: "maybe", label: "Maybe: my period is late, or I've had sex without contraception", flag: "red" },
@@ -995,6 +1135,26 @@ export const FLOWS: SymptomFlow[] = [
     ],
     outcomes: [
       {
+        id: "pv-emergency-np",
+        match: { answers: { onset: ["sudden", "worsening"] }, ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "Severe or worsening pain needs emergency care now",
+        summary:
+          "Pain that comes on suddenly and severely, or keeps getting worse over a few hours, needs checking at a hospital now. **Please call 112 or go to the nearest emergency department, and don't drive yourself.**",
+        oftenLinkedTo: [
+          "An ovary twisting, or a cyst bursting, which often causes sudden pain on one side",
+          "Appendicitis, which often starts near the belly button and moves to the lower right",
+          "A kidney stone or a severe infection",
+        ],
+        whatHelps: [
+          "Call 112, or ask someone to take you to hospital now",
+          "Tell the team when the last period was",
+          "Lie in whatever position hurts least while you wait",
+        ],
+        seeDoctor:
+          "Now: severe or worsening pain is always one for the emergency department.",
+      },
+      {
         id: "pv-emergency",
         match: { answers: { onset: ["sudden", "worsening"] } },
         urgency: "emergency",
@@ -1013,6 +1173,26 @@ export const FLOWS: SymptomFlow[] = [
           "Lie in whatever position hurts least while you wait",
         ],
         seeDoctor: "Now: severe or worsening pain is always one for the emergency department.",
+      },
+      {
+        id: "pv-faint-np",
+        match: { answers: { signs: ["faint"] }, ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "Pain with fainting or shoulder tip pain needs care now",
+        summary:
+          "Feeling faint or dizzy with tummy pain, or an odd pain where the shoulder meets the arm, can be a sign of bleeding inside the tummy. **Please call 112 or go to the nearest emergency department now.**",
+        oftenLinkedTo: [
+          "A cyst that has burst and is bleeding",
+          "Heavy blood loss from another cause",
+          "A severe infection or another tummy problem a doctor needs to find",
+        ],
+        whatHelps: [
+          "Call 112 now, and don't drive yourself",
+          "Lie down with your legs raised while you wait",
+          "Tell the team when the last period was",
+        ],
+        seeDoctor:
+          "Now: this needs emergency care.",
       },
       {
         id: "pv-faint",
@@ -1055,6 +1235,27 @@ export const FLOWS: SymptomFlow[] = [
           "Today: any pelvic pain with a possible or confirmed pregnancy should be checked the same day.",
       },
       {
+        id: "pv-today-young",
+        match: { flag: "red", ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "This kind of pain needs a doctor today",
+        summary:
+          "Tummy pain with fever, chills or vomiting, or pain that has moved to the lower right side, needs a doctor today. In children and teens this is often linked to appendicitis or an infection, which are very treatable when caught early.",
+        oftenLinkedTo: [
+          "Appendicitis, especially pain that has moved to the lower right",
+          "A urine or kidney infection, especially with back or side pain",
+          "A stomach infection",
+          "An ovarian cyst",
+        ],
+        whatHelps: [
+          "See a doctor today, or go to emergency if it's late at night",
+          "Small sips of water and rest, and no food until a doctor has checked if appendicitis is possible",
+          "Go to emergency straight away if the pain gets severe, or there is fainting or confusion",
+        ],
+        seeDoctor:
+          "Today: fever with tummy pain, or pain that has moved to the lower right, needs prompt checking.",
+      },
+      {
         id: "pv-today",
         match: { flag: "red" },
         urgency: "soon",
@@ -1076,6 +1277,28 @@ export const FLOWS: SymptomFlow[] = [
           "Today: fever with pelvic pain, or pain that has moved to the lower right, needs prompt checking.",
       },
       {
+        id: "pv-amber-young",
+        match: { flag: "amber", ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "Worth seeing a doctor in the next day or two",
+        summary:
+          "Tummy pain with burning when peeing, or with unusual bleeding or discharge, is often linked to a urine infection or irritation, which is common and easy to treat once a doctor has checked.",
+        oftenLinkedTo: [
+          "A urine infection (UTI)",
+          "Constipation, which often causes lower tummy pain in children and teens",
+          "Irritation or an infection that a doctor can check with a simple test",
+          "Hormones settling in the first years of periods",
+        ],
+        whatHelps: [
+          "Drink plenty of water and don't hold pee in, even at school",
+          "Wash the outside with plain warm water only, with no scented soaps or washes",
+          "A parent or trusted adult can go along to the doctor",
+          "Go the same day if a fever or back pain starts, or the pain gets worse",
+        ],
+        seeDoctor:
+          "See a doctor within a day or two for a urine test, and sooner with fever or back pain.",
+      },
+      {
         id: "pv-amber",
         match: { flag: "amber" },
         urgency: "soon",
@@ -1084,7 +1307,7 @@ export const FLOWS: SymptomFlow[] = [
           "Pelvic pain with burning when you pee, or with unusual bleeding or discharge, is often linked to an infection. These are common and easily treated, but each needs the right treatment from a doctor, and guessing rarely helps.",
         oftenLinkedTo: [
           "A urine infection (UTI)",
-          "A vaginal infection, or a sexually transmitted infection",
+          "A vaginal infection, or another infection a swab can check",
           "Pelvic inflammatory disease, which can follow an infection",
           "Bleeding linked to hormones, fibroids or polyps",
         ],
@@ -1116,7 +1339,7 @@ export const FLOWS: SymptomFlow[] = [
           "Long-term bladder irritation",
         ],
         whatHelps: [
-          "Keep a pain diary: when it comes, where, and whether it links to your cycle, food, peeing or sex",
+          "Keep a pain diary: when it comes, where, and whether it links to your cycle, food or peeing",
           "Log periods in the free [period tracker](/period-log) to spot any pattern",
           "Heat on the lower tummy and gentle movement often ease it",
           "If you're over 40 and bloating or feeling full quickly keeps happening, mention it to your doctor",

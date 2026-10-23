@@ -1,7 +1,11 @@
 import type { SymptomFlow } from "../symptomTypes";
+import { FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO } from "../applies";
 
 // Intimate health check-ins: discharge, itching, burning when peeing, PMS and
-// pad rash. Guidance only, never a diagnosis.
+// pad rash. Guidance only, never a diagnosis. Pregnancy, sex and
+// contraception only come up for women 18 to 44 asking for themselves or
+// someone else (REPRO in ../applies); children and women 45+ get their own
+// outcomes where the general wording wouldn't fit.
 
 export const FLOWS: SymptomFlow[] = [
   // 1. Changes in vaginal discharge
@@ -26,6 +30,9 @@ export const FLOWS: SymptomFlow[] = [
       "discharge badal gaya",
     ],
     needs: {},
+    showIf: FEMALE,
+    notFor:
+      "This check-in is about vaginal discharge, so it doesn't fit the details you gave: for a boy or man with discharge, pain or sores, please see a doctor, as it usually needs a simple test.",
     questions: [
       {
         id: "change",
@@ -43,7 +50,7 @@ export const FLOWS: SymptomFlow[] = [
         id: "when",
         text: "When did you notice it?",
         options: [
-          { id: "cycle", label: "It comes and goes with my cycle" },
+          { id: "cycle", label: "It comes and goes with my cycle", showIf: { ages: PERIOD_AGES } },
           { id: "days", label: "In the last few days" },
           { id: "week", label: "It has lasted more than a week" },
           { id: "product", label: "After a new soap, wash, wipe, pad or liner" },
@@ -58,13 +65,15 @@ export const FLOWS: SymptomFlow[] = [
           { id: "pain", label: "Pain low in my tummy or pelvis", flag: "amber" },
           { id: "sores", label: "Sores, blisters or lumps", flag: "amber" },
           { id: "fever", label: "Fever along with tummy or pelvic pain", flag: "red" },
-          { id: "bleed", label: "Bleeding after sex, or any bleeding after menopause", flag: "red" },
+          { id: "bleed", label: "Bleeding after sex", flag: "red", showIf: REPRO },
+          { id: "bleed-meno", label: "Any bleeding after menopause", flag: "red", showIf: { ages: MIDLIFE_AGES } },
           { id: "none", label: "None of these" },
         ],
       },
       {
         id: "preg",
         text: "Could you be pregnant?",
+        showIf: REPRO,
         options: [
           { id: "yes", label: "Yes, or I'm pregnant" },
           { id: "fluid", label: "I'm pregnant and it's watery, a gush or a trickle", flag: "red" },
@@ -74,6 +83,25 @@ export const FLOWS: SymptomFlow[] = [
       },
     ],
     outcomes: [
+      {
+        id: "discharge-red-np",
+        match: { flag: "red", ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "Something you mentioned needs a doctor today",
+        summary:
+          "Thank you for telling me. Fever with tummy or pelvic pain, or bleeding that isn't a period, are signs to get checked **today**, not waited out. If the pain is severe or there is faintness, call **112** or go to the nearest emergency.",
+        oftenLinkedTo: [
+          "An infection that has spread higher up, which needs prompt treatment",
+          "Bleeding that isn't a period, which always deserves an examination",
+        ],
+        whatHelps: [
+          "Contact a doctor or gynaecologist today",
+          "Note when it started and what changed, to tell the doctor",
+          "Don't put creams, washes or home remedies on the area before the visit",
+        ],
+        seeDoctor:
+          "Today: these signs are usually something treatable, but they are never ones to sit on.",
+      },
       {
         id: "discharge-red",
         match: { flag: "red" },
@@ -94,6 +122,29 @@ export const FLOWS: SymptomFlow[] = [
         ],
         seeDoctor:
           "Today: these signs are usually something treatable, but they are never ones to sit on.",
+      },
+      {
+        id: "discharge-amber-np",
+        match: { flag: "amber", ages: NO_PREG_AGES },
+        urgency: "soon",
+        title: "This change is worth a doctor's look in the next day or two",
+        summary:
+          "Blood in discharge outside a period, tummy or pelvic pain, or sores and blisters are signs to get checked soon. Most causes are common and treatable, but they need the right check, not a guess.",
+        oftenLinkedTo: [
+          "Infections that a simple swab or urine test can check",
+          "Irritation or small injuries to the skin",
+          "Skin conditions of the vulva, which respond well to treatment",
+          "Hormone changes, such as in the first years of periods or after menopause",
+        ],
+        whatHelps: [
+          "Book a visit with a doctor or gynaecologist in the next day or two",
+          "Wash the outside only, with plain warm water. No soap, antiseptic or douching",
+          "Wear loose cotton underwear",
+          "For a child or teen, a parent or trusted adult can go along, and you can ask for a female doctor",
+        ],
+        seeDoctor:
+          "Within 1 to 2 days, and sooner if a fever, severe pain or heavier bleeding starts.",
+        readMore: [{ label: "White discharge: normal or not?", href: "/blog/white-discharge-normal-or-not" }],
       },
       {
         id: "discharge-amber",
@@ -140,6 +191,28 @@ export const FLOWS: SymptomFlow[] = [
         products: ["ovy-liners"],
       },
       {
+        id: "discharge-child",
+        match: { ages: ["u5"] },
+        urgency: "checkup",
+        title: "Discharge in a young child is worth showing a doctor",
+        summary:
+          "Before puberty, discharge isn't expected, so discharge, redness or soreness in a young child is worth a gentle check by a doctor. It's usually something simple, like irritation from soap or a mild infection.",
+        oftenLinkedTo: [
+          "Irritation from soap, bubble bath, wipes or tight clothes",
+          "Wet or soiled nappies or underwear left on for long",
+          "A mild infection, which a doctor can check easily",
+          "Sometimes a small object, such as a bit of tissue, which a doctor can gently check for",
+        ],
+        whatHelps: [
+          "Wash the outside with plain warm water only and pat dry",
+          "Loose cotton underwear changed daily, and frequent nappy changes",
+          "Wipe front to back every time",
+          "Skip bubble bath and scented soaps",
+        ],
+        seeDoctor:
+          "Book a visit in the next few days, and sooner if there is blood, a bad smell, pain or a fever.",
+      },
+      {
         id: "discharge-young",
         match: { ages: ["u13"], answers: { change: ["colour", "thick", "smell", "unsure"] } },
         urgency: "checkup",
@@ -159,6 +232,51 @@ export const FLOWS: SymptomFlow[] = [
         ],
         seeDoctor:
           "Book a visit in the next few days, and sooner if there is pain, blood or a fever.",
+      },
+      {
+        id: "discharge-teen",
+        match: { ages: ["13-17"], answers: { change: ["colour", "thick", "smell", "unsure"] } },
+        urgency: "checkup",
+        title: "Discharge that has changed is worth a check",
+        summary:
+          "Some white or clear discharge is normal and healthy in the teen years. When it changes colour, turns lumpy, smells strong or itches, a doctor can tell what's going on with a quick check, and it's usually easy to treat.",
+        oftenLinkedTo: [
+          "Thrush, a yeast overgrowth, often thick and white with itching",
+          "An imbalance of the vagina's own bacteria, often thin and grey with a fishy smell",
+          "Irritation from scented soap, washes, wipes or tight clothes",
+        ],
+        whatHelps: [
+          "Book a visit with a doctor this week: a parent or trusted adult can go too",
+          "Stop any scented soap, intimate wash, wipe or spray",
+          "Wash the outside only, with plain warm water",
+          "If a liner helps you feel fresh, change it every 3 to 4 hours",
+        ],
+        seeDoctor:
+          "This week, because the right treatment depends on the cause, and that needs a doctor.",
+        products: ["ovy-liners"],
+        readMore: [{ label: "White discharge: normal or not?", href: "/blog/white-discharge-normal-or-not" }],
+      },
+      {
+        id: "discharge-midlife",
+        match: { ages: ["45-49", "50+"], answers: { change: ["colour", "thick", "smell", "unsure"] } },
+        urgency: "checkup",
+        title: "Discharge that has changed in your late 40s or 50s",
+        summary:
+          "Changes in discharge are common at this age and usually easy to treat. Around and after menopause, lower hormone levels can also make the skin thinner and drier, which changes discharge and makes infection and irritation more likely. A quick check finds the cause.",
+        oftenLinkedTo: [
+          "Thrush, or an imbalance of the vagina's own bacteria",
+          "Thinning and dryness of the vaginal skin around and after menopause",
+          "Scented washes, wipes or douching upsetting the natural balance",
+        ],
+        whatHelps: [
+          "Book a visit with a doctor or gynaecologist this week",
+          "Stop any scented soap, intimate wash, wipe or spray",
+          "Wash the outside only, with plain warm water",
+          "Any blood in discharge after menopause needs a doctor within a few days",
+        ],
+        seeDoctor:
+          "This week, because the right treatment depends on the cause.",
+        products: ["ovy-liners"],
       },
       {
         id: "discharge-infection-pattern",
@@ -209,6 +327,51 @@ export const FLOWS: SymptomFlow[] = [
         readMore: [
           { label: "White discharge: normal or not?", href: "/blog/white-discharge-normal-or-not" },
         ],
+      },
+      {
+        id: "discharge-normal-young",
+        match: { ages: ["u13", "13-17"] },
+        urgency: "selfcare",
+        title: "This sounds like everyday discharge",
+        summary:
+          "Discharge is normal and healthy: it's how the body keeps itself clean. In girls, white or clear discharge often starts a few months to a year before the first period, and once periods start it changes through the month.",
+        oftenLinkedTo: [
+          "A sign that periods may start within a year or so, if they haven't yet",
+          "Normal changes through the cycle once periods have started",
+          "Sweat, heat or tight clothes making it feel like more",
+        ],
+        whatHelps: [
+          "Wash the outside only, with plain warm water. The vagina cleans itself",
+          "If it started after a new soap, wash or product, stop that product",
+          "Cotton underwear, and a liner changed every 3 to 4 hours for a fresh feeling",
+          "Note changes in the free [period tracker](/period-log) to learn the pattern",
+        ],
+        seeDoctor:
+          "If it starts to itch, smell strong, change colour or comes with pain, book a visit.",
+        products: ["ovy-liners", "ovy-teen"],
+        readMore: [{ label: "White discharge: normal or not?", href: "/blog/white-discharge-normal-or-not" }],
+      },
+      {
+        id: "discharge-normal-midlife",
+        match: { ages: ["45-49", "50+"] },
+        urgency: "selfcare",
+        title: "This sounds like everyday discharge",
+        summary:
+          "Discharge is normal and healthy at every age. In the years around menopause, many women notice less discharge or more dryness, and some notice changes from month to month while periods are changing.",
+        oftenLinkedTo: [
+          "Normal changes while periods are changing",
+          "Lower hormone levels around and after menopause, which can mean less discharge and more dryness",
+          "Sweat, heat or tight clothes",
+        ],
+        whatHelps: [
+          "Wash the outside only, with plain warm water",
+          "If it started after a new soap, wash or product, stop that product",
+          "Cotton underwear, and a liner changed every 3 to 4 hours if you'd like to feel fresh",
+          "Mention dryness or soreness to a doctor: there are simple treatments",
+        ],
+        seeDoctor:
+          "If it starts to itch, smell strong, change colour, shows any blood or comes with pain, book a visit.",
+        products: ["ovy-liners"],
       },
       {
         id: "discharge-normal",
@@ -265,6 +428,9 @@ export const FLOWS: SymptomFlow[] = [
       "neeche jalan ho rahi hai",
     ],
     needs: {},
+    showIf: FEMALE,
+    notFor:
+      "This check-in is written for girls and women, so it doesn't fit the details you gave: for itching or soreness in a boy or man, a pharmacist or doctor can help, and see a doctor soon for sores, blisters or a fever.",
     questions: [
       {
         id: "where",
@@ -293,10 +459,12 @@ export const FLOWS: SymptomFlow[] = [
         multi: true,
         options: [
           { id: "product", label: "A new soap, intimate wash, wipe or detergent" },
-          { id: "pad", label: "Pads or liners, or wearing one for long" },
-          { id: "shave", label: "Shaving, waxing or hair removal cream" },
+          { id: "pad", label: "Pads or liners, or wearing one for long", showIf: { ages: PERIOD_AGES } },
+          { id: "shave", label: "Shaving, waxing or hair removal cream", showIf: { ages: ["13-17", "18-29", "30-39", "40-44", "45-49", "50+"] } },
           { id: "heat", label: "Heat, sweat, tight clothes or travel" },
-          { id: "period", label: "It started around my period" },
+          { id: "period", label: "It started around my period", showIf: { ages: PERIOD_AGES } },
+          { id: "nappy", label: "Nappies, or wet or soiled underwear", showIf: { ages: ["u5"] } },
+          { id: "night", label: "Worse at night, or itching around the bottom too", showIf: { ages: ["u5", "5-12"] } },
           { id: "none", label: "None of these" },
         ],
       },
@@ -309,13 +477,15 @@ export const FLOWS: SymptomFlow[] = [
           { id: "sores", label: "Sores, blisters or ulcers", flag: "amber" },
           { id: "patches", label: "White, thin or shiny patches of skin", flag: "amber" },
           { id: "fever", label: "Fever or pain low in my tummy", flag: "red" },
-          { id: "bleed", label: "Bleeding after sex, between periods or after menopause", flag: "red" },
+          { id: "bleed", label: "Bleeding after sex", flag: "red", showIf: REPRO },
+          { id: "bleed-other", label: "Any bleeding that isn't a normal period", flag: "red" },
           { id: "none", label: "None of these" },
         ],
       },
       {
         id: "preg",
         text: "Could you be pregnant?",
+        showIf: REPRO,
         options: [
           { id: "yes", label: "Yes, or I'm pregnant", flag: "amber" },
           { id: "unsure", label: "Not sure" },
@@ -324,6 +494,26 @@ export const FLOWS: SymptomFlow[] = [
       },
     ],
     outcomes: [
+      {
+        id: "itching-red-young",
+        match: { flag: "red", ages: ["u13"] },
+        urgency: "emergency",
+        title: "Itching with a fever, tummy pain or bleeding needs a doctor today",
+        summary:
+          "In a child, itching that comes with a fever, tummy pain or any bleeding should be checked by a doctor **today**. If the child is very unwell, floppy or in severe pain, call **112** or go to the nearest emergency.",
+        oftenLinkedTo: [
+          "An infection that needs prompt treatment",
+          "A skin injury or skin condition that needs a proper look",
+          "Bleeding in a young girl, which always deserves an examination",
+        ],
+        whatHelps: [
+          "Contact a doctor today, and go with her",
+          "Don't put creams, powders or home remedies on the area before the visit",
+          "Loose cotton underwear, and keep the area clean and dry",
+        ],
+        seeDoctor:
+          "Today: it's usually something treatable, but not something to sit on.",
+      },
       {
         id: "itching-red",
         match: { flag: "red" },
@@ -342,6 +532,27 @@ export const FLOWS: SymptomFlow[] = [
         ],
         seeDoctor:
           "Today: it's usually something treatable, but not something to sit on.",
+      },
+      {
+        id: "itching-amber-np",
+        match: { flag: "amber", ages: NO_PREG_AGES },
+        urgency: "soon",
+        title: "This itch is worth a doctor's look in the next day or two",
+        summary:
+          "Sores, blisters, or white, thin or shiny patches of skin are worth seeing a doctor about soon. Most causes are common and treatable once someone looks.",
+        oftenLinkedTo: [
+          "Infections that cause sores or blisters, which a simple test can check",
+          "Skin conditions of the vulva, such as lichen sclerosus, which is most common in young girls and after menopause and responds well to treatment",
+          "Irritation or a reaction to something touching the skin",
+        ],
+        whatHelps: [
+          "Book a visit with a doctor or gynaecologist in the next day or two",
+          "Don't burst blisters or scratch. A cool, clean cloth can soothe",
+          "Plain warm water on the outside only, and pat dry",
+          "For a child or teen, a parent or trusted adult can go along",
+        ],
+        seeDoctor:
+          "Within 1 to 2 days, because sores and skin changes need a proper look and sometimes a simple test.",
       },
       {
         id: "itching-amber",
@@ -365,16 +576,38 @@ export const FLOWS: SymptomFlow[] = [
           "Within 1 to 2 days, because sores and skin changes need a proper look and sometimes a simple test.",
       },
       {
+        id: "itching-child",
+        match: { ages: ["u13"] },
+        urgency: "checkup",
+        title: "Itching down there in a young girl",
+        summary:
+          "Itching or soreness down there is common in young girls and is usually caused by something simple, like soap, bubble bath, wet clothes or threadworms. It often settles with a few gentle changes, and a doctor can check if it doesn't.",
+        oftenLinkedTo: [
+          "Irritation from soap, bubble bath, wipes or detergent",
+          "Wet or soiled nappies or underwear, sweat or tight clothes",
+          "Threadworms, especially if it itches more at night or around the bottom",
+          "Less often, a skin condition or infection that a doctor can check",
+        ],
+        whatHelps: [
+          "Wash with plain warm water only and pat dry, with no bubble bath or scented soap",
+          "Loose cotton underwear changed daily, and quick changes out of wet clothes or nappies",
+          "Wipe front to back every time, and keep nails short to limit scratching",
+          "If threadworms are possible, a doctor or pharmacist can advise on treatment for the whole family",
+        ],
+        seeDoctor:
+          "See a doctor if it doesn't settle in a few days, keeps coming back, or there is discharge, bleeding, sores or white patches.",
+      },
+      {
         id: "itching-discharge",
         match: { answers: { with: ["discharge"] } },
         urgency: "checkup",
         title: "Itching along with a change in discharge",
         summary:
-          "Itching with discharge that has changed is one of the commonest reasons women see a gynaecologist, and it's usually easy to treat. The causes look alike, so a check beats guessing.",
+          "Itching with discharge that has changed is one of the commonest reasons to see a gynaecologist, and it's usually easy to treat. The causes look alike, so a check beats guessing.",
         oftenLinkedTo: [
           "Thrush, often with thick white discharge",
           "An imbalance of the vagina's own bacteria",
-          "Some infections passed on through sex",
+          "Other infections that a simple swab can check",
         ],
         whatHelps: [
           "Book a visit with a doctor this week",
@@ -506,7 +739,7 @@ export const FLOWS: SymptomFlow[] = [
       "baar baar peshab aana",
       "baar baar toilet jaana",
     ],
-    needs: { sex: true },
+    needs: { who: true, sex: true },
     questions: [
       {
         id: "main",
@@ -537,6 +770,7 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "preg",
         text: "Is pregnancy possible right now?",
+        showIf: REPRO,
         options: [
           { id: "yes", label: "Yes, or I'm pregnant", flag: "amber" },
           { id: "unsure", label: "Not sure" },
@@ -560,7 +794,7 @@ export const FLOWS: SymptomFlow[] = [
           { id: "hold", label: "Holding urine for hours: travel, work or school" },
           { id: "water", label: "Not drinking much water" },
           { id: "toilets", label: "Avoiding dirty or public toilets" },
-          { id: "pad", label: "Long hours in the same pad or liner" },
+          { id: "pad", label: "Long hours in the same pad or liner", showIf: { ages: PERIOD_AGES, sex: ["female", "other"] } },
           { id: "none", label: "None of these" },
         ],
       },
@@ -587,7 +821,7 @@ export const FLOWS: SymptomFlow[] = [
       },
       {
         id: "uti-amber",
-        match: { flag: "amber" },
+        match: { answers: { preg: ["yes"] } },
         urgency: "soon",
         title: "Burning when peeing that needs a doctor soon",
         summary:
@@ -604,6 +838,47 @@ export const FLOWS: SymptomFlow[] = [
         ],
         seeDoctor:
           "Within 1 to 2 days, and today if a fever, back pain or vomiting starts.",
+      },
+      {
+        id: "uti-blood",
+        match: { flag: "amber" },
+        urgency: "soon",
+        title: "Blood in the urine needs a doctor soon",
+        summary:
+          "Pink or red urine, or blood when peeing, should be checked by a doctor within a day or two. It's often linked to a urine infection, which is very treatable, but a doctor will want to check the cause.",
+        oftenLinkedTo: [
+          "A urine infection",
+          "Irritation of the bladder or urine tube",
+          "Less often, a stone or another cause a doctor would want to rule out",
+        ],
+        whatHelps: [
+          "Book a doctor's visit in the next day or two and ask for a urine test",
+          "Drink enough water to keep the urine pale",
+          "Note whether the colour comes and goes, and anything eaten, like beetroot, that can colour urine",
+        ],
+        seeDoctor:
+          "Within 1 to 2 days, and today if a fever, back pain or vomiting starts.",
+      },
+      {
+        id: "uti-young",
+        match: { ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "Children and teens with burning should see a doctor",
+        summary:
+          "Burning or stinging when peeing in a child or teenager should always be checked by a doctor, who can do a simple urine test. Most causes are easy to treat.",
+        oftenLinkedTo: [
+          "A urine infection",
+          "Sore skin from soap, bubble bath or tight clothes",
+          "Holding urine at school or on journeys",
+        ],
+        whatHelps: [
+          "See a doctor in the next day or two, with a parent or trusted adult",
+          "Plenty of water through the day",
+          "Wash the outside with plain warm water only, and for girls, wipe front to back",
+          "Go to the toilet when the urge comes, even at school",
+        ],
+        seeDoctor:
+          "Within 1 to 2 days, and today if there is a fever, vomiting or tummy or back pain.",
       },
       {
         id: "uti-male",
@@ -624,27 +899,6 @@ export const FLOWS: SymptomFlow[] = [
         ],
         seeDoctor:
           "Within 1 to 2 days, and today if a fever, back pain or vomiting starts.",
-      },
-      {
-        id: "uti-young",
-        match: { ages: ["u13", "13-17"] },
-        urgency: "soon",
-        title: "Children and teens with burning should see a doctor",
-        summary:
-          "Burning or stinging when peeing in a child or teenager should always be checked by a doctor, who can do a simple urine test. Most causes are easy to treat.",
-        oftenLinkedTo: [
-          "A urine infection",
-          "Sore skin from soap, bubble bath or tight clothes",
-          "Holding urine at school or on journeys",
-        ],
-        whatHelps: [
-          "See a doctor in the next day or two, with a parent or trusted adult",
-          "Plenty of water through the day",
-          "Wipe front to back, and wash the outside with plain warm water only",
-          "Go to the toilet when the urge comes, even at school",
-        ],
-        seeDoctor:
-          "Within 1 to 2 days, and today if there is a fever, vomiting or tummy or back pain.",
       },
       {
         id: "uti-lasting",
@@ -748,6 +1002,10 @@ export const FLOWS: SymptomFlow[] = [
       "feeling low before period",
     ],
     needs: {},
+    ageOptions: PERIOD_AGES,
+    showIf: { ...FEMALE, ages: PERIOD_AGES },
+    notFor:
+      "This check-in is about mood changes linked to periods, so it doesn't fit the details you gave: if someone's mood is worrying you, a doctor can help, and Tele MANAS on 14416 is free and open 24 hours.",
     questions: [
       {
         id: "timing",
@@ -987,6 +1245,10 @@ export const FLOWS: SymptomFlow[] = [
       "pad lagane se dane",
     ],
     needs: {},
+    ageOptions: PERIOD_AGES,
+    showIf: { ...FEMALE, ages: PERIOD_AGES },
+    notFor:
+      "This check-in is about rashes from pads and liners, so it doesn't fit the details you gave: for a rash in a young child, a boy or a man, a pharmacist or doctor can help, and see a doctor soon if there are blisters, pus or a fever.",
     questions: [
       {
         id: "howlong",

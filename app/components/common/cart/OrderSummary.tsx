@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ShieldCheck, Truck, Tag, Gift, Luggage } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,7 +11,8 @@ import {
   FREE_SHIPPING_THRESHOLD,
 } from "@/lib/shippingConfig";
 import { validateCartCoupon } from "@/helper";
-import { couponConditions, liveCoupons } from "@/const/coupons";
+import { couponConditions, differentProductCount, liveCoupons } from "@/const/coupons";
+import { SpendMoreBar } from "@/app/components/common/offers/Offers";
 import { toast } from "sonner";
 import Image from "next/image";
 import { getImageUrl } from "@/lib/imageUrl";
@@ -44,6 +45,40 @@ export function OrderSummary() {
       setCouponInput(appliedCoupon.code);
     }
   }, [appliedCoupon]);
+
+  // /cart?coupon=CODE (from Potent Saathi or an offer link) applies that coupon
+  // once, and Saathi can also apply one while the bag is open.
+  const autoApplied = useRef(false);
+  const itemsRef = useRef(items);
+  itemsRef.current = items;
+  useEffect(() => {
+    const applyCode = (code: string) => {
+      setCouponInput(code);
+      validateCartCoupon({ code, items: itemsRef.current })
+        .then((res) => {
+          if (res.success && res.coupon) {
+            setAppliedCoupon({ ...res.coupon, discount: res.discount });
+            toast.success(res.message || `Coupon ${res.coupon.code} applied!`);
+          } else {
+            toast.error(res.message || "Invalid coupon code");
+          }
+        })
+        .catch(() => {});
+    };
+    const onApply = (e: Event) => {
+      const code = String((e as CustomEvent<{ code?: string }>).detail?.code || "").trim().toUpperCase();
+      if (code && itemsRef.current.length) applyCode(code);
+    };
+    window.addEventListener("potent-apply-coupon", onApply);
+    if (!autoApplied.current && items.length && !appliedCoupon) {
+      const code = new URLSearchParams(window.location.search).get("coupon")?.trim().toUpperCase();
+      if (code) {
+        autoApplied.current = true;
+        applyCode(code);
+      }
+    }
+    return () => window.removeEventListener("potent-apply-coupon", onApply);
+  }, [items.length, appliedCoupon, setAppliedCoupon]);
 
   // ✅ Derived calculations
   const subtotal = items.reduce(
@@ -81,14 +116,15 @@ export function OrderSummary() {
 
   const discountedSubtotal = Math.max(0, subtotal - discount);
   const shipping =
-    items.length === 0 ? 0 : calculateShippingFee(discountedSubtotal);
+    items.length === 0 ? 0 : calculateShippingFee(subtotal);
   const final = items.length === 0 ? 0 : discountedSubtotal + shipping;
 
   if (items.length === 0) {
     return null;
   }
 
-  const freeShippingDiff = FREE_SHIPPING_THRESHOLD - discountedSubtotal;
+  // Free delivery counts the bag before any coupon, the same as checkout.
+  const freeShippingDiff = FREE_SHIPPING_THRESHOLD - subtotal;
 
   const handleApplyCoupon = async (picked?: string) => {
     const code = (picked || couponInput).trim().toUpperCase();
@@ -238,7 +274,7 @@ export function OrderSummary() {
       )}
 
       {/* Free delivery callout */}
-      {discountedSubtotal < FREE_SHIPPING_THRESHOLD ? (
+      {subtotal < FREE_SHIPPING_THRESHOLD ? (
         <div className="mb-5 rounded-xl border border-[#016271]/20 bg-[#E2F4F7]/40 p-3 text-xs sm:text-sm text-[#016271]">
           <div className="flex items-center justify-between font-semibold">
             <span className="flex items-center gap-1.5">
@@ -250,7 +286,7 @@ export function OrderSummary() {
             <div
               className="h-full rounded-full bg-[#016271] transition-all duration-300"
               style={{
-                width: `${Math.min(100, Math.round((discountedSubtotal / FREE_SHIPPING_THRESHOLD) * 100))}%`,
+                width: `${Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100))}%`,
               }}
             />
           </div>
@@ -261,6 +297,14 @@ export function OrderSummary() {
           <span>You&apos;ve unlocked <strong>FREE delivery</strong>!</span>
         </div>
       )}
+
+      {/* Best coupon for this bag and the next spend-more step */}
+      <SpendMoreBar
+        subtotal={subtotal}
+        differentProducts={differentProductCount(items)}
+        onApply={(code) => handleApplyCoupon(code)}
+        applied={appliedCoupon?.code}
+      />
 
       {/* 🎟️ Coupon Box in Cart */}
       <div className="mb-5 space-y-2">

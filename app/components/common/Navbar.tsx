@@ -34,7 +34,7 @@ import { isUserLoggedIn } from "@/helper/auth/action";
 import { getImageUrl } from "@/lib/imageUrl";
 import { syncWishlistFromDB } from "@/store/WishlistActions";
 import { syncCartFromDB } from "@/store/cartActions";
-import { festiveCoupon } from "@/const/coupons";
+import { OfferStrip } from "@/app/components/common/offers/Offers";
 
 const navLinks = [
   { name: "Home", href: "/", icon: <IconHome size={20} /> },
@@ -125,14 +125,8 @@ export function Navbar() {
       {showBanner && (
         <div className="relative flex w-full items-center justify-center border-b border-[#004851]/10 bg-[#E2F4F7] px-4 py-2 text-xs font-medium text-[#004851] sm:text-sm">
           <p className="pr-6 text-center font-medium tracking-tight">
-            {/* A festive coupon takes the strip while it runs (const/coupons.ts). */}
-            {festiveCoupon() ? (
-              <Link href="/shop" className="font-semibold underline-offset-2 hover:underline">
-                {festiveCoupon()!.pitch}
-              </Link>
-            ) : (
-              <>Subscribe to pads, liners, seat covers and bags. Pause or cancel in two clicks.</>
-            )}
+            {/* Live offers in turn, festive first (const/coupons.ts). */}
+            <OfferStrip />
           </p>
           <button
             type="button"

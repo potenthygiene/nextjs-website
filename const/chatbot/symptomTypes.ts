@@ -3,15 +3,35 @@
 // what helps, which products may make things easier, and how urgently to
 // see a doctor. All text accepts **bold** and [link](/path).
 
-export type AgeBand = "u13" | "13-17" | "18-29" | "30-39" | "40-49" | "50+";
-export type Who = "me" | "daughter" | "someone";
+/**
+ * The widget offers only the granular bands: u5, 5-12, 13-17, 18-29, 30-39,
+ * 40-44, 45-49, 50+. "u13" (covers u5 and 5-12) and "40-49" (covers 40-44
+ * and 45-49) are umbrella values kept so older lists keep working.
+ */
+export type AgeBand = "u5" | "5-12" | "u13" | "13-17" | "18-29" | "30-39" | "40-44" | "45-49" | "40-49" | "50+";
+export type Who = "me" | "daughter" | "son" | "someone";
 export type Sex = "female" | "male" | "other";
+
+/**
+ * Who a flow, question or option fits. Every listed condition must hold.
+ * answers: an earlier question in this flow was answered with one of these
+ * option ids; notAnswers is the opposite. An unknown profile value passes.
+ */
+export type Applies = {
+  ages?: AgeBand[];
+  sex?: Sex[];
+  who?: Who[];
+  answers?: Record<string, string[]>;
+  notAnswers?: Record<string, string[]>;
+};
 
 export type SymptomOption = {
   id: string;
   label: string;
   /** "red" = needs urgent care; "amber" = should see a doctor soon. */
   flag?: "red" | "amber";
+  /** Show this option only when it fits the profile and earlier answers. */
+  showIf?: Applies;
 };
 
 export type SymptomQuestion = {
@@ -20,6 +40,8 @@ export type SymptomQuestion = {
   /** Let the person pick several, then tap Done. */
   multi?: boolean;
   options: SymptomOption[];
+  /** Ask this question only when it fits the profile and earlier answers. */
+  showIf?: Applies;
 };
 
 export type ProductKey =
@@ -73,6 +95,14 @@ export type SymptomFlow = {
   triggers: string[];
   /** Which profile details matter for this flow. Age is always asked. */
   needs: { who?: boolean; sex?: boolean };
+  /** Who the whole check-in is for. When it fails, show notFor instead. */
+  showIf?: Applies;
+  /** One warm sentence shown when the profile doesn't fit, pointing to what can help instead. */
+  notFor?: string;
+  /** The age bands worth offering for this flow; omit for all. */
+  ageOptions?: AgeBand[];
+  /** The who-choices worth offering; omit for all four. */
+  whoOptions?: Who[];
   questions: SymptomQuestion[];
   outcomes: SymptomOutcome[];
   sources: { label: string; url: string }[];

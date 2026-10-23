@@ -1,8 +1,17 @@
-import type { SymptomFlow } from "../symptomTypes";
+import type { Applies, SymptomFlow } from "../symptomTypes";
+import { FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO } from "../applies";
 
 // Cycle check-ins: late, irregular, heavy, spotting and painful periods.
 // These never diagnose and never name a medicine. Red-flag outcomes come
 // first in every flow, then amber, then situations, then a default.
+
+// Period check-ins fit anyone who may have periods: girls from about 8,
+// teens and women, never a male, a son or a child under 5. Pregnancy,
+// birth, sex and contraception only come up for women 18 to 44 asking for
+// themselves or someone else (see REPRO in ../applies).
+const PERIOD_FLOW: Applies = { ...FEMALE, ages: PERIOD_AGES };
+const PERIOD_NOT_FOR =
+  "This check-in is about periods, so it doesn't fit the details you gave: for a boy, a man or a young child with a health worry, a doctor is the best next step, and any bleeding from the vagina in a young girl needs a doctor soon.";
 
 export const FLOWS: SymptomFlow[] = [
   // ───────────── Late or missed period ─────────────
@@ -27,6 +36,10 @@ export const FLOWS: SymptomFlow[] = [
       "why is my period late",
     ],
     needs: { who: true },
+    whoOptions: ["me", "daughter", "someone"],
+    ageOptions: PERIOD_AGES,
+    showIf: PERIOD_FLOW,
+    notFor: PERIOD_NOT_FOR,
     questions: [
       {
         id: "late",
@@ -41,6 +54,7 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "pregnancy",
         text: "Is there any chance of pregnancy? Any sex in the last few months counts, even with protection.",
+        showIf: REPRO,
         options: [
           { id: "possible", label: "Yes, it's possible" },
           { id: "test-negative", label: "Possible, but a test was negative" },
@@ -56,8 +70,8 @@ export const FLOWS: SymptomFlow[] = [
           { id: "stress", label: "Stress, exams, travel or poor sleep" },
           { id: "illness", label: "A recent illness or fever" },
           { id: "weight", label: "Weight loss or gain, dieting, or much more exercise" },
-          { id: "contraception", label: "Started, stopped or changed contraception, or took an emergency pill" },
-          { id: "baby", label: "Had a baby recently, or breastfeeding" },
+          { id: "contraception", label: "Started, stopped or changed contraception, or took an emergency pill", showIf: REPRO },
+          { id: "baby", label: "Had a baby recently, or breastfeeding", showIf: REPRO },
           { id: "none", label: "None of these" },
         ],
       },
@@ -76,6 +90,26 @@ export const FLOWS: SymptomFlow[] = [
       },
     ],
     outcomes: [
+      {
+        id: "late-red-np",
+        match: { flag: "red", ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "Severe pain or faintness with a late period needs help now",
+        summary:
+          "Severe or one-sided tummy pain, fainting, or pain at the tip of the shoulder needs a doctor straight away. Please call **112** or go to the nearest emergency department now.",
+        oftenLinkedTo: [
+          "An ovarian cyst that has twisted or burst",
+          "Appendicitis or another tummy problem that a doctor needs to rule out",
+          "Bleeding inside the tummy, which needs urgent care",
+        ],
+        whatHelps: [
+          "Call **112** or ask someone to take you to hospital now",
+          "Lie down if you feel faint, and don't go alone",
+          "Tell the doctor when the last period started and where the pain is worst",
+        ],
+        seeDoctor:
+          "Go now: this is not one to wait out at home.",
+      },
       {
         id: "late-red",
         match: { flag: "red" },
@@ -97,7 +131,7 @@ export const FLOWS: SymptomFlow[] = [
       },
       {
         id: "late-amber",
-        match: { flag: "amber" },
+        match: { flag: "amber", answers: { pregnancy: ["possible", "test-negative", "unsure"] } },
         urgency: "soon",
         title: "A late period with unusual bleeding is worth checking soon",
         summary:
@@ -115,6 +149,27 @@ export const FLOWS: SymptomFlow[] = [
           "If severe pain, fainting or heavy bleeding starts, call **112** or go to emergency straight away",
         ],
         seeDoctor: "See a doctor or gynaecologist in the next day or two, and sooner if any pain starts.",
+        products: ["ovy-liners", "period-tracker"],
+      },
+      {
+        id: "late-amber-np",
+        match: { flag: "amber" },
+        urgency: "soon",
+        title: "A late period with unusual bleeding is worth checking soon",
+        summary:
+          "Light, brown or stop-start bleeding when a period is late can have several causes, and most are common and treatable. It's still one for a doctor to look at in the next few days, rather than wait out.",
+        oftenLinkedTo: [
+          "Hormone changes that shift the cycle, which are common in the first years of periods and in the years before menopause",
+          "Thyroid problems or PCOS",
+          "Polyps or an infection in the womb or cervix",
+        ],
+        whatHelps: [
+          "Use a liner or light pad so you can see how much bleeding there is and its colour",
+          "Note the dates in the [period tracker](/period-log) to show the doctor",
+          "If severe pain, fainting or heavy bleeding starts, call **112** or go to emergency straight away",
+        ],
+        seeDoctor:
+          "See a doctor or gynaecologist in the next few days, and sooner if any pain starts.",
         products: ["ovy-liners", "period-tracker"],
       },
       {
@@ -141,6 +196,51 @@ export const FLOWS: SymptomFlow[] = [
         products: ["period-tracker"],
       },
       {
+        id: "late-teen-three",
+        match: { ages: ["u13", "13-17"], answers: { late: ["three-months"] } },
+        urgency: "checkup",
+        title: "No period for 3 months is worth a doctor's check",
+        summary:
+          "Skipping a month is common while periods settle, but no period for 3 months or more is worth a routine visit, even in the first couple of years. It's usually something common, and simple checks often find the answer. If you're checking for your daughter, go with her.",
+        oftenLinkedTo: [
+          "A cycle that is still settling",
+          "Big weight loss, eating very little, heavy sport training or a lot of stress",
+          "PCOS, especially with acne or extra hair",
+          "Thyroid or other hormone changes that a blood test can check",
+        ],
+        whatHelps: [
+          "Write down when the last few periods came",
+          "Eat regular, balanced meals, especially on sports days",
+          "Keep a pad and spare underwear in the school bag, so a surprise period is no stress",
+          "Book a routine visit with a doctor or gynaecologist",
+        ],
+        seeDoctor:
+          "Book a check in the next few weeks, and sooner if there's tummy pain, bad headaches or big weight loss.",
+        products: ["ovy-teen", "period-tracker"],
+      },
+      {
+        id: "late-midlife-gap",
+        match: { ages: ["45-49", "50+"], answers: { late: ["three-months"] } },
+        urgency: "checkup",
+        title: "No period for 3 months in your late 40s or 50s",
+        summary:
+          "In the years before menopause, periods often space out and then stop, so a gap of 3 months is common at this age. A routine check is still worthwhile, to rule out other causes and talk about any symptoms. Menopause is confirmed once there's been a full year without a period.",
+        oftenLinkedTo: [
+          "Perimenopause, usually between 45 and 55",
+          "Thyroid problems, which are common at this age",
+          "Stress, illness or weight change",
+        ],
+        whatHelps: [
+          "Track periods and other changes, like hot flushes or poor sleep, in the [period tracker](/period-log)",
+          "Keep a few pads handy, as a period can still come after a long gap",
+          "Mention hot flushes, mood changes or sleep problems to a doctor: there's real help available",
+        ],
+        seeDoctor:
+          "Book a routine check, and see a doctor quickly for any bleeding after a full year without periods.",
+        products: ["ovy-pads", "period-tracker"],
+        readMore: [{ label: "Early signs of perimenopause", href: "/blog/perimenopause-symptoms-early-signs" }],
+      },
+      {
         id: "late-three-months",
         match: { answers: { late: ["three-months"] } },
         urgency: "checkup",
@@ -155,7 +255,7 @@ export const FLOWS: SymptomFlow[] = [
           "Perimenopause in the 40s, or the ovaries slowing down early if under 40",
         ],
         whatHelps: [
-          "Do a pregnancy test first, even if it seems unlikely",
+          "Note any other changes, like acne, extra hair, hot flushes or constant tiredness",
           "Write down when the last few periods came and any other changes",
           "Eat regular, balanced meals and keep sleep steady",
           "Book a routine visit with a doctor or gynaecologist",
@@ -168,14 +268,13 @@ export const FLOWS: SymptomFlow[] = [
         id: "late-40s",
         match: { ages: ["40-49", "50+"] },
         urgency: "selfcare",
-        title: "A late period in your 40s is often linked to perimenopause",
+        title: "A late period in your 40s or 50s is often linked to perimenopause",
         summary:
-          "In the years before menopause, cycles often get longer or shorter, or skip a month. That's common, but pregnancy is still possible until a full year without periods, so a test is wise if there's any chance.",
+          "In the years before menopause, cycles often get longer or shorter, or skip a month. That's common, and a simple log helps you and your doctor see the pattern.",
         oftenLinkedTo: [
           "Perimenopause, usually between 45 and 55, though it can start earlier",
           "Stress, illness or weight change",
           "Thyroid problems, which are common at this age",
-          "Pregnancy, which is still possible",
         ],
         whatHelps: [
           "Track periods and other changes, like hot flushes or poor sleep, in the [period tracker](/period-log)",
@@ -204,7 +303,6 @@ export const FLOWS: SymptomFlow[] = [
           "Log every period in the [period tracker](/period-log)",
           "Keep a pad and spare underwear in the school bag, so a surprise period is no stress",
           "Eat regular meals, especially on sports days",
-          "If there's any chance of pregnancy, a test is the first step",
         ],
         seeDoctor:
           "See a doctor if there's no period for 3 months, if periods haven't started by 15, or if they still come more than 45 days apart after the first 2 years.",
@@ -224,7 +322,6 @@ export const FLOWS: SymptomFlow[] = [
           "PCOS or thyroid problems, if it keeps happening",
         ],
         whatHelps: [
-          "If there's any chance of pregnancy, do a home test",
           "Log dates in the [period tracker](/period-log) to see your real pattern",
           "Keep sleep, meals and exercise steady for a few weeks",
           "If you've noticed acne, extra hair, weight change or constant tiredness, tell a doctor: a simple blood test can check hormones and thyroid",
@@ -263,6 +360,10 @@ export const FLOWS: SymptomFlow[] = [
       "periods early aa gaye",
     ],
     needs: { who: true },
+    whoOptions: ["me", "daughter", "someone"],
+    ageOptions: PERIOD_AGES,
+    showIf: PERIOD_FLOW,
+    notFor: PERIOD_NOT_FOR,
     questions: [
       {
         id: "pattern",
@@ -300,6 +401,7 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "situation",
         text: "Does any of this apply?",
+        showIf: REPRO,
         options: [
           { id: "pregnancy", label: "Pregnancy is possible" },
           { id: "trying", label: "Trying to get pregnant" },
@@ -309,6 +411,26 @@ export const FLOWS: SymptomFlow[] = [
       },
     ],
     outcomes: [
+      {
+        id: "irr-red-np",
+        match: { flag: "red", ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "Severe pain, fainting or very fast bleeding needs help now",
+        summary:
+          "These are signs to get checked today, not wait out. Please call **112** or go to the nearest emergency department now.",
+        oftenLinkedTo: [
+          "Losing blood faster than the body can keep up with",
+          "An ovarian cyst that has twisted or burst",
+          "Appendicitis or another tummy problem that a doctor needs to rule out",
+        ],
+        whatHelps: [
+          "Call **112** or ask someone to take you to hospital now",
+          "Lie down if you feel faint, and don't go alone",
+          "Tell the doctor the last period date and how often pads are being changed",
+        ],
+        seeDoctor:
+          "Go now: this is not one to wait out at home.",
+      },
       {
         id: "irr-red",
         match: { flag: "red" },
@@ -327,6 +449,29 @@ export const FLOWS: SymptomFlow[] = [
           "Tell the doctor the last period date and whether pregnancy is possible",
         ],
         seeDoctor: "Go now: this is not one to wait out at home.",
+      },
+      {
+        id: "irr-amber-teen",
+        match: { flag: "amber", ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "Irregular periods with heavy or in-between bleeding are worth a check soon",
+        summary:
+          "In the first years of periods, cycles are often irregular, but very heavy bleeding, big clots or bleeding between periods should be seen by a doctor in the next few days. It's usually common and treatable. If you're checking for your daughter, go with her.",
+        oftenLinkedTo: [
+          "Hormones that are still settling, so the lining builds up more in some months",
+          "A bleeding disorder, which a blood test can check, especially if heavy bleeding runs in the family",
+          "PCOS or thyroid problems",
+          "Low iron from heavy bleeding, if there's tiredness or breathlessness",
+        ],
+        whatHelps: [
+          "Note how often pads are changed on the heaviest day, and the size of any clots",
+          "Use XL+ pads or a period panty at night and on the heaviest days",
+          "Log dates in the [period tracker](/period-log) to show the doctor",
+          "Eat iron-rich food like dal, rajma, spinach and jaggery, with amla or lemon to help absorb it",
+        ],
+        seeDoctor:
+          "See a doctor in the next few days, and go to emergency if a pad soaks through within an hour or there is faintness.",
+        products: ["ovy-teen", "ovy-panty", "period-tracker"],
       },
       {
         id: "irr-amber",
@@ -420,6 +565,29 @@ export const FLOWS: SymptomFlow[] = [
         products: ["ovy-teen", "period-tracker"],
       },
       {
+        id: "irr-midlife",
+        match: { ages: ["40-49", "50+"] },
+        urgency: "selfcare",
+        title: "Irregular periods in your 40s and 50s are often perimenopause",
+        summary:
+          "In the years before menopause, the gap between periods often changes, and flow can swing heavier or lighter. That's common, but some changes are worth a doctor's check, so keep a simple log.",
+        oftenLinkedTo: [
+          "Perimenopause, usually between 45 and 55, though it can start earlier",
+          "Fibroids or polyps, which are common at this age",
+          "Thyroid problems",
+          "Stress, illness or weight change",
+        ],
+        whatHelps: [
+          "Track dates and flow in the [period tracker](/period-log)",
+          "Keep a mix of pad sizes handy for unpredictable months",
+          "Mention hot flushes, poor sleep or mood changes to a doctor: there's real help available",
+        ],
+        seeDoctor:
+          "See a doctor if periods come less than 21 days apart, last more than 7 days or become very heavy, and always for any bleeding after a full year without periods.",
+        products: ["ovy-pads", "period-tracker"],
+        readMore: [{ label: "Early signs of perimenopause", href: "/blog/perimenopause-symptoms-early-signs" }],
+      },
+      {
         id: "irr-long",
         match: { answers: { duration: ["months", "long-time"] } },
         urgency: "checkup",
@@ -437,7 +605,6 @@ export const FLOWS: SymptomFlow[] = [
           "Log dates and flow in the [period tracker](/period-log) for 2 or 3 cycles before the visit",
           "Keep sleep and meals steady",
           "Keep a mix of pad sizes handy for unpredictable months",
-          "If pregnancy is possible, do a test first",
         ],
         seeDoctor: "Book a routine visit with a doctor or gynaecologist in the next few weeks.",
         products: ["ovy-pads", "period-tracker"],
@@ -457,7 +624,6 @@ export const FLOWS: SymptomFlow[] = [
         whatHelps: [
           "Log dates in the [period tracker](/period-log) to see the real pattern",
           "Keep sleep, meals and exercise steady",
-          "If pregnancy is possible, do a home test",
           "Watch for the signs that need a doctor: gaps under 21 or over 35 days, periods over 7 days, or bleeding in between",
         ],
         seeDoctor:
@@ -493,6 +659,10 @@ export const FLOWS: SymptomFlow[] = [
       "khoon ke thakke",
     ],
     needs: { who: true },
+    whoOptions: ["me", "daughter", "someone"],
+    ageOptions: PERIOD_AGES,
+    showIf: PERIOD_FLOW,
+    notFor: PERIOD_NOT_FOR,
     questions: [
       {
         id: "soak",
@@ -527,8 +697,8 @@ export const FLOWS: SymptomFlow[] = [
         text: "Does any of this apply?",
         multi: true,
         options: [
-          { id: "pregnant", label: "Pregnant, or pregnancy is possible", flag: "red" },
-          { id: "baby", label: "Had a baby in the last 6 weeks" },
+          { id: "pregnant", label: "Pregnant, or pregnancy is possible", flag: "red", showIf: REPRO },
+          { id: "baby", label: "Had a baby in the last 6 weeks", showIf: REPRO },
           { id: "bruise", label: "Bruise easily, frequent nosebleeds, or heavy bleeding runs in the family", flag: "amber" },
           { id: "heavier", label: "Periods are much heavier than they used to be" },
           { id: "none", label: "None of these" },
@@ -550,6 +720,26 @@ export const FLOWS: SymptomFlow[] = [
     ],
     outcomes: [
       {
+        id: "heavy-red-np",
+        match: { flag: "red", ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "This much bleeding needs medical help now",
+        summary:
+          "Soaking a pad within an hour, fainting, chest pain or severe pain are signs to get help straight away. Please call **112** or go to the nearest emergency department now.",
+        oftenLinkedTo: [
+          "Losing blood faster than the body can keep up with",
+          "A low blood count from heavy blood loss",
+          "A bleeding or clotting problem, or another cause a doctor needs to find",
+        ],
+        whatHelps: [
+          "Call **112** or ask someone to take you to hospital now",
+          "Lie down with your legs raised if you feel faint, and don't go alone",
+          "Tell the doctor how often you've been changing pads",
+        ],
+        seeDoctor:
+          "Go now: this is not one to wait out at home.",
+      },
+      {
         id: "heavy-red",
         match: { flag: "red" },
         urgency: "emergency",
@@ -567,6 +757,29 @@ export const FLOWS: SymptomFlow[] = [
           "Tell the doctor how often you've been changing pads",
         ],
         seeDoctor: "Go now: this is not one to wait out at home.",
+      },
+      {
+        id: "heavy-amber-teen",
+        match: { flag: "amber", ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "Heavy periods like this are worth a doctor's visit soon",
+        summary:
+          "Soaking a pad in under 2 hours, clots bigger than a ₹5 coin, bleeding beyond 7 days or constant tiredness are signs that a period is heavier than it should be. In the first years of periods this is common and treatable, and a doctor can check iron levels and whether a bleeding tendency runs in the family.",
+        oftenLinkedTo: [
+          "Hormones that are still settling in the first years of periods",
+          "A bleeding disorder, especially with easy bruising, nosebleeds or a family history",
+          "Low iron or anaemia, when there's tiredness or breathlessness",
+          "PCOS or thyroid problems",
+        ],
+        whatHelps: [
+          "Pack XL+ pads and spare underwear for school, and use a period panty at night",
+          "Note how often pads are changed and the size of any clots: it helps the doctor a lot",
+          "Eat iron-rich food like dal, rajma, spinach, dates and jaggery, with amla, lemon or orange to help absorb it",
+          "Go to emergency if a pad soaks through within an hour or there is faintness",
+        ],
+        seeDoctor:
+          "See a doctor or gynaecologist in the next few days.",
+        products: ["ovy-teen", "ovy-pads", "ovy-panty"],
       },
       {
         id: "heavy-amber",
@@ -640,7 +853,7 @@ export const FLOWS: SymptomFlow[] = [
         id: "heavy-40s",
         match: { ages: ["40-49", "50+"] },
         urgency: "checkup",
-        title: "Heavier periods in your 40s are common, but worth a check",
+        title: "Heavier periods in your 40s and 50s are common, but worth a check",
         summary:
           "Flow often swings heavier in the years before menopause. New or much heavier bleeding at this age is still worth a doctor's visit, because a few causes are easier to treat when found early.",
         oftenLinkedTo: [
@@ -735,6 +948,9 @@ export const FLOWS: SymptomFlow[] = [
       "sex ke baad bleeding",
     ],
     needs: {},
+    ageOptions: PERIOD_AGES,
+    showIf: PERIOD_FLOW,
+    notFor: PERIOD_NOT_FOR,
     questions: [
       {
         id: "when",
@@ -742,15 +958,16 @@ export const FLOWS: SymptomFlow[] = [
         options: [
           { id: "mid", label: "Around the middle of the cycle" },
           { id: "before", label: "A day or two before a period" },
-          { id: "after-sex", label: "After sex", flag: "amber" },
+          { id: "after-sex", label: "After sex", flag: "amber", showIf: REPRO },
           { id: "random", label: "At random times, no pattern" },
-          { id: "contraception", label: "Since starting, changing or missing contraception (pill, injection, IUD or emergency pill)" },
-          { id: "menopause", label: "After menopause (a year or more with no periods)", flag: "red" },
+          { id: "contraception", label: "Since starting, changing or missing contraception (pill, injection, IUD or emergency pill)", showIf: REPRO },
+          { id: "menopause", label: "After menopause (a year or more with no periods)", flag: "red", showIf: { ages: MIDLIFE_AGES } },
         ],
       },
       {
         id: "pregnancy",
         text: "Is there any chance of pregnancy?",
+        showIf: REPRO,
         options: [
           { id: "yes", label: "Yes, pregnant or it's possible", flag: "red" },
           { id: "unsure", label: "Not sure", flag: "amber" },
@@ -774,12 +991,32 @@ export const FLOWS: SymptomFlow[] = [
           { id: "heavy-faint", label: "Heavy bleeding, fainting or feeling very dizzy", flag: "red" },
           { id: "severe-pain", label: "Severe or one-sided tummy pain, or pain with a fever", flag: "red" },
           { id: "discharge", label: "Unusual discharge, a strong smell or itching", flag: "amber" },
-          { id: "sex-pain", label: "Pain during sex", flag: "amber" },
+          { id: "sex-pain", label: "Pain during sex", flag: "amber", showIf: REPRO },
           { id: "none", label: "None of these" },
         ],
       },
     ],
     outcomes: [
+      {
+        id: "sp-emergency-np",
+        match: { answers: { signs: ["heavy-faint", "severe-pain"] }, ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "Bleeding with severe pain or faintness needs help now",
+        summary:
+          "Bleeding together with severe or one-sided pain, a fever, heavy flow or fainting needs a doctor today. Please call **112** or go to the nearest emergency department now.",
+        oftenLinkedTo: [
+          "A pelvic infection, especially with a fever",
+          "An ovarian cyst that has twisted or burst",
+          "Heavy blood loss from another cause a doctor needs to find",
+        ],
+        whatHelps: [
+          "Call **112** or ask someone to take you to hospital now",
+          "Lie down if you feel faint, and don't go alone",
+          "Tell the doctor when the last period was and how much bleeding there has been",
+        ],
+        seeDoctor:
+          "Go now: this is not one to wait out at home.",
+      },
       {
         id: "sp-emergency",
         match: { answers: { signs: ["heavy-faint", "severe-pain"] } },
@@ -801,7 +1038,7 @@ export const FLOWS: SymptomFlow[] = [
       },
       {
         id: "sp-pregnancy",
-        match: { answers: { pregnancy: ["yes"] } },
+        match: { answers: { pregnancy: ["yes", "unsure"] } },
         urgency: "soon",
         title: "Bleeding when pregnancy is possible: call a doctor today",
         summary:
@@ -845,12 +1082,80 @@ export const FLOWS: SymptomFlow[] = [
         products: ["ovy-liners"],
       },
       {
+        id: "sp-midlife",
+        match: { ages: ["45-49", "50+"] },
+        urgency: "soon",
+        title: "Bleeding between periods in your late 40s or 50s should be checked",
+        summary:
+          "Cycles often change in the years before menopause, but bleeding between periods at this age should always be checked by a doctor. It's usually something common and treatable, and a few causes are much easier to treat when found early.",
+        oftenLinkedTo: [
+          "Perimenopause hormone swings",
+          "Polyps or fibroids, which are common at this age",
+          "A thickened womb lining, which a doctor checks with a scan",
+          "An infection of the cervix or womb, especially with unusual discharge",
+        ],
+        whatHelps: [
+          "Book a gynaecologist visit in the next week or two",
+          "Note the dates, amount and colour in the [period tracker](/period-log)",
+          "Use a liner so you can see if it happens again",
+          "If periods have stopped for a full year, any bleeding at all needs a doctor within a few days",
+        ],
+        seeDoctor:
+          "See a gynaecologist in the next week or two, and sooner if it's heavy, keeps happening or comes with pain.",
+        products: ["ovy-liners", "period-tracker"],
+      },
+      {
+        id: "sp-teen-amber",
+        match: { flag: "amber", ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "Spotting with unusual discharge is worth a doctor's check soon",
+        summary:
+          "Spotting together with unusual discharge, a strong smell or itching is worth showing a doctor in the next few days. It's usually something common and easy to treat, such as an infection or irritation.",
+        oftenLinkedTo: [
+          "An infection, which a simple swab or urine test can check",
+          "Irritation from soaps, washes or wipes",
+          "Hormones still settling in the first years of periods",
+        ],
+        whatHelps: [
+          "Wash the outside with plain warm water only: no soap, douching or scented washes",
+          "Wear loose cotton underwear",
+          "Use a liner so you can see the colour and amount",
+          "A parent or trusted adult can go along to the doctor",
+        ],
+        seeDoctor:
+          "See a doctor in the next few days, and sooner if there's pain or a fever.",
+        products: ["ovy-liners"],
+      },
+      {
+        id: "sp-teen",
+        match: { ages: ["u13", "13-17"] },
+        urgency: "checkup",
+        title: "Spotting between periods in the first years is worth mentioning to a doctor",
+        summary:
+          "In the first couple of years, hormones are still settling, so a little spotting between periods can happen. It's still worth telling a doctor, especially if it keeps happening. If periods haven't started yet, any bleeding needs a doctor soon.",
+        oftenLinkedTo: [
+          "Hormones still settling in the first years of periods",
+          "The hormone dip around the middle of the cycle",
+          "Stress, exams or a change in routine",
+          "Less often, a bleeding tendency or a thyroid problem that a doctor can check",
+        ],
+        whatHelps: [
+          "Use a liner on spotting days and change it every 3 to 4 hours",
+          "Note when it happens in the [period tracker](/period-log) to see a pattern",
+          "Keep a liner and spare underwear in the school bag",
+          "Talk to a parent, school nurse or doctor about any worry",
+        ],
+        seeDoctor:
+          "See a doctor if it keeps happening, gets heavier or comes with pain, and soon for any bleeding before periods have started.",
+        products: ["ovy-liners", "period-tracker"],
+      },
+      {
         id: "sp-amber",
         match: { flag: "amber" },
         urgency: "soon",
         title: "Bleeding after sex or with other symptoms is worth checking soon",
         summary:
-          "That's one to get checked rather than wait out. It's usually something small and fixable, but it's never something to sit on. If pregnancy is possible, do a test first.",
+          "That's one to get checked rather than wait out. It's usually something small and fixable, but it's never something to sit on.",
         oftenLinkedTo: [
           "Changes on the surface of the cervix, which are common and treatable",
           "An infection, including a sexually transmitted infection",
@@ -859,7 +1164,6 @@ export const FLOWS: SymptomFlow[] = [
           "Early pregnancy, if a test hasn't ruled it out",
         ],
         whatHelps: [
-          "If there's any chance of pregnancy, do a home test",
           "Avoid sex until a doctor has checked",
           "Wash the outside with plain water only: no douching, soap or scented washes",
           "Keep up with any cervical screening your doctor suggests",
@@ -907,7 +1211,6 @@ export const FLOWS: SymptomFlow[] = [
         whatHelps: [
           "Use a liner on spotting days and change it every 3 to 4 hours",
           "Note when it happens in the [period tracker](/period-log) to see a pattern",
-          "If pregnancy is possible, do a test",
           "Book a routine visit, especially if it keeps happening",
         ],
         seeDoctor:
@@ -929,7 +1232,6 @@ export const FLOWS: SymptomFlow[] = [
         whatHelps: [
           "Use a liner on spotting days and change it every 3 to 4 hours",
           "Note each episode in the [period tracker](/period-log)",
-          "If pregnancy is possible, do a home test",
           "Book a visit with a doctor or gynaecologist",
         ],
         seeDoctor:
@@ -966,6 +1268,10 @@ export const FLOWS: SymptomFlow[] = [
       "pain during periods",
     ],
     needs: { who: true },
+    whoOptions: ["me", "daughter", "someone"],
+    ageOptions: PERIOD_AGES,
+    showIf: PERIOD_FLOW,
+    notFor: PERIOD_NOT_FOR,
     questions: [
       {
         id: "severity",
@@ -1005,14 +1311,35 @@ export const FLOWS: SymptomFlow[] = [
         options: [
           { id: "fever", label: "Fever, or feeling hot and shivery", flag: "red" },
           { id: "one-sided", label: "Sudden severe pain on one side, or fainting", flag: "red" },
-          { id: "pregnancy", label: "Pregnancy is possible and the period is late or unusual", flag: "red" },
-          { id: "sex-bowel", label: "Pain during sex, or when pooing or peeing", flag: "amber" },
+          { id: "pregnancy", label: "Pregnancy is possible and the period is late or unusual", flag: "red", showIf: REPRO },
+          { id: "sex-bowel", label: "Pain during sex", flag: "amber", showIf: REPRO },
+          { id: "bowel", label: "Pain when pooing or peeing", flag: "amber" },
           { id: "heavy", label: "Very heavy bleeding or big clots", flag: "amber" },
           { id: "none", label: "None of these" },
         ],
       },
     ],
     outcomes: [
+      {
+        id: "pain-red-np",
+        match: { flag: "red", ages: NO_PREG_AGES },
+        urgency: "emergency",
+        title: "This kind of pain needs medical help now",
+        summary:
+          "Sudden or severe one-sided pain, fainting, or pain with a fever needs a doctor today. Please call **112** or go to the nearest emergency department now.",
+        oftenLinkedTo: [
+          "An ovarian cyst that has twisted or burst",
+          "A pelvic infection, especially with a fever",
+          "Appendicitis or another tummy problem",
+        ],
+        whatHelps: [
+          "Call **112** or ask someone to take you to hospital now",
+          "Lie down if you feel faint, and don't go alone",
+          "Tell the doctor the last period date and where the pain is worst",
+        ],
+        seeDoctor:
+          "Go now: this is not one to wait out at home.",
+      },
       {
         id: "pain-red",
         match: { flag: "red" },
@@ -1034,6 +1361,29 @@ export const FLOWS: SymptomFlow[] = [
         seeDoctor: "Go now: this is not one to wait out at home.",
       },
       {
+        id: "pain-amber-teen",
+        match: { flag: "amber", ages: ["u13", "13-17"] },
+        urgency: "soon",
+        title: "Period pain like this is worth a doctor's visit soon",
+        summary:
+          "Pain that heat and rest don't touch, pain outside periods, or pain that keeps getting worse isn't something to put up with, even in the teen years. A doctor can look for a cause and help. If you're checking for your daughter, take her pain seriously and go with her.",
+        oftenLinkedTo: [
+          "Strong cramps from natural chemicals called prostaglandins",
+          "Endometriosis, which can start in the teens and is often missed",
+          "A cyst on an ovary",
+          "Constipation or a urine infection, which can feel like period pain",
+        ],
+        whatHelps: [
+          "Keep a pain diary: when it starts, how bad it is, and what it stops you doing",
+          "Heat on the lower tummy or back, and gentle movement",
+          "A doctor or pharmacist can advise on pain relief that's right for this age",
+          "Note missed school days: that detail helps the doctor take it seriously",
+        ],
+        seeDoctor:
+          "See a doctor or gynaecologist in the next few days, and go to emergency if the pain becomes sudden or severe or a fever starts.",
+        products: ["ovy-teen", "period-tracker"],
+      },
+      {
         id: "pain-amber",
         match: { flag: "amber" },
         urgency: "soon",
@@ -1045,7 +1395,6 @@ export const FLOWS: SymptomFlow[] = [
           "Adenomyosis",
           "Fibroids",
           "A pelvic infection",
-          "An IUD, especially in the first few months after fitting",
         ],
         whatHelps: [
           "Keep a pain diary: when it starts, how bad it is, and what it stops you doing",
@@ -1133,7 +1482,7 @@ export const FLOWS: SymptomFlow[] = [
           "Natural chemicals called prostaglandins that make the womb contract",
           "Heavier flow days",
           "PMS, if the pain starts before the period with bloating or mood changes",
-          "A copper IUD, which can make cramps stronger for some",
+          "Constipation or a full bladder, which can make cramps feel worse",
         ],
         whatHelps: [
           "Heat on the lower tummy or back",

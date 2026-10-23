@@ -13,6 +13,7 @@ import { LoowayFaqSection } from "@/app/components/common/homepage/brands/Looway
 import { BrandStats } from "@/app/components/common/homepage/brands/BrandStats";
 import { brandDataMap } from "@/const/globalconst";
 import { getFullProductDetails } from "@/helper/product/action";
+import { OffersBand } from "@/app/components/common/offers/Offers";
 
 export const dynamic = "force-dynamic";
 
@@ -49,6 +50,7 @@ export default async function LowayPage() {
     <main style={{ backgroundColor: data["bg-color"] }}>
       <LoowayHero productsBySlug={productsBySlug} />
       <LoowayShopSection productsBySlug={productsBySlug} />
+      <OffersBand title="Travel offers running now" />
       <LoowayShopByTrip productsBySlug={productsBySlug} />
       <LoowayHowItWorks productsBySlug={productsBySlug} />
       <LoowayYatraKitSection />

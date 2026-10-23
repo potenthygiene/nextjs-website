@@ -11,7 +11,16 @@ export type FinderStep = {
 };
 
 export type FinderPick = { product: ProductKey; why: string; size?: string };
-export type FinderResult = { title: string; intro: string; picks: FinderPick[]; tip?: string };
+export type FinderResult = {
+  title: string;
+  intro: string;
+  picks: FinderPick[];
+  tip?: string;
+  /** A packing list or step list, shown as ticks. */
+  checklist?: string[];
+  /** Pages worth opening next, such as the full quiz on the site. */
+  links?: { label: string; href: string }[];
+};
 
 export type Finder = {
   id: string;
@@ -19,6 +28,8 @@ export type Finder = {
   steps: FinderStep[];
   /** Skip a step when it doesn't apply to the answers so far. */
   skip?: (stepId: string, a: Record<string, string[]>) => boolean;
+  /** Hide an option that doesn't fit the answers so far (for example, a pregnancy option once "Men only" is picked). */
+  hideOption?: (stepId: string, optionId: string, a: Record<string, string[]>) => boolean;
   result: (a: Record<string, string[]>) => FinderResult;
 };
 
@@ -74,7 +85,9 @@ export const FINDERS: Record<string, Finder> = {
         ],
       },
     ],
-    skip: (step, a) => (step === "type" && (has(a, "who", "teen") || has(a, "who", "gift"))) || (step === "flow" && has(a, "who", "gift")),
+    // A first-period kit and a gift don't depend on type or extras, and a gift doesn't need the flow.
+    skip: (step, a) =>
+      ((step === "type" || step === "extra") && (has(a, "who", "teen") || has(a, "who", "gift"))) || (step === "flow" && has(a, "who", "gift")),
     result: (a) => {
       const picks: FinderPick[] = [];
       const flow = a.flow?.[0] || "unsure";
@@ -158,6 +171,8 @@ export const FINDERS: Record<string, Finder> = {
       },
     ],
     skip: (step, a) => step === "length" && has(a, "trip", "daily"),
+    // A daily office or college commute isn't one for young children or elderly parents.
+    hideOption: (step, option, a) => step === "who" && has(a, "trip", "daily") && (option === "kids" || option === "seniors"),
     result: (a) => {
       const picks: FinderPick[] = [];
       const trip = a.trip?.[0] || "train";

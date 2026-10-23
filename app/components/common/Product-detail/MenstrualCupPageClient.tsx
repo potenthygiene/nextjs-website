@@ -47,6 +47,7 @@ import ProductReviews from "./productreview";
 import ProductFaqSection from "./ProductFaqSection";
 import ImageZoomModal from "./ImageZoomModal";
 import { ovyProductDetailsPage } from "@/const/globalconst";
+import { OffersForYou } from "@/app/components/common/offers/Offers";
 
 type Props = {
   product: any;
@@ -1054,6 +1055,11 @@ export default function MenstrualCupPageClient({
                     </button>
                   </>
                 )}
+
+                {/* Offers from const/coupons.ts */}
+                <div className="col-span-12">
+                  <OffersForYou brand="ovy" />
+                </div>
 
                 {/* Save to Wishlist Button */}
                 <button

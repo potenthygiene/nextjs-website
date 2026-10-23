@@ -53,6 +53,7 @@ import ImageZoomModal from "./ImageZoomModal";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
 import ProductReviews from "./productreview";
 import { lowayProductDetailsPage } from "@/const/globalconst";
+import { OffersForYou } from "@/app/components/common/offers/Offers";
 
 type Props = {
   product: any;
@@ -970,6 +971,9 @@ export default function SeatCoversPageClient({
                   </button>
                 )}
               </div>
+
+              {/* Offers from const/coupons.ts */}
+              <OffersForYou brand="looway" className="mt-3" />
 
               {/* Trust Badges & Guarantee Content (Attached 3 Images) */}
               <div className="my-2 space-y-4">

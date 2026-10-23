@@ -31,13 +31,29 @@ export default function ShareReferralClient({ userDetail }: any) {
   };
 
   const handleWhatsAppShare = () => {
-    const shareMessage = `Hey! Use my referral code ${referralCode} to get ₹100 OFF on your first Potent order (above ₹399).`;
+    const shareMessage = `Hey! Join Potent Hygiene with my link ${referralLink || ""} (or code ${referralCode}) and get 20% off your first order with SAATHI20, plus ₹150 credit to spend. Free delivery on ₹399+.`;
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
 
   return (
     <div className="space-y-6">
+      {/* Referral coupons (const/coupons.ts) */}
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="rounded-xl border border-dashed border-[#9FD3D6] bg-[#F3FAFB] p-3.5">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[#016271]">Your friend gets</p>
+          <p className="mt-1 text-sm text-gray-800">
+            <strong className="font-mono">SAATHI20</strong>: 20% off their first order of ₹399+, plus ₹150 credit when they join with your link.
+          </p>
+        </div>
+        <div className="rounded-xl border border-dashed border-[#dcc0d4] bg-[#FFF7FB] p-3.5">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-[#7E4D77]">You get</p>
+          <p className="mt-1 text-sm text-gray-800">
+            <strong className="font-mono">SHARECARE15</strong>: 15% off your next order, once for every friend whose first order is delivered, plus ₹100 credit.
+          </p>
+        </div>
+      </div>
+
       {/* 1. Referral Code */}
       <div className="space-y-2">
         <p className="text-sm font-medium">Your Referral Code</p>

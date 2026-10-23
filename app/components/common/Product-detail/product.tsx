@@ -69,6 +69,7 @@ import {
   resolveStaticSizeKey,
 } from "@/lib/productStaticContent";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
+import { OffersForYou } from "@/app/components/common/offers/Offers";
 
 type DeliveryStatus =
   | {
@@ -1835,6 +1836,9 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                 </>
               )}
             </div>
+
+            {/* Offers from const/coupons.ts */}
+            <OffersForYou brand="ovy" className="mt-4" />
 
             {/* Shop With Confidence & Trust Assurance Section */}
             <div className="space-y-4 pt-3">

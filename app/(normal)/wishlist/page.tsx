@@ -1,5 +1,6 @@
 
 import WishlistProducts from "../../components/common/wishlist/WishlistProducts"
+import { OffersBand } from "@/app/components/common/offers/Offers";
 
 export default function Page(){
 
@@ -8,6 +9,8 @@ export default function Page(){
 
 
       <div className="max-w-7xl md:mx-12 mx-auto py-10 px-6">
+
+        <OffersBand title="Offers on your saved items" className="!px-0 !pt-0" />
 
         <h1 className="text-2xl font-bold mb-8">
          You May Also Like

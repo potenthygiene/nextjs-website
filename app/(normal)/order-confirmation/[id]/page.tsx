@@ -353,6 +353,18 @@ export default async function OrderConfirmationPage({ params }: any) {
           </aside>
         </section>
 
+        {/* Next-order offers and referral (const/coupons.ts) */}
+        <div className="mb-4 rounded-2xl border border-dashed border-[#dcc0d4] bg-[#FFF7FB] p-4">
+          <p className="text-[12px] font-bold uppercase tracking-[0.1em] text-[#7E4D77]">For your next order</p>
+          <p className="mt-1.5 text-sm text-gray-800">
+            Stock up and save: <strong>₹80 off on ₹799+</strong> (STOCKUP80), <strong>₹130 off on ₹1099+</strong> (STOCKUP130), <strong>₹200 off on ₹1499+</strong> (STOCKUP200) and <strong>₹300 off on ₹1999+</strong> (STOCKUP300).
+          </p>
+          <p className="mt-2 text-sm text-gray-800">
+            Share Potent with a friend: they get 20% off with SAATHI20, and you get 15% off with SHARECARE15 once their first order is delivered.{" "}
+            <Link href="/dashboard/referral" className="font-semibold text-[#7E4D77] underline">Get my referral link</Link>
+          </p>
+        </div>
+
         {/* Action Buttons */}
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button

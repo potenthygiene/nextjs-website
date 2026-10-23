@@ -58,6 +58,7 @@ import FunnelMarketComparisonSection from "./FunnelMarketComparisonSection";
 import FunnelReviewsSection from "./FunnelReviewsSection";
 import FunnelFaqSection from "./FunnelFaqSection";
 import WhileYoureHereSection from "./WhileYoureHereSection";
+import { OffersForYou } from "@/app/components/common/offers/Offers";
 
 type Props = {
   product: any;
@@ -881,6 +882,9 @@ export default function PeeFunnelPageClient({
                     </span>
                   </button>
                 </div>
+
+                {/* Offers from const/coupons.ts */}
+                <OffersForYou brand="looway" className="mt-3" />
 
                 {/* Shipping Micro-copy */}
                 <p className="mt-3 text-center text-[11px] leading-relaxed text-[#5A0E30]/60">

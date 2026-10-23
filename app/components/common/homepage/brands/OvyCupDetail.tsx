@@ -124,15 +124,14 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                 OVY MENSTRUAL CUP
               </span>
               <h2 className="font-serif text-3xl leading-snug font-bold text-[#1F1915] sm:text-4xl lg:text-5xl">
-                Three sizes. One price.
+                Three sizes. One right fit.
               </h2>
               <div className="mt-0.5 font-serif text-2xl font-normal text-[#C0428A] italic sm:text-3xl">
                 Choose by fit, not by age.
               </div>
               <p className="mt-3 max-w-2xl text-xs leading-relaxed font-normal text-[#5C524D] sm:text-sm">
                 Cervix height decides first, then flow, then whether you have
-                given birth vaginally. Not age, not weight, and never budget:
-                every size costs the same. Up to 12 hours between changes, 100%
+                given birth vaginally. Not age and not weight. Up to 12 hours between changes, 100%
                 medical-grade silicone, and a cotton pouch in the box.
               </p>
             </div>
@@ -237,7 +236,7 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                   3
                 </div>
                 <p className="mt-0.5 text-[11px] leading-tight text-[#5C524D]">
-                  sizes, four colours, one price
+                  sizes, four colours, one fit for you
                 </p>
               </div>
             </div>

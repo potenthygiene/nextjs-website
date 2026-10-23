@@ -63,6 +63,7 @@ import MarketComparisonSection from "./MarketComparisonSection";
 import LoowayReviewsSection from "./LoowayReviewsSection";
 import LoowayFaqSection from "./LoowayFaqSection";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
+import { OffersForYou } from "@/app/components/common/offers/Offers";
 
 type Props = {
   product: any;
@@ -1310,6 +1311,9 @@ export default function PeePukeBagsPageClient({
                     </button>
                   )}
                 </div>
+
+                {/* Offers from const/coupons.ts */}
+                <OffersForYou brand="looway" className="mt-3" />
 
                 {/* Save to Wishlist Button */}
                 <button

@@ -5,7 +5,8 @@
 import type { ChatAnswer } from "@/const/chatbot/types";
 import { ALL_ANSWERS } from "@/const/chatbot";
 import { SYMPTOM_FLOWS } from "@/const/chatbot/symptoms";
-import type { SymptomFlow, SymptomOutcome } from "@/const/chatbot/symptomTypes";
+import type { AgeBand, Sex, SymptomFlow, SymptomOutcome, Who } from "@/const/chatbot/symptomTypes";
+import { ageIn, effectiveSex } from "@/const/chatbot/applies";
 
 const STOPWORDS = new Set(
   (
@@ -462,9 +463,10 @@ export function pickOutcome(flow: SymptomFlow, answers: Record<string, string[]>
     if (!m) return o;
     if (m.flag === "red" && worst !== "red") continue;
     if (m.flag === "amber" && !worst) continue;
-    if (m.ages && !(profile.age && (m.ages as string[]).includes(profile.age))) continue;
+    if (m.ages && !(profile.age && ageIn(m.ages, profile.age as AgeBand))) continue;
     if (m.who && !(profile.who && (m.who as string[]).includes(profile.who))) continue;
-    if (m.sex && !(profile.sex && (m.sex as string[]).includes(profile.sex))) continue;
+    const sex = effectiveSex({ who: profile.who as Who | undefined, sex: profile.sex as Sex | undefined });
+    if (m.sex && !(sex && m.sex.includes(sex))) continue;
     if (m.answers && !Object.entries(m.answers).every(([q, ids]) => (answers[q] || []).some((a) => ids.includes(a)))) continue;
     return o;
   }

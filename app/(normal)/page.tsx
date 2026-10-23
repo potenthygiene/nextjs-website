@@ -19,6 +19,7 @@ import StoryTruth from "../components/common/homepage/StoryTruth";
 import AboutStory from "../components/common/homepage/AboutStory";
 import { ProductCategories } from "../components/common/homepage/ProductCategories";
 import { YatraKitPromo } from "../components/common/homepage/YatraKitPromo";
+import { OffersBand } from "@/app/components/common/offers/Offers";
 
 export const metadata = pageMetadata("home");
 
@@ -39,6 +40,7 @@ export default function Home() {
           />
         </div>
       </div>
+      <OffersBand title="Offers running now" />
       <CategoryGrid />
       <StoryTruth key={STORY_CONTENT[0].title} {...STORY_CONTENT[0]} />
       <OurStory key={STORY_CONTENT[0].title} {...STORY_CONTENT[1]} />

@@ -29,6 +29,7 @@ import { BrandWhyChoose } from "@/app/components/common/homepage/brands/BrandWhy
 import { brandDataMap } from "@/const/globalconst";
 import BestsellingProducts from "@/app/components/common/homepage/BestSellingProduct";
 import { getFullProductDetails } from "@/helper/product/action";
+import { OffersBand } from "@/app/components/common/offers/Offers";
 
 export const dynamic = "force-dynamic";
 
@@ -76,6 +77,7 @@ export default async function OvyPage() {
     <main style={{ backgroundColor: data["bg-color"] }}>
       <OvyHero />
       <OvyShopSection productsBySlug={productsBySlug} />
+      <OffersBand title="Ovy offers running now" />
       <OvyShopByMoment productsBySlug={productsBySlug} />
       <OvyFindMyFit productsBySlug={productsBySlug} />
       <OvySizedToFlow />

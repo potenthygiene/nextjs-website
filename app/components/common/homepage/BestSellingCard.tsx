@@ -11,6 +11,7 @@ import {
   removeFromWishlist as removeWishlistDB,
 } from "@/store/WishlistActions";
 import { useEffect, useState } from "react";
+import { OfferTag } from "@/app/components/common/offers/Offers";
 
 type Props = {
   product: any;
@@ -383,6 +384,9 @@ export default function BestsellingCard({
               </span>
             )}
           </div>
+
+          {/* Live offer (const/coupons.ts) */}
+          <OfferTag className="mb-1.5 self-start" />
 
           {isOutOfStock ? (
             <button

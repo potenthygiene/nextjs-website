@@ -15,6 +15,16 @@ import { toast } from "sonner";
 import type { MixBoxRecipe, PurchaseType, SubscriptionType } from "@/lib/mixYourBox";
 import type { YatraKitCartItem } from "@/lib/yatraKit";
 import { getProductMaxQuantity, getMaxQuantityMessage } from "@/lib/productQuantityLimits";
+import { bagNudge, differentProductCount } from "@/const/coupons";
+import { FREE_SHIPPING_THRESHOLD } from "@/lib/shippingConfig";
+
+// "Added to bag", with a nudge towards free delivery or the next coupon.
+function addedToast() {
+  const items = useCartStore.getState().items;
+  const subtotal = items.reduce((sum, i) => sum + Number(i.price || 0) * Number(i.quantity || 1), 0);
+  const nudge = bagNudge(subtotal, differentProductCount(items), FREE_SHIPPING_THRESHOLD);
+  toast.success("Added to bag!", nudge ? { description: nudge, duration: 5000 } : undefined);
+}
 
 // Types
 type CartItem = {
@@ -136,7 +146,7 @@ export const addToCart = async (item: CartItem) => {
   const isAuth = await isUserLoggedIn();
   if (!isAuth) {
     // Guest user: Item added to local cart successfully!
-    toast.success("Added to bag!");
+    addedToast();
     return true;
   }
 
@@ -154,7 +164,7 @@ export const addToCart = async (item: CartItem) => {
       toast.error((result as any)?.message || "Failed to add item to bag. Please try again.");
       return false;
     }
-    toast.success("Added to bag!");
+    addedToast();
   } else {
     // ✅ DB sync
     const result = await addToCartDB(item.productId, item.quantity, item.selectedPlan, item.isSubscribed, item.productVariantId, item.cartSizes, item.uuid, {
@@ -169,7 +179,7 @@ export const addToCart = async (item: CartItem) => {
       toast.error((result as any)?.message || "Failed to add item to bag. Please try again.");
       return false;
     }
-    toast.success("Added to bag!");
+    addedToast();
   }
 
   return true;
