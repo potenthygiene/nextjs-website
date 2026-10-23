@@ -117,7 +117,7 @@ const SOLUTIONS = [
     icon: HeartHandshake,
     title: "Gifting & CSR drives",
     text: "Employee gifts, event kits and menstrual hygiene drives, packed and delivered for you.",
-    image: "/product-images/teen-pro.jpg",
+    image: "/product-images/cup-rbw.jpg",
   },
 ];
 
