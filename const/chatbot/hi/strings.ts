@@ -268,8 +268,6 @@ export const STRINGS_HI: Record<string, string> = {
   "That makes my day{n}! A short review helps other women choose, and earns you Rewards credit.":
     "यह सुनकर बहुत अच्छा लगा{n}! एक छोटा-सा रिव्यू दूसरी महिलाओं को चुनने में मदद करता है, और आपको Rewards क्रेडिट मिलता है।",
   " Up to ₹{n} for an approved review.": " अप्रूव हुए रिव्यू पर ₹{n} तक।",
-  "\n\nLove it enough to share? Your friend gets 20% off with **SAATHI20**, and you get 15% off with **SHARECARE15** once their first order is delivered.":
-    "\n\nशेयर करना चाहेंगे? आपके दोस्त को **SAATHI20** से 20% छूट मिलेगी, और उनका पहला ऑर्डर डिलीवर होते ही आपको **SHARECARE15** से 15% छूट।",
   "I'm sorry {name} didn't feel right. What went wrong? I'll pass it to the team and help you fix it.":
     "मुझे अफ़सोस है कि {name} ठीक नहीं लगा। क्या गड़बड़ हुई? मैं टीम तक बात पहुँचाऊँगी और इसे ठीक करने में मदद करूँगी।",
   "Thanks for telling me. The right size fixes most problems. These quizzes match what our site recommends.":
@@ -292,7 +290,7 @@ export const STRINGS_HI: Record<string, string> = {
   "Continue your chat": "अपनी चैट जारी रखें",
   "Tap to carry on where you left off.": "जहाँ छोड़ा था, वहीं से जारी रखने के लिए टैप करें।",
   Apply: "लगाएँ",
-  "One coupon per order. Tap Apply and I'll open your bag with it applied.": "एक ऑर्डर पर एक कूपन। लगाएँ पर टैप करें, मैं कूपन लगाकर आपका बैग खोल दूँगी।",
+  "One store coupon per order, plus FIRSTCARE15 or SHARECARE15 on top. Tap Apply and I'll open your bag with it applied.": "एक ऑर्डर पर एक स्टोर कूपन, और उसके ऊपर FIRSTCARE15 या SHARECARE15। लगाएँ पर टैप करें, मैं कूपन लगाकर आपका बैग खोल दूँगी।",
   "Quizzes & planners": "क्विज़ और प्लानर",
   "My orders": "मेरे ऑर्डर",
   Home: "होम",
@@ -320,4 +318,25 @@ export const STRINGS_HI: Record<string, string> = {
   "View order": "ऑर्डर देखें",
   " Add ₹{n} more for free delivery.": " ₹{n} का और सामान जोड़ें, डिलीवरी मुफ़्त हो जाएगी।",
   "\n\nAdd ₹{n} more for free delivery.": "\n\n₹{n} का और सामान जोड़ें, डिलीवरी मुफ़्त हो जाएगी।",
+  "\n\nLove it enough to share? Your friend gets 15% off their first order, and once it is delivered you get **SHARECARE15**, which adds on to any coupon.":
+    "\n\nशेयर करना चाहेंगे? आपके दोस्त को पहले ऑर्डर पर 15% छूट मिलेगी, और उनका ऑर्डर डिलीवर होते ही आपको **SHARECARE15** मिलेगा, जो किसी भी कूपन के साथ लगता है।",
+  "Your friend's gift: 15% off your first order": "दोस्त का तोहफ़ा: पहले ऑर्डर पर 15% की छूट",
+  "Use FIRSTCARE15 on ₹399 and above, and add a Stock Up coupon on bigger bags.": "₹399 और उससे ऊपर FIRSTCARE15 लगाएँ, और बड़े बैग पर Stock Up कूपन भी जोड़ें।",
+  "Welcome back{n}! It's been a while.": "फिर से स्वागत है{n}! काफ़ी दिन हो गए।",
+  "You have ₹{n} Rewards credit waiting. It applies by itself at checkout, together with coupons.": "आपका ₹{n} Rewards क्रेडिट इंतज़ार कर रहा है। यह चेकआउट पर कूपन के साथ अपने आप लग जाता है।",
+  "Here's what's new: today's offers and a quick way to buy again.": "नया क्या है: आज के ऑफ़र और फिर से ख़रीदने का आसान तरीका।",
+  "₹{n} Rewards credit to use": "₹{n} Rewards क्रेडिट इस्तेमाल के लिए",
+  "Applied by itself at checkout, together with coupons: up to 20% of your order, at most ₹150.": "चेकआउट पर कूपन के साथ अपने आप लगता है: ऑर्डर का 20% तक, ज़्यादा से ज़्यादा ₹150।",
+  "My rewards": "मेरे रिवॉर्ड",
+  "Sign in to see your Rewards credit and history. New accounts get ₹{n} credit to start.": "अपना Rewards क्रेडिट और हिस्ट्री देखने के लिए साइन इन करें। नए अकाउंट को शुरुआत में ₹{n} क्रेडिट मिलता है।",
+  "How do rewards work?": "रिवॉर्ड कैसे काम करते हैं?",
+  "You have **₹{n} Rewards credit**{N}. It applies by itself at checkout, together with coupons: up to 20% of your order, at most ₹150. Credit doesn't pay for delivery.":
+    "आपके पास **₹{n} Rewards क्रेडिट** है{N}। यह चेकआउट पर कूपन के साथ अपने आप लग जाता है: ऑर्डर का 20% तक, ज़्यादा से ज़्यादा ₹150। क्रेडिट से डिलीवरी चार्ज नहीं कटता।",
+  "You have no Rewards credit yet{n}. You earn 5% back on every delivered order, plus credit for reviews, your birthday and referring friends.":
+    "अभी आपके पास कोई Rewards क्रेडिट नहीं है{n}। हर डिलीवर हुए ऑर्डर पर 5% वापस मिलता है, साथ में रिव्यू, जन्मदिन और दोस्तों को रेफ़र करने पर क्रेडिट।",
+  "Full rewards history": "पूरी रिवॉर्ड हिस्ट्री",
+  "How do I earn more?": "और कैसे कमाऊँ?",
+  "Refer a friend": "दोस्त को रेफ़र करें",
+  "Rewards credit": "Rewards क्रेडिट",
+  "No credits earned or used yet.": "अभी तक कोई क्रेडिट नहीं कमाया या इस्तेमाल किया।",
 };

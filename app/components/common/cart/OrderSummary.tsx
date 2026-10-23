@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { ShieldCheck, Truck, Tag, Gift, Luggage } from "lucide-react";
+import { ShieldCheck, Truck, Gift } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useCartStore } from "@/store/cartStore";
 import {
@@ -11,8 +10,9 @@ import {
   FREE_SHIPPING_THRESHOLD,
 } from "@/lib/shippingConfig";
 import { validateCartCoupon } from "@/helper";
-import { couponConditions, differentProductCount, liveCoupons } from "@/const/coupons";
+import { differentProductCount } from "@/const/coupons";
 import { SpendMoreBar } from "@/app/components/common/offers/Offers";
+import { CouponWindow } from "@/app/components/common/offers/CouponWindow";
 import { toast } from "sonner";
 import Image from "next/image";
 import { getImageUrl } from "@/lib/imageUrl";
@@ -80,6 +80,31 @@ export function OrderSummary() {
     return () => window.removeEventListener("potent-apply-coupon", onApply);
   }, [items.length, appliedCoupon, setAppliedCoupon]);
 
+  // When the bag changes, check the applied coupon(s) again: a smaller bag can
+  // fall below a minimum, a bigger one changes the saving.
+  const bagSignature = items.map((i) => `${i.productId}:${i.price}:${i.quantity}`).join("|");
+  const lastChecked = useRef(bagSignature);
+  useEffect(() => {
+    if (!appliedCoupon?.code || !items.length || lastChecked.current === bagSignature) return;
+    lastChecked.current = bagSignature;
+    const code = appliedCoupon.code;
+    const t = setTimeout(() => {
+      validateCartCoupon({ code, items: itemsRef.current })
+        .then((res) => {
+          if (res.success && res.coupon) {
+            setAppliedCoupon({ ...res.coupon, discount: res.discount });
+          } else {
+            setAppliedCoupon(null);
+            setCouponInput("");
+            toast.info(`${code.replace("+", " + ")} was removed: ${res.message || "it no longer fits this bag"}`);
+          }
+        })
+        .catch(() => {});
+    }, 350);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bagSignature]);
+
   // ✅ Derived calculations
   const subtotal = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
@@ -91,28 +116,8 @@ export function OrderSummary() {
     0,
   );
 
-  let discount = 0;
-  if (appliedCoupon && subtotal > 0) {
-    if (
-      Number(appliedCoupon.minimumOrderValue || 0) > 0 &&
-      subtotal < Number(appliedCoupon.minimumOrderValue)
-    ) {
-      discount = 0;
-    } else {
-      if (appliedCoupon.isDiscountPercentage) {
-        discount = subtotal * ((appliedCoupon.discountPercentage ?? 0) / 100);
-      } else {
-        discount = appliedCoupon.discountFixedAmount ?? 0;
-      }
-      if (
-        appliedCoupon.maximumDiscountAmount &&
-        appliedCoupon.maximumDiscountAmount > 0
-      ) {
-        discount = Math.min(discount, appliedCoupon.maximumDiscountAmount);
-      }
-      discount = Math.round(Math.min(discount, subtotal) * 100) / 100;
-    }
-  }
+  // The discount is what the server worked out for the applied coupon(s).
+  const discount = appliedCoupon && subtotal > 0 ? Math.min(Number(appliedCoupon.discount || 0), subtotal) : 0;
 
   const discountedSubtotal = Math.max(0, subtotal - discount);
   const shipping =
@@ -126,27 +131,30 @@ export function OrderSummary() {
   // Free delivery counts the bag before any coupon, the same as checkout.
   const freeShippingDiff = FREE_SHIPPING_THRESHOLD - subtotal;
 
-  const handleApplyCoupon = async (picked?: string) => {
+  const handleApplyCoupon = async (picked?: string): Promise<boolean> => {
     const code = (picked || couponInput).trim().toUpperCase();
     if (picked) setCouponInput(code);
     if (!code) {
       toast.error("Please enter a coupon code");
-      return;
+      return false;
     }
     setCouponLoading(true);
     try {
       const res = await validateCartCoupon({ code, items });
       if (!res.success || !res.coupon) {
         toast.error(res.message || "Invalid coupon code");
-        return;
+        return false;
       }
+      lastChecked.current = bagSignature;
       setAppliedCoupon({
         ...res.coupon,
         discount: res.discount,
       });
       toast.success(res.message || `Coupon ${res.coupon.code} applied!`);
+      return true;
     } catch {
       toast.error("Failed to apply coupon");
+      return false;
     } finally {
       setCouponLoading(false);
     }
@@ -298,97 +306,19 @@ export function OrderSummary() {
         </div>
       )}
 
-      {/* Best coupon for this bag and the next spend-more step */}
-      <SpendMoreBar
-        subtotal={subtotal}
-        differentProducts={differentProductCount(items)}
-        onApply={(code) => handleApplyCoupon(code)}
-        applied={appliedCoupon?.code}
-      />
+      {/* How far the next spend-more saving is */}
+      <SpendMoreBar subtotal={subtotal} differentProducts={differentProductCount(items)} applied={appliedCoupon?.code} showBest={false} />
 
-      {/* 🎟️ Coupon Box in Cart */}
-      <div className="mb-5 space-y-2">
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              value={couponInput}
-              onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  if (!appliedCoupon) handleApplyCoupon();
-                }
-              }}
-              placeholder="Enter coupon code"
-              className="h-10 pl-9 uppercase font-mono tracking-wider text-xs sm:text-sm"
-              disabled={couponLoading || Boolean(appliedCoupon)}
-            />
-          </div>
-
-          {appliedCoupon ? (
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleRemoveCoupon}
-              disabled={couponLoading}
-              className="h-10 px-3 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 border-rose-200"
-            >
-              Remove
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              onClick={() => handleApplyCoupon()}
-              disabled={couponLoading || !couponInput.trim()}
-              className="h-10 px-4 text-xs font-bold bg-[#016271] hover:bg-[#014d59] text-white"
-            >
-              {couponLoading ? "Checking..." : "Apply"}
-            </Button>
-          )}
-        </div>
-
-        {/* Offers running today, tap to apply (rules in const/coupons.ts) */}
-        {!appliedCoupon && liveCoupons().length > 0 && (
-          <div className="rounded-lg border border-dashed border-[#9FD3D6] bg-[#F3FAFB] p-2.5">
-            <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-[#016271]">Available offers</p>
-            <div className="divide-y divide-[#D6ECEE]">
-              {liveCoupons().map((c) => (
-                <button
-                  key={c.code}
-                  type="button"
-                  onClick={() => handleApplyCoupon(c.code)}
-                  disabled={couponLoading}
-                  className="flex w-full items-center justify-between gap-3 py-2 text-left"
-                >
-                  <span className="min-w-0">
-                    <span className="block text-xs text-gray-800">
-                      <strong className="font-mono tracking-wide">{c.code}</strong> · {c.description}
-                    </span>
-                    <span className="block text-[11px] text-gray-500">{couponConditions(c)}</span>
-                  </span>
-                  <span className="shrink-0 text-xs font-bold text-[#016271]">Apply</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {appliedCoupon && discount > 0 && (
-          <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800 flex items-center justify-between">
-            <span>
-              Coupon <strong>{appliedCoupon.code}</strong> applied! You saved ₹{discount.toFixed(2)}.
-            </span>
-          </div>
-        )}
-
-        {appliedCoupon &&
-        Number(appliedCoupon.minimumOrderValue || 0) > 0 &&
-        subtotal < Number(appliedCoupon.minimumOrderValue) ? (
-          <div className="rounded-lg bg-amber-50 border border-amber-200 px-3 py-2 text-xs text-amber-800">
-            Min order value of ₹{appliedCoupon.minimumOrderValue} required for {appliedCoupon.code}.
-          </div>
-        ) : null}
+      {/* Coupons and offers, marketplace style (rules in const/coupons.ts) */}
+      <div className="mb-5">
+        <CouponWindow
+          items={items}
+          applied={appliedCoupon?.code ? { code: appliedCoupon.code, discount } : null}
+          onApply={(code) => handleApplyCoupon(code)}
+          onRemove={handleRemoveCoupon}
+          busy={couponLoading}
+        />
+        <p className="mt-2 text-[11.5px] text-gray-500">Your Rewards credit is applied on top at checkout.</p>
       </div>
 
       {/* 🎁 Gift Option in Cart */}
@@ -440,7 +370,7 @@ export function OrderSummary() {
         {appliedCoupon && discount > 0 && (
           <>
             <div className="flex justify-between text-sm text-emerald-700">
-              <span>Coupon Discount ({appliedCoupon.code})</span>
+              <span>Coupon Discount ({appliedCoupon.code.replace("+", " + ")})</span>
               <span className="font-bold">-₹{discount.toFixed(2)}</span>
             </div>
 

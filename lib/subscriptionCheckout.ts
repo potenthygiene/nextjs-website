@@ -231,7 +231,10 @@ export async function getSubscriptionCheckoutQuote(
   const discountedSubtotal = mixPricing
     ? discountedUnitPrice
     : discountedUnitPrice * quantity;
-  const shipping = calculateShippingFee(discountedSubtotal);
+  // Free delivery is judged on the price before the subscription saving, the
+  // same as coupons, so subscribing never adds a delivery charge.
+  const priceBeforeSaving = mixPricing ? subtotal : baseVariantPrice * quantity;
+  const shipping = calculateShippingFee(priceBeforeSaving);
   const totalBeforeRewards = discountedSubtotal + shipping;
   const rewardState = userId
     ? await syncAndGetUserRewards(userId)

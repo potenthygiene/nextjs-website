@@ -1,5 +1,5 @@
 import type { Applies, SymptomFlow } from "../symptomTypes";
-import { FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO } from "../applies";
+import { FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO, SEX_SYMPTOMS } from "../applies";
 
 // Cycle check-ins: late, irregular, heavy, spotting and painful periods.
 // These never diagnose and never name a medicine. Red-flag outcomes come
@@ -7,8 +7,9 @@ import { FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO } from "../appli
 
 // Period check-ins fit anyone who may have periods: girls from about 8,
 // teens and women, never a male, a son or a child under 5. Pregnancy,
-// birth, sex and contraception only come up for women 18 to 44 asking for
-// themselves or someone else (see REPRO in ../applies).
+// birth and contraception only come up for women 18 to 49 asking for
+// themselves or someone else (REPRO in ../applies), and sex-related symptoms
+// for women 18 and over, including after menopause (SEX_SYMPTOMS).
 const PERIOD_FLOW: Applies = { ...FEMALE, ages: PERIOD_AGES };
 const PERIOD_NOT_FOR =
   "This check-in is about periods, so it doesn't fit the details you gave: for a boy, a man or a young child with a health worry, a doctor is the best next step, and any bleeding from the vagina in a young girl needs a doctor soon.";
@@ -184,6 +185,7 @@ export const FLOWS: SymptomFlow[] = [
           "Stress, travel, illness or weight change delaying ovulation",
           "An emergency pill, which can make the next period early or about a week late",
           "Starting or stopping hormonal contraception",
+          "Perimenopause in the 40s, though pregnancy is still possible until a full year without periods",
         ],
         whatHelps: [
           "Do a home pregnancy test, ideally with the first urine of the morning",
@@ -958,7 +960,7 @@ export const FLOWS: SymptomFlow[] = [
         options: [
           { id: "mid", label: "Around the middle of the cycle" },
           { id: "before", label: "A day or two before a period" },
-          { id: "after-sex", label: "After sex", flag: "amber", showIf: REPRO },
+          { id: "after-sex", label: "After sex", flag: "amber", showIf: SEX_SYMPTOMS },
           { id: "random", label: "At random times, no pattern" },
           { id: "contraception", label: "Since starting, changing or missing contraception (pill, injection, IUD or emergency pill)", showIf: REPRO },
           { id: "menopause", label: "After menopause (a year or more with no periods)", flag: "red", showIf: { ages: MIDLIFE_AGES } },
@@ -991,7 +993,7 @@ export const FLOWS: SymptomFlow[] = [
           { id: "heavy-faint", label: "Heavy bleeding, fainting or feeling very dizzy", flag: "red" },
           { id: "severe-pain", label: "Severe or one-sided tummy pain, or pain with a fever", flag: "red" },
           { id: "discharge", label: "Unusual discharge, a strong smell or itching", flag: "amber" },
-          { id: "sex-pain", label: "Pain during sex", flag: "amber", showIf: REPRO },
+          { id: "sex-pain", label: "Pain during sex", flag: "amber", showIf: SEX_SYMPTOMS },
           { id: "none", label: "None of these" },
         ],
       },
@@ -1079,6 +1081,29 @@ export const FLOWS: SymptomFlow[] = [
           "Don't wait to see if it stops on its own",
         ],
         seeDoctor: "See a doctor within a few days: this is one to check, never one to wait out.",
+        products: ["ovy-liners"],
+      },
+      {
+        id: "sp-sex-midlife",
+        match: { answers: { when: ["after-sex"] }, ages: ["45-49", "50+"] },
+        urgency: "soon",
+        title: "Bleeding after sex in your late 40s or 50s needs a doctor's check",
+        summary:
+          "Bleeding after sex should always be checked, and at this age it's one to book soon rather than wait out. It's usually something common and treatable, such as thin, dry skin or a polyp, and the few serious causes are much easier to treat when found early.",
+        oftenLinkedTo: [
+          "Thinner, drier vaginal skin as hormone levels fall around and after menopause",
+          "Polyps, or changes on the surface of the cervix",
+          "An infection, including one passed on through sex",
+          "Less often, cancer of the cervix or womb, which is much easier to treat when found early",
+        ],
+        whatHelps: [
+          "Book a gynaecologist visit this week, even if it happened only once",
+          "Avoid sex until a doctor has checked",
+          "Mention any dryness or pain during sex: there are simple, effective treatments",
+          "Keep up with any cervical screening your doctor suggests",
+        ],
+        seeDoctor:
+          "See a gynaecologist within a week, and within a few days if periods stopped a year or more ago.",
         products: ["ovy-liners"],
       },
       {
@@ -1312,7 +1337,7 @@ export const FLOWS: SymptomFlow[] = [
           { id: "fever", label: "Fever, or feeling hot and shivery", flag: "red" },
           { id: "one-sided", label: "Sudden severe pain on one side, or fainting", flag: "red" },
           { id: "pregnancy", label: "Pregnancy is possible and the period is late or unusual", flag: "red", showIf: REPRO },
-          { id: "sex-bowel", label: "Pain during sex", flag: "amber", showIf: REPRO },
+          { id: "sex-bowel", label: "Pain during sex", flag: "amber", showIf: SEX_SYMPTOMS },
           { id: "bowel", label: "Pain when pooing or peeing", flag: "amber" },
           { id: "heavy", label: "Very heavy bleeding or big clots", flag: "amber" },
           { id: "none", label: "None of these" },

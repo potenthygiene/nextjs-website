@@ -15,7 +15,6 @@ import { toast } from "sonner";
 import { getCheckoutPricing } from "@/helper";
 import { getDirectCheckoutPricing } from "@/helper/checkout/action";
 import { clearCart } from "@/store/cartActions";
-import { Input } from "@/components/ui/input";
 import { useCartStore } from "@/store/cartStore";
 import {
   getCleanProductTitle,
@@ -26,6 +25,7 @@ import {
 import { getImageUrl } from "@/lib/imageUrl";
 import { formatMixBoxRecipe } from "@/lib/mixYourBox";
 import { formatYatraKitContents, getYatraKitData } from "@/lib/yatraKit";
+import { CouponWindow } from "@/app/components/common/offers/CouponWindow";
 
 export function CheckoutSummary({
   selected,
@@ -208,26 +208,6 @@ export function CheckoutSummary({
       }
     }
   }, [checkoutMode, subscriptionCheckout, directCheckoutItem]);
-
-  const handleApplyCoupon = async () => {
-    const code = couponInput.trim();
-    if (!code) {
-      toast.error("Please enter a coupon code");
-      return;
-    }
-
-    setCouponLoading(true);
-    const res: any = await loadPricing(code);
-    setCouponLoading(false);
-
-    if (res && res.success) {
-      if (res.savingsChoiceNotice) {
-        toast.info(res.savingsChoiceNotice, { duration: 5000 });
-      } else if (res.coupon) {
-        toast.success(`Coupon ${res.coupon.code} applied!`);
-      }
-    }
-  };
 
   const handleRemoveCoupon = async () => {
     setCouponInput("");
@@ -519,45 +499,25 @@ export function CheckoutSummary({
 
         {!isSubscriptionCheckout && (
           <div className="space-y-2">
-            <div className="flex gap-2">
-              <Input
-                value={couponInput}
-                onChange={(event) =>
-                  setCouponInput(event.target.value.toUpperCase())
+            {/* Coupons and offers, marketplace style (rules in const/coupons.ts) */}
+            <CouponWindow
+              items={displayItems}
+              applied={appliedCoupon?.code ? { code: appliedCoupon.code, discount } : null}
+              onApply={async (code) => {
+                setCouponLoading(true);
+                const res: any = await loadPricing(code);
+                setCouponLoading(false);
+                if (res && res.success && res.coupon) {
+                  toast.success(`${String(res.coupon.code).replace("+", " + ")} applied! You save ₹${Number(res.discount || 0).toFixed(2)}`);
+                  return true;
                 }
-                placeholder="Enter coupon code"
-                className="h-10 uppercase"
-                disabled={couponLoading || loading || Boolean(appliedCoupon)}
-              />
-
-              {appliedCoupon ? (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleRemoveCoupon}
-                  disabled={couponLoading || loading}
-                  className="h-10"
-                >
-                  Remove
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  onClick={handleApplyCoupon}
-                  disabled={couponLoading || loading}
-                  className="h-10"
-                >
-                  {couponLoading ? "Checking..." : "Apply"}
-                </Button>
-              )}
-            </div>
-
-            {appliedCoupon && (
-              <div className="rounded-md bg-green-50 px-3 py-2 text-xs text-green-700">
-                Coupon <strong>{appliedCoupon.code}</strong> applied. You saved ₹
-                {discount.toFixed(2)}.
-              </div>
-            )}
+                // The coupon didn't fit: go back to what was applied before.
+                await loadPricing(appliedCoupon?.code || "");
+                return false;
+              }}
+              onRemove={handleRemoveCoupon}
+              busy={couponLoading || loading}
+            />
 
             {savingsNotice && (
               <div className="rounded-md bg-cyan-50 border border-[#016271]/20 p-2.5 text-xs text-[#016271] leading-relaxed">
@@ -612,7 +572,7 @@ export function CheckoutSummary({
                 {isSubscriptionCheckout
                   ? `Subscription Discount · Save ${subscriptionQuote?.discountPercentage ?? 0}%`
                   : appliedCoupon?.code
-                    ? `Coupon Discount (${appliedCoupon.code})`
+                    ? `Coupon Discount (${String(appliedCoupon.code).replace("+", " + ")})`
                     : "Coupon Discount"}
               </span>
               <span className="font-bold">-₹{discount.toFixed(2)}</span>
@@ -652,20 +612,20 @@ export function CheckoutSummary({
                   Rewards Credit Applied (Auto)
                 </span>
                 <span className="text-[10px] text-emerald-600">
-                  Up to 20% of product total (max ₹150)
+                  {appliedCoupon ? "Used together with your coupon: up to 20% of what is left, max ₹150" : "Up to 20% of product total (max ₹150)"}
                 </span>
               </div>
               <span className="font-bold">-₹{rewardsUsed.toFixed(2)}</span>
             </div>
-          ) : appliedCoupon && rewardBalance > 0 ? (
+          ) : rewardBalance > 0 && !isSubscriptionCheckout ? (
             <p className="text-[11px] text-emerald-800 pt-0.5">
-              Your ₹{rewardBalance} rewards credit remains in your wallet (cannot be combined with coupon; coupon saved more).
+              Your credit is applied automatically on one-time orders, together with any coupon.
             </p>
           ) : (
             <p className="text-[11px] text-gray-500">
               {isSubscriptionCheckout
                 ? "Credits are used on one-time orders only, not on subscriptions."
-                : "Credits are applied automatically (up to 20% of product total, max ₹150)."}
+                : "No credit yet: you earn 5% back on every delivered order, plus credit for reviews and referrals."}
             </p>
           )}
         </div>

@@ -204,7 +204,7 @@ const Page = () => {
           <p className="mb-3 rounded-lg bg-[#F3FAFB] px-3 py-2 text-center text-xs text-[#016271]">
             {ref ? (
               <>
-                Joining with a friend&apos;s link? You get <strong>₹150 credit</strong> plus <strong className="font-mono">SAATHI20</strong>: 20% off your first order.
+                Joining with a friend&apos;s link? You get <strong>₹150 credit</strong> plus <strong className="font-mono">FIRSTCARE15</strong>: 15% off your first order.
               </>
             ) : (
               <>

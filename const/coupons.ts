@@ -8,8 +8,18 @@
 // database automatically the next time checkout or Admin → Coupons loads,
 // and the site and Potent Saathi start showing it once it is public and live.
 // Database limits: name and code up to 20 characters, description up to 100.
+//
+// Combining coupons (like Amazon and Shopify stores, not one-code-only like Myntra):
+// - One store coupon per order: a festival, Stock Up or Pair Up coupon.
+// - Plus at most one personal coupon on top:
+//   FIRSTCARE15 (first order) adds on to a Stock Up coupon only;
+//   SHARECARE15 (for referring a friend) adds on to any one store coupon.
+// - Every percentage is worked out on the bag total, and all coupons together
+//   take at most 30% off the bag.
+// - Rewards credits still apply on top (up to 20% of what is left, at most ₹150).
 
 export type CouponKind = "welcome" | "friend" | "referrer" | "festival" | "combo" | "tier";
+export type CouponGroup = "store" | "personal";
 
 export type StoreCoupon = {
   code: string;
@@ -32,6 +42,8 @@ export type StoreCoupon = {
   referredOnly?: boolean;
   /** Once for every referred friend whose first order has been delivered. */
   referrerOnly?: boolean;
+  /** Personal coupons only: the store coupon kinds it can be added to. */
+  stacksWith?: CouponKind[];
   /** Shown on the site and by the chat. */
   public: boolean;
   /** Short line for banners and the chat. */
@@ -45,47 +57,33 @@ export const STORE_COUPONS: StoreCoupon[] = [
     code: "FIRSTCARE15",
     kind: "welcome",
     name: "First Care 15%",
-    description: "15% off your first order when you sign up, on orders of ₹399 and above",
-    descriptionHi: "साइन अप करने पर पहले ऑर्डर पर 15% की छूट, ₹399 और उससे ऊपर के ऑर्डर पर",
+    description: "15% off your first order, and it adds on to a Stock Up coupon",
+    descriptionHi: "पहले ऑर्डर पर 15% की छूट, और यह Stock Up कूपन के साथ भी लगती है",
     percent: 15,
     minimumOrderValue: 399,
     maximumDiscountAmount: 150,
     useOnce: true,
     firstOrderOnly: true,
+    stacksWith: ["tier"],
     public: true,
     pitch: "New here? Sign up and get 15% off your first order with FIRSTCARE15",
     pitchHi: "नए हैं? साइन अप करें और FIRSTCARE15 से पहले ऑर्डर पर 15% की छूट पाएँ",
   },
   {
-    code: "SAATHI20",
-    kind: "friend",
-    name: "Saathi Friend 20%",
-    description: "20% off the first order for friends who join with a referral link",
-    descriptionHi: "रेफ़रल लिंक से जुड़ने वाले दोस्तों के लिए पहले ऑर्डर पर 20% की छूट",
-    percent: 20,
-    minimumOrderValue: 399,
-    maximumDiscountAmount: 200,
-    useOnce: true,
-    firstOrderOnly: true,
-    referredOnly: true,
-    public: true,
-    pitch: "Joined with a friend's link? 20% off your first order with SAATHI20",
-    pitchHi: "दोस्त के लिंक से जुड़े हैं? SAATHI20 से पहले ऑर्डर पर 20% की छूट",
-  },
-  {
     code: "SHARECARE15",
     kind: "referrer",
     name: "Share Care 15%",
-    description: "15% off for you, once for every friend whose first order is delivered",
-    descriptionHi: "हर उस दोस्त के लिए एक बार 15% की छूट, जिसका पहला ऑर्डर डिलीवर हो गया हो",
+    description: "15% off for referring a friend, and it adds on to any one store coupon",
+    descriptionHi: "दोस्त को रेफ़र करने पर 15% की छूट, और यह किसी भी एक स्टोर कूपन के साथ लगती है",
     percent: 15,
     minimumOrderValue: 399,
     maximumDiscountAmount: 200,
     useOnce: false,
     referrerOnly: true,
+    stacksWith: ["festival", "tier", "combo"],
     public: true,
-    pitch: "Refer a friend: they get 20% off, you get 15% off with SHARECARE15",
-    pitchHi: "दोस्त को रेफ़र करें: उन्हें 20% छूट, आपको SHARECARE15 से 15% छूट",
+    pitch: "Refer a friend: they get 15% off their first order, and you get SHARECARE15 to add to any coupon",
+    pitchHi: "दोस्त को रेफ़र करें: उन्हें पहले ऑर्डर पर 15% छूट, और आपको SHARECARE15 जो किसी भी कूपन के साथ लगे",
   },
 
   // ---- Festivals
@@ -152,6 +150,23 @@ export const STORE_COUPONS: StoreCoupon[] = [
     public: true,
     pitch: "Holi offer: 10% off with HOLI10, till 23 March",
     pitchHi: "होली ऑफ़र: HOLI10 से 10% की छूट, 23 मार्च तक",
+  },
+
+  {
+    code: "OWNYOURFLOW10",
+    kind: "festival",
+    name: "Own Your Flow 10%",
+    description: "10% off for Menstrual Hygiene Day week, on orders of ₹399 and above",
+    descriptionHi: "मेंस्ट्रुअल हाइजीन डे वीक पर 10% की छूट, ₹399 और उससे ऊपर के ऑर्डर पर",
+    percent: 10,
+    minimumOrderValue: 399,
+    maximumDiscountAmount: 150,
+    useOnce: false,
+    startsAt: "2027-05-24T00:00:00+05:30",
+    endsAt: "2027-05-31T23:59:59+05:30",
+    public: true,
+    pitch: "Menstrual Hygiene Day: 10% off with OWNYOURFLOW10, till 31 May",
+    pitchHi: "मेंस्ट्रुअल हाइजीन डे: OWNYOURFLOW10 से 10% की छूट, 31 मई तक",
   },
 
   // ---- Bigger bags
@@ -233,7 +248,7 @@ export const STORE_COUPONS: StoreCoupon[] = [
  * versions replaced by the coupons above. Unused ones are removed from the
  * database automatically; used ones stay for order history but can't be applied.
  */
-export const RETIRED_CODES = ["TEST20", "TEST50", "TEENFIRST10", "WELCOME15", "COMBO10", "COMBO15"];
+export const RETIRED_CODES = ["TEST20", "TEST50", "TEENFIRST10", "WELCOME15", "COMBO10", "COMBO15", "SAATHI20"];
 /** Kept for older imports. */
 export const BLOCKED_CODES = RETIRED_CODES;
 
@@ -272,6 +287,40 @@ export function couponSaving(c: StoreCoupon, subtotal: number) {
   return Math.round(Math.min(raw, c.maximumDiscountAmount || raw, subtotal) * 100) / 100;
 }
 
+/** All coupons together take at most this share of the bag. */
+export const COMBINED_CAP = 0.3;
+
+export const groupOf = (c: StoreCoupon): CouponGroup => (c.kind === "welcome" || c.kind === "referrer" || c.kind === "friend" ? "personal" : "store");
+
+/** "A+B" or "A + B" → ["A", "B"], at most two, no repeats. */
+export function parseCodes(raw?: string | null) {
+  return [...new Set(String(raw || "").toUpperCase().split(/[+,\s]+/).map((c) => c.trim()).filter(Boolean))].slice(0, 2);
+}
+export const joinCodes = (codes: string[]) => codes.join("+");
+
+/** Why two coupons can't be used together, or null when they can. */
+export function stackProblem(a: StoreCoupon, b: StoreCoupon): string | null {
+  if (a.code === b.code) return "That coupon is already applied";
+  const ga = groupOf(a);
+  const gb = groupOf(b);
+  if (ga === "store" && gb === "store") return `Only one store coupon per order: choose ${a.code} or ${b.code}`;
+  if (ga === "personal" && gb === "personal") return `${a.code} and ${b.code} can't be used together`;
+  const personal = ga === "personal" ? a : b;
+  const store = ga === "personal" ? b : a;
+  if (!personal.stacksWith?.includes(store.kind)) {
+    return personal.kind === "welcome" ? `${personal.code} adds on to a Stock Up coupon only, not ${store.code}` : `${personal.code} can't be added to ${store.code}`;
+  }
+  return null;
+}
+
+/** One line on what a coupon can be combined with, for coupon lists. */
+export function stackNote(c: StoreCoupon) {
+  if (c.kind === "welcome") return "Can be added to a Stock Up coupon";
+  if (c.kind === "referrer") return "Can be added to any one store coupon";
+  if (c.kind === "tier") return "Can be combined with FIRSTCARE15 or SHARECARE15";
+  return "Can be combined with SHARECARE15";
+}
+
 export type BagOffer = { coupon: StoreCoupon; saving: number };
 
 /**
@@ -282,22 +331,32 @@ export type BagOffer = { coupon: StoreCoupon; saving: number };
 export function bagOffers(
   subtotal: number,
   differentProducts: number,
-  opts: { firstOrder?: boolean; referred?: boolean; now?: number } = {},
+  opts: { firstOrder?: boolean; referred?: boolean; referrerCredits?: number; now?: number } = {},
 ) {
   const usable = liveCoupons(opts.now).filter((c) => {
-    if (c.kind === "referrer") return false;
-    if (c.kind === "friend" && !opts.referred) return false;
+    if (c.kind === "referrer" && !opts.referrerCredits) return false;
+    if (c.kind === "friend") return false;
     if (c.firstOrderOnly && !opts.firstOrder) return false;
     if (c.minDifferentProducts && differentProducts < c.minDifferentProducts) return false;
     return true;
   });
-  const best = usable
-    .map((coupon) => ({ coupon, saving: couponSaving(coupon, subtotal) }))
-    .filter((o) => o.saving > 0)
-    .sort((a, b) => b.saving - a.saving)[0] as BagOffer | undefined;
+  const scored = usable.map((coupon) => ({ coupon, saving: couponSaving(coupon, subtotal) })).filter((o) => o.saving > 0);
+  const best = [...scored].sort((a, b) => b.saving - a.saving)[0] as BagOffer | undefined;
+  // The best pair: one store coupon plus one personal coupon that adds on to it.
+  let combo: { coupons: BagOffer[]; saving: number } | undefined;
+  for (const a of scored.filter((o) => groupOf(o.coupon) === "store")) {
+    for (const b of scored.filter((o) => groupOf(o.coupon) === "personal")) {
+      if (stackProblem(a.coupon, b.coupon)) continue;
+      const saving = Math.min(a.saving + b.saving, Math.round(subtotal * COMBINED_CAP * 100) / 100);
+      if (!combo || saving > combo.saving) combo = { coupons: [a, b], saving };
+    }
+  }
+  const top = combo && combo.saving > (best?.saving || 0) ? combo : best ? { coupons: [best], saving: best.saving } : undefined;
   const nextTier = TIER_COUPONS.find((c) => c.minimumOrderValue > subtotal && (c.flat || 0) > (best?.saving || 0));
   return {
     best,
+    /** The best coupons to use together (one or two), and what they save. */
+    top,
     next: nextTier ? { coupon: nextTier, needed: Math.ceil(nextTier.minimumOrderValue - subtotal), saving: nextTier.flat || 0 } : undefined,
   };
 }

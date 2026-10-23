@@ -1,11 +1,12 @@
 import type { SymptomFlow } from "../symptomTypes";
-import { FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO } from "../applies";
+import { FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO, SEX_SYMPTOMS } from "../applies";
 
 // Intimate health check-ins: discharge, itching, burning when peeing, PMS and
-// pad rash. Guidance only, never a diagnosis. Pregnancy, sex and
-// contraception only come up for women 18 to 44 asking for themselves or
-// someone else (REPRO in ../applies); children and women 45+ get their own
-// outcomes where the general wording wouldn't fit.
+// pad rash. Guidance only, never a diagnosis. Pregnancy and contraception
+// only come up for women 18 to 49 asking for themselves or someone else
+// (REPRO in ../applies), and sex-related symptoms for women 18 and over
+// (SEX_SYMPTOMS); children, teens and older women get their own outcomes
+// where the general wording wouldn't fit.
 
 export const FLOWS: SymptomFlow[] = [
   // 1. Changes in vaginal discharge
@@ -65,7 +66,7 @@ export const FLOWS: SymptomFlow[] = [
           { id: "pain", label: "Pain low in my tummy or pelvis", flag: "amber" },
           { id: "sores", label: "Sores, blisters or lumps", flag: "amber" },
           { id: "fever", label: "Fever along with tummy or pelvic pain", flag: "red" },
-          { id: "bleed", label: "Bleeding after sex", flag: "red", showIf: REPRO },
+          { id: "bleed", label: "Bleeding after sex", flag: "red", showIf: SEX_SYMPTOMS },
           { id: "bleed-meno", label: "Any bleeding after menopause", flag: "red", showIf: { ages: MIDLIFE_AGES } },
           { id: "none", label: "None of these" },
         ],
@@ -329,8 +330,30 @@ export const FLOWS: SymptomFlow[] = [
         ],
       },
       {
+        id: "discharge-girl",
+        match: { ages: ["5-12"] },
+        urgency: "checkup",
+        title: "Discharge in a girl: often normal near the first period, but worth a check",
+        summary:
+          "In girls close to their first period, usually from about 9 or 10, a little white or clear discharge is normal and a sign that periods are on the way. In a younger girl, or if you're not sure, a gentle check by a doctor is the safe next step.",
+        oftenLinkedTo: [
+          "A sign that periods may start within a year or so, when there are other signs of puberty like breast buds",
+          "Irritation from soap, bubble bath, wipes or tight clothes",
+          "A mild infection, which a doctor can check easily",
+        ],
+        whatHelps: [
+          "Wash the outside with plain warm water only and pat dry",
+          "Loose cotton underwear, changed daily",
+          "Wipe front to back every time",
+          "If periods seem close, a starter kit in the school bag helps her feel ready",
+        ],
+        seeDoctor:
+          "Book a visit if there are no other signs of puberty yet, or if there is itching, a smell, a change in colour, blood or pain.",
+        products: ["ovy-teen"],
+      },
+      {
         id: "discharge-normal-young",
-        match: { ages: ["u13", "13-17"] },
+        match: { ages: ["13-17"] },
         urgency: "selfcare",
         title: "This sounds like everyday discharge",
         summary:
@@ -477,7 +500,7 @@ export const FLOWS: SymptomFlow[] = [
           { id: "sores", label: "Sores, blisters or ulcers", flag: "amber" },
           { id: "patches", label: "White, thin or shiny patches of skin", flag: "amber" },
           { id: "fever", label: "Fever or pain low in my tummy", flag: "red" },
-          { id: "bleed", label: "Bleeding after sex", flag: "red", showIf: REPRO },
+          { id: "bleed", label: "Bleeding after sex", flag: "red", showIf: SEX_SYMPTOMS },
           { id: "bleed-other", label: "Any bleeding that isn't a normal period", flag: "red" },
           { id: "none", label: "None of these" },
         ],
@@ -595,7 +618,7 @@ export const FLOWS: SymptomFlow[] = [
           "If threadworms are possible, a doctor or pharmacist can advise on treatment for the whole family",
         ],
         seeDoctor:
-          "See a doctor if it doesn't settle in a few days, keeps coming back, or there is discharge, bleeding, sores or white patches.",
+          "A doctor's check is always worthwhile in a young child: book one if it hasn't settled in 2 or 3 days or keeps coming back, and sooner for discharge, bleeding, sores or white patches.",
       },
       {
         id: "itching-discharge",
@@ -876,6 +899,7 @@ export const FLOWS: SymptomFlow[] = [
           "Plenty of water through the day",
           "Wash the outside with plain warm water only, and for girls, wipe front to back",
           "Go to the toilet when the urge comes, even at school",
+          "For a boy, sudden pain or swelling in the testicles needs emergency care straight away",
         ],
         seeDoctor:
           "Within 1 to 2 days, and today if there is a fever, vomiting or tummy or back pain.",
@@ -896,6 +920,7 @@ export const FLOWS: SymptomFlow[] = [
           "See a doctor in the next day or two and ask for a urine test",
           "Drink enough water to keep your urine pale",
           "Don't hold urine for long",
+          "Discharge from the penis, or pain or swelling in the testicles, also needs a doctor soon, and sudden severe pain there needs emergency care",
         ],
         seeDoctor:
           "Within 1 to 2 days, and today if a fever, back pain or vomiting starts.",
@@ -911,6 +936,7 @@ export const FLOWS: SymptomFlow[] = [
           "A urine infection that needs the right treatment",
           "Repeat infections, which a doctor may want to look into further",
           "Irritation that feels like an infection but needs a different approach",
+          "Lower hormone levels after menopause, which make repeat infections more likely",
         ],
         whatHelps: [
           "See a doctor in the next day or two and ask for a urine test",

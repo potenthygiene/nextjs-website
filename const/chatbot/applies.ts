@@ -47,16 +47,31 @@ export function applies(cond: Applies | undefined, p: ProfileLike, answers: Reco
 
 // ── Shared conditions used by the check-ins ──
 
-/** Ages where pregnancy, birth, sex and contraception questions may be asked. */
-export const ADULT_AGES: AgeBand[] = ["18-29", "30-39", "40-44"];
+/** Every adult age band, 18 and over. */
+export const ADULT_AGES: AgeBand[] = ["18-29", "30-39", "40-44", "45-49", "50+"];
 
 /**
- * Pregnancy, the chance of pregnancy, a recent baby, breastfeeding, sex and
- * contraception: only for a woman aged 18 to 44 asking for herself or for
- * someone else, never for a child, a teen, 45 and over, a male, or when a
+ * Ages where pregnancy questions may be asked: 18 to 49. Pregnancy is still
+ * possible in the late 40s, until a full year without periods, so women 45 to
+ * 49 are asked too. Not asked from 50.
+ */
+export const PREG_AGES: AgeBand[] = ["18-29", "30-39", "40-44", "45-49"];
+
+/**
+ * Pregnancy, the chance of pregnancy, a recent baby, breastfeeding and
+ * contraception: only for a woman aged 18 to 49 asking for herself or for
+ * someone else, never for a child, a teen, 50 and over, a male, or when a
  * parent is asking about a daughter or son.
  */
-export const REPRO: Applies = { ages: ADULT_AGES, sex: ["female", "other"], who: ["me", "someone"] };
+export const REPRO: Applies = { ages: PREG_AGES, sex: ["female", "other"], who: ["me", "someone"] };
+
+/**
+ * Sex-related symptoms, such as bleeding after sex or pain during sex: for a
+ * woman of any adult age asking for herself or someone else, including after
+ * menopause, when bleeding after sex is a red flag. Never for a child, a teen,
+ * a male, or when a parent is asking about a daughter or son.
+ */
+export const SEX_SYMPTOMS: Applies = { ages: ADULT_AGES, sex: ["female", "other"], who: ["me", "someone"] };
 
 /** Anyone who may have periods: girls from about 8 (inside 5-12) up. */
 export const PERIOD_AGES: AgeBand[] = ["5-12", "13-17", "18-29", "30-39", "40-44", "45-49", "50+"];
@@ -67,8 +82,10 @@ export const FEMALE: Applies = { sex: ["female", "other"], who: ["me", "daughter
 /** Menopause options: 40 and over. */
 export const MIDLIFE_AGES: AgeBand[] = ["40-44", "45-49", "50+"];
 
-/** Ages where the "pregnancy free" wording should be used in outcomes. */
+/** Age groups some outcomes are written for. */
 export const CHILD_AGES: AgeBand[] = ["u5", "5-12"];
 export const YOUNG_AGES: AgeBand[] = ["u5", "5-12", "13-17"];
 export const OLDER_AGES: AgeBand[] = ["45-49", "50+"];
-export const NO_PREG_AGES: AgeBand[] = ["u5", "5-12", "13-17", "45-49", "50+"];
+
+/** Ages that get the outcome wording without pregnancy: children, teens and 50+. */
+export const NO_PREG_AGES: AgeBand[] = ["u5", "5-12", "13-17", "50+"];

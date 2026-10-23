@@ -70,6 +70,22 @@ import {
 } from "@/lib/productStaticContent";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
 import { OffersForYou } from "@/app/components/common/offers/Offers";
+import {
+  OVY_QUIZ_THEME,
+  QuizModal,
+  QuizResult,
+  QuizSteps,
+  useQuizFlow,
+} from "@/app/components/common/quiz/QuizKit";
+import {
+  PAD_PICKS,
+  PAD_STEPS,
+  isMixPick,
+  mixRecipeFor,
+  padQuizResult,
+  padSizeOfVariant,
+  type PadPickKey,
+} from "@/const/quizRules";
 
 type DeliveryStatus =
   | {
@@ -240,12 +256,8 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
 
   // UI state for Quiz & Comparison & Sticky bar
   const [isQuizOpen, setIsQuizOpen] = useState(false);
-  const [quizStep, setQuizStep] = useState(0);
-  const [quizAnswers, setQuizAnswers] = useState({
-    flow: "",
-    leaks: "",
-    duration: "",
-  });
+  const padQuiz = useQuizFlow(PAD_STEPS);
+  const [quizAdding, setQuizAdding] = useState(false);
   const [showSizeCompare, setShowSizeCompare] = useState(false);
   const [showStickyBar, setShowStickyBar] = useState(false);
 
@@ -857,120 +869,180 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
     setActiveImage(productImages[nextIdx]);
   };
 
-  // Quiz Recommendation Calculation
-  const recommendedQuizResult = useMemo(() => {
-    const { flow, leaks, duration } = quizAnswers;
-    if (
-      flow === "variable" ||
-      duration === "7+" ||
-      (flow === "heavy" && duration === "5-7")
-    ) {
-      return {
-        size: "Mix Your Box",
-        badge: "RECOMMENDED FOR YOUR CYCLE",
-        why: "Your period flow varies across your cycle. Mix Your Box gives you L for light days, XL for regular days, and XL+ for heavy flow & overnight in a single box!",
-        type: "mixYourBox",
-        variantSize: "Mix Your Box",
-        price: Number(activeVariant?.price || 349),
-        image: activeVariant?.bannerImage || productInfo?.bannerImage,
-      };
+  // Pad size quiz: the rules live in const/quizRules.ts (shared with the chat).
+  const padQuizOutcome = useMemo(() => {
+    if (!padQuiz.done) return null;
+    const outcome = padQuizResult(padQuiz.answers);
+    // Without Mix Your Box on this page, lead with the single size instead.
+    if (!canCustomizeBox && isMixPick(outcome.primary) && !isMixPick(outcome.alternative)) {
+      return { ...outcome, primary: outcome.alternative, alternative: outcome.primary };
     }
-    if (flow === "extra_heavy" || leaks === "often") {
-      const match = variantsList.find((v: any) => v.size?.includes("320"));
-      return {
-        size: "XL+ (320mm)",
-        badge: "BEST MATCH FOR HEAVY FLOW",
-        why: "Maximum length (320mm) with dual leak guards to give you complete protection during heavy flow days and overnight peace of mind.",
-        type: "pickSize",
-        variantSize: "XL+ (320mm)",
-        price: Number(match?.price || 349),
-        image:
-          match?.bannerImage ||
-          match?.image ||
-          activeVariant?.bannerImage ||
-          productInfo?.bannerImage,
-      };
-    }
-    if (flow === "light") {
-      const match = variantsList.find((v: any) => v.size?.includes("240"));
-      return {
-        size: "L (240mm)",
-        badge: "BEST MATCH FOR LIGHT FLOW",
-        why: "Compact 240mm length designed for light flow, spotting, and comfortable everyday wear during your lighter period days.",
-        type: "pickSize",
-        variantSize: "L (240mm)",
-        price: Number(match?.price || 299),
-        image:
-          match?.bannerImage ||
-          match?.image ||
-          activeVariant?.bannerImage ||
-          productInfo?.bannerImage,
-      };
-    }
-    const match = variantsList.find((v: any) => v.size?.includes("280"));
-    return {
-      size: "XL (280mm)",
-      badge: "MOST POPULAR CHOICE",
-      why: "Versatile 280mm length for regular-to-heavy flow. High absorption core ensures up to 8 hours of rash-free comfort.",
-      type: "pickSize",
-      variantSize: "XL (280mm)",
-      price: Number(match?.price || 349),
-      image:
-        match?.bannerImage ||
-        match?.image ||
-        activeVariant?.bannerImage ||
-        productInfo?.bannerImage,
-    };
-  }, [quizAnswers, activeVariant, productInfo, variantsList]);
+    return outcome;
+  }, [padQuiz.done, padQuiz.answers, canCustomizeBox]);
 
-  const applyQuizRecommendation = () => {
-    if (recommendedQuizResult.type === "mixYourBox") {
-      switchToTab("mixYourBox");
-    } else {
-      const targetSize = recommendedQuizResult.variantSize;
-      const match = variantsList.find(
-        (v: any) =>
-          v.size === targetSize || v.name?.includes(targetSize?.split(" ")[0]),
-      );
-      switchToTab("pickSize", match);
-    }
-    setIsQuizOpen(false);
+  const findPadVariant = (key: PadPickKey): any =>
+    isMixPick(key)
+      ? null
+      : variantsList.find((v: any) => padSizeOfVariant(v) === key) || null;
+
+  const livePrice = (value: any) => {
+    const n = Number(value);
+    return Number.isFinite(n) && n > 0 ? n : null;
   };
 
-  const handleDirectQuizAddToCart = async () => {
-    applyQuizRecommendation();
-    const targetSize = recommendedQuizResult.variantSize;
-    const targetVariant =
-      variantsList.find(
-        (v: any) =>
-          v.size === targetSize || v.name?.includes(targetSize?.split(" ")[0]),
-      ) || activeVariant;
+  const padPickPrice = (key: PadPickKey) => {
+    if (isMixPick(key)) {
+      const recipe = mixRecipeFor(key);
+      const setPrice = livePrice(activeVariant?.price);
+      if (!recipe || !setPrice) return null;
+      const pricing = calculateMixBoxPricing({ recipe, setPrice, purchaseType: "one_time", subscriptionType: null });
+      return pricing.valid ? pricing.price : null;
+    }
+    return livePrice(findPadVariant(key)?.price);
+  };
 
-    const basePrice = Number(
-      recommendedQuizResult.price || targetVariant?.price || 349,
-    );
-
-    await addToCartAction({
-      productId: productInfo.id,
-      productVariantId: targetVariant?.id,
-      sku: targetVariant?.sku || `${recommendedQuizResult.size}`,
-      slug: productInfo?.slug || "",
-      title: `${targetVariant?.name || productInfo?.name} (${recommendedQuizResult.size})`,
-      price: basePrice,
-      selectedPlan: BUY_ONCE_PLAN,
-      isSubscribed: false,
-      image:
-        recommendedQuizResult.image ||
-        targetVariant?.bannerImage ||
-        "/product.png",
-      quantity: 1,
-      isQuantityChangable: true,
-      purchaseType: "one_time",
-      subscriptionType: null,
-    });
-
-    toast.success(`${recommendedQuizResult.size} added to cart!`);
+  const closeQuizAndShowBox = () => {
     setIsQuizOpen(false);
+    setTimeout(() => {
+      document.getElementById("starter")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
+  };
+
+  // Puts the quiz pick on the page: the matching size, or the Mix Your Box recipe.
+  const showPadPickOnPage = (key: PadPickKey) => {
+    if (isMixPick(key)) {
+      const recipe = mixRecipeFor(key);
+      if (recipe && typeof window !== "undefined") {
+        try {
+          window.localStorage.setItem("ovy_mix_your_box_recipe", JSON.stringify(recipe));
+        } catch {
+          // Storage can be blocked; the box then opens with its default recipe.
+        }
+      }
+      switchToTab("mixYourBox");
+    } else {
+      const match = findPadVariant(key);
+      if (match) switchToTab("pickSize", match);
+    }
+    closeQuizAndShowBox();
+  };
+
+  const addPadPickToCart = async (key: PadPickKey) => {
+    if (quizAdding) return;
+    setQuizAdding(true);
+    try {
+      if (isMixPick(key)) {
+        const recipe = mixRecipeFor(key);
+        const setPrice = livePrice(activeVariant?.price);
+        if (!recipe || !setPrice) {
+          showPadPickOnPage(key);
+          return;
+        }
+        const pricing = calculateMixBoxPricing({ recipe, setPrice, purchaseType: "one_time", subscriptionType: null });
+        if (!pricing.valid) {
+          showPadPickOnPage(key);
+          return;
+        }
+        const sourceVariants =
+          productInfo?.prodcutVarientBoxRes || productInfo?.productVariants || variantsList;
+        const boxItems = (Array.isArray(sourceVariants) ? sourceVariants : [])
+          .map((item: any) => {
+            const size = padSizeOfVariant(item);
+            return size
+              ? {
+                  ...item,
+                  name: item.name || `Ovy Soft Sanitary Pads - ${size}`,
+                  size: item.size || size,
+                  quantity: recipe[size] ?? 0,
+                  price: Number(item.price) || setPrice,
+                }
+              : null;
+          })
+          .filter(Boolean);
+        await addToCartAction({
+          productId: productInfo.id,
+          productVariantId: activeVariant?.id,
+          sku: activeVariant?.sku || "mix-your-box",
+          slug: productInfo?.slug || "",
+          title: productInfo?.name || activeVariant?.name,
+          price: pricing.price,
+          selectedPlan: BUY_ONCE_PLAN,
+          isSubscribed: false,
+          image:
+            activeVariant?.bannerImage ||
+            activeVariant?.image ||
+            productInfo?.bannerImage ||
+            "/product.png",
+          originalPrice: activeVariant?.strikethroughPrice,
+          cartSizes: boxItems,
+          mixBoxRecipe: recipe,
+          totalPads: pricing.totalPads,
+          boxCount: 1,
+          freeLiners: pricing.freeLiners,
+          purchaseType: "one_time",
+          subscriptionType: null,
+          isQuantityChangable: false,
+          quantity: 1,
+          uuid: crypto.randomUUID(),
+        });
+        toast.success("Mix Your Box added to bag!");
+        setIsQuizOpen(false);
+        return;
+      }
+      const variant = findPadVariant(key);
+      const price = livePrice(variant?.price);
+      if (!variant || !price) {
+        showPadPickOnPage(key);
+        return;
+      }
+      if (variant.isInStock === false || variant.is_in_stock === false) {
+        toast.error("This size is out of stock right now.");
+        return;
+      }
+      await addToCartAction({
+        productId: productInfo.id,
+        productVariantId: variant.id,
+        sku: variant.sku || PAD_PICKS[key].label,
+        slug: productInfo?.slug || "",
+        title: variant.name || `${productInfo?.name} (${PAD_PICKS[key].label})`,
+        price,
+        selectedPlan: BUY_ONCE_PLAN,
+        isSubscribed: false,
+        image: variant.bannerImage || variant.image || productInfo?.bannerImage || "/product.png",
+        originalPrice: variant.strikethroughPrice,
+        quantity: 1,
+        isQuantityChangable: true,
+        purchaseType: "one_time",
+        subscriptionType: null,
+      });
+      switchToTab("pickSize", variant);
+      toast.success(`${PAD_PICKS[key].label} added to bag!`);
+      setIsQuizOpen(false);
+    } catch (error) {
+      console.error("Quiz add to bag failed:", error);
+      toast.error("Couldn't add it to your bag. Please try again.");
+    } finally {
+      setQuizAdding(false);
+    }
+  };
+
+  const padsPerBox = Number(staticContent?.PRICING?.PADS_PER_BOX) || 0;
+  const linersPerBox = Number(staticContent?.PRICING?.LINERS_PER_BOX) || 0;
+  const padPickContents = (key: PadPickKey) => {
+    const lines: string[] = [];
+    const recipe = mixRecipeFor(key);
+    if (recipe) {
+      lines.push(
+        `${recipe.L} L pads (240mm)`,
+        `${recipe.XL} XL pads (280mm)`,
+        `${recipe["XL+"]} XL+ pads (320mm)`,
+      );
+    } else if (padsPerBox) {
+      lines.push(`${padsPerBox} ${PAD_PICKS[key].label} pads`);
+    }
+    if (linersPerBox) lines.push(`${linersPerBox} panty liners`);
+    lines.push("Biodegradable disposal bags");
+    return lines;
   };
 
   return (
@@ -1285,7 +1357,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     type="button"
                     onClick={() => {
                       setIsQuizOpen(true);
-                      setQuizStep(0);
+                      padQuiz.reset();
                     }}
                     className="font-caveat cursor-pointer text-sm font-semibold text-[#7E4D77] underline underline-offset-2 hover:text-[#9A5B90] sm:text-base"
                   >
@@ -1480,7 +1552,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
               type="button"
               onClick={() => {
                 setIsQuizOpen(true);
-                setQuizStep(0);
+                padQuiz.reset();
               }}
               className="flex w-full cursor-pointer items-center gap-3 rounded-2xl border-2 border-[#9A5B90] bg-gradient-to-r from-[#F3E6F0] to-[#E4F1F1] p-3.5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:shadow-md sm:gap-4 sm:rounded-3xl sm:p-5"
             >
@@ -2034,310 +2106,84 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           <OvyPromos
             onOpenQuiz={() => {
               setIsQuizOpen(true);
-              setQuizStep(0);
+              padQuiz.reset();
             }}
           />
         </>
       )}
 
       {/* Interactive Size Recommendation Quiz Modal */}
-      {isPads && isQuizOpen && (
-        <div className="fixed inset-0 z-[96] flex items-center justify-center p-5">
-          <div
-            className="absolute inset-0 bg-[#1A150F]/50 backdrop-blur-xs"
-            onClick={() => setIsQuizOpen(false)}
-          />
-          <div className="relative max-h-[90vh] w-full max-w-[540px] overflow-auto rounded-3xl bg-white p-6 shadow-xl sm:p-8">
-            <button
-              type="button"
-              onClick={() => setIsQuizOpen(false)}
-              className="absolute top-4 right-4 flex h-8.5 w-8.5 cursor-pointer items-center justify-center rounded-full bg-[#F4F1E8] text-gray-500 transition hover:text-[#1A150F]"
-              aria-label="Close quiz"
-            >
-              <X className="h-4 w-4" />
-            </button>
-
-            {/* Progress bar */}
-            <div className="mb-5 flex gap-2">
-              {[0, 1, 2, 3].map((stepIdx) => (
-                <span
-                  key={stepIdx}
-                  className={`h-1.5 flex-1 rounded-full transition-all ${
-                    quizStep >= stepIdx ? "bg-[#9A5B90]" : "bg-gray-200"
-                  }`}
+      {isPads && (
+        <QuizModal
+          open={isQuizOpen}
+          onClose={() => setIsQuizOpen(false)}
+          theme={OVY_QUIZ_THEME}
+          label="Pad size quiz"
+        >
+          {!padQuizOutcome ? (
+            <QuizSteps flow={padQuiz} />
+          ) : (
+            (() => {
+              const key = padQuizOutcome.primary;
+              const alt = padQuizOutcome.alternative;
+              const variant = findPadVariant(key);
+              const outOfStock = Boolean(
+                variant && (variant.isInStock === false || variant.is_in_stock === false),
+              );
+              const mix = isMixPick(key);
+              const imageSrc =
+                variant?.bannerImage || variant?.image
+                  ? getImageUrl(variant.bannerImage || variant.image)
+                  : activeImage
+                    ? getImageUrl(activeImage)
+                    : "/product-images/pads.jpg";
+              return (
+                <QuizResult
+                  eyebrow={mix ? "Recommended for your cycle" : "Your best fit"}
+                  title={PAD_PICKS[key].title}
+                  productName={productInfo?.name || "Ovy Organic Sanitary Pads"}
+                  sizeLabel={PAD_PICKS[key].label}
+                  image={imageSrc}
+                  price={padPickPrice(key)}
+                  strikePrice={mix ? null : livePrice(variant?.strikethroughPrice)}
+                  description={PAD_PICKS[key].why}
+                  reasons={padQuizOutcome.reasons}
+                  contents={padPickContents(key)}
+                  alternative={{
+                    title: `Or try ${PAD_PICKS[alt].label}`,
+                    why: PAD_PICKS[alt].altWhy,
+                    action: {
+                      label: `Show ${PAD_PICKS[alt].short} on the page`,
+                      onClick: () => showPadPickOnPage(alt),
+                    },
+                  }}
+                  tips={padQuizOutcome.tips}
+                  warning={padQuizOutcome.warning}
+                  primary={{
+                    label: outOfStock
+                      ? "Out of stock right now"
+                      : quizAdding
+                        ? "Adding..."
+                        : mix
+                          ? "Add this box to bag"
+                          : `Add ${PAD_PICKS[key].label} to bag`,
+                    onClick: () => addPadPickToCart(key),
+                    disabled: outOfStock || quizAdding,
+                    icon: <ShoppingBag className="h-5 w-5" />,
+                  }}
+                  secondary={[
+                    {
+                      label: mix ? "Adjust it in Mix Your Box" : "Select this size on the page",
+                      onClick: () => showPadPickOnPage(key),
+                    },
+                  ]}
+                  onBack={padQuiz.back}
+                  onRetake={padQuiz.reset}
                 />
-              ))}
-            </div>
-
-            {quizStep === 0 && (
-              <div>
-                <span className="text-xs font-bold tracking-wider text-[#7E4D77] uppercase">
-                  STEP 1 OF 3 • PERIOD FLOW
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-2xl leading-tight font-semibold text-[#1A150F] sm:text-3xl">
-                  How heavy is your period flow usually?
-                </h3>
-                <div className="grid gap-3">
-                  {[
-                    {
-                      id: "light",
-                      label: "Light Flow",
-                      sub: "Lighter days, spotting, last days of period",
-                    },
-                    {
-                      id: "medium",
-                      label: "Medium / Regular Flow",
-                      sub: "Normal steady flow on most period days",
-                    },
-                    {
-                      id: "heavy",
-                      label: "Heavy Flow",
-                      sub: "Soaking through pads quickly on initial days",
-                    },
-                    {
-                      id: "variable",
-                      label: "Changes a lot across days",
-                      sub: "Heavy first 2 days, then light/medium",
-                    },
-                  ].map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      className={`flex w-full cursor-pointer items-center gap-3.5 rounded-2xl border-2 p-4 text-left transition-all ${
-                        quizAnswers.flow === opt.id
-                          ? "border-[#9A5B90] bg-[#F3E6F0]"
-                          : "border-gray-200/80 bg-white hover:border-[#9A5B90] hover:bg-[#F3E6F0]/40"
-                      }`}
-                      onClick={() => {
-                        setQuizAnswers((prev) => ({ ...prev, flow: opt.id }));
-                        setQuizStep(1);
-                      }}
-                    >
-                      <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[#F4F1E8] text-[#7E4D77]">
-                        <Heart className="h-4.5 w-4.5" />
-                      </div>
-                      <div className="flex-1">
-                        <b className="block text-sm font-semibold text-[#1A150F]">
-                          {opt.label}
-                        </b>
-                        <small className="block text-xs font-medium text-gray-500">
-                          {opt.sub}
-                        </small>
-                      </div>
-                      <div className="ml-auto flex h-5.5 w-5.5 flex-none items-center justify-center rounded-full border border-gray-300 text-xs font-bold text-transparent">
-                        ✓
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {quizStep === 1 && (
-              <div>
-                <span className="text-xs font-bold tracking-wider text-[#7E4D77] uppercase">
-                  STEP 2 OF 3 • LEAK PROTECTION
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-2xl leading-tight font-semibold text-[#1A150F] sm:text-3xl">
-                  Do you experience leaks at night or during activity?
-                </h3>
-                <div className="grid gap-3">
-                  {[
-                    {
-                      id: "rarely",
-                      label: "Rarely or Never",
-                      sub: "Standard coverage is usually fine",
-                    },
-                    {
-                      id: "sometimes",
-                      label: "Sometimes at Night",
-                      sub: "Need extra back coverage for sleeping",
-                    },
-                    {
-                      id: "often",
-                      label: "Often / High Risk",
-                      sub: "Need maximum length & extra wide wings",
-                    },
-                  ].map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      className={`flex w-full cursor-pointer items-center gap-3.5 rounded-2xl border-2 p-4 text-left transition-all ${
-                        quizAnswers.leaks === opt.id
-                          ? "border-[#9A5B90] bg-[#F3E6F0]"
-                          : "border-gray-200/80 bg-white hover:border-[#9A5B90] hover:bg-[#F3E6F0]/40"
-                      }`}
-                      onClick={() => {
-                        setQuizAnswers((prev) => ({ ...prev, leaks: opt.id }));
-                        setQuizStep(2);
-                      }}
-                    >
-                      <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[#F4F1E8] text-[#7E4D77]">
-                        <ShieldCheck className="h-4.5 w-4.5" />
-                      </div>
-                      <div className="flex-1">
-                        <b className="block text-sm font-semibold text-[#1A150F]">
-                          {opt.label}
-                        </b>
-                        <small className="block text-xs font-medium text-gray-500">
-                          {opt.sub}
-                        </small>
-                      </div>
-                      <div className="ml-auto flex h-5.5 w-5.5 flex-none items-center justify-center rounded-full border border-gray-300 text-xs font-bold text-transparent">
-                        ✓
-                      </div>
-                    </button>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setQuizStep(0)}
-                  className="mt-4 cursor-pointer text-xs font-semibold text-gray-500 hover:text-[#1A150F]"
-                >
-                  ← Back to Step 1
-                </button>
-              </div>
-            )}
-
-            {quizStep === 2 && (
-              <div>
-                <span className="text-xs font-bold tracking-wider text-[#7E4D77] uppercase">
-                  STEP 3 OF 3 • DURATION
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-2xl leading-tight font-semibold text-[#1A150F] sm:text-3xl">
-                  How many days does your period last?
-                </h3>
-                <div className="grid gap-3">
-                  {[
-                    {
-                      id: "3-4",
-                      label: "3 to 4 Days",
-                      sub: "Shorter period duration",
-                    },
-                    {
-                      id: "5-7",
-                      label: "5 to 7 Days",
-                      sub: "Average period length",
-                    },
-                    {
-                      id: "7+",
-                      label: "7+ Days",
-                      sub: "Longer cycle duration",
-                    },
-                  ].map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      className={`flex w-full cursor-pointer items-center gap-3.5 rounded-2xl border-2 p-4 text-left transition-all ${
-                        quizAnswers.duration === opt.id
-                          ? "border-[#9A5B90] bg-[#F3E6F0]"
-                          : "border-gray-200/80 bg-white hover:border-[#9A5B90] hover:bg-[#F3E6F0]/40"
-                      }`}
-                      onClick={() => {
-                        setQuizAnswers((prev) => ({
-                          ...prev,
-                          duration: opt.id,
-                        }));
-                        setQuizStep(3);
-                      }}
-                    >
-                      <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[#F4F1E8] text-[#7E4D77]">
-                        <RotateCcw className="h-4.5 w-4.5" />
-                      </div>
-                      <div className="flex-1">
-                        <b className="block text-sm font-semibold text-[#1A150F]">
-                          {opt.label}
-                        </b>
-                        <small className="block text-xs font-medium text-gray-500">
-                          {opt.sub}
-                        </small>
-                      </div>
-                      <div className="ml-auto flex h-5.5 w-5.5 flex-none items-center justify-center rounded-full border border-gray-300 text-xs font-bold text-transparent">
-                        ✓
-                      </div>
-                    </button>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setQuizStep(1)}
-                  className="mt-4 cursor-pointer text-xs font-semibold text-gray-500 hover:text-[#1A150F]"
-                >
-                  ← Back to Step 2
-                </button>
-              </div>
-            )}
-
-            {quizStep === 3 && (
-              <div className="pt-1 text-center">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#9A5B90] px-3.5 py-1 text-xs font-extrabold tracking-wider text-white uppercase shadow-xs">
-                  {recommendedQuizResult.badge}
-                </span>
-
-                {/* Recommended Product Preview Box inside Popup */}
-                <div className="mt-4 mb-5 rounded-3xl border-2 border-[#9A5B90] bg-gradient-to-br from-[#FBF1FB] via-white to-[#F3E6F0] p-4.5 text-left shadow-sm sm:p-5">
-                  <div className="flex items-center gap-4">
-                    <div className="relative h-20 w-20 flex-none overflow-hidden rounded-2xl border border-[#F3E6F0] bg-white p-2 shadow-xs">
-                      <Image
-                        src={getImageUrl(
-                          recommendedQuizResult.image || activeImage,
-                        )}
-                        alt={recommendedQuizResult.size}
-                        fill
-                        className="object-contain p-1"
-                      />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-semibold text-gray-500">
-                          21 Pads + 4 Liners
-                        </span>
-                      </div>
-                      <h4 className="mt-1 font-serif text-xl font-bold text-[#1A150F]">
-                        Ovy Organic — {recommendedQuizResult.size}
-                      </h4>
-                      <div className="mt-0.5 flex items-baseline gap-2">
-                        <span className="font-serif text-lg font-bold text-[#9A5B90]">
-                          ₹{recommendedQuizResult.price || 349}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <p className="mt-3 rounded-xl border border-gray-100 bg-white/70 p-3 text-xs leading-relaxed text-gray-700">
-                    💡 <strong>Why it fits:</strong> {recommendedQuizResult.why}
-                  </p>
-                </div>
-
-                {/* Popup Actions */}
-                <div className="space-y-2.5">
-                  <button
-                    type="button"
-                    onClick={handleDirectQuizAddToCart}
-                    className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[#9A5B90] p-4 text-base font-semibold text-white shadow-md transition hover:bg-[#7E4D77]"
-                  >
-                    <ShoppingBag className="h-5 w-5" />
-                    Add {recommendedQuizResult.size} to Cart →
-                  </button>
-                  <button
-                    type="button"
-                    onClick={applyQuizRecommendation}
-                    className="w-full cursor-pointer rounded-2xl border border-gray-300 bg-white p-3 text-sm font-semibold text-[#1A150F] transition hover:bg-gray-50"
-                  >
-                    Apply Choice to Page Selection
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setQuizStep(0)}
-                    className="cursor-pointer text-xs font-semibold text-gray-500 hover:text-[#1A150F]"
-                  >
-                    Retake Quiz
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+              );
+            })()
+          )}
+        </QuizModal>
       )}
 
       {/* Sticky Mobile Buying Bar */}

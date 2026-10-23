@@ -317,13 +317,21 @@ async function handlePaymentCaptured(gatewayPayment: any) {
         })
         .where(eq(order.id, intent.order.id));
 
-      const coupon = (intent.payment.paymentMeta as any)?.coupon;
-      if (coupon?.id) {
+      // One record per coupon used (an order can carry a store coupon plus
+      // a personal one), so once-only and per-referral limits count correctly.
+      const meta = intent.payment.paymentMeta as any;
+      const used: { id: string; code: string; discount: number }[] = Array.isArray(meta?.coupons) && meta.coupons.length
+        ? meta.coupons
+        : meta?.coupon?.id
+          ? [{ id: meta.coupon.id, code: meta.coupon.code, discount: Number(meta?.discount || 0) }]
+          : [];
+      for (const c of used) {
+        if (!c?.id) continue;
         await tx.insert(couponTransaction).values({
           userId: intent.order.userId,
-          couponId: coupon.id,
-          code: coupon.code,
-          discountedAmount: Number((intent.payment.paymentMeta as any)?.discount || 0),
+          couponId: c.id,
+          code: c.code,
+          discountedAmount: Math.round(Number(c.discount || 0)),
         });
       }
     }

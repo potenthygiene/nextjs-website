@@ -18,6 +18,7 @@ import {
 import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { getAuthSession } from "@/helper/auth/session";
 import { allowRequest } from "@/lib/requestGuard";
+import { describeRewardHistoryRow, syncAndGetUserRewards } from "@/lib/rewards";
 
 // Saves a question the chat could not answer, so the team can add an answer.
 // It lands in Admin → Contact Us as "CHAT QUESTION". Emails and phone
@@ -118,6 +119,8 @@ export type ChatContext = {
   referred: boolean;
   wishlist: { slug: string; name: string }[];
   activeSubscriptions: number;
+  /** Rewards credit: balance and the latest entries, newest first. */
+  rewards: { balance: number; history: { title: string; amount: string; date: string; positive: boolean }[] };
 };
 
 const PAID = ["paid", "processing", "shipped", "delivered", "completed"];
@@ -220,6 +223,21 @@ export async function getChatContext(): Promise<ChatContext | null> {
       .from(subscriptions)
       .where(and(eq(subscriptions.userId, u.id), eq(subscriptions.isActive, true)));
 
+    // Rewards: the same balance checkout uses.
+    let rewards: ChatContext["rewards"] = { balance: 0, history: [] };
+    try {
+      const r = await syncAndGetUserRewards(u.id);
+      rewards = {
+        balance: Math.max(0, Math.round(Number(r.balance || 0))),
+        history: (r.history || []).slice(0, 6).map((h) => {
+          const d = describeRewardHistoryRow(h);
+          return { title: String(d.title).replace(/\s*[\u2013\u2014]\s*/g, ": "), amount: d.formattedAmount, date: d.formattedDate, positive: d.isPositive };
+        }),
+      };
+    } catch {
+      // Orders still show without the rewards part.
+    }
+
     const first = u.name?.trim().split(/\s+/)[0];
     return {
       firstName: first ? first[0].toUpperCase() + first.slice(1) : null,
@@ -229,6 +247,7 @@ export async function getChatContext(): Promise<ChatContext | null> {
       referred: !!joined,
       wishlist: saved.map((s) => ({ slug: s.slug, name: s.name || s.slug })),
       activeSubscriptions: Number(subs?.n || 0),
+      rewards,
     };
   } catch (error) {
     console.error("Chat context failed:", error);

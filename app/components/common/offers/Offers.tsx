@@ -161,7 +161,7 @@ export function OffersForYou({ brand = "any", className = "" }: { brand?: Brand;
           </div>
         </div>
       )}
-      <p className="mt-2.5 text-[11.5px] text-[#8a7484]">One coupon per order, applied in your bag. Free delivery on ₹399+.</p>
+      <p className="mt-2.5 text-[11.5px] text-[#8a7484]">One store coupon per order, plus FIRSTCARE15 or SHARECARE15 on top. Rewards credit applies too. Free delivery on ₹399+.</p>
     </div>
   );
 }
@@ -175,7 +175,7 @@ export function OffersBand({ title = "Offers running now", className = "" }: { t
     <section className={`mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 ${className}`} aria-label="Offers">
       <div className="mb-3 flex items-end justify-between gap-3">
         <h2 className="text-[20px] font-bold text-[#2b1c27] sm:text-[24px]">{title}</h2>
-        <span className="text-[12px] text-[#8a7484]">Tap a code to copy · one per order</span>
+        <span className="text-[12px] text-[#8a7484]">Tap a code to copy · one store coupon per order</span>
       </div>
       <div className="no-scrollbar -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
         {live.map((c) => {
@@ -227,13 +227,17 @@ export function SpendMoreBar({
   differentProducts,
   onApply,
   applied,
+  showBest = true,
 }: {
   subtotal: number;
   differentProducts: number;
   onApply?: (code: string) => void;
   applied?: string | null;
+  showBest?: boolean;
 }) {
-  const { best, next } = bagOffers(subtotal, differentProducts);
+  const offers = bagOffers(subtotal, differentProducts);
+  const best = showBest ? offers.best : undefined;
+  const next = offers.next;
   if (!best && !next) return null;
   const prev = next ? [...TIER_COUPONS].reverse().find((c) => c.minimumOrderValue <= subtotal) : undefined;
   const from = prev?.minimumOrderValue || 0;

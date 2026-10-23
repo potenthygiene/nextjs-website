@@ -360,7 +360,7 @@ export default async function OrderConfirmationPage({ params }: any) {
             Stock up and save: <strong>₹80 off on ₹799+</strong> (STOCKUP80), <strong>₹130 off on ₹1099+</strong> (STOCKUP130), <strong>₹200 off on ₹1499+</strong> (STOCKUP200) and <strong>₹300 off on ₹1999+</strong> (STOCKUP300).
           </p>
           <p className="mt-2 text-sm text-gray-800">
-            Share Potent with a friend: they get 20% off with SAATHI20, and you get 15% off with SHARECARE15 once their first order is delivered.{" "}
+            Share Potent with a friend: they get 15% off their first order, and once it is delivered you get SHARECARE15, which adds on to any coupon.{" "}
             <Link href="/dashboard/referral" className="font-semibold text-[#7E4D77] underline">Get my referral link</Link>
           </p>
         </div>

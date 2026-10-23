@@ -1,10 +1,11 @@
 import type { SymptomFlow } from "../symptomTypes";
-import { ADULT_AGES, FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, REPRO } from "../applies";
+import { ADULT_AGES, FEMALE, MIDLIFE_AGES, NO_PREG_AGES, PERIOD_AGES, PREG_AGES, REPRO, SEX_SYMPTOMS } from "../applies";
 
 // Life-stage check-ins: first periods, perimenopause and menopause, breast
 // changes, bleeding after birth, and pelvic pain outside a period. Each
-// flow says who it fits (showIf, ageOptions); pregnancy, birth, sex and
-// contraception only come up for women 18 to 44 (REPRO in ../applies).
+// flow says who it fits (showIf, ageOptions); pregnancy, birth and
+// contraception only come up for women 18 to 49 (REPRO in ../applies), and
+// sex-related symptoms for women 18 and over (SEX_SYMPTOMS).
 
 /** Bleeding and period-pattern questions only once periods have started. */
 const NOT_YET = { notAnswers: { stage: ["not-yet", "not-yet-15"] } };
@@ -293,7 +294,7 @@ export const FLOWS: SymptomFlow[] = [
           { id: "faint", label: "Heavy bleeding with feeling faint, dizzy or breathless", flag: "red" },
           { id: "heavy", label: "Soaking a pad every 1 to 2 hours, or clots bigger than a ₹5 coin", flag: "amber", showIf: { notAnswers: { periods: ["stopped"] } } },
           { id: "between", label: "Bleeding between periods", flag: "amber", showIf: { notAnswers: { periods: ["stopped"] } } },
-          { id: "after-sex", label: "Bleeding after sex", flag: "amber", showIf: REPRO },
+          { id: "after-sex", label: "Bleeding after sex", flag: "amber", showIf: SEX_SYMPTOMS },
           { id: "short", label: "Periods less than 21 days apart, or lasting more than 7 days", flag: "amber", showIf: { notAnswers: { periods: ["stopped", "recent-stop"] } } },
           { id: "none", label: "None of these" },
         ],
@@ -308,6 +309,7 @@ export const FLOWS: SymptomFlow[] = [
           { id: "mood", label: "Low mood, anxiety, irritability or brain fog" },
           { id: "aches", label: "Joint or muscle aches" },
           { id: "dryness", label: "Vaginal dryness, or stinging when peeing" },
+          { id: "sex-pain", label: "Pain or discomfort during sex", showIf: SEX_SYMPTOMS },
           { id: "none", label: "None of these" },
         ],
       },
@@ -386,6 +388,28 @@ export const FLOWS: SymptomFlow[] = [
         readMore: [{ label: "Perimenopause symptoms and when to worry", href: "/blog/perimenopause-symptoms-early-signs" }],
       },
       {
+        id: "mp-sex-bleed",
+        match: { answers: { periods: ["stopped"], warning: ["after-sex"] } },
+        urgency: "soon",
+        title: "Bleeding after sex after menopause needs a doctor",
+        summary:
+          "Once periods have stopped for 12 months, **any bleeding, including after sex, needs a doctor's check.** It's usually linked to thin, dry skin that tears easily, which is very treatable, but it is never one to wait out.",
+        oftenLinkedTo: [
+          "Thinner, drier vaginal skin after menopause",
+          "Polyps on the cervix or in the womb",
+          "An infection",
+          "Less often, something more serious, which is easier to treat when it's found early",
+        ],
+        whatHelps: [
+          "Book a gynaecologist appointment in the next few days, even if it happened only once",
+          "Avoid sex until a doctor has checked",
+          "Tell the doctor about any dryness or pain during sex: there are simple, effective treatments",
+        ],
+        seeDoctor:
+          "See a gynaecologist within a few days; they will usually suggest an examination and sometimes a scan.",
+        readMore: [{ label: "Perimenopause symptoms and when to worry", href: "/blog/perimenopause-symptoms-early-signs" }],
+      },
+      {
         id: "mp-bleeding",
         match: { flag: "amber" },
         urgency: "soon",
@@ -447,7 +471,7 @@ export const FLOWS: SymptomFlow[] = [
         whatHelps: [
           "For flushes: light cotton, a fan, a cool room, and fewer triggers like spicy food, very hot drinks, caffeine and alcohol",
           "For bones and joints: daily walking or yoga, strength exercise two or three times a week, and calcium-rich food like milk, curd, paneer and ragi",
-          "For dryness or stinging when peeing, tell a doctor: there are simple, effective treatments",
+          "For dryness, stinging when peeing or pain during sex, tell a doctor: there are simple, effective treatments",
           "Remember that any bleeding at all after a year without periods needs a doctor",
         ],
         seeDoctor:
@@ -456,7 +480,7 @@ export const FLOWS: SymptomFlow[] = [
       },
       {
         id: "mp-common-early",
-        match: { ages: ["40-44"] },
+        match: { ages: ["40-44", "45-49"] },
         urgency: "selfcare",
         title: "These sound like common perimenopause changes",
         summary:
@@ -471,6 +495,7 @@ export const FLOWS: SymptomFlow[] = [
           "For sleep: a regular bedtime and a cool, dark room",
           "For aches and mood: daily walking or yoga, plus strength exercise two or three times a week",
           "Track periods in the free [period tracker](/period-log); pregnancy is still possible until 12 months without a period, so keep using contraception",
+          "For dryness or pain during sex, tell a doctor: there are simple, effective treatments",
         ],
         seeDoctor:
           "See a doctor if symptoms affect your daily life, you notice palpitations, or there is any bleeding after 12 months without a period.",
@@ -493,6 +518,7 @@ export const FLOWS: SymptomFlow[] = [
           "For sleep: a regular bedtime and a cool, dark room",
           "For aches and mood: daily walking or yoga, plus strength exercise two or three times a week",
           "Track periods in the free [period tracker](/period-log) to spot patterns and show your doctor",
+          "For dryness or pain during sex, tell a doctor: there are simple, effective treatments",
         ],
         seeDoctor:
           "See a doctor if symptoms affect your daily life, you notice palpitations, or there is any bleeding after 12 months without a period.",
@@ -573,7 +599,7 @@ export const FLOWS: SymptomFlow[] = [
       {
         id: "family",
         text: "Has your mother, sister or daughter had breast or ovarian cancer?",
-        showIf: { ages: ["18-29", "30-39", "40-44", "45-49", "50+"] },
+        showIf: { ages: ADULT_AGES },
         options: [
           { id: "yes", label: "Yes" },
           { id: "no", label: "No" },
@@ -852,8 +878,8 @@ export const FLOWS: SymptomFlow[] = [
     // Also for a parent asking about a grown-up daughter who has just had a baby.
     needs: { who: true },
     whoOptions: ["me", "daughter", "someone"],
-    ageOptions: ADULT_AGES,
-    showIf: { ages: ADULT_AGES, sex: ["female", "other"], who: ["me", "daughter", "someone"] },
+    ageOptions: PREG_AGES,
+    showIf: { ages: PREG_AGES, sex: ["female", "other"], who: ["me", "daughter", "someone"] },
     notFor:
       "This check-in doesn't fit the details you gave, so let's try another one: the heavy bleeding or bleeding between periods check-ins may help, and if bleeding is very heavy or there is faintness, call 112.",
     questions: [

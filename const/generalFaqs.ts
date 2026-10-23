@@ -66,7 +66,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         id: "coupons",
         q: "How do I use a coupon code?",
-        a: "Enter it in your bag or at checkout and tap Apply. Coupons can't be combined with Potent Rewards credits; checkout uses whichever saves you more and tells you which one it applied.",
+        a: "Tap Apply coupons & offers in your bag or at checkout. You'll see every coupon, what it saves and how to unlock the rest. Use one store coupon per order, plus FIRSTCARE15 on a Stock Up coupon or SHARECARE15 on any store coupon. Your Potent Rewards credit is applied on top.",
       },
       {
         id: "payment-failed",

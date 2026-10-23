@@ -1216,6 +1216,7 @@ export async function createPendingCheckoutOrder({
           gst: pricing.gst,
           shipping: pricing.shipping,
           coupon: pricing.coupon,
+          coupons: (pricing as { coupons?: unknown[] }).coupons ?? [],
           rewardsUsed: pricing.rewardsUsed ?? 0,
           rewardBalance: pricing.rewardBalance ?? 0,
           razorpayOrderId,

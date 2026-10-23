@@ -192,7 +192,7 @@ export function CouponList({
           )}
         </div>
       ))}
-      <p className="border-t border-[#f3e0ec] px-4 py-2 text-[11.5px] text-[#a08a99]">{t("One coupon per order. Tap Apply and I'll open your bag with it applied.")}</p>
+      <p className="border-t border-[#f3e0ec] px-4 py-2 text-[11.5px] text-[#a08a99]">{t("One store coupon per order, plus FIRSTCARE15 or SHARECARE15 on top. Tap Apply and I'll open your bag with it applied.")}</p>
     </div>
   );
 }

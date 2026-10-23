@@ -92,6 +92,7 @@ type Action =
   | { type: "finder"; id: string }
   | { type: "quizzes" }
   | { type: "account" }
+  | { type: "rewards" }
   | { type: "reorder"; orderId: string }
   | { type: "rate"; mood: "up" | "down"; name: string }
   | { type: "issue"; topic: string; name: string }
@@ -125,6 +126,8 @@ type ChatMessage = {
   orders?: { id: string; status: string; date: string; total: number | null; items: number }[];
   /** Show the "For you" card. */
   forYou?: boolean;
+  /** Show the Rewards balance and history card. */
+  rewards?: boolean;
   feedback?: { q: string; answerId: string; given?: "up" | "down" };
   tone?: "safety";
   /** Written in Hindi, so its cards are shown in Hindi too. */
@@ -178,6 +181,7 @@ const MORE_TOPICS: { label: string; icon: LucideIcon; action: Action }[] = [
   { label: "Subscriptions", icon: RefreshCw, action: { type: "menu", id: "subscriptions" } },
   { label: "First periods & teens", icon: Sprout, action: { type: "menu", id: "teens" } },
   { label: "Women's health", icon: HeartPulse, action: { type: "menu", id: "health" } },
+  { label: "My rewards", icon: Gift, action: { type: "rewards" } },
   { label: "Account & rewards", icon: UserRound, action: { type: "menu", id: "account" } },
   { label: "Bulk orders", icon: Building2, action: { type: "menu", id: "business" } },
 ];
@@ -239,6 +243,7 @@ const TRIP_PLAN_WORDS = /\b(plan my trip|plan a trip|trip planner|trip hygiene|w
 const QUIZ_WORDS = /\b(quiz|quizzes|planner|planners|size quiz|find my size|which size)\b/;
 const MY_ORDERS_WORDS = /\b(my orders|order history|last order|past orders|previous orders?|my account|recent orders?)\b/;
 const REORDER_WORDS = /\b(reorder|re order|buy again|order again|repeat (my )?order|same order again|restock)\b/;
+const REWARDS_WORDS = /\b(my rewards|rewards? (history|balance|points?)|my credits?|credit balance|how much credit|my points|wallet balance|reward points|rewards credit)\b/;
 const REVIEW_WORDS = /\b(write a review|leave a review|post a review|give (a )?review|review my|rate my)\b/;
 
 // The same, for Hindi typing (after normalise: no nukta, chandrabindu as anusvara).
@@ -248,6 +253,7 @@ const TRAVEL_HI = /(सफर|यात्रा|ट्रेन|टॉयले
 const TRIP_PLAN_HI = /(क्या पैक|पैकिंग|सफर की तैयारी|यात्रा की तैयारी|ट्रिप की तैयारी)/;
 const QUIZ_HI = /(क्विज|साइज कैसे चुनें|कौन सा साइज)/;
 const MY_ORDERS_HI = /(मेरे ऑर्डर|पिछला ऑर्डर|ऑर्डर हिस्ट्री)/;
+const REWARDS_HI = /(मेरे रिवॉर्ड|रिवॉर्ड बैलेंस|क्रेडिट बैलेंस|मेरा क्रेडिट|रिवॉर्ड हिस्ट्री|मेरे पॉइंट)/;
 const REORDER_HI = /(फिर से ऑर्डर|दोबारा ऑर्डर|दोबारा मंगवाना|फिर से मंगवाना)/;
 const SYMPTOM_HI = /(खून|ब्लीडिंग|दर्द|खुजली|जलन|बदबू|गांठ|थक्के|बुखार|रैश|लेट|स्पॉटिंग|सूजन|मिस)/;
 const PRODUCT_WORDS_HI: Record<string, string> = {
@@ -263,6 +269,7 @@ const LANG_KEY = "potent-chat-lang";
 const SAVE_KEY = "potent-saathi-chat";
 const RECENT_KEY = "potent-recent-products";
 const NUDGE_KEY = "potent-chat-nudged";
+const LAST_VISIT_KEY = "potent-last-visit";
 // The chat stays off sign-in pages and the admin; it is on everywhere else, dashboard included.
 const hiddenPathPrefixes = ["/admin", "/login", "/signup", "/reset-password", "/email-verification"];
 const PERIOD_PRODUCTS = ["ovy-pads", "ovy-liners", "ovy-panty", "ovy-teen"];
@@ -361,6 +368,7 @@ export function ChatBotWidget() {
   const [farFromEnd, setFarFromEnd] = useState(false);
   const [ctx, setCtx] = useState<ChatContext | null | undefined>(undefined);
   const [recent, setRecent] = useState<string[]>([]);
+  const [awayDays, setAwayDays] = useState(0);
   const ctxAt = useRef(0);
   const engineRef = useRef<Engine | null>(null);
   const enginePromise = useRef<Promise<Engine> | null>(null);
@@ -381,6 +389,7 @@ export function ChatBotWidget() {
   const hiRef = useRef<Hindi | null>(null);
   const hiPromise = useRef<Promise<Hindi> | null>(null);
   const restoredLang = useRef(false);
+  const runRef = useRef<((a: Action, label: string) => Promise<unknown>) | null>(null);
   const name = profile.name;
   const bagItems = useCartStore((st) => st.items);
 
@@ -468,6 +477,9 @@ export function ChatBotWidget() {
     }
     if (saved?.profile) setProfile(saved.profile);
     setRecent(readJSON<string[]>("local", RECENT_KEY, []));
+    const last = readJSON<number>("local", LAST_VISIT_KEY, 0);
+    if (last) setAwayDays(Math.floor((Date.now() - last) / 86_400_000));
+    writeJSON("local", LAST_VISIT_KEY, Date.now());
     if (readJSON<string>("local", LANG_KEY, "en") === "hi") {
       loadHindi().then(() => setLang("hi")).catch(() => {});
       restoredLang.current = true;
@@ -523,6 +535,22 @@ export function ChatBotWidget() {
     if (m && !Object.keys(liveRef.current.products).length) loadLive(m);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
+
+  // Other parts of the site can open the chat on a planner or menu.
+  useEffect(() => {
+    const onOpen = (e: Event) => {
+      const d = (e as CustomEvent<{ finder?: string; menu?: string }>).detail || {};
+      openedOnce.current = true;
+      setIsOpen(true);
+      loadEngine().then(() => {
+        if (d.finder) runRef.current?.({ type: "finder", id: d.finder }, "");
+        else if (d.menu) runRef.current?.({ type: "menu", id: d.menu }, "");
+      });
+    };
+    window.addEventListener("potent-open-saathi", onOpen);
+    return () => window.removeEventListener("potent-open-saathi", onOpen);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Remember the products someone looks at, to suggest them later.
   useEffect(() => {
@@ -725,6 +753,26 @@ export function ChatBotWidget() {
         links: [{ label: t("Track my order"), href: `/dashboard/orders/${latest.id}` }],
       });
     }
+    const credit = c?.rewards?.balance || 0;
+    if (c && awayDays >= 14) {
+      rows.push({
+        key: "back",
+        icon: Heart,
+        title: t("Welcome back{n}! It's been a while.", nv(name)),
+        text: credit
+          ? t("You have ₹{n} Rewards credit waiting. It applies by itself at checkout, together with coupons.", { n: credit })
+          : t("Here's what's new: today's offers and a quick way to buy again."),
+        actions: [{ label: t("See all offers"), action: { type: "offers" } }, ...(credit ? [{ label: t("My rewards"), action: { type: "rewards" } as Action }] : [])],
+      });
+    } else if (credit > 0) {
+      rows.push({
+        key: "credit",
+        icon: Gift,
+        title: t("₹{n} Rewards credit to use", { n: credit }),
+        text: t("Applied by itself at checkout, together with coupons: up to 20% of your order, at most ₹150."),
+        actions: [{ label: t("My rewards"), action: { type: "rewards" } }],
+      });
+    }
     const delivered = c?.orders.find((o) => o.status === "delivered" || o.status === "completed");
     if (delivered && delivered.lines.length) {
       const first = delivered.lines[0].name;
@@ -766,27 +814,27 @@ export function ChatBotWidget() {
     }
     if (bagItems.length) {
       const sub = bagSubtotal();
-      const { best, next } = bagOffers(sub, differentProductCount(bagItems), { firstOrder: c?.firstOrder, referred: c?.referred });
+      const { top, next } = bagOffers(sub, differentProductCount(bagItems), { firstOrder: c ? c.firstOrder : undefined });
+      const topCode = top?.coupons.map((x) => x.coupon.code).join("+");
       rows.push({
         key: "bag",
         icon: ShoppingBag,
         title: t("{n} items waiting in your bag", { n: bagItems.length }),
-        text: best
-          ? t("{code} saves you ₹{s} on this bag.", { code: best.coupon.code, s: Math.round(best.saving) })
+        text: top
+          ? t("{code} saves you ₹{s} on this bag.", { code: topCode!.replace("+", " + "), s: Math.round(top.saving) })
           : next
             ? t("Add ₹{n} more to save ₹{s} with {code}.", { n: next.needed, s: next.saving, code: next.coupon.code })
             : undefined,
-        actions: best ? [{ label: t("Apply {code}", { code: best.coupon.code }), action: { type: "apply", code: best.coupon.code } }] : [],
+        actions: top ? [{ label: t("Apply {code}", { code: topCode!.replace("+", " + ") }), action: { type: "apply", code: topCode! } }] : [],
         links: [{ label: t("Go to my bag"), href: "/cart" }],
       });
     }
     if (c && c.firstOrder) {
-      const code = c.referred ? "SAATHI20" : "FIRSTCARE15";
       rows.push({
         key: "first",
         icon: Gift,
-        title: c.referred ? t("Your friend's gift: 20% off your first order") : t("Your welcome gift: 15% off your first order"),
-        text: t("Use {code} on orders of ₹399 and above.", { code }),
+        title: c.referred ? t("Your friend's gift: 15% off your first order") : t("Your welcome gift: 15% off your first order"),
+        text: t("Use FIRSTCARE15 on ₹399 and above, and add a Stock Up coupon on bigger bags."),
         actions: [{ label: t("Help me choose"), action: { type: "finder", id: "ovy" } }],
       });
     }
@@ -844,7 +892,7 @@ export function ChatBotWidget() {
         links: [{ label: t("Sign in"), href: "/login" }],
       });
     }
-    const first = ["transit", "rate", "last", "restock"];
+    const first = ["back", "transit", "rate", "last", "restock", "credit"];
     return [...rows.filter((r) => first.includes(r.key)), ...rows.filter((r) => !first.includes(r.key))].slice(0, 4);
   };
 
@@ -911,12 +959,14 @@ export function ChatBotWidget() {
   const offersMessage = (): Reply => {
     const sub = bagSubtotal();
     const different = differentProductCount(bagItems);
-    const { best, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : true, referred: ctx?.referred });
+    const { top, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : true });
+    const topCode = top?.coupons.map((x) => x.coupon.code).join("+");
     const nudgeText = !bagItems.length
       ? ""
-      : best
-        ? t("\n\nFor the ₹{sub} in your bag, **{code}** saves you ₹{s} right now.", { sub: Math.round(sub), code: best.coupon.code, s: Math.round(best.saving) })
+      : top
+        ? t("\n\nFor the ₹{sub} in your bag, **{code}** saves you ₹{s} right now.", { sub: Math.round(sub), code: topCode!.replace("+", " + "), s: Math.round(top.saving) })
         : "";
+    const best = top?.coupons[0];
     const nextText = bagItems.length && next ? t("\n\nAdd ₹{n} more to save ₹{s} with **{code}**.", { n: next.needed, s: next.saving, code: next.coupon.code }) : "";
     const freeFrom = live().offers?.freeDeliveryFrom || 399;
     const freeText = sub > 0 && sub < freeFrom ? t("\n\nAdd ₹{n} more for free delivery.", { n: Math.ceil(freeFrom - sub) }) : "";
@@ -925,6 +975,7 @@ export function ChatBotWidget() {
       coupons: { highlight: best?.coupon.code },
       offers: true,
       chips: [
+        ...(top && bagItems.length ? [{ label: t("Apply {code}", { code: topCode!.replace("+", " + ") }), action: { type: "apply", code: topCode! } as Action }] : []),
         { label: "How do subscriptions work?", action: { type: "answer", id: "ord-sub-how" } },
         { label: "Help me choose", action: { type: "finder", id: "ovy" } },
         BACK,
@@ -963,11 +1014,12 @@ export function ChatBotWidget() {
     const different = new Set(useCartStore.getState().items.map((i) => i.productId)).size;
     const items = useCartStore.getState().items;
     const sub = items.reduce((s, i) => s + Number(i.price || 0) * Number(i.quantity || 1), 0);
-    const { best, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : false, referred: ctx?.referred });
+    const { top, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : false });
     const freeFrom = live().offers?.freeDeliveryFrom || 399;
+    const topCode = top?.coupons.map((x) => x.coupon.code).join(" + ");
     return (
       (sub > 0 && sub < freeFrom ? t(" Add ₹{n} more for free delivery.", { n: Math.ceil(freeFrom - sub) }) : "") +
-      (best ? t(" **{code}** saves you ₹{s} on this bag.", { code: best.coupon.code, s: Math.round(best.saving) }) : "") +
+      (top ? t(" **{code}** saves you ₹{s} on this bag.", { code: topCode!, s: Math.round(top.saving) }) : "") +
       (next ? t(" Add ₹{n} more to save ₹{s} with {code}.", { n: next.needed, s: next.saving, code: next.coupon.code }) : "")
     );
   };
@@ -1045,6 +1097,32 @@ export function ChatBotWidget() {
     return { ...msg, orders: c.orders };
   };
 
+  // Rewards: balance and the latest credits earned and used.
+  const rewardsMessage = async (): Promise<Reply> => {
+    const c = ctx === undefined ? await getChatContext().catch(() => null) : ctx;
+    if (ctx === undefined) setCtx(c);
+    const r = live().offers?.rewards;
+    if (!c) {
+      return {
+        text: t("Sign in to see your Rewards credit and history. New accounts get ₹{n} credit to start.", { n: r?.joining || 50 }),
+        links: [{ label: "Sign in", href: "/login" }],
+        chips: [{ label: "How do rewards work?", action: { type: "answer", id: "ord-rewards-what" } }, BACK],
+      };
+    }
+    return {
+      text: c.rewards.balance
+        ? t("You have **₹{n} Rewards credit**{N}. It applies by itself at checkout, together with coupons: up to 20% of your order, at most ₹150. Credit doesn't pay for delivery.", { n: c.rewards.balance, N: name ? `, ${name}` : "" })
+        : t("You have no Rewards credit yet{n}. You earn 5% back on every delivered order, plus credit for reviews, your birthday and referring friends.", nv(name)),
+      rewards: true,
+      links: [{ label: "Full rewards history", href: "/dashboard/security" }],
+      chips: [
+        { label: "How do I earn more?", action: { type: "answer", id: "ord-rewards-what" } },
+        { label: "Refer a friend", action: { type: "answer", id: "ord-referral-how" } },
+        BACK,
+      ],
+    };
+  };
+
   // "My orders": the latest orders and everything waiting for the customer.
   const accountMessage = async (): Promise<Reply> => {
     const c = ctx === undefined ? await getChatContext().catch(() => null) : ctx;
@@ -1062,6 +1140,7 @@ export function ChatBotWidget() {
       forYou: true,
       chips: [
         ...(c.orders[0] ? [{ label: "Buy my last order again", action: { type: "reorder", orderId: c.orders[0].id } as Action }] : []),
+        { label: "My rewards", action: { type: "rewards" } },
         { label: "Orders & delivery", action: { type: "menu", id: "orders" } },
         BACK,
       ],
@@ -1269,7 +1348,7 @@ export function ChatBotWidget() {
         text:
           t("That makes my day{n}! A short review helps other women choose, and earns you Rewards credit.", nv(name)) +
           (r ? t(" Up to ₹{n} for an approved review.", { n: r.review }) : "") +
-          t("\n\nLove it enough to share? Your friend gets 20% off with **SAATHI20**, and you get 15% off with **SHARECARE15** once their first order is delivered."),
+          t("\n\nLove it enough to share? Your friend gets 15% off their first order, and once it is delivered you get **SHARECARE15**, which adds on to any coupon."),
         links: [
           { label: "Write a review", href: "/dashboard/reviews" },
           { label: "Get my referral link", href: "/dashboard/referral" },
@@ -1396,6 +1475,7 @@ export function ChatBotWidget() {
       return c?.orders[0] ? reorder(c.orders[0].id) : reply(await accountMessage());
     }
     if (MY_ORDERS_WORDS.test(bare) || MY_ORDERS_HI.test(bare)) return reply(await accountMessage());
+    if (REWARDS_WORDS.test(bare) || REWARDS_HI.test(bare)) return reply(await rewardsMessage());
     if (REVIEW_WORDS.test(bare)) return reply(rateMessage("up", ctx?.toReview[0]?.name || t("your order")));
     if (OFFER_WORDS.test(bare) || OFFER_HI.test(bare)) return reply(offersMessage());
     if (QUIZ_WORDS.test(bare) || QUIZ_HI.test(bare)) return reply(quizzesMessage());
@@ -1463,7 +1543,7 @@ export function ChatBotWidget() {
   async function run(action: Action, label: string) {
     if (typing) return;
     if (action.type === "type") return inputRef.current?.focus();
-    say(label);
+    if (label) say(label);
     const engine = engineRef.current || (await loadEngine());
     const task = taskRef.current;
 
@@ -1496,6 +1576,7 @@ export function ChatBotWidget() {
     if (action.type === "offers") return reply(offersMessage());
     if (action.type === "quizzes") return reply(quizzesMessage());
     if (action.type === "account") return reply(await accountMessage());
+    if (action.type === "rewards") return reply(await rewardsMessage());
     if (action.type === "reorder") return reorder(action.orderId);
     if (action.type === "rate") return reply(rateMessage(action.mood, action.name));
     if (action.type === "issue") return reply(await issueMessage(action.topic, action.name));
@@ -1561,6 +1642,8 @@ export function ChatBotWidget() {
     const answer = engine.answerById(action.id);
     return answer ? reply(await withOrders(answerMessage(answer, label), answer.id)) : respondTo(label);
   }
+
+  runRef.current = run;
 
   // Pick-several questions: tick options, then Done.
   async function submitMulti() {
@@ -1962,6 +2045,27 @@ export function ChatBotWidget() {
                           </div>
                         ) : null}
                         {message.forYou && isLast && forYouCard(tm)}
+                        {message.rewards && ctx?.rewards && (
+                          <div className="mt-3 overflow-hidden rounded-2xl border border-[#d9ece6] bg-white">
+                            <div className="flex items-center justify-between border-b border-[#e8f3ef] px-4 py-3">
+                              <span className="text-[11.5px] font-bold uppercase tracking-[0.08em] text-[#0E5C3A]">{tm("Rewards credit")}</span>
+                              <span className="text-[18px] font-bold text-[#0E5C3A]">₹{ctx.rewards.balance.toLocaleString("en-IN")}</span>
+                            </div>
+                            {ctx.rewards.history.length ? (
+                              ctx.rewards.history.map((h, i) => (
+                                <div key={i} className="flex items-center gap-3 border-b border-[#f0f6f3] px-4 py-2.5 last:border-b-0">
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block text-[13.5px] font-semibold leading-snug text-[#2b3a33]">{h.title}</span>
+                                    <span className="block text-[11.5px] text-[#6f8178]">{h.date}</span>
+                                  </span>
+                                  <span className={`shrink-0 text-[13.5px] font-bold ${h.positive ? "text-emerald-700" : "text-rose-600"}`}>{h.amount}</span>
+                                </div>
+                              ))
+                            ) : (
+                              <p className="px-4 py-3 text-[13px] text-[#6f8178]">{tm("No credits earned or used yet.")}</p>
+                            )}
+                          </div>
+                        )}
                         {message.offers && offers && <OffersCard offers={offers} subscriptionSave={bestSaving()} t={tm} />}
 
                         {message.products?.length ? (

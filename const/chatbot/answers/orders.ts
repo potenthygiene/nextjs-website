@@ -749,7 +749,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["coupon", "promo code", "discount code", "voucher", "apply", "code"],
     answer:
-      "Enter the code in your bag or at checkout and tap **Apply**. A coupon can't be combined with Potent Rewards credits: checkout uses whichever saves you more and tells you which one it applied.",
+      "Enter the code in your bag or at checkout and tap **Apply**. Tap **Apply coupons & offers** to see every coupon, what each saves and how to unlock the rest. You can use one store coupon, plus **FIRSTCARE15** on a Stock Up coupon or **SHARECARE15** on any store coupon, and your Potent Rewards credit is applied on top.",
     links: [{ label: "My bag", href: "/cart" }],
     related: ["ord-coupon-not-working", "ord-coupon-codes", "ord-rewards-use"],
   },
@@ -770,7 +770,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["coupon code", "offer", "discount", "promo", "first order", "koi offer"],
     answer:
-      "Yes. Today's coupon codes show in your bag under **Available offers**, and I can list them for you: tap **See all offers**. New customers get **FIRSTCARE15** on their first order (friends who join with a referral link get **SAATHI20**), **PAIRUP10** works when your bag has 2 or more different products, and bigger bags unlock **STOCKUP80** on ₹799+, **STOCKUP130** on ₹1099+, **STOCKUP200** on ₹1499+ and **STOCKUP300** on ₹1999+. One coupon per order, and coupons don't combine with Rewards credits.",
+      "Yes. Every coupon shows in your bag and at checkout under **Apply coupons & offers**, with what it saves and how to unlock it, and I can list them for you: tap **See all offers**. New customers (including friends who join with a referral link) get **FIRSTCARE15** on their first order, **PAIRUP10** works when your bag has 2 or more different products, and bigger bags unlock **STOCKUP80** on ₹799+, **STOCKUP130** on ₹1099+, **STOCKUP200** on ₹1499+ and **STOCKUP300** on ₹1999+. You can use one store coupon per order, and add **FIRSTCARE15** to a Stock Up coupon, or **SHARECARE15** to any store coupon. Your Rewards credit applies on top.",
     links: [{ label: "Join Potent Rewards", href: "/signup" }],
     related: ["ord-rewards-what", "ord-referral-how", "ord-sub-saving"],
   },
@@ -790,7 +790,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["coupon not working", "invalid", "expired", "not applied", "laga nahi", "error"],
     answer:
-      "Check the code is typed exactly, is still valid and that your bag meets its conditions, as each coupon has its own terms. Coupons can't be combined with credits or other offers. If it still won't apply, send the code and a screenshot to care@potenthygiene.com.",
+      "Check the code is typed exactly, is still valid and that your bag meets its conditions, as each coupon has its own terms. Only one store coupon works per order; FIRSTCARE15 adds on to a Stock Up coupon only, and SHARECARE15 to any store coupon. The coupons window shows why a coupon is locked and how much more to add. If it still won't apply, send the code and a screenshot to care@potenthygiene.com.",
     links: [{ label: "My bag", href: "/cart" }],
     related: ["ord-coupon-how", "ord-rewards-use", "ord-contact"],
   },
@@ -1501,7 +1501,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["use credits", "redeem", "apply credits", "kaise use", "wallet"],
     answer:
-      "You don't need to do anything. At checkout, credits are applied automatically to part of your product total on one-time orders, and the amount used is shown. They don't cover delivery, can't be combined with a coupon, and aren't used on subscription payments. Unused credits stay for next time.",
+      "You don't need to do anything. At checkout, credits are applied automatically to part of your product total on one-time orders, and the amount used is shown. They work together with your coupons (up to 20% of what is left after coupons, at most ₹150), don't cover delivery, and aren't used on subscription payments. Unused credits stay for next time.",
     links: [{ label: "My bag", href: "/cart" }],
     related: ["ord-rewards-balance", "ord-coupon-how", "ord-rewards-expiry"],
   },
@@ -1562,7 +1562,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["refer", "referral", "invite", "friend", "dost", "referral code"],
     answer:
-      "Share your code or link from **Account → Referral Program**, by copy or WhatsApp. Your friend gets **20% off their first order with SAATHI20** plus joining credit, and once their first order of ₹399 or more is delivered you earn credit and **15% off with SHARECARE15**, once for every friend. Your friend must be new to Potent Hygiene, and you can earn for up to 5 referrals a month.",
+      "Share your code or link from **Account → Referral Program**, by copy or WhatsApp. Your friend gets **15% off their first order with FIRSTCARE15** plus joining credit, and once their first order of ₹399 or more is delivered you earn credit and **SHARECARE15**, 15% off that you can add to any store coupon, once for every friend. Your friend must be new to Potent Hygiene, and you can earn for up to 5 referrals a month.",
     links: [{ label: "Referral Program", href: "/dashboard/referral" }],
     related: ["ord-referral-not-credited", "ord-rewards-what", "ord-rewards-cash"],
   },

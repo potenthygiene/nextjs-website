@@ -11,7 +11,19 @@ import {
   productVariant,
   referralCoinHistory,
 } from "@/db/schema";
-import { couponRules, isCouponLive, RETIRED_CODES } from "@/const/coupons";
+import {
+  COMBINED_CAP,
+  couponConditions,
+  couponRules,
+  groupOf,
+  isCouponLive,
+  joinCodes,
+  parseCodes,
+  RETIRED_CODES,
+  STORE_COUPONS,
+  stackNote,
+  stackProblem,
+} from "@/const/coupons";
 import { db } from "@/lib/db";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { requireUserWithRefresh } from "../user/action";
@@ -221,6 +233,76 @@ async function getValidCoupon({
   return { couponInfo, error: null };
 }
 
+type ValidCoupon = NonNullable<Awaited<ReturnType<typeof getValidCoupon>>["couponInfo"]>;
+
+/**
+ * One or two coupons ("STOCKUP80+FIRSTCARE15"). Each is checked on its own,
+ * then the pair is checked against the combining rules in const/coupons.ts.
+ * Each discount is worked out on the bag total; together they take at most
+ * COMBINED_CAP of the bag.
+ */
+async function getValidCoupons({
+  code,
+  userId,
+  subtotal,
+  items = [],
+}: {
+  code?: string | null;
+  userId: string;
+  subtotal: number;
+  items?: any[];
+}): Promise<{ parts: { info: ValidCoupon; discount: number }[]; total: number; error: string | null }> {
+  const codes = parseCodes(code);
+  if (!codes.length) return { parts: [], total: 0, error: null };
+  const infos: ValidCoupon[] = [];
+  for (const c of codes) {
+    const { couponInfo, error } = await getValidCoupon({ code: c, userId, subtotal, items });
+    if (error || !couponInfo) return { parts: [], total: 0, error: codes.length > 1 ? `${c}: ${error || "Invalid coupon code"}` : error || "Invalid coupon code" };
+    infos.push(couponInfo);
+  }
+  if (infos.length === 2) {
+    const a = couponRules(infos[0].code);
+    const b = couponRules(infos[1].code);
+    const problem = a && b ? stackProblem(a, b) : "These coupons can't be used together";
+    if (problem) return { parts: [], total: 0, error: problem };
+  }
+  // Store coupon first, then the personal one that adds on to it.
+  infos.sort((x, y) => Number(["welcome", "referrer"].includes(couponRules(x.code)?.kind || "")) - Number(["welcome", "referrer"].includes(couponRules(y.code)?.kind || "")));
+  const parts = infos.map((info) => {
+    let d = info.isDiscountPercentage ? subtotal * ((info.discountPercentage ?? 0) / 100) : (info.discountFixedAmount ?? 0);
+    if (info.maximumDiscountAmount > 0) d = Math.min(d, info.maximumDiscountAmount);
+    return { info, discount: roundMoney(Math.min(d, subtotal)) };
+  });
+  let total = roundMoney(parts.reduce((n, p) => n + p.discount, 0));
+  if (parts.length > 1) {
+    const cap = roundMoney(subtotal * COMBINED_CAP);
+    if (total > cap) {
+      const last = parts[parts.length - 1];
+      last.discount = roundMoney(Math.max(0, last.discount - (total - cap)));
+      total = cap;
+    }
+  }
+  return { parts, total, error: null };
+}
+
+const couponSummary = (parts: { info: ValidCoupon; discount: number }[]) => {
+  if (!parts.length) return null;
+  const first = parts[0].info;
+  return {
+    id: first.id,
+    name: parts.map((p) => p.info.name).join(" + "),
+    // The code sent back to pay: "A+B" when two coupons are used.
+    code: joinCodes(parts.map((p) => p.info.code)),
+    description: parts.map((p) => p.info.description).filter(Boolean).join(" · "),
+    isDiscountPercentage: first.isDiscountPercentage,
+    discountPercentage: first.discountPercentage,
+    discountFixedAmount: first.discountFixedAmount,
+    minimumOrderValue: Math.max(...parts.map((p) => p.info.minimumOrderValue || 0)),
+    maximumDiscountAmount: first.maximumDiscountAmount,
+    useOnce: first.useOnce,
+  };
+};
+
 export async function calculateCheckoutPricingForUser({
   userId,
   couponCode,
@@ -358,21 +440,17 @@ export async function calculateCheckoutPricingForUser({
     : { balance: 0 };
   const rewardBalance = Math.max(0, Math.round(Number(rewardState.balance || 0)));
 
-  // Specification:
-  // - Credits are applied automatically at checkout. No code to type.
-  // - She can use credits for up to 20% of the product total, and at most ₹150 per order, whichever is lower.
+  // Credits (Rewards):
+  // - Applied automatically at checkout. No code to type.
+  // - They now work together with coupons, like Myntra credit or a wallet:
+  //   up to 20% of the product total left after coupons, at most ₹150 per order.
   // - Credits do not pay for delivery.
-  // - Credits and a coupon code cannot be used together. If she has both, use the one that saves her more and show which one was used.
-  const maxCreditsByPercent = Math.floor(subtotal * MAX_REWARD_REDEEM_PERCENT);
-  const maxPossibleCredits =
-    subtotal > 0
-      ? Math.max(
-          0,
-          Math.min(rewardBalance, maxCreditsByPercent, MAX_REWARD_REDEEM_PER_ORDER),
-        )
+  const creditsFor = (productTotal: number) =>
+    productTotal > 0
+      ? Math.max(0, Math.min(rewardBalance, Math.floor(productTotal * MAX_REWARD_REDEEM_PERCENT), MAX_REWARD_REDEEM_PER_ORDER))
       : 0;
 
-  const { couponInfo, error: couponError } = await getValidCoupon({
+  const { parts, total: couponTotal, error: couponError } = await getValidCoupons({
     code: couponCode,
     userId,
     subtotal,
@@ -380,9 +458,8 @@ export async function calculateCheckoutPricingForUser({
   });
 
   if (couponError && couponCode) {
-    // If entered coupon is invalid / not meeting min order value:
-    // Credits remain applied automatically.
-    const rewardsUsed = maxPossibleCredits;
+    // The coupon can't be used: credits still apply on their own.
+    const rewardsUsed = creditsFor(subtotal);
     const discountedSubtotal = roundMoney(Math.max(subtotal - rewardsUsed, 0));
     const shipping = calculateShipping(subtotal);
     const final = roundMoney(discountedSubtotal + shipping);
@@ -401,70 +478,28 @@ export async function calculateCheckoutPricingForUser({
       remainingRewardBalance: Math.max(0, rewardBalance - rewardsUsed),
       final,
       coupon: null,
+      coupons: [],
       savingsChoiceNotice: null,
     };
-  }
-
-  let couponDiscount = 0;
-  if (couponInfo) {
-    couponDiscount = couponInfo.isDiscountPercentage
-      ? subtotal * ((couponInfo.discountPercentage ?? 0) / 100)
-      : (couponInfo.discountFixedAmount ?? 0);
-
-    if (couponInfo.maximumDiscountAmount > 0) {
-      couponDiscount = Math.min(couponDiscount, couponInfo.maximumDiscountAmount);
-    }
-
-    couponDiscount = roundMoney(Math.min(couponDiscount, subtotal));
-  }
-
-  let safeDiscount = 0;
-  let rewardsUsed = 0;
-  let activeCoupon = null;
-  let savingsChoiceNotice: string | null = null;
-
-  if (couponInfo && couponDiscount > 0) {
-    // Both coupon and credits are eligible: compare which saves more
-    if (couponDiscount > maxPossibleCredits) {
-      // Coupon saves more
-      safeDiscount = couponDiscount;
-      rewardsUsed = 0;
-      activeCoupon = couponInfo;
-      if (maxPossibleCredits > 0) {
-        savingsChoiceNotice = `Coupon ${couponInfo.code} saved you ₹${couponDiscount.toFixed(2)}, which is more than your ₹${maxPossibleCredits} rewards credit. Credits and coupons cannot be combined, so coupon was used and your credits stay in your wallet.`;
-      }
-    } else if (maxPossibleCredits > 0) {
-      // Credits save more or equal
-      safeDiscount = 0;
-      rewardsUsed = maxPossibleCredits;
-      activeCoupon = null;
-      savingsChoiceNotice = `₹${maxPossibleCredits} rewards credit applied automatically because it saves you more than coupon ${couponInfo.code} (₹${couponDiscount.toFixed(2)}). Credits and coupons cannot be combined.`;
-    } else {
-      safeDiscount = couponDiscount;
-      rewardsUsed = 0;
-      activeCoupon = couponInfo;
-    }
-  } else {
-    // No coupon code entered: auto-apply credits
-    safeDiscount = 0;
-    rewardsUsed = maxPossibleCredits;
-    activeCoupon = null;
   }
 
   // Delivery charge is separate; credits do NOT pay for delivery. Free
   // delivery is decided on the bag before any coupon, so a coupon never
   // makes an order cost more.
-  const productAfterCoupon = roundMoney(Math.max(subtotal - safeDiscount, 0));
+  const productAfterCoupon = roundMoney(Math.max(subtotal - couponTotal, 0));
+  const rewardsUsed = creditsFor(productAfterCoupon);
   const shipping = calculateShipping(subtotal);
   const discountedSubtotal = roundMoney(Math.max(productAfterCoupon - rewardsUsed, 0));
   const gst = 0;
   const final = roundMoney(discountedSubtotal + shipping);
+  const savingsChoiceNotice =
+    parts.length && rewardsUsed > 0 ? `Your coupon${parts.length > 1 ? "s" : ""} and ₹${rewardsUsed} Rewards credit are both applied.` : null;
 
   return {
     success: true,
     items,
     subtotal,
-    discount: safeDiscount,
+    discount: couponTotal,
     discountedSubtotal,
     gst,
     shipping,
@@ -473,20 +508,9 @@ export async function calculateCheckoutPricingForUser({
     remainingRewardBalance: Math.max(0, rewardBalance - rewardsUsed),
     final,
     savingsChoiceNotice,
-    coupon: activeCoupon
-      ? {
-          id: activeCoupon.id,
-          name: activeCoupon.name,
-          code: activeCoupon.code,
-          description: activeCoupon.description,
-          isDiscountPercentage: activeCoupon.isDiscountPercentage,
-          discountPercentage: activeCoupon.discountPercentage,
-          discountFixedAmount: activeCoupon.discountFixedAmount,
-          minimumOrderValue: activeCoupon.minimumOrderValue,
-          maximumDiscountAmount: activeCoupon.maximumDiscountAmount,
-          useOnce: activeCoupon.useOnce,
-        }
-      : null,
+    coupon: couponSummary(parts),
+    /** Each coupon used and what it took off, for the order record. */
+    coupons: parts.map((p) => ({ id: p.info.id, code: p.info.code, discount: p.discount })),
   };
 }
 
@@ -575,47 +599,170 @@ export async function validateCartCoupon({
       }, 0),
     );
 
-    const { couponInfo, error } = await getValidCoupon({
+    const { parts, total, error } = await getValidCoupons({
       code: normalizedCode,
       userId,
       subtotal,
       items,
     });
 
-    if (error || !couponInfo) {
+    if (error || !parts.length) {
       return {
         success: false,
         message: error || "Invalid coupon code",
       };
     }
 
-    let discount = couponInfo.isDiscountPercentage
-      ? subtotal * ((couponInfo.discountPercentage ?? 0) / 100)
-      : (couponInfo.discountFixedAmount ?? 0);
-
-    if (couponInfo.maximumDiscountAmount > 0) {
-      discount = Math.min(discount, couponInfo.maximumDiscountAmount);
-    }
-    discount = roundMoney(Math.min(discount, subtotal));
-
+    const summary = couponSummary(parts)!;
     return {
       success: true,
-      coupon: {
-        id: couponInfo.id,
-        name: couponInfo.name,
-        code: couponInfo.code,
-        description: couponInfo.description,
-        isDiscountPercentage: couponInfo.isDiscountPercentage,
-        discountPercentage: couponInfo.discountPercentage,
-        discountFixedAmount: couponInfo.discountFixedAmount,
-        minimumOrderValue: couponInfo.minimumOrderValue,
-        maximumDiscountAmount: couponInfo.maximumDiscountAmount,
-      },
-      discount,
-      message: `Coupon ${couponInfo.code} applied! Saved ₹${discount.toFixed(2)}`,
+      coupon: summary,
+      coupons: parts.map((p) => ({ id: p.info.id, code: p.info.code, discount: p.discount })),
+      discount: total,
+      message: parts.length > 1 ? `${summary.code.replace("+", " + ")} applied! You save ₹${total.toFixed(2)}` : `Coupon ${summary.code} applied! Saved ₹${total.toFixed(2)}`,
     };
   } catch (err: any) {
     console.error("validateCartCoupon error:", err);
     return { success: false, message: "Failed to validate coupon" };
   }
+}
+
+export type CouponWindowItem = {
+  code: string;
+  kind: string;
+  group: "store" | "personal";
+  title: string;
+  conditions: string;
+  stackNote: string;
+  /** ok: can be applied now · locked: spend or add more · ineligible: not for this account · upcoming: starts soon */
+  state: "ok" | "locked" | "ineligible" | "upcoming";
+  reason?: string;
+  /** How close the bag is to unlocking it, 0 to 1. */
+  progress?: number;
+  saving: number;
+  endsOn?: string;
+};
+
+export type CouponWindow = {
+  signedIn: boolean;
+  subtotal: number;
+  coupons: CouponWindowItem[];
+  best: { codes: string[]; saving: number } | null;
+};
+
+const dayLabel = (d: string) => new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short", timeZone: "Asia/Kolkata" });
+
+/**
+ * Every coupon for this bag, the way marketplaces show them: what can be
+ * applied now and what it saves, what unlocks with a bigger bag, what isn't
+ * for this account and why, what starts soon, and the best combination.
+ */
+export async function getCouponWindow({ items }: { items: any[] }): Promise<CouponWindow> {
+  await ensureDefaultCoupons();
+  let userId = "";
+  try {
+    userId = (await requireUserWithRefresh()).userId || "";
+  } catch {
+    // Guests see every coupon; account-only ones say to sign in.
+  }
+  const subtotal = roundMoney(items.reduce((sum, i) => sum + Number(i.price || 0) * Number(i.quantity || 1), 0));
+  const different = differentProducts(items);
+
+  let firstOrder = true;
+  let referrerCredits = 0;
+  if (userId) {
+    const previous = await db
+      .select({ id: order.id })
+      .from(order)
+      .where(and(eq(order.userId, userId), inArray(order.status, ["paid", "processing", "shipped", "delivered", "completed"])))
+      .limit(1);
+    firstOrder = !previous.length;
+    const friends = await db.selectDistinct({ id: referralCoinHistory.newUserId }).from(referralCoinHistory).where(eq(referralCoinHistory.userId, userId));
+    const friendIds = friends.map((f) => f.id).filter((id): id is string => !!id && id !== userId);
+    const delivered = friendIds.length
+      ? await db.selectDistinct({ userId: order.userId }).from(order).where(and(inArray(order.userId, friendIds), inArray(order.status, ["delivered", "completed"])))
+      : [];
+    const [used] = await db
+      .select({ n: sql<number>`count(*)` })
+      .from(couponTransaction)
+      .where(and(eq(couponTransaction.userId, userId), eq(couponTransaction.code, "SHARECARE15")));
+    referrerCredits = Math.max(0, delivered.length - Number(used?.n || 0));
+  }
+
+  const dbRows = await db.select().from(coupon).where(inArray(coupon.code, STORE_COUPONS.map((c) => c.code)));
+  const byCode = new Map(dbRows.map((r) => [r.code, r]));
+  const now = Date.now();
+  const soon = now + 45 * 86_400_000;
+
+  const list: CouponWindowItem[] = [];
+  for (const c of STORE_COUPONS) {
+    if (!c.public || c.kind === "friend") continue;
+    const row = byCode.get(c.code);
+    if (!row) continue;
+    const start = c.startsAt ? new Date(c.startsAt).getTime() : undefined;
+    const end = c.endsAt ? new Date(c.endsAt).getTime() : undefined;
+    if (end !== undefined && now > end) continue;
+    if (start !== undefined && start > soon) continue;
+    const min = row.minimumOrderValue || 0;
+    let saving = row.isDiscountPercentage ? (subtotal * (row.discountPercentage ?? 0)) / 100 : row.discountFixedAmount ?? 0;
+    if (row.maximumDiscountAmount > 0) saving = Math.min(saving, row.maximumDiscountAmount);
+    saving = roundMoney(Math.min(saving, subtotal));
+    const item: CouponWindowItem = {
+      code: c.code,
+      kind: c.kind,
+      group: groupOf(c),
+      title: row.description || c.description,
+      conditions: couponConditions(c),
+      stackNote: stackNote(c),
+      state: "ok",
+      saving,
+      endsOn: c.endsAt ? dayLabel(c.endsAt) : undefined,
+    };
+    if (start !== undefined && start > now) {
+      item.state = "upcoming";
+      item.reason = `Starts ${dayLabel(c.startsAt!)}`;
+    } else if (c.firstOrderOnly && userId && !firstOrder) {
+      item.state = "ineligible";
+      item.reason = "For first orders only";
+    } else if (c.referrerOnly && !userId) {
+      item.state = "ineligible";
+      item.reason = "Sign in to use: it unlocks when a friend you referred gets their first order delivered";
+    } else if (c.referrerOnly && !referrerCredits) {
+      item.state = "ineligible";
+      item.reason = "Unlocks when a friend you referred gets their first order delivered";
+    } else if (subtotal < min) {
+      item.state = "locked";
+      item.reason = `Shop for ₹${Math.ceil(min - subtotal)} more to use this`;
+      item.progress = min ? Math.max(0, Math.min(1, subtotal / min)) : 0;
+    } else if (c.minDifferentProducts && different < c.minDifferentProducts) {
+      const more = c.minDifferentProducts - different;
+      item.state = "locked";
+      item.reason = `Add ${more} more different product${more > 1 ? "s" : ""} to use this`;
+      item.progress = different / c.minDifferentProducts;
+    }
+    if (item.state === "ok" && c.firstOrderOnly && !userId) item.reason = "First order only: sign in at checkout";
+    if (item.state === "ok" && c.referrerOnly) item.reason = `${referrerCredits} available`;
+    if (item.state !== "ok") item.saving = c.flat ?? (c.percent ? roundMoney(Math.min(((Math.max(subtotal, min)) * c.percent) / 100, c.maximumDiscountAmount)) : 0);
+    list.push(item);
+  }
+
+  // The best single coupon or pair, by the combining rules.
+  const ok = list.filter((x) => x.state === "ok" && x.saving > 0);
+  let best: CouponWindow["best"] = null;
+  for (const x of ok) {
+    if (!best || x.saving > best.saving) best = { codes: [x.code], saving: x.saving };
+  }
+  for (const x of ok.filter((o) => o.group === "store")) {
+    for (const y of ok.filter((o) => o.group === "personal")) {
+      const a = couponRules(x.code);
+      const b = couponRules(y.code);
+      if (!a || !b || stackProblem(a, b)) continue;
+      const saving = roundMoney(Math.min(x.saving + y.saving, subtotal * COMBINED_CAP));
+      if (!best || saving > best.saving) best = { codes: [x.code, y.code], saving };
+    }
+  }
+
+  const rank = { ok: 0, locked: 1, upcoming: 2, ineligible: 3 } as const;
+  list.sort((a, b) => rank[a.state] - rank[b.state] || b.saving - a.saving);
+  return { signedIn: !!userId, subtotal, coupons: list, best };
 }
