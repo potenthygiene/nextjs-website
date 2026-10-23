@@ -30,12 +30,6 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
     addToCart(variantId);
   };
 
-  const scrollToQuiz = () => {
-    const quizEl = document.getElementById("find-my-fit");
-    if (quizEl) {
-      quizEl.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <div className="w-full">
@@ -393,12 +387,12 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                   Shop the cup <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
 
-                <button
-                  onClick={scrollToQuiz}
-                  className="border border-[#602E55] text-[#602E55] rounded-full py-2.5 px-3 text-xs font-semibold hover:bg-pink-50 transition-colors text-center"
+                <Link
+                  href="/product-detail/ovy-cup#size-finder"
+                  className="border border-[#602E55] text-[#602E55] rounded-full py-2.5 px-3 text-xs font-semibold hover:bg-pink-50 transition-colors flex items-center justify-center text-center"
                 >
                   Find my size
-                </button>
+                </Link>
               </div>
             </div>
           </div>

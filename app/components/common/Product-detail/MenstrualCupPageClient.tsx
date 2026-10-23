@@ -35,6 +35,22 @@ import {
   ZoomIn,
 } from "lucide-react";
 import { toast } from "sonner";
+import {
+  OVY_QUIZ_THEME,
+  QuizModal,
+  QuizResult,
+  QuizSteps,
+  useQuizFlow,
+} from "@/app/components/common/quiz/QuizKit";
+import {
+  CUP_ALT_WHY,
+  CUP_SIZES,
+  CUP_STEPS,
+  cupQuizResult,
+  cupSizeOfVariant,
+  cupSkip,
+  type CupSize,
+} from "@/const/quizRules";
 import { addToCart as addToCartAction } from "@/store/cartActions";
 import { useWishlistStore } from "@/store/WishlistStore";
 import {
@@ -55,27 +71,6 @@ type Props = {
   content?: any;
 };
 
-// Size Quiz Static Reference
-const QUIZ_SIZES = [
-  {
-    id: "xs",
-    name: "Teen (XS)",
-    cap: "16 ml",
-    forWho: "Teens & first-timers under 18",
-  },
-  {
-    id: "m",
-    name: "Medium",
-    cap: "25 ml",
-    forWho: "No vaginal birth yet (any age / C-section)",
-  },
-  {
-    id: "l",
-    name: "Large",
-    cap: "35 ml",
-    forWho: "After vaginal birth or very heavy flow",
-  },
-];
 
 // Quick Questions Data
 const QUICK_QUESTIONS_DATA: Record<
@@ -416,14 +411,8 @@ export default function MenstrualCupPageClient({
 
   // Quiz Modal State
   const [isQuizOpen, setIsQuizOpen] = useState(false);
-  const [quizStep, setQuizStep] = useState(0);
-  const [quizAnswers, setQuizAnswers] = useState({
-    age: "",
-    birth: "",
-    flow: "",
-    cervix: "",
-  });
-  const [quizResult, setQuizResult] = useState<"xs" | "m" | "l" | null>(null);
+  const cupQuiz = useQuizFlow(CUP_STEPS, cupSkip);
+  const [quizAdding, setQuizAdding] = useState(false);
 
   // Savings Calculator State (Screenshot 2)
   const [monthlySpend, setMonthlySpend] = useState(250);
@@ -627,68 +616,94 @@ export default function MenstrualCupPageClient({
     setIsCheckingPincode(false);
   };
 
-  // Size Quiz Logic
-  const handleQuizAnswer = (key: string, val: string) => {
-    const nextAnswers = { ...quizAnswers, [key]: val };
-    setQuizAnswers(nextAnswers);
+  // Size Quiz Logic: the rules live in const/quizRules.ts (shared with the chat)
+  // and follow the size table and cervix check on this page.
+  const cupQuizOutcome = useMemo(
+    () => (cupQuiz.done ? cupQuizResult(cupQuiz.answers) : null),
+    [cupQuiz.done, cupQuiz.answers],
+  );
 
-    if (quizStep < 3) {
-      setQuizStep(quizStep + 1);
-    } else {
-      let rec: "xs" | "m" | "l" = "m";
+  const resetQuiz = () => cupQuiz.reset();
 
-      if (nextAnswers.age === "under18") {
-        // Under 18 / Teen: Teen (XS) is specifically engineered for teens and young first-timers
-        rec = "xs";
-      } else if (nextAnswers.birth === "vaginal") {
-        // After vaginal childbirth:
-        if (nextAnswers.cervix === "low" && nextAnswers.flow === "light") {
-          // Low cervix + light flow: Medium avoids protrusion while holding adequate capacity
-          rec = "m";
-        } else {
-          // Standard recommendation after vaginal birth is Large
-          rec = "l";
-        }
-      } else {
-        // Adult (18+) without vaginal childbirth (includes C-section moms):
-        if (
-          nextAnswers.age === "above30" &&
-          nextAnswers.flow === "heavy" &&
-          nextAnswers.cervix !== "low"
-        ) {
-          // 30+ with very heavy flow and average/high cervix can use Large
-          rec = "l";
-        } else {
-          // Default recommended standard size for all adults without vaginal birth is Medium
-          rec = "m";
-        }
-      }
+  // Live prices only come from the product's own variants, never the fallback list.
+  const hasLiveVariants =
+    (Array.isArray(productInfo?.productVariants) && productInfo.productVariants.length > 0) ||
+    (Array.isArray(productInfo?.prodcutVarientBoxRes) && productInfo.prodcutVarientBoxRes.length > 0);
 
-      setQuizResult(rec);
-      setQuizStep(4);
+  // The variant index for a size, matched by explicit size words. Keeps the
+  // shopper's current colour when it is already that size.
+  const findCupVariantIndex = (size: CupSize) => {
+    if (cupSizeOfVariant(activeVariant) === size) return selectedVariantIndex;
+    const matches = variantsList
+      .map((v: any, idx: number) => ({ v, idx }))
+      .filter(({ v }: any) => cupSizeOfVariant(v) === size);
+    const inStock = matches.find(({ v }: any) => v?.isInStock !== false && v?.is_in_stock !== false);
+    return (inStock || matches[0])?.idx ?? -1;
+  };
+
+  const cupVariantPrice = (v: any) => {
+    if (!hasLiveVariants) return null;
+    const n = Number(v?.price);
+    return Number.isFinite(n) && n > 0 ? n : null;
+  };
+
+  const CUP_SIZE_IMAGES: Record<CupSize, string> = {
+    xs: "/ovy/cup-xs.jpg",
+    m: "/ovy/cup-m.jpg",
+    l: "/ovy/cup-l.jpg",
+  };
+
+  const selectCupSize = (size: CupSize) => {
+    const idx = findCupVariantIndex(size);
+    if (idx === -1) {
+      toast.error(`${CUP_SIZES[size].name} isn't available right now.`);
+      return;
     }
+    handleSelectVariant(idx);
+    setIsQuizOpen(false);
+    toast.success(`Selected size: ${CUP_SIZES[size].name}`);
+    setTimeout(() => {
+      mainButtonsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 150);
   };
 
-  const resetQuiz = () => {
-    setQuizStep(0);
-    setQuizAnswers({ age: "", birth: "", flow: "", cervix: "" });
-    setQuizResult(null);
-  };
-
-  const applyQuizResult = () => {
-    if (quizResult) {
-      const matchIdx = variantsList.findIndex((v: any) =>
-        (v?.size || v?.name || "")
-          .toLowerCase()
-          .includes(quizResult.toLowerCase()),
-      );
-      if (matchIdx !== -1) {
-        setSelectedVariantIndex(matchIdx);
-      }
+  const addCupSizeToCart = async (size: CupSize) => {
+    const idx = findCupVariantIndex(size);
+    const v = idx >= 0 ? variantsList[idx] : null;
+    const livePrice = cupVariantPrice(v);
+    if (!v || !livePrice) {
+      selectCupSize(size);
+      return;
+    }
+    if (v.isInStock === false || v.is_in_stock === false) {
+      toast.error("This size is out of stock right now.");
+      return;
+    }
+    setQuizAdding(true);
+    try {
+      const variantLabel = v.name || v.size || CUP_SIZES[size].name;
+      const strike = Number(v.strikethroughPrice ?? v.mrp);
+      await addToCartAction({
+        productId: productInfo?._id || productInfo?.id || "ovy-cup",
+        productVariantId: v._id || v.id,
+        sku: v.sku || `OVY-CUP-${v.size || size.toUpperCase()}`,
+        slug: productInfo?.slug || "menstrual-cup",
+        title: productInfo?.name ? `${productInfo.name} (${variantLabel})` : variantLabel,
+        variantName: variantLabel,
+        price: livePrice,
+        originalPrice: Number.isFinite(strike) && strike > 0 ? strike : undefined,
+        image: v.bannerImage || v.image ? getImageUrl(v.bannerImage || v.image) : CUP_SIZE_IMAGES[size],
+        isQuantityChangable: true,
+        quantity: 1,
+      });
+      handleSelectVariant(idx);
+      toast.success(`${CUP_SIZES[size].name} added to bag!`);
       setIsQuizOpen(false);
-      toast.success(
-        `Selected size: ${QUIZ_SIZES.find((s) => s.id === quizResult)?.name}`,
-      );
+    } catch (err) {
+      console.error("Cart Add Error:", err);
+      toast.error("Couldn't add it to your bag. Please try again.");
+    } finally {
+      setQuizAdding(false);
     }
   };
 
@@ -2570,162 +2585,64 @@ export default function MenstrualCupPageClient({
       />
 
       {/* SIZE FINDER QUIZ MODAL */}
-      {isQuizOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-          <div className="relative w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl transition-all sm:p-8">
-            <button
-              onClick={() => setIsQuizOpen(false)}
-              className="absolute top-4 right-4 rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-black"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
-            {/* Step 0: Age */}
-            {quizStep === 0 && (
-              <div>
-                <span className="text-xs font-bold tracking-wider text-[#7E4D77] uppercase">
-                  Step 1 of 4
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-xl font-bold text-gray-900">
-                  What is your age?
-                </h3>
-                <div className="space-y-2.5">
-                  <button
-                    onClick={() => handleQuizAnswer("age", "under18")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Under 18 years old (Teen)
-                  </button>
-                  <button
-                    onClick={() => handleQuizAnswer("age", "18to30")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    18 – 30 years old
-                  </button>
-                  <button
-                    onClick={() => handleQuizAnswer("age", "above30")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Over 30 years old
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 1: Birth */}
-            {quizStep === 1 && (
-              <div>
-                <span className="text-xs font-bold tracking-wider text-[#7E4D77] uppercase">
-                  Step 2 of 4
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-xl font-bold text-gray-900">
-                  Have you given birth vaginally?
-                </h3>
-                <div className="space-y-2.5">
-                  <button
-                    onClick={() => handleQuizAnswer("birth", "none")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    No / C-section delivery
-                  </button>
-                  <button
-                    onClick={() => handleQuizAnswer("birth", "vaginal")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Yes, given birth vaginally
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 2: Flow */}
-            {quizStep === 2 && (
-              <div>
-                <span className="text-xs font-bold tracking-wider text-[#7E4D77] uppercase">
-                  Step 3 of 4
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-xl font-bold text-gray-900">
-                  How heavy is your period flow?
-                </h3>
-                <div className="space-y-2.5">
-                  <button
-                    onClick={() => handleQuizAnswer("flow", "light")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Light to Normal flow
-                  </button>
-                  <button
-                    onClick={() => handleQuizAnswer("flow", "heavy")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Heavy flow (Change pads frequently)
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Cervix */}
-            {quizStep === 3 && (
-              <div>
-                <span className="text-xs font-bold tracking-wider text-[#7E4D77] uppercase">
-                  Step 4 of 4
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-xl font-bold text-gray-900">
-                  What is your cervix height?
-                </h3>
-                <div className="space-y-2.5">
-                  <button
-                    onClick={() => handleQuizAnswer("cervix", "medium")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Average or High Cervix
-                  </button>
-                  <button
-                    onClick={() => handleQuizAnswer("cervix", "low")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Low Cervix
-                  </button>
-                  <button
-                    onClick={() => handleQuizAnswer("cervix", "unsure")}
-                    className="w-full rounded-xl border border-gray-200 p-3.5 text-left text-sm font-medium transition-all hover:border-[#7E4D77] hover:bg-pink-50/50"
-                  >
-                    Unsure / First-time user
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 4: Result */}
-            {quizStep === 4 && quizResult && (
-              <div className="py-2 text-center">
-                <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-[#F3E6F0] text-[#7E4D77]">
-                  <Heart className="h-8 w-8" />
-                </div>
-                <span className="text-xs font-bold tracking-widest text-emerald-600 uppercase">
-                  PERFECT MATCH FOUND
-                </span>
-                <h3 className="mt-1 font-serif text-2xl font-bold text-gray-900">
-                  We recommend:{" "}
-                  {QUIZ_SIZES.find((s) => s.id === quizResult)?.name}
-                </h3>
-                <p className="mt-2 text-xs leading-relaxed text-gray-600">
-                  Based on your answers, the {quizResult.toUpperCase()} cup size
-                  ({QUIZ_SIZES.find((s) => s.id === quizResult)?.cap}) provides
-                  optimal seal, comfort, and leak protection.
-                </p>
-
-                <button
-                  onClick={applyQuizResult}
-                  className="mt-6 w-full rounded-xl bg-[#7E4D77] py-3 font-bold text-white transition-all hover:bg-[#683c62]"
-                >
-                  Select Size
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <QuizModal
+        open={isQuizOpen}
+        onClose={() => setIsQuizOpen(false)}
+        theme={OVY_QUIZ_THEME}
+        label="Cup size quiz"
+      >
+        {!cupQuizOutcome ? (
+          <QuizSteps flow={cupQuiz} />
+        ) : (
+          (() => {
+            const size = cupQuizOutcome.size;
+            const alt = cupQuizOutcome.alternative;
+            const idx = findCupVariantIndex(size);
+            const v = idx >= 0 ? variantsList[idx] : null;
+            const outOfStock = Boolean(v && (v.isInStock === false || v.is_in_stock === false));
+            const strike = Number(v?.strikethroughPrice ?? v?.mrp);
+            const colour = v?.color ? ` · ${v.color}` : "";
+            return (
+              <QuizResult
+                eyebrow="Perfect match found"
+                title={CUP_SIZES[size].title}
+                productName={productInfo?.name || "Ovy Reusable Menstrual Cup"}
+                sizeLabel={`${CUP_SIZES[size].name}, ${CUP_SIZES[size].cap}${colour}`}
+                image={v?.bannerImage || v?.image ? getImageUrl(v.bannerImage || v.image) : CUP_SIZE_IMAGES[size]}
+                price={cupVariantPrice(v)}
+                strikePrice={hasLiveVariants && Number.isFinite(strike) && strike > 0 ? strike : null}
+                description={CUP_SIZES[size].why}
+                reasons={cupQuizOutcome.reasons}
+                alternative={{
+                  title: `Or ${CUP_SIZES[alt].name}, ${CUP_SIZES[alt].cap}`,
+                  why: CUP_ALT_WHY[`${size}>${alt}`] || CUP_SIZES[alt].why,
+                  action: { label: `Select ${CUP_SIZES[alt].name} instead`, onClick: () => selectCupSize(alt) },
+                }}
+                tips={cupQuizOutcome.tips}
+                warning={cupQuizOutcome.warning}
+                primary={{
+                  label: outOfStock
+                    ? "Out of stock right now"
+                    : quizAdding
+                      ? "Adding..."
+                      : `Add ${CUP_SIZES[size].name} to bag`,
+                  onClick: () => addCupSizeToCart(size),
+                  disabled: outOfStock || quizAdding || idx === -1,
+                  icon: <ShoppingBag className="h-5 w-5" />,
+                }}
+                secondary={[
+                  {
+                    label: size === "m" ? "Select Medium and pick a colour" : `Select ${CUP_SIZES[size].name}`,
+                    onClick: () => selectCupSize(size),
+                  },
+                ]}
+                onBack={cupQuiz.back}
+                onRetake={cupQuiz.reset}
+              />
+            );
+          })()
+        )}
+      </QuizModal>
 
       {/* QUICK QUESTION ANSWER MODAL */}
       {activeQuickQuestionKey && QUICK_QUESTIONS_DATA[activeQuickQuestionKey] && (

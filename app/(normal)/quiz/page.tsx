@@ -1,175 +1,59 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Progress } from "@/components/ui/progress";
-import { quizQuestions } from "@/const/globalconst";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import React, { useState } from "react";
-import { toast } from "sonner";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { Sparkles } from "lucide-react";
+import { quizQuestions } from "@/const/globalconst";
+import { NEED_STORAGE_KEY } from "@/const/quizRules";
+import {
+  NEUTRAL_QUIZ_THEME,
+  QuizSteps,
+  themeStyle,
+  useQuizFlow,
+} from "@/app/components/common/quiz/QuizKit";
 
+// "Find what I need": four questions, then /suggested-products works out the
+// picks in the browser from the saved answers (rules in const/quizRules.ts).
 const Page = () => {
-  const [quizData, setQuizData] = React.useState(quizQuestions[0]);
-  const [answers, setAnswers] = React.useState<{ [key: number]: number }>({});
-
   const router = useRouter();
+  const flow = useQuizFlow(quizQuestions);
 
-  // const [suggestedProductPopup,setSuggestedProductPopup]=useState(false);
-
-  const filteredAnswers = quizQuestions
-    .filter((question) => answers[question.id] !== undefined)
-    .map((question) => ({
-      id: question.id,
-      question: question.question,
-      answer: question.options[answers[question.id]].slug,
-    }));
-
-  const changeQuiz = (quizId: any) => {
-    if (quizQuestions.length > quizId) {
-      setQuizData(quizQuestions[quizId]);
-    } else {
-      toast.success("Quiz Completed!");
-      localStorage.setItem("quizAnswers", JSON.stringify(filteredAnswers));
-      router.push("/suggested-products");
-      // setSuggestedProductPopup(true)
+  useEffect(() => {
+    if (!flow.done) return;
+    try {
+      window.localStorage.setItem(NEED_STORAGE_KEY, JSON.stringify(flow.answers));
+    } catch {
+      // Storage can be blocked; sessionStorage below is the fallback.
     }
-  };
-
-  // const handleOptionClick = (questionId: number, optionIndex: number) => {
-  //   setAnswers((prev) => ({
-  //     ...prev,
-  //     [questionId]: optionIndex,
-  //   }));
-
-  //   changeQuiz(questionId);
-  // };
-
-  const handleOptionClick = (questionId: number, optionIndex: number) => {
-    const updatedAnswers = {
-      ...answers,
-      [questionId]: optionIndex,
-    };
-
-    setAnswers(updatedAnswers);
-
-    const updatedFilteredAnswers = quizQuestions
-      .filter((q) => updatedAnswers[q.id] !== undefined)
-      .map((q) => ({
-        id: q.id,
-        question: q.question,
-        answer: q.options[updatedAnswers[q.id]].slug,
-      }));
-
-    if (updatedFilteredAnswers.length === quizQuestions.length) {
-      localStorage.setItem(
-        "quizAnswers",
-        JSON.stringify(updatedFilteredAnswers),
-      );
-
-      toast.success("Quiz Completed!");
-      router.replace("/suggested-products");
-      return;
+    try {
+      window.sessionStorage.setItem(NEED_STORAGE_KEY, JSON.stringify(flow.answers));
+    } catch {
+      // Ignore: one of the two stores is enough.
     }
-
-    changeQuiz(questionId);
-  };
-
-  const BackHandler = () => {
-    if (quizData?.id > 1) {
-      changeQuiz(quizData?.id - 2);
-    }
-  };
-
-  const NextHandler = () => {
-    if (quizData?.id < quizQuestions.length) {
-      changeQuiz(quizData?.id);
-    }
-  };
-
-  // if(suggestedProductPopup){
-  //   return <SuggestedProducts userAnswers={filteredAnswers}/>
-  // }
+    router.push("/suggested-products");
+  }, [flow.done, flow.answers, router]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
-      <div className="my-5 flex w-full max-w-4xl flex-col gap-8 rounded-2xl bg-white p-6 shadow-lg md:my-0 md:p-10">
-        {/* Progress */}
-        <Field className="w-full">
-          <FieldLabel className="flex justify-between text-sm text-gray-600">
-            <span>
-              Question {quizData?.id} of {quizQuestions.length}
-            </span>
-            <span>
-              {Math.round(
-                answers[quizQuestions.length] >= 0
-                  ? 100
-                  : (quizData.id - 1) * (100 / quizQuestions.length),
-              )}
-              %
-            </span>
-          </FieldLabel>
-          <Progress
-            value={
-              answers[quizQuestions.length] >= 0
-                ? 100
-                : (quizData.id - 1) * (100 / quizQuestions.length)
-            }
-            className="bg-[#016271]/50 [&>div]:bg-[#016271]"
-            id="progress-upload"
-          />
-        </Field>
-
-        {/* Question */}
-        <div className="text-center">
-          <h1 className="text-xl font-semibold text-gray-800 md:text-3xl">
-            {quizData?.question}
-          </h1>
+    <div className="flex min-h-[80vh] items-start justify-center bg-[#F4F7F7] px-4 py-6 sm:items-center sm:py-10" style={themeStyle(NEUTRAL_QUIZ_THEME)}>
+      <div className="w-full max-w-2xl rounded-3xl bg-white p-5 shadow-lg sm:p-10">
+        <div className="mb-5 text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--quiz-soft)] px-3 py-1 text-[11px] font-bold tracking-wider text-[var(--quiz-accent-dark)] uppercase">
+            <Sparkles className="h-3.5 w-3.5" /> Find what I need
+          </span>
+          <h1 className="mt-2 font-serif text-2xl font-bold text-[var(--quiz-ink)] sm:text-3xl">Four questions, one honest match</h1>
+          <p className="mt-1.5 text-sm text-gray-600">
+            About 30 seconds. We match Ovy products and sizes to your flow, comfort and skin.
+          </p>
         </div>
 
-        {/* Options */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {quizData?.options.map((option: any, index: number) => {
-            const Icon = option.icon;
+        {flow.done ? (
+          <p className="py-10 text-center text-sm font-medium text-gray-600">Working out your picks...</p>
+        ) : (
+          <QuizSteps flow={flow} columns={2} />
+        )}
 
-            return (
-              <Button
-                onClick={() => handleOptionClick(quizData?.id, index)}
-                key={index}
-                className={`flex h-auto items-center justify-start gap-4 rounded-xl p-4 transition-all ${
-                  answers[quizData?.id] === index
-                    ? "bg-[#016271] text-white"
-                    : "bg-[#9DD8E2] text-white hover:bg-[#016271]"
-                }`}
-              >
-                <div className="rounded-lg bg-white p-2 text-[#016271]">
-                  <Icon size={20} />
-                </div>
-                <span className="font-medium">{option.label}</span>
-              </Button>
-            );
-          })}
-        </div>
-
-        <div
-          className={`flex w-full items-center justify-between ${quizData?.id == 1 && "justify-end"}`}
-        >
-          {quizData?.id > 1 && (
-            <Button onClick={() => BackHandler()} variant={"ghost"}>
-              <ArrowLeft /> Back
-            </Button>
-          )}
-
-          {quizData?.id < quizQuestions.length && (
-            <Button onClick={() => NextHandler()} variant={"ghost"}>
-              Next <ArrowRight />
-            </Button>
-          )}
-        </div>
-
-        {/* Footer */}
-        <p className="text-center text-sm text-gray-500">
-          Your answers help us recommend the perfect products for your needs
+        <p className="mt-6 text-center text-xs text-gray-500">
+          Your answers stay on this device. We use them only to suggest products.
         </p>
       </div>
     </div>

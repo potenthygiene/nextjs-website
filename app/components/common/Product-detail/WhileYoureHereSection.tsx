@@ -5,12 +5,17 @@ import Link from "next/link";
 import { ArrowRight, HelpCircle, Luggage, Gift } from "lucide-react";
 
 interface WhileYoureHereProps {
+  /** Kept for existing callers. The travel quiz card always opens the chat's trip planner now. */
   onOpenQuiz?: () => void;
   brandTheme?: "looway" | "ovy";
 }
 
+// The "travel quiz" is the trip planner in Potent Saathi (the chat widget listens for this event).
+const openTripPlanner = () => {
+  window.dispatchEvent(new CustomEvent("potent-open-saathi", { detail: { finder: "trip-planner" } }));
+};
+
 export default function WhileYoureHereSection({
-  onOpenQuiz,
   brandTheme = "looway",
 }: WhileYoureHereProps) {
   const isLooway = brandTheme === "looway";
@@ -71,7 +76,7 @@ export default function WhileYoureHereSection({
                   Potent Rewards Club
                 </h3>
                 <p className="mt-0.5 text-xs text-[#5A0E30]/70 leading-snug line-clamp-2">
-                  Earn credits across Ovy &amp; Looway — ₹50 to join.
+                  Earn credits across Ovy &amp; Looway, ₹50 to join.
                 </p>
               </div>
             </div>
@@ -79,9 +84,9 @@ export default function WhileYoureHereSection({
           </Link>
 
           {/* Card 3: Not sure what you need? (Pink Card) */}
-          <a
-            href={onOpenQuiz ? undefined : "#guide"}
-            onClick={onOpenQuiz ? (e) => { e.preventDefault(); onOpenQuiz(); } : undefined}
+          <button
+            type="button"
+            onClick={openTripPlanner}
             className={`group relative flex w-full cursor-pointer items-center justify-between gap-4 rounded-3xl border ${pinkCardBg} p-5 text-left shadow-2xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#C21E63] hover:shadow-md sm:col-span-2 lg:col-span-1`}
           >
             {/* Free Badge */}
@@ -103,7 +108,7 @@ export default function WhileYoureHereSection({
               </div>
             </div>
             <ArrowRight className="h-5 w-5 flex-none text-gray-400 transition-transform group-hover:translate-x-1 group-hover:text-[#C21E63]" />
-          </a>
+          </button>
         </div>
       </div>
     </section>

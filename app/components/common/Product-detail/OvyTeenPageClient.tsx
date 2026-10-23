@@ -45,6 +45,20 @@ import {
   ZoomIn,
 } from "lucide-react";
 import { toast } from "sonner";
+import {
+  OVY_QUIZ_THEME,
+  QuizModal,
+  QuizResult,
+  QuizSteps,
+  useQuizFlow,
+} from "@/app/components/common/quiz/QuizKit";
+import {
+  TEEN_KITS,
+  TEEN_STEPS,
+  teenKitOfVariant,
+  teenQuizResult,
+  type TeenKit,
+} from "@/const/quizRules";
 import { addToCart as addToCartAction } from "@/store/cartActions";
 import { getProductMaxQuantity, getMaxQuantityMessage } from "@/lib/productQuantityLimits";
 import { useWishlistStore } from "@/store/WishlistStore";
@@ -590,9 +604,12 @@ export default function OvyTeenPageClient({
 
   // Quiz Modal State
   const [quizOpen, setQuizOpen] = useState<boolean>(false);
-  const [quizStep, setQuizStep] = useState<number>(1);
-  const [quizAnswers, setQuizAnswers] = useState<Record<number, string>>({});
-  const [quizResultKit, setQuizResultKit] = useState<string | null>(null);
+  const teenQuiz = useQuizFlow(TEEN_STEPS);
+  const [quizAdding, setQuizAdding] = useState(false);
+  const openTeenQuiz = () => {
+    teenQuiz.reset();
+    setQuizOpen(true);
+  };
 
   // Pincode Checker State
   const [pincode, setPincode] = useState<string>("");
@@ -1028,31 +1045,68 @@ export default function OvyTeenPageClient({
     router.push("/checkout?mode=subscription");
   };
 
-  // Handle Quiz flow
-  const handleQuizAnswer = (questionIdx: number, val: string) => {
-    const nextAnswers = { ...quizAnswers, [questionIdx]: val };
-    setQuizAnswers(nextAnswers);
+  // Teen kit quiz: the rules live in const/quizRules.ts (shared with the chat).
+  const teenQuizOutcome = useMemo(
+    () => (teenQuiz.done ? teenQuizResult(teenQuiz.answers) : null),
+    [teenQuiz.done, teenQuiz.answers],
+  );
 
-    if (questionIdx < 3) {
-      setQuizStep(questionIdx + 1);
-    } else {
-      // Calculate recommended kit
-      let recommended = "STARTER";
-      if (nextAnswers[1] === "active" || nextAnswers[3] === "sports") {
-        recommended = "PRO";
-      } else if (nextAnswers[1] === "first" || nextAnswers[3] === "gift") {
-        recommended = "FIRST";
-      }
-      setQuizResultKit(recommended);
-      setQuizStep(4);
-    }
+  // Only a variant that is clearly this kit counts, so the quiz never shows
+  // another kit's price.
+  const findKitVariantStrict = (key: TeenKit): any =>
+    variantsList.find((v: any) => teenKitOfVariant(v) === key) || null;
+
+  const kitLivePrice = (key: TeenKit) => {
+    const n = Number(findKitVariantStrict(key)?.price);
+    return Number.isFinite(n) && n > 0 ? n : null;
   };
 
-  const handleSelectQuizResult = () => {
-    if (quizResultKit) {
-      handleSelectKit(quizResultKit);
-      setQuizOpen(false);
-      toast.success(`Selected ${KITS_DATA[quizResultKit].label}!`);
+  const showKitOnPage = (key: TeenKit) => {
+    handleSelectKit(key);
+    setQuizOpen(false);
+    setTimeout(() => {
+      mainButtonsRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 150);
+  };
+
+  const addQuizKitToCart = async (key: TeenKit) => {
+    const variant = findKitVariantStrict(key);
+    const price = kitLivePrice(key);
+    if (!variant || !price) {
+      showKitOnPage(key);
+      return;
+    }
+    if (variant.isInStock === false || variant.is_in_stock === false) {
+      toast.error("This kit is out of stock right now.");
+      return;
+    }
+    const label = KITS_DATA[key]?.label || TEEN_KITS[key].label;
+    setQuizAdding(true);
+    try {
+      const added = await addToCartAction({
+        productId: product?.id,
+        productVariantId: variant.id,
+        sku: variant.sku,
+        slug: product?.slug || "ovy-teen",
+        title: `${product?.name || "Ovy Organic Soft Sanitary Pads, Teen"} (${label})`,
+        variantName: label,
+        image: KITS_DATA[key]?.image || "/product-images/teen.jpg",
+        price,
+        quantity: 1,
+        isQuantityChangable: true,
+        purchaseType: "one_time",
+        subscriptionType: null,
+        isSubscribed: false,
+      });
+      if (added !== false) {
+        handleSelectKit(key);
+        toast.success(`Added ${label} to bag!`);
+        setQuizOpen(false);
+      }
+    } catch {
+      toast.error("Couldn't add it to your bag. Please try again.");
+    } finally {
+      setQuizAdding(false);
     }
   };
 
@@ -1146,7 +1200,7 @@ export default function OvyTeenPageClient({
                       </button>
                       <button
                         onClick={() => {
-                          setQuizOpen(true);
+                          openTeenQuiz();
                           setLearnDropdownOpen(false);
                         }}
                         className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-[#1A150F] transition-colors hover:bg-[#F3E6F0]"
@@ -1477,7 +1531,7 @@ export default function OvyTeenPageClient({
 
             {/* Period Quiz Banner Entry */}
             <button
-              onClick={() => setQuizOpen(true)}
+              onClick={openTeenQuiz}
               className="border-1.5 group flex w-full cursor-pointer items-center gap-4 rounded-2xl border-[#9A5B90] bg-gradient-to-r from-[#F3E6F0] to-[#E4F1F1] p-4 text-left shadow-sm transition-all hover:-translate-y-0.5"
             >
               <div className="grid h-10 w-10 place-items-center rounded-xl bg-white text-[#7E4D77] shadow-xs transition-transform group-hover:scale-105">
@@ -2706,7 +2760,7 @@ export default function OvyTeenPageClient({
         </section>
 
         {/* Good to Know / Promos Section at the bottom */}
-        <OvyPromos onOpenQuiz={() => setQuizOpen(true)} />
+        <OvyPromos onOpenQuiz={openTeenQuiz} />
 
         {/* Product Reviews Section */}
         <section className="mt-16 border-t border-[#1A150F]/10 pt-12">
@@ -2726,120 +2780,70 @@ export default function OvyTeenPageClient({
       </main>
 
       {/* Quiz Modal */}
-      {quizOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-xs"
-            onClick={() => setQuizOpen(false)}
-          />
-          <div className="animate-in zoom-in-95 relative z-10 w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl duration-200">
-            <button
-              onClick={() => setQuizOpen(false)}
-              className="absolute top-4 right-4 grid h-8 w-8 place-items-center rounded-full bg-[#FAF9F5] text-[#1A150F]/60 hover:text-[#1A150F]"
-            >
-              <X className="h-4 w-4" />
-            </button>
-
-            {quizStep <= 3 ? (
-              <div>
-                <span className="text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase">
-                  Question {quizStep} of 3
-                </span>
-                <h3 className="mt-1 mb-4 font-serif text-xl font-bold text-[#1A150F]">
-                  {quizStep === 1
-                    ? "Is this for a first period, or an active teen?"
-                    : quizStep === 2
-                      ? "What is her daily activity level?"
-                      : "What type of kit support would she love?"}
-                </h3>
-
-                <div className="space-y-2.5">
-                  {quizStep === 1 && (
-                    <>
-                      <button
-                        onClick={() => handleQuizAnswer(1, "first")}
-                        className="w-full rounded-2xl border border-[#1A150F]/10 p-3.5 text-left text-xs font-semibold transition-all hover:border-[#9A5B90] hover:bg-[#F3E6F0]/50 sm:text-sm"
-                      >
-                        First period / First time user
-                      </button>
-                      <button
-                        onClick={() => handleQuizAnswer(1, "regular")}
-                        className="w-full rounded-2xl border border-[#1A150F]/10 p-3.5 text-left text-xs font-semibold transition-all hover:border-[#9A5B90] hover:bg-[#F3E6F0]/50 sm:text-sm"
-                      >
-                        Regular monthly period care
-                      </button>
-                      <button
-                        onClick={() => handleQuizAnswer(1, "active")}
-                        className="w-full rounded-2xl border border-[#1A150F]/10 p-3.5 text-left text-xs font-semibold transition-all hover:border-[#9A5B90] hover:bg-[#F3E6F0]/50 sm:text-sm"
-                      >
-                        Sports player / Tournament traveler
-                      </button>
-                    </>
-                  )}
-
-                  {quizStep === 2 && (
-                    <>
-                      <button
-                        onClick={() => handleQuizAnswer(2, "school")}
-                        className="w-full rounded-2xl border border-[#1A150F]/10 p-3.5 text-left text-xs font-semibold transition-all hover:border-[#9A5B90] hover:bg-[#F3E6F0]/50 sm:text-sm"
-                      >
-                        School days & light study routines
-                      </button>
-                      <button
-                        onClick={() => handleQuizAnswer(2, "sports")}
-                        className="w-full rounded-2xl border border-[#1A150F]/10 p-3.5 text-left text-xs font-semibold transition-all hover:border-[#9A5B90] hover:bg-[#F3E6F0]/50 sm:text-sm"
-                      >
-                        Active sports, dance & outdoor activities
-                      </button>
-                    </>
-                  )}
-
-                  {quizStep === 3 && (
-                    <>
-                      <button
-                        onClick={() => handleQuizAnswer(3, "basic")}
-                        className="w-full rounded-2xl border border-[#1A150F]/10 p-3.5 text-left text-xs font-semibold transition-all hover:border-[#9A5B90] hover:bg-[#F3E6F0]/50 sm:text-sm"
-                      >
-                        Essential pad pack
-                      </button>
-                      <button
-                        onClick={() => handleQuizAnswer(3, "gift")}
-                        className="w-full rounded-2xl border border-[#1A150F]/10 p-3.5 text-left text-xs font-semibold transition-all hover:border-[#9A5B90] hover:bg-[#F3E6F0]/50 sm:text-sm"
-                      >
-                        Complete milestone gift box with extras
-                      </button>
-                    </>
-                  )}
-                </div>
-              </div>
-            ) : (
-              <div className="py-4 text-center">
-                <span className="mb-3 inline-block rounded-full bg-[#F3E6F0] p-3 text-[#7E4D77]">
-                  <Heart className="h-6 w-6" />
-                </span>
-                <h3 className="font-serif text-2xl font-bold text-[#1A150F]">
-                  We recommend:
-                </h3>
-                <b className="my-2 block font-serif text-3xl font-bold text-[#7E4D77]">
-                  {quizResultKit
-                    ? KITS_DATA[quizResultKit].label
-                    : "Starter Pack"}
-                </b>
-                <p className="mx-auto mb-6 max-w-xs text-xs text-[#1A150F]/70">
-                  {quizResultKit ? KITS_DATA[quizResultKit].short : ""}
-                </p>
-
-                <button
-                  onClick={handleSelectQuizResult}
-                  className="w-full cursor-pointer rounded-full bg-[#9A5B90] py-3.5 text-sm font-bold text-white shadow-md transition-all hover:bg-[#7E4D77]"
-                >
-                  Select this Kit
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <QuizModal
+        open={quizOpen}
+        onClose={() => setQuizOpen(false)}
+        theme={OVY_QUIZ_THEME}
+        label="Teen kit quiz"
+      >
+        {!teenQuizOutcome ? (
+          <QuizSteps flow={teenQuiz} />
+        ) : (
+          (() => {
+            const key = teenQuizOutcome.kit;
+            const alt = teenQuizOutcome.alternative;
+            const variant = findKitVariantStrict(key);
+            const outOfStock = Boolean(
+              variant && (variant.isInStock === false || variant.is_in_stock === false),
+            );
+            const strike = Number(variant?.strikethroughPrice);
+            const label = KITS_DATA[key]?.label || TEEN_KITS[key].label;
+            const altLabel = KITS_DATA[alt]?.label || TEEN_KITS[alt].label;
+            return (
+              <QuizResult
+                eyebrow="We recommend"
+                title={TEEN_KITS[key].title}
+                productName={product?.name || "Ovy Teen Pads"}
+                sizeLabel={`${label} · ${KITS_DATA[key]?.pieces || ""}`.replace(/ · $/, "")}
+                image={KITS_DATA[key]?.image}
+                price={kitLivePrice(key)}
+                strikePrice={Number.isFinite(strike) && strike > 0 ? strike : null}
+                description={TEEN_KITS[key].why}
+                reasons={teenQuizOutcome.reasons}
+                contents={TEEN_KITS[key].contents}
+                alternative={
+                  teenQuizOutcome.wantsGift
+                    ? {
+                        title: "First Period Box (coming soon)",
+                        why: TEEN_KITS.FIRST.altWhy,
+                        action: { label: "Get notified", onClick: () => showKitOnPage("FIRST") },
+                      }
+                    : {
+                        title: `Or the ${altLabel}`,
+                        why: TEEN_KITS[alt].altWhy,
+                        action: { label: `See the ${altLabel}`, onClick: () => showKitOnPage(alt) },
+                      }
+                }
+                tips={teenQuizOutcome.tips}
+                warning={teenQuizOutcome.warning}
+                primary={{
+                  label: outOfStock
+                    ? "Out of stock right now"
+                    : quizAdding
+                      ? "Adding..."
+                      : `Add ${label} to bag`,
+                  onClick: () => addQuizKitToCart(key),
+                  disabled: outOfStock || quizAdding,
+                  icon: <ShoppingBag className="h-5 w-5" />,
+                }}
+                secondary={[{ label: "Select this kit on the page", onClick: () => showKitOnPage(key) }]}
+                onBack={teenQuiz.back}
+                onRetake={teenQuiz.reset}
+              />
+            );
+          })()
+        )}
+      </QuizModal>
 
       {/* Topic Modals for Period School */}
       {activeTopicModal && (

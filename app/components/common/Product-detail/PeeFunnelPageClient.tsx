@@ -736,13 +736,18 @@ export default function PeeFunnelPageClient({
               </div>
 
               {/* Quiz Banner Bar */}
-              <a
-                href="#guide"
-                className="mt-4 flex items-center justify-between rounded-2xl border-2 border-dashed border-[#C21E63]/40 bg-white p-3 px-4 text-xs font-bold text-[#C21E63] transition-colors hover:bg-[#FDEEF4]/50"
+              <button
+                type="button"
+                onClick={() =>
+                  window.dispatchEvent(
+                    new CustomEvent("potent-open-saathi", { detail: { finder: "trip-planner" } }),
+                  )
+                }
+                className="mt-4 flex min-h-[44px] w-full cursor-pointer items-center justify-between rounded-2xl border-2 border-dashed border-[#C21E63]/40 bg-white p-3 px-4 text-left text-xs font-bold text-[#C21E63] transition-colors hover:bg-[#FDEEF4]/50"
               >
                 <span>❓ Not sure how many? Take the 30-second quiz</span>
                 <ArrowRight className="h-4 w-4" />
-              </a>
+              </button>
 
               {/* MAIN BUY BOX */}
               <div className="mt-6 rounded-2xl border border-[#EAD6DC] bg-white p-5 shadow-md">

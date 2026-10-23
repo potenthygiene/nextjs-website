@@ -1,4 +1,4 @@
-import { User2 } from "lucide-react";
+import { NEED_STEPS } from "./quizRules";
 
 export const SIZES = ["XS", "S", "M", "L", "XL", "XXL", "semi-stitched"];
 export const MATERIALS = ["Cotton", "Wool", "Silk", "Leather", "Linen"];
@@ -38,53 +38,9 @@ export const CATEGORY_2 = [
   },
 ];
 
-export const quizQuestions = [
-  {
-    id: 1,
-    question: "What describes your flow?",
-    options: [
-      { icon: User2, label: "light flow", slug: "ligth_flow" },
-      { icon: User2, label: "medium flow", slug: "medium_flow" },
-      { icon: User2, label: "heavy flow", slug: "heavy_flow" },
-      { icon: User2, label: "Unsure", slug: "unsure" },
-    ],
-  },
-  {
-    id: 2,
-    question: "Do you experience cramps or discomfort?",
-    options: [
-      { icon: User2, label: "No Discomfort", slug: "no_discomfort" },
-      { icon: User2, label: "Mild Discomfort", slug: "mild_discomfort" },
-      { icon: User2, label: "Severe Cramps", slug: "severe_cramps" },
-      { icon: User2, label: "Varies", slug: "varies" },
-    ],
-  },
-  {
-    id: 3,
-    question: "What is your preferred material for period products?",
-    options: [
-      { icon: User2, label: "Cotton", slug: "organic_cotton" },
-      { icon: User2, label: "Synthetic Blend", slug: "synthetic_blend" },
-      {
-        icon: User2,
-        label: "Medical Grade Silicone",
-        slug: "medical_grade_silicon",
-      },
-      { icon: User2, label: "Unsure", slug: "unsure" },
-    ],
-  },
-  {
-    id: 4,
-    question:
-      "Do you have any allergies or sensitivities to certain materials?",
-    options: [
-      { icon: User2, label: "No Allergies", slug: "no_allergies" },
-      { icon: User2, label: "Sensitive Skin", slug: "sensitive_skin" },
-      { icon: User2, label: "Allergic Reactions", slug: "allergic_reactions" },
-      { icon: User2, label: "Not Sure", slug: "not_sure" },
-    ],
-  },
-];
+// The "Find what I need" quiz (/quiz). Questions and the rules that turn the
+// answers into picks live in const/quizRules.ts, shared with the chat.
+export const quizQuestions = NEED_STEPS;
 
 export const pageSize = 10;
 // export const tempUserId = "c263327b-3958-4fe8-b0b9-1ca3711f7c9c"

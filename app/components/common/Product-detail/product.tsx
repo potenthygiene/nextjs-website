@@ -22,7 +22,6 @@ import {
   ShoppingBag,
   Star,
   Truck,
-  X,
 } from "lucide-react";
 import Image from "next/image";
 import { addToCart as addToCartAction } from "@/store/cartActions";
