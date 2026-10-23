@@ -164,6 +164,9 @@ async function getValidCoupon({
       }
     }
     // Once for every referred friend whose first order has been delivered.
+    if (rules.referrerOnly && !userId) {
+      return { couponInfo: null, error: `Sign in to use ${normalizedCode}` };
+    }
     if (rules.referrerOnly) {
       const friends = userId
         ? await db
@@ -210,7 +213,8 @@ async function getValidCoupon({
     };
   }
 
-  if (couponInfo.useOnce) {
+  // Guests are checked again at checkout once signed in (a guest has no account id).
+  if (couponInfo.useOnce && userId) {
     const existingUsage = await db
       .select({ id: couponTransaction.id })
       .from(couponTransaction)
