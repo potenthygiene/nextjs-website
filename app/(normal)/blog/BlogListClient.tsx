@@ -49,7 +49,6 @@ function Cover({ post, sizes, priority }: { post: Post; sizes: string; priority?
       sizes={sizes}
       priority={priority}
       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-      unoptimized
     />
   );
 }

@@ -5,19 +5,43 @@ import { COVER_ICON_NODES } from "@/const/journal/coverIcons";
 
 export const COVER_SIZE = { width: 1200, height: 630 };
 
+// Google Fonts serves TrueType to a plain request, which is what the image
+// renderer needs. Without the fonts the cover still draws in a default face.
+async function loadFont(family: string, weight: number) {
+  try {
+    const css = await fetch(
+      `https://fonts.googleapis.com/css2?family=${family}:wght@${weight}`,
+    ).then((r) => r.text());
+    const url = css.match(/src: url\((.+?)\) format\('(?:truetype|opentype)'\)/)?.[1];
+    if (!url) return null;
+    return await fetch(url).then((r) => r.arrayBuffer());
+  } catch {
+    return null;
+  }
+}
+
+async function coverFonts() {
+  const [serif, sans] = await Promise.all([loadFont("Fraunces", 600), loadFont("Geist", 600)]);
+  const fonts: { name: string; data: ArrayBuffer; weight: 600; style: "normal" }[] = [];
+  if (serif) fonts.push({ name: "Fraunces", data: serif, weight: 600, style: "normal" });
+  if (sans) fonts.push({ name: "Geist", data: sans, weight: 600, style: "normal" });
+  return fonts;
+}
+
 /**
  * Draws a Journal cover. "cover" is the artwork used on cards and at the
  * top of the article; "share" adds the title for WhatsApp, Google and
  * social previews.
  */
-export function renderCover(slug: string, variant: "cover" | "share") {
+export async function renderCover(slug: string, variant: "cover" | "share") {
   const a = getArticle(slug);
   if (!a) return new Response("Not found", { status: 404 });
 
   const t = COVER_THEMES[a.cover.theme];
   const icon = COVER_ICON_NODES[a.cover.icon];
   const headline = variant === "share" ? a.title : a.cover.kicker;
-  const headlineSize = variant === "share" ? (a.title.length > 60 ? 52 : 60) : 68;
+  const headlineSize = variant === "share" ? (a.title.length > 60 ? 54 : 62) : 70;
+  const fonts = await coverFonts();
 
   return new ImageResponse(
     (
@@ -30,7 +54,7 @@ export function renderCover(slug: string, variant: "cover" | "share") {
           overflow: "hidden",
           backgroundImage: `linear-gradient(135deg, ${t.from} 0%, ${t.to} 100%)`,
           color: "white",
-          fontFamily: "sans-serif",
+          fontFamily: "Geist, sans-serif",
         }}
       >
         {/* Soft shapes */}
@@ -136,7 +160,7 @@ export function renderCover(slug: string, variant: "cover" | "share") {
                 backgroundColor: t.accent,
               }}
             />
-            <div style={{ fontSize: 24, fontWeight: 700, letterSpacing: 5 }}>
+            <div style={{ fontSize: 24, fontWeight: 600, letterSpacing: 5 }}>
               POTENT JOURNAL
             </div>
           </div>
@@ -151,7 +175,7 @@ export function renderCover(slug: string, variant: "cover" | "share") {
                 backgroundColor: "rgba(255,255,255,0.16)",
                 border: "1.5px solid rgba(255,255,255,0.35)",
                 fontSize: 22,
-                fontWeight: 700,
+                fontWeight: 600,
                 letterSpacing: 3,
               }}
             >
@@ -160,7 +184,8 @@ export function renderCover(slug: string, variant: "cover" | "share") {
             <div
               style={{
                 fontSize: headlineSize,
-                fontWeight: 700,
+                fontFamily: "Fraunces, serif",
+                fontWeight: 600,
                 lineHeight: 1.08,
                 letterSpacing: -1,
               }}
@@ -174,7 +199,8 @@ export function renderCover(slug: string, variant: "cover" | "share") {
     ),
     {
       ...COVER_SIZE,
-      headers: { "Cache-Control": "public, max-age=86400, s-maxage=31536000, immutable" },
+      fonts: fonts.length ? fonts : undefined,
+      headers: { "Cache-Control": "public, max-age=3600, s-maxage=86400" },
     },
   );
 }

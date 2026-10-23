@@ -372,7 +372,6 @@ export default function ArticleView({ article: a }: { article: Article }) {
             priority
             sizes="(min-width: 1024px) 1024px, 100vw"
             className="object-cover"
-            unoptimized
           />
         </div>
       </div>
@@ -518,7 +517,7 @@ export default function ArticleView({ article: a }: { article: Article }) {
           {related.map((r) => (
             <Link key={r.slug} href={`/blog/${r.slug}`} className="group overflow-hidden rounded-3xl border border-[#E1ECEE] bg-white transition-shadow hover:shadow-[0_16px_40px_-16px_rgba(7,89,101,0.25)]">
               <div className="relative aspect-[1200/630] overflow-hidden">
-                <Image src={coverImage(r.slug)} alt={r.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" unoptimized />
+                <Image src={coverImage(r.slug)} alt={r.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
               </div>
               <div className="p-5">
                 <p className="text-[11.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: COVER_THEMES[r.cover.theme].ink }}>

@@ -23,7 +23,7 @@ const article: Article = {
     "Delhi AQI today",
   ],
   date: "2026-10-22",
-  cover: { theme: "sky", icon: "wind", kicker: "GRAP Stage I in force" },
+  cover: { theme: "sky", icon: "wind", kicker: "Pollution Season" },
   intro: [
     "On the afternoon of 21 October, Delhi's air quality index jumped to 244, tipping into the \"poor\" band, and GRAP Stage I came into force across Delhi-NCR. If your throat already feels scratchy after the morning walk, you're not imagining it. Understanding AQI health effects helps you decide when to step out, which mask is worth buying and how to keep the air inside your home cleaner.",
     "With Diwali on 8 November and winter on its way, this is the stretch of the year when air in north India often gets worse before it gets better. Here's what each AQI level means for your body, who needs to be most careful, which masks actually work, and the everyday habits that protect your lungs from pollution.",

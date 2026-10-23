@@ -156,10 +156,10 @@ export function Navbar() {
             </Link>
 
             {/* Vertical Separator (Desktop) */}
-            <div className="mx-3 hidden h-10 w-px bg-white/30 lg:block" />
+            <div className="mx-3 hidden h-10 w-px bg-white/30 xl:block" />
 
             {/* Ovy & Looway Sub-logos (Desktop) */}
-            <div className="hidden items-center gap-3.5 lg:flex">
+            <div className="hidden items-center gap-3.5 xl:flex">
               <Link href="/ovy" className="transition-opacity hover:opacity-90">
                 <Image
                   src="/brand/ovy-white.png"
@@ -186,7 +186,7 @@ export function Navbar() {
           </div>
 
           {/* CENTER NAVIGATION LINKS (Desktop) */}
-          <div className="hidden items-center gap-5 sm:gap-6 text-xs sm:text-sm font-medium tracking-normal text-white/95 lg:flex">
+          <div className="hidden items-center gap-3.5 whitespace-nowrap text-[13px] font-medium tracking-normal text-white/95 lg:flex xl:gap-6 xl:text-sm">
             <Link
               href="/shop"
               className={`transition-colors hover:text-white ${
