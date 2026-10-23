@@ -823,6 +823,17 @@ export function ChatBotWidget() {
         actions: [{ label: t("What does it cost?"), action: { type: "price", slug: PRODUCT_META[partner].href.split("/")[2] } }],
       });
     }
+    // Signed in with nothing else to show: their last order, one tap from buying again.
+    if (c && !rows.length && latest) {
+      rows.push({
+        key: "last",
+        icon: Package,
+        title: t("Your last order: {date}", { date: latest.date }),
+        text: t("{n} items · {status}", { n: latest.items, status: t(latest.status) }),
+        actions: latest.lines.length ? [{ label: t("Buy again"), action: { type: "reorder", orderId: latest.id } }] : [],
+        links: [{ label: t("View order"), href: `/dashboard/orders/${latest.id}` }],
+      });
+    }
     if (c === null) {
       rows.push({
         key: "signin",
