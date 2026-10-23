@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { product, productFaq } from "@/db/schema";
+import { product, productFaq, productVariant } from "@/db/schema";
+import { fixHighlights } from "@/lib/contentFixes";
+import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_FEE } from "@/lib/shippingConfig";
+import * as R from "@/lib/rewards";
 import { FAQ_GROUPS } from "@/const/generalFaqs";
 import { ARTICLES } from "@/const/journal";
 import { fixProductFaq } from "@/lib/contentFixes";
@@ -65,6 +68,48 @@ async function productFaqs(): Promise<ChatAnswer[]> {
   });
 }
 
+// Live product facts for the chat's product cards: prices, sizes, stock,
+// highlights and subscription savings, straight from the database.
+async function liveProducts() {
+  const [products, variants] = await Promise.all([
+    db.select().from(product),
+    db
+      .select({ productId: productVariant.productId, name: productVariant.name, price: productVariant.price, inStock: productVariant.isInStock })
+      .from(productVariant),
+  ]);
+  return products.map((p) => {
+    const vs = variants.filter((v) => v.productId === p.id && Number(v.price) > 0);
+    const prices = vs.map((v) => Number(v.price));
+    return {
+      slug: resolveCanonicalSlug(p.slug),
+      name: p.name,
+      brand: p.brand === "loway" ? "Looway" : "Ovy",
+      fromPrice: prices.length ? Math.min(...prices) : null,
+      variants: vs.map((v) => ({ name: v.name, price: Number(v.price), inStock: v.inStock !== false })),
+      inStock: vs.length ? vs.some((v) => v.inStock !== false) : true,
+      highlights: fixHighlights(p.highlights).slice(0, 3),
+      subscription: p.allowSubscription ? { monthly: p.subscribeMonthlyDiscount || 0, everyTwoMonths: p.subscribeBiMontlyDiscount || 0 } : null,
+      cycleSync: p.allowCycleSync && p.cycleSyncDiscount ? p.cycleSyncDiscount : 0,
+    };
+  });
+}
+
+const OFFERS = {
+  freeDeliveryFrom: FREE_SHIPPING_THRESHOLD,
+  deliveryFee: STANDARD_SHIPPING_FEE,
+  rewards: {
+    joining: R.SIGNUP_BONUS_RUPEES,
+    orderBackPercent: Math.round(R.ORDER_REWARD_RATE * 100),
+    birthday: R.BIRTHDAY_REWARD_RUPEES,
+    review: Math.max(R.REVIEW_TEXT_REWARD_RUPEES, R.REVIEW_PHOTO_REWARD_RUPEES),
+    referralYou: R.REFERRAL_EARNING_RUPEES,
+    referralFriend: R.REFERRAL_FRIEND_BONUS_RUPEES,
+    referralMinOrder: R.REFERRAL_MIN_ORDER_AMOUNT,
+    maxRedeemPerOrder: R.MAX_REWARD_REDEEM_PER_ORDER,
+    maxRedeemPercent: Math.round(R.MAX_REWARD_REDEEM_PERCENT * 100),
+  },
+};
+
 export async function GET() {
   const general: ChatAnswer[] = FAQ_GROUPS.flatMap((g) =>
     g.faqs.map((f) => entry(`dyn-faq-${f.id}`, "orders", f.q, f.a, f.links?.slice(0, 2) || [{ label: "All FAQs", href: "/faq" }])),
@@ -79,14 +124,15 @@ export async function GET() {
   );
 
   let products: ChatAnswer[] = [];
+  let catalog: Awaited<ReturnType<typeof liveProducts>> = [];
   try {
-    products = await productFaqs();
+    [products, catalog] = await Promise.all([productFaqs(), liveProducts()]);
   } catch (error) {
-    console.error("chat-knowledge product FAQs failed:", error);
+    console.error("chat-knowledge product data failed:", error);
   }
 
   return NextResponse.json(
-    { answers: [...products, ...general, ...journal] },
+    { answers: [...products, ...general, ...journal], products: catalog, offers: OFFERS },
     { headers: { "Cache-Control": "public, max-age=600, s-maxage=3600" } },
   );
 }

@@ -4,6 +4,8 @@
 
 import type { ChatAnswer } from "@/const/chatbot/types";
 import { ALL_ANSWERS } from "@/const/chatbot";
+import { SYMPTOM_FLOWS } from "@/const/chatbot/symptoms";
+import type { SymptomFlow, SymptomOutcome } from "@/const/chatbot/symptomTypes";
 
 const STOPWORDS = new Set(
   (
@@ -358,3 +360,69 @@ export function warmUp() {
   buildIndex();
 }
 
+
+// ---- Symptom check-ins and type-ahead ----
+
+export { SYMPTOM_FLOWS };
+
+/** A symptom check-in to start when someone describes a symptom. */
+export function findSymptomFlow(text: string): SymptomFlow | null {
+  const t = ` ${normalise(text)} `;
+  const words = new Set(tokens(text));
+  let best: { flow: SymptomFlow; score: number } | null = null;
+  for (const flow of SYMPTOM_FLOWS) {
+    for (const trig of flow.triggers) {
+      const p = normalise(trig);
+      if (!p) continue;
+      // An exact phrase wins; otherwise every meaning word of the trigger
+      // must appear, so "my period is late" matches "period late".
+      const tw = tokens(trig);
+      const exact = t.includes(` ${p} `);
+      const allWords = tw.length >= 2 && tw.every((w) => words.has(w));
+      if (!exact && !allWords) continue;
+      const score = (exact ? 100 : 0) + tw.length * 10 + p.length;
+      if (!best || score > best.score) best = { flow, score };
+    }
+  }
+  return best?.flow || null;
+}
+
+type Profile = { age?: string; who?: string; sex?: string };
+
+/** First outcome whose conditions all hold. */
+export function pickOutcome(flow: SymptomFlow, answers: Record<string, string[]>, profile: Profile): SymptomOutcome {
+  const chosen = flow.questions.flatMap((q) => q.options.filter((o) => (answers[q.id] || []).includes(o.id)));
+  const worst = chosen.some((o) => o.flag === "red") ? "red" : chosen.some((o) => o.flag === "amber") ? "amber" : null;
+  for (const o of flow.outcomes) {
+    const m = o.match;
+    if (!m) return o;
+    if (m.flag === "red" && worst !== "red") continue;
+    if (m.flag === "amber" && !worst) continue;
+    if (m.ages && !(profile.age && (m.ages as string[]).includes(profile.age))) continue;
+    if (m.who && !(profile.who && (m.who as string[]).includes(profile.who))) continue;
+    if (m.sex && !(profile.sex && (m.sex as string[]).includes(profile.sex))) continue;
+    if (m.answers && !Object.entries(m.answers).every(([q, ids]) => (answers[q] || []).some((a) => ids.includes(a)))) continue;
+    return o;
+  }
+  return flow.outcomes[flow.outcomes.length - 1];
+}
+
+/** Up to n questions that match what is being typed, for suggestions. */
+export function suggest(text: string, n = 4): ChatAnswer[] {
+  if (normalise(text).length < 3) return [];
+  const r = findAnswer(text);
+  const ids = new Set<string>();
+  const out: ChatAnswer[] = [];
+  const push = (a?: ChatAnswer) => a && !ids.has(a.id) && !a.id.startsWith("dyn-") && (ids.add(a.id), out.push(a));
+  if (r.kind === "answer") {
+    push(r.answer);
+    r.alternatives.forEach(push);
+  } else if (r.kind === "unsure") r.options.forEach(push);
+  // Prefix matches on question text fill the rest.
+  const t = normalise(text);
+  for (const a of ALL_ANSWERS) {
+    if (out.length >= n) break;
+    if (normalise(a.question).includes(t)) push(a);
+  }
+  return out.slice(0, n);
+}
