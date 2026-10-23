@@ -57,14 +57,14 @@ export const JOURNAL_PRODUCTS: Record<
     brand: "Ovy",
     href: "/product-detail/ovy-pads",
     image: "/product-images/pads.jpg",
-    line: "Dermatologically tested, rash-free pads in L, XL and XL+.",
+    line: "BIS certified, dermatologically tested, rash-free pads in L, XL and XL+.",
   },
   "ovy-liners": {
     name: "Ovy Daily Panty Liners",
     brand: "Ovy",
     href: "/product-detail/ovy-liners",
     image: "/product-images/liners.jpg",
-    line: "Thin, breathable liners for everyday freshness.",
+    line: "Dermatologically tested, rash-free liners for everyday freshness.",
   },
   "ovy-panty": {
     name: "Ovy Super Slim Period Panties",

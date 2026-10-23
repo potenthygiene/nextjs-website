@@ -226,7 +226,7 @@ const article: Article = {
         {
           type: "product",
           product: "ovy-liners",
-          note: "Ovy Daily Liners are thin and breathable, made for everyday freshness on heavier-discharge days, and like any liner they make no claim to prevent or treat an infection.",
+          note: "Ovy Daily Liners are thin, breathable, dermatologically tested, rash-free and non-irritant, made for everyday freshness on heavier-discharge days. Like any liner, they do not prevent or treat an infection.",
         },
       ],
     },

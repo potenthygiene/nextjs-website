@@ -145,11 +145,15 @@ const article: Article = {
       blocks: [
         {
           type: "p",
-          text: "IS 5405 is the Bureau of Indian Standards (BIS) specification for disposable sanitary pads. It sets requirements for size, finish, pH, how well the pad holds fluid under pressure, and microbial cleanliness.",
+          text: "IS 5405 is the Bureau of Indian Standards (BIS) specification for disposable sanitary pads. It sets requirements for size, finish, pH, how well the pad holds fluid under pressure, and microbial cleanliness. Pads certified under it carry the ISI mark with a BIS licence number.",
         },
         {
           type: "p",
           text: "The 2025 revision also covers panty liners, maternity pads and period panties. According to the BIS product manual for it (July 2025), makers must test raw materials for phthalates, and the finished product once a year. The manual lists no separate VOC test.",
+        },
+        {
+          type: "p",
+          text: "Look for the **ISI mark with IS 5405** and a licence number on the pack. Ovy pads are BIS certified.",
         },
       ],
     },
@@ -208,7 +212,7 @@ const article: Article = {
       blocks: [
         {
           type: "p",
-          text: "Choose an unscented, dye-free pad in the right length for your flow, with soft, breathable layers, from a brand that explains its dermatological testing. Then change it every 4 to 6 hours, because the habit matters as much as the pad.",
+          text: "Choose an unscented, dye-free pad in the right length for your flow, with soft, breathable layers, from a brand that explains its dermatological testing and carries the ISI mark. Then change it every 4 to 6 hours, because the habit matters as much as the pad.",
         },
         {
           type: "checklist",
@@ -219,7 +223,7 @@ const article: Article = {
             "**The right size** for your flow, with wings that fold fully under",
             "**Soft, breathable layers** that don't feel plasticky",
             "**Dermatologically tested**, with details stated, not just a badge",
-            "**Clear labelling**: what the pad is made of and who makes it",
+            "**ISI mark and IS 5405** printed on the pack",
           ],
         },
         { type: "h3", text: "How often to change a pad" },
@@ -239,7 +243,7 @@ const article: Article = {
         {
           type: "product",
           product: "ovy-pads",
-          note: "Ovy pads are dermatologically tested and were clinically tested on 24 volunteers, where they were found to be non-irritant; that is what the testing showed, and no test can promise how your own skin will react.",
+          note: "Ovy pads are BIS certified, dermatologically tested, cruelty-free and rash-free, and were found non-irritant in a clinical test on 24 volunteers. No test can promise how your own skin will react, so change pads regularly.",
         },
       ],
     },
