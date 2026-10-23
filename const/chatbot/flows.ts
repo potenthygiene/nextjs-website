@@ -46,7 +46,7 @@ export const FLOWS: Record<string, FlowStep | FlowResult> = {
 
   // ---- Cup size finder ----
   "cup:start": {
-    text: "Let's find your cup size. All three sizes cost the same, so choose purely by fit. Have you had a vaginal birth?",
+    text: "Let's find your cup size. Fit matters most, so a few quick questions. Have you had a vaginal birth?",
     options: [
       { label: "Yes", next: "cup:large" },
       { label: "No, or only a C-section", next: "cup:cervix" },
