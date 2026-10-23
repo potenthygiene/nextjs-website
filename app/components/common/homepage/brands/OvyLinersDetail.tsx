@@ -19,6 +19,12 @@ interface OvyLinersDetailProps {
 }
 
 export function OvyLinersDetail({ productsBySlug }: OvyLinersDetailProps) {
+  // Live lowest pack price from the database; never a hand-typed price.
+  const linerPrices = getOvyVariants(productsBySlug?.["ovy-daily-panty-liners"])
+    .map((v) => getOvyVariantPrice(v))
+    .filter((p) => p > 0);
+  const fromPrice = linerPrices.length > 0 ? Math.min(...linerPrices) : 0;
+
   const handleAddToCart = async () => {
     const linerProduct = productsBySlug?.["ovy-daily-panty-liners"];
     const linerVariant = getOvyVariants(linerProduct)[0];
@@ -66,7 +72,7 @@ export function OvyLinersDetail({ productsBySlug }: OvyLinersDetailProps) {
               </span>
               <h2 className="font-serif text-2xl leading-snug font-bold text-[#1F1915] sm:text-4xl lg:text-5xl">
                 Fresh every day,{" "}
-                <span className="font-serif font-normal text-[#2563EB] italic">
+                <span className="font-serif font-normal text-ovy italic">
                   the clean way.
                 </span>
               </h2>
@@ -78,7 +84,7 @@ export function OvyLinersDetail({ productsBySlug }: OvyLinersDetailProps) {
             </div>
 
             {/* Quote Callout Box */}
-            <div className="max-w-xl rounded-r-2xl border-l-4 border-[#2563EB] bg-white p-4 shadow-2xs">
+            <div className="max-w-xl rounded-r-2xl border-l-4 border-ovy bg-white p-4 shadow-2xs">
               <p className="font-serif text-sm font-medium text-[#1F1915] italic sm:text-base">
                 “If it is your period, it is a pad. If it is everything in
                 between, it is a liner.”
@@ -88,19 +94,19 @@ export function OvyLinersDetail({ productsBySlug }: OvyLinersDetailProps) {
             {/* 2-Column Checkmarks Grid */}
             <div className="grid max-w-xl grid-cols-1 gap-2.5 text-xs text-[#1F1915] sm:grid-cols-2 sm:text-sm">
               <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 shrink-0 text-[#2563EB]" />
+                <Check className="h-4 w-4 shrink-0 text-ovy" />
                 <span>Everyday discharge</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 shrink-0 text-[#2563EB]" />
+                <Check className="h-4 w-4 shrink-0 text-ovy" />
                 <span>Spotting before or after a period</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 shrink-0 text-[#2563EB]" />
+                <Check className="h-4 w-4 shrink-0 text-ovy" />
                 <span>Light bladder leaks</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 shrink-0 text-[#2563EB]" />
+                <Check className="h-4 w-4 shrink-0 text-ovy" />
                 <span>Backup with a cup on light days</span>
               </div>
             </div>
@@ -111,20 +117,20 @@ export function OvyLinersDetail({ productsBySlug }: OvyLinersDetailProps) {
                 <div className="font-serif text-2xl font-bold text-[#602E55]">
                   40
                 </div>
-                <div className="mt-0.5 text-[11px] font-bold text-[#1F1915]">
+                <div className="mt-0.5 text-[12px] font-bold text-[#1F1915]">
                   about 10 days
                 </div>
-                <div className="text-[10px] text-gray-400">Trying Ovy</div>
+                <div className="text-[12px] text-gray-400">Trying Ovy</div>
               </div>
 
               <div className="rounded-2xl border border-blue-100 bg-white p-4 text-center shadow-2xs">
                 <div className="font-serif text-2xl font-bold text-[#602E55]">
                   60
                 </div>
-                <div className="mt-0.5 text-[11px] font-bold text-[#1F1915]">
+                <div className="mt-0.5 text-[12px] font-bold text-[#1F1915]">
                   about a fortnight
                 </div>
-                <div className="text-[10px] text-gray-400">
+                <div className="text-[12px] text-gray-400">
                   Our pick for daily wear
                 </div>
               </div>
@@ -133,16 +139,16 @@ export function OvyLinersDetail({ productsBySlug }: OvyLinersDetailProps) {
                 <div className="font-serif text-2xl font-bold text-[#602E55]">
                   80
                 </div>
-                <div className="mt-0.5 text-[11px] font-bold text-[#1F1915]">
+                <div className="mt-0.5 text-[12px] font-bold text-[#1F1915]">
                   about three weeks
                 </div>
-                <div className="text-[10px] text-gray-400">
+                <div className="text-[12px] text-gray-400">
                   Best value per liner
                 </div>
               </div>
             </div>
 
-            <p className="text-[11px] leading-tight text-gray-500">
+            <p className="text-[12px] leading-tight text-ink-muted">
               At a fresh liner every 3 to 4 hours, a full day is about four.
             </p>
 
@@ -159,7 +165,7 @@ export function OvyLinersDetail({ productsBySlug }: OvyLinersDetailProps) {
                 onClick={handleAddToCart}
                 className="inline-flex items-center gap-1.5 rounded-full bg-[#602E55] px-6 py-2.5 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#4A2040] sm:text-sm"
               >
-                <Plus className="h-4 w-4" /> Add, from ₹269
+                <Plus className="h-4 w-4" /> {fromPrice > 0 ? `Add, from ₹${fromPrice}` : "Add to bag"}
               </button>
             </div>
           </div>

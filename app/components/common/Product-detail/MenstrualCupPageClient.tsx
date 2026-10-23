@@ -59,6 +59,7 @@ import {
 } from "@/store/WishlistActions";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
 import { getImageUrl } from "@/lib/imageUrl";
+import { getReviewStats, reviewCountLabel } from "@/lib/reviewStats";
 import ProductReviews from "./productreview";
 import ProductFaqSection from "./ProductFaqSection";
 import ImageZoomModal from "./ImageZoomModal";
@@ -130,6 +131,7 @@ export default function MenstrualCupPageClient({
   reviewWithMedia,
   content,
 }: Props) {
+  const reviewStats = useMemo(() => getReviewStats(reviewWithMedia), [reviewWithMedia]);
   const router = useRouter();
   const productInfo = product;
   const themeColor =
@@ -717,14 +719,14 @@ export default function MenstrualCupPageClient({
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] pb-20 font-sans text-[#1A150F] antialiased">
+    <div className="min-h-screen bg-[#FAF9F5] pb-20 font-sans text-ink antialiased">
       {/* SECTION 1: HERO BUY SECTION WITH SINGLE-SELECT VARIANT CARDS */}
       <div
         ref={topSectionRef}
         className="mx-auto max-w-[1180px] px-4 pt-6 sm:px-6 sm:pt-10"
       >
         {/* Top Breadcrumb */}
-        <nav className="mb-4 flex items-center gap-2 text-xs text-gray-500 sm:mb-6 sm:text-sm">
+        <nav className="mb-4 flex items-center gap-2 text-xs text-ink-muted sm:mb-6 sm:text-sm">
           <Link href="/" className="hover:text-[#7E4D77]">
             Home
           </Link>
@@ -733,7 +735,7 @@ export default function MenstrualCupPageClient({
             Shop
           </Link>
           <span>/</span>
-          <span className="font-semibold text-[#1A150F]">
+          <span className="font-semibold text-ink">
             {productInfo?.name || "Ovy Reusable Menstrual Cup"}
           </span>
         </nav>
@@ -853,20 +855,20 @@ export default function MenstrualCupPageClient({
             <div className="mt-4 grid grid-cols-3 gap-3">
               <div className="rounded-2xl border border-gray-100 bg-white p-3 text-center shadow-2xs">
                 <Clock className="mx-auto mb-1 h-5 w-5 text-[#7E4D77]" />
-                <p className="text-xs font-bold text-gray-900">Up to 12 Hrs</p>
-                <p className="text-[10px] text-gray-500">Leak-free wear</p>
+                <p className="text-xs font-bold text-ink">Up to 12 Hrs</p>
+                <p className="text-[12px] text-ink-muted">Leak-free wear</p>
               </div>
               <div className="rounded-2xl border border-gray-100 bg-white p-3 text-center shadow-2xs">
                 <Leaf className="mx-auto mb-1 h-5 w-5 text-emerald-600" />
-                <p className="text-xs font-bold text-gray-900">
+                <p className="text-xs font-bold text-ink">
                   Reusable 10 Yrs
                 </p>
-                <p className="text-[10px] text-gray-500">Zero pad waste</p>
+                <p className="text-[12px] text-ink-muted">Zero pad waste</p>
               </div>
               <div className="rounded-2xl border border-gray-100 bg-white p-3 text-center shadow-2xs">
                 <ShieldCheck className="mx-auto mb-1 h-5 w-5 text-teal-600" />
-                <p className="text-xs font-bold text-gray-900">100% Medical</p>
-                <p className="text-[10px] text-gray-500">BPA & latex free</p>
+                <p className="text-xs font-bold text-ink">100% Medical</p>
+                <p className="text-[12px] text-ink-muted">BPA & latex free</p>
               </div>
             </div>
           </div>
@@ -885,26 +887,28 @@ export default function MenstrualCupPageClient({
             </div>
 
             {/* Title */}
-            <h1 className="mb-2 font-serif text-3xl leading-tight font-bold text-[#1A150F] sm:text-4xl">
+            <h1 className="mb-2 font-serif text-3xl leading-tight font-bold text-ink sm:text-4xl">
               {productInfo?.name || "Reusable Menstrual Cup"}
             </h1>
 
             {/* RATING STRIP & PILL BADGES */}
             <div className="mb-4 space-y-3">
-              <div className="flex items-center gap-2 text-xs text-gray-700 sm:text-sm">
+              {reviewStats.count > 0 && (
+              <div className="flex items-center gap-2 text-xs text-ink-muted sm:text-sm">
                 <div className="flex text-purple-600">
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="h-4 w-4 fill-[#B076A8] stroke-[#B076A8]"
+                      className={`h-4 w-4 ${i < Math.round(reviewStats.average) ? "fill-[#B076A8] stroke-[#B076A8]" : "fill-gray-200 text-gray-200"}`}
                     />
                   ))}
                 </div>
-                <span className="font-bold text-gray-900">4.8</span>
-                <span className="text-gray-500">
-                  out of 5 
+                <span className="font-bold text-ink">{reviewStats.averageLabel}</span>
+                <span className="text-ink-muted">
+                  out of 5 ({reviewCountLabel(reviewStats.count)})
                 </span>
               </div>
+              )}
 
               {/* Pill Badges */}
               <div className="flex flex-wrap gap-2">
@@ -924,7 +928,7 @@ export default function MenstrualCupPageClient({
             </div>
 
             {/* DESCRIPTION KEY POINTS */}
-            <p className="mb-6 text-sm leading-relaxed text-gray-700 sm:text-base">
+            <p className="mb-6 text-sm leading-relaxed text-ink-muted sm:text-base">
               The softest cup you'll ever use, and a{" "}
               <b>kinder swap for your body and the planet</b>. 100%
               medical-grade silicone gives you up to 12 hours of leak-proof
@@ -935,7 +939,7 @@ export default function MenstrualCupPageClient({
             {/* INTERACTIVE VARIANT SELECTOR CARDS */}
             <div className="mb-6">
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-xs font-bold tracking-wider text-gray-900 uppercase">
+                <span className="text-xs font-bold tracking-wider text-ink uppercase">
                   Select Size & Color Option
                 </span>
                 <button
@@ -966,11 +970,11 @@ export default function MenstrualCupPageClient({
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex flex-col">
-                          <span className="font-serif text-sm font-bold text-gray-900">
+                          <span className="font-serif text-sm font-bold text-ink">
                             {v?.name || v?.size || `Option ${idx + 1}`}
                           </span>
                           {(v?.isInStock === false || v?.is_in_stock === false) && (
-                            <span className="mt-0.5 w-fit rounded bg-stone-100 px-1.5 py-0.5 text-[9px] font-bold text-stone-500">
+                            <span className="mt-0.5 w-fit rounded bg-stone-100 px-1.5 py-0.5 text-[12px] font-bold text-stone-500">
                               Out of stock
                             </span>
                           )}
@@ -998,7 +1002,7 @@ export default function MenstrualCupPageClient({
             {/* PRICING & RATES */}
             <div className="border-t border-gray-200 pt-4">
               <div className="mb-2 flex items-baseline gap-3">
-                <span className="font-serif text-3xl font-bold text-gray-900">
+                <span className="font-serif text-3xl font-bold text-ink">
                   {priceMissing ? "Price unavailable" : `₹${price}`}
                 </span>
                 {!priceMissing && strikethroughPrice > price && (
@@ -1012,12 +1016,12 @@ export default function MenstrualCupPageClient({
                   </span>
                 )}
               </div>
-              <p className="mb-4 text-xs text-gray-500">
+              <p className="mb-4 text-xs text-ink-muted">
                 Includes breathable organic cotton storage pouch & size guide.
               </p>
 
               {/* Quantity + Buttons */}
-              <div className="mb-2 flex items-center justify-between text-xs font-semibold text-gray-500">
+              <div className="mb-2 flex items-center justify-between text-xs font-semibold text-ink-muted">
                 <span>Quantity</span>
                 <span>Maximum {maxQuantity} per order</span>
               </div>
@@ -1028,7 +1032,7 @@ export default function MenstrualCupPageClient({
                     type="button"
                     disabled={quantity <= 1}
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-1 text-lg font-bold text-gray-600 hover:text-black disabled:opacity-30 cursor-pointer"
+                    className="px-1 text-lg font-bold text-ink-muted hover:text-black disabled:opacity-30 cursor-pointer"
                   >
                     -
                   </button>
@@ -1055,7 +1059,7 @@ export default function MenstrualCupPageClient({
                   <button
                     type="button"
                     disabled
-                    className="col-span-12 flex items-center justify-center gap-2 rounded-xl bg-gray-200 px-6 py-3 font-bold text-gray-500 shadow-none cursor-not-allowed"
+                    className="col-span-12 flex items-center justify-center gap-2 rounded-xl bg-gray-200 px-6 py-3 font-bold text-ink-muted shadow-none cursor-not-allowed"
                   >
                     Out of stock
                   </button>
@@ -1093,7 +1097,7 @@ export default function MenstrualCupPageClient({
                   className={`col-span-12 flex cursor-pointer items-center justify-center gap-2 rounded-xl border py-3 text-sm font-semibold transition-all ${
                     isWishlisted
                       ? "border-rose-300 bg-rose-50 text-rose-600 hover:bg-rose-100"
-                      : "border-gray-200 bg-white text-gray-700 hover:border-[#7E4D77] hover:text-[#7E4D77]"
+                      : "border-gray-200 bg-white text-ink-muted hover:border-[#7E4D77] hover:text-[#7E4D77]"
                   }`}
                 >
                   <Heart
@@ -1109,7 +1113,7 @@ export default function MenstrualCupPageClient({
 
               {/* WHAT'S IN THE BOX BOX */}
               <div className="mb-6 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xs">
-                <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50/80 px-4 py-3 text-xs font-bold text-gray-600">
+                <div className="flex items-center justify-between border-b border-gray-100 bg-gray-50/80 px-4 py-3 text-xs font-bold text-ink-muted">
                   <span>WHAT'S IN THE BOX</span>
                   <span className="text-gray-400">
                     3 ITEMS · READY TO START
@@ -1117,42 +1121,42 @@ export default function MenstrualCupPageClient({
                 </div>
                 <div className="divide-y divide-gray-100 text-xs sm:text-sm">
                   <div className="flex items-center justify-between p-3.5">
-                    <span className="font-bold text-gray-900">
+                    <span className="font-bold text-ink">
                       1 Ovy menstrual cup
                     </span>
                     <span className="font-semibold text-[#7E4D77]">
                       {activeVariant?.size || activeVariant?.name || "Medium"}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-ink-muted">
                       Collects your flow, leak-free up to 12 hrs
                     </span>
                   </div>
                   <div className="flex items-center justify-between p-3.5">
-                    <span className="font-bold text-gray-900">
+                    <span className="font-bold text-ink">
                       Breathable cotton pouch
                     </span>
                     <span className="font-semibold text-[#7E4D77]">
                       included
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-ink-muted">
                       Store it dry and fresh between cycles
                     </span>
                   </div>
                   <div className="flex items-center justify-between p-3.5">
-                    <span className="font-bold text-gray-900">
+                    <span className="font-bold text-ink">
                       Illustrated how-to guide
                     </span>
                     <span className="font-semibold text-[#7E4D77]">
                       first use
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-ink-muted">
                       Fold, insert, seal and remove with ease
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between border-t border-gray-100 bg-[#FAF7F2] p-3 text-xs font-bold text-gray-700">
+                <div className="flex items-center justify-between border-t border-gray-100 bg-[#FAF7F2] p-3 text-xs font-bold text-ink-muted">
                   <span>TOTAL</span>
-                  <span className="font-normal text-gray-500">
+                  <span className="font-normal text-ink-muted">
                     Everything to start: one cup, reusable for years
                   </span>
                 </div>
@@ -1161,8 +1165,8 @@ export default function MenstrualCupPageClient({
 
               {/* REPLACEMENT GUARANTEE & SHOP WITH CONFIDENCE */}
               <div className="mb-6 space-y-4">
-                <div className="space-y-1 text-xs text-gray-600">
-                  <p className="font-semibold text-gray-500">
+                <div className="space-y-1 text-xs text-ink-muted">
+                  <p className="font-semibold text-ink-muted">
                     Ships in 24 to 48 hrs · secure checkout
                   </p>
                   <p>
@@ -1181,11 +1185,11 @@ export default function MenstrualCupPageClient({
 
                 {/* SHOP WITH CONFIDENCE CARD */}
                 <div className="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-2xs">
-                  <span className="block text-xs font-extrabold tracking-wider text-gray-900 uppercase">
+                  <span className="block text-xs font-extrabold tracking-wider text-ink uppercase">
                     SHOP WITH CONFIDENCE
                   </span>
 
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-medium text-gray-700">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-medium text-ink-muted">
                     <span className="flex items-center gap-1">
                       <Shield className="h-3.5 w-3.5 text-[#7E4D77]" />{" "}
                       Medical-grade silicone
@@ -1200,12 +1204,12 @@ export default function MenstrualCupPageClient({
                     </span>
                   </div>
 
-                  <div className="space-y-1.5 rounded-xl border border-gray-100 bg-gray-50/80 p-3 text-xs text-gray-600">
-                    <p className="flex items-center gap-1.5 font-bold text-gray-800">
+                  <div className="space-y-1.5 rounded-xl border border-gray-100 bg-gray-50/80 p-3 text-xs text-ink-muted">
+                    <p className="flex items-center gap-1.5 font-bold text-ink">
                       <Truck className="h-4 w-4 text-teal-600" /> Usually
                       delivered in 5 to 7 days · ships in 24 to 48 hrs, tracked
                     </p>
-                    <p className="text-[11px] leading-relaxed">
+                    <p className="text-[12px] leading-relaxed">
                       ✓ A cup is a personal hygiene product, so it can't be
                       returned, exchanged, refunded or replaced once delivered.
                       Please check your size with the size finder before you
@@ -1219,7 +1223,7 @@ export default function MenstrualCupPageClient({
                   <div className="mb-2 flex items-center gap-1.5 text-xs font-bold text-emerald-700">
                     <Lock className="h-3.5 w-3.5" /> Secure checkout
                   </div>
-                  <div className="flex flex-wrap gap-2 text-xs font-semibold text-gray-600">
+                  <div className="flex flex-wrap gap-2 text-xs font-semibold text-ink-muted">
                     {[
                       "UPI",
                       "Razorpay",
@@ -1294,10 +1298,10 @@ export default function MenstrualCupPageClient({
             <BookOpen className="h-3.5 w-3.5" />
             OVY PERIOD SCHOOL
           </div>
-          <h2 className="mx-auto mb-4 max-w-2xl font-serif text-3xl leading-tight font-bold text-[#1A150F] sm:text-5xl">
+          <h2 className="mx-auto mb-4 max-w-2xl font-serif text-3xl leading-tight font-bold text-ink sm:text-5xl">
             You've seen the cup. Now get to know your body.
           </h2>
-          <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-gray-600 sm:text-base">
+          <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-ink-muted sm:text-base">
             A cup comes with a lot of questions, and not nearly enough straight
             answers. This is where we change that: no jargon, no shame, just
             what's really going on and what actually helps.
@@ -1327,14 +1331,14 @@ export default function MenstrualCupPageClient({
               onClick={() => scrollToRef(topSectionRef)}
               className="group flex items-center gap-3 rounded-2xl border border-gray-200/80 bg-white p-4 text-left shadow-2xs transition-all hover:border-[#7E4D77]"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-gray-700 transition-colors group-hover:bg-[#F3E6F0] group-hover:text-[#7E4D77]">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-ink-muted transition-colors group-hover:bg-[#F3E6F0] group-hover:text-[#7E4D77]">
                 <ArrowUp className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm font-bold text-gray-900">
+                <p className="text-sm font-bold text-ink">
                   I'm all set, shop my cup
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-ink-muted">
                   Back to sizes, colours & checkout
                 </p>
               </div>
@@ -1348,10 +1352,10 @@ export default function MenstrualCupPageClient({
                 <ArrowDown className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm font-bold text-gray-900">
+                <p className="text-sm font-bold text-ink">
                   Take me into the Period School
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-ink-muted">
                   15 quick topics: sizing, care, safety, savings & more
                 </p>
               </div>
@@ -1370,13 +1374,13 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             LET'S TALK ABOUT IT
           </span>
-          <h2 className="font-serif text-3xl leading-tight font-bold text-gray-900 sm:text-4xl">
+          <h2 className="font-serif text-3xl leading-tight font-bold text-ink sm:text-4xl">
             Will a cup affect your virginity?{" "}
             <span className="font-serif font-normal text-[#7E4D77] italic">
               No, and here's why.
             </span>
           </h2>
-          <p className="mt-2 max-w-2xl text-sm text-gray-600 sm:text-base">
+          <p className="mt-2 max-w-2xl text-sm text-ink-muted sm:text-base">
             It's the question we hear most, especially from teens and
             first-timers. So here's the honest, gynaecologist-checked truth,
             gently, and without the myths.
@@ -1385,11 +1389,11 @@ export default function MenstrualCupPageClient({
 
         <div className="mb-6 grid grid-cols-1 items-center gap-8 rounded-3xl border border-gray-200/80 bg-white p-6 shadow-2xs sm:p-10 md:grid-cols-12">
           <div className="md:col-span-7">
-            <h3 className="mb-3 font-serif text-xl leading-snug font-bold text-gray-900 sm:text-2xl">
+            <h3 className="mb-3 font-serif text-xl leading-snug font-bold text-ink sm:text-2xl">
               A cup can't “take” your virginity. There's no wall down there
               waiting to break.
             </h3>
-            <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+            <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
               Virginity is a personal idea, not a medical state an object can
               change. What's actually near the opening is a soft, stretchy ring
               of tissue called the <b>hymen</b>, with a natural gap your period
@@ -1400,7 +1404,7 @@ export default function MenstrualCupPageClient({
           <div className="flex flex-col items-center justify-center rounded-2xl border border-gray-100 bg-[#FAF9F5] p-6 text-center md:col-span-5">
             <div className="relative my-2 flex h-40 w-40 items-center justify-center">
               <div className="flex h-32 w-32 items-center justify-center rounded-full border-8 border-[#7E4D77]/30 bg-[#F3E6F0]">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-[#7E4D77] bg-white text-[10px] font-bold text-gray-500">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-[#7E4D77] bg-white text-[12px] font-bold text-ink-muted">
                   natural
                   <br />
                   opening
@@ -1408,10 +1412,10 @@ export default function MenstrualCupPageClient({
               </div>
             </div>
             <p className="mt-1 text-xs font-bold text-[#7E4D77]">The hymen</p>
-            <p className="text-[11px] text-gray-500">
+            <p className="text-[12px] text-ink-muted">
               a soft, elastic ring of tissue
             </p>
-            <p className="mt-2 text-[10px] text-gray-400 italic">
+            <p className="mt-2 text-[12px] text-gray-400 italic">
               It stretches to let things through. It doesn't "break".
             </p>
           </div>
@@ -1420,7 +1424,7 @@ export default function MenstrualCupPageClient({
         <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-2xs">
             <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50/80 px-4 py-2.5">
-              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-rose-600 uppercase">
+              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-rose-600 uppercase">
                 MYTH
               </span>
               <span className="font-serif text-xs text-gray-400 italic">
@@ -1428,10 +1432,10 @@ export default function MenstrualCupPageClient({
               </span>
             </div>
             <div className="flex items-start gap-3 p-4">
-              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-purple-700 uppercase">
+              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-purple-700 uppercase">
                 TRUTH
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 It's soft, elastic tissue with a <b>natural opening</b>. It
                 stretches to let things past. It doesn't snap.
               </p>
@@ -1440,7 +1444,7 @@ export default function MenstrualCupPageClient({
 
           <div className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-2xs">
             <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50/80 px-4 py-2.5">
-              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-rose-600 uppercase">
+              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-rose-600 uppercase">
                 MYTH
               </span>
               <span className="font-serif text-xs text-gray-400 italic">
@@ -1448,10 +1452,10 @@ export default function MenstrualCupPageClient({
               </span>
             </div>
             <div className="flex items-start gap-3 p-4">
-              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-purple-700 uppercase">
+              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-purple-700 uppercase">
                 TRUTH
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 The hymen can't show whether someone's had sex. It comes in{" "}
                 <b>every shape</b>, and some are born with barely any.
               </p>
@@ -1460,7 +1464,7 @@ export default function MenstrualCupPageClient({
 
           <div className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-2xs">
             <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50/80 px-4 py-2.5">
-              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-rose-600 uppercase">
+              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-rose-600 uppercase">
                 MYTH
               </span>
               <span className="font-serif text-xs text-gray-400 italic">
@@ -1468,10 +1472,10 @@ export default function MenstrualCupPageClient({
               </span>
             </div>
             <div className="flex items-start gap-3 p-4">
-              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-purple-700 uppercase">
+              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-purple-700 uppercase">
                 TRUTH
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Cycling, sport, dance and tampons stretch it over the years too.{" "}
                 <b>Stretching isn't tearing.</b>
               </p>
@@ -1480,7 +1484,7 @@ export default function MenstrualCupPageClient({
 
           <div className="overflow-hidden rounded-2xl border border-gray-200/80 bg-white shadow-2xs">
             <div className="flex items-center gap-2 border-b border-gray-100 bg-gray-50/80 px-4 py-2.5">
-              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-rose-600 uppercase">
+              <span className="rounded-md bg-rose-50 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-rose-600 uppercase">
                 MYTH
               </span>
               <span className="font-serif text-xs text-gray-400 italic">
@@ -1488,10 +1492,10 @@ export default function MenstrualCupPageClient({
               </span>
             </div>
             <div className="flex items-start gap-3 p-4">
-              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[10px] font-extrabold tracking-wider text-purple-700 uppercase">
+              <span className="mt-0.5 shrink-0 rounded-md bg-purple-100 px-2 py-0.5 text-[11px] font-extrabold tracking-wider text-purple-700 uppercase">
                 TRUTH
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Anyone who menstruates can. Start with our softest <b>Teen</b>{" "}
                 size, breathe out, wet the rim. No rush.
               </p>
@@ -1501,7 +1505,7 @@ export default function MenstrualCupPageClient({
 
         <div className="flex items-start gap-3 rounded-2xl border border-[#7E4D77]/20 bg-[#F3E6F0]/60 p-4">
           <Info className="mt-0.5 h-5 w-5 shrink-0 text-[#7E4D77]" />
-          <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+          <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
             <b>A gentle note:</b> if insertion ever feels truly impossible or
             sharply painful even when you're relaxed, it's worth a quick chat
             with a doctor. Very rarely a hymen has an unusually small opening,
@@ -1520,10 +1524,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             FIND YOUR SIZE
           </span>
-          <h2 className="font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl">
             Three sizes, four colours
           </h2>
-          <p className="mt-2 max-w-3xl text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="mt-2 max-w-3xl text-xs leading-relaxed text-ink-muted sm:text-sm">
             One cup, sized to you. What matters most is{" "}
             <b>how high your cervix sits</b>, along with your flow and whether
             you've had a <b>vaginal</b> birth. It's not about your body shape,
@@ -1550,7 +1554,7 @@ export default function MenstrualCupPageClient({
               const el = document.getElementById("cervix-check-box");
               el?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="rounded-full border border-gray-300 bg-white px-5 py-2.5 text-xs font-bold text-gray-700 transition-all hover:border-[#7E4D77] hover:text-[#7E4D77]"
+            className="rounded-full border border-gray-300 bg-white px-5 py-2.5 text-xs font-bold text-ink-muted transition-all hover:border-[#7E4D77] hover:text-[#7E4D77]"
           >
             Do the cervix check →
           </button>
@@ -1569,15 +1573,15 @@ export default function MenstrualCupPageClient({
               </thead>
               <tbody className="divide-y divide-gray-100">
                 <tr className="hover:bg-pink-50/20">
-                  <td className="flex items-center gap-3 p-4 font-serif font-bold text-gray-900">
+                  <td className="flex items-center gap-3 p-4 font-serif font-bold text-ink">
                     <span className="inline-block h-6 w-6 shrink-0 rounded-full bg-pink-300 shadow-2xs" />
                     Teen (XS)
                   </td>
                   <td className="p-4 font-serif text-base font-bold text-[#7E4D77]">
                     16 ml
                   </td>
-                  <td className="p-4 text-gray-600">Pink</td>
-                  <td className="p-4 leading-relaxed text-gray-600">
+                  <td className="p-4 text-ink-muted">Pink</td>
+                  <td className="p-4 leading-relaxed text-ink-muted">
                     First periods & first-timers • light to average flow •
                     before any birth • a low-to-average cervix or tighter
                     muscles
@@ -1585,15 +1589,15 @@ export default function MenstrualCupPageClient({
                 </tr>
 
                 <tr className="hover:bg-purple-50/20">
-                  <td className="flex items-center gap-3 p-4 font-serif font-bold text-gray-900">
+                  <td className="flex items-center gap-3 p-4 font-serif font-bold text-ink">
                     <span className="inline-block h-6 w-6 shrink-0 rounded-full bg-purple-400 shadow-2xs" />
                     Medium (M)
                   </td>
                   <td className="p-4 font-serif text-base font-bold text-[#7E4D77]">
                     25 ml
                   </td>
-                  <td className="p-4 text-gray-600">Purple • Rainbow</td>
-                  <td className="p-4 leading-relaxed text-gray-600">
+                  <td className="p-4 text-ink-muted">Purple • Rainbow</td>
+                  <td className="p-4 leading-relaxed text-ink-muted">
                     The everyday all-rounder • average flow & cervix • no{" "}
                     <b>vaginal</b> birth yet (C-section mums and many over-30s
                     included)
@@ -1601,15 +1605,15 @@ export default function MenstrualCupPageClient({
                 </tr>
 
                 <tr className="hover:bg-gray-50">
-                  <td className="flex items-center gap-3 p-4 font-serif font-bold text-gray-900">
+                  <td className="flex items-center gap-3 p-4 font-serif font-bold text-ink">
                     <span className="inline-block h-6 w-6 shrink-0 rounded-full border border-gray-300 bg-amber-100 shadow-2xs" />
                     Large (L)
                   </td>
                   <td className="p-4 font-serif text-base font-bold text-[#7E4D77]">
                     35 ml
                   </td>
-                  <td className="p-4 text-gray-600">White</td>
-                  <td className="p-4 leading-relaxed text-gray-600">
+                  <td className="p-4 text-ink-muted">White</td>
+                  <td className="p-4 leading-relaxed text-ink-muted">
                     After a <b>vaginal</b> birth • heavier or longer days • a
                     higher cervix or a more relaxed pelvic floor
                   </td>
@@ -1623,10 +1627,10 @@ export default function MenstrualCupPageClient({
           id="cervix-check-box"
           className="rounded-3xl border border-gray-200/80 bg-white p-6 shadow-2xs sm:p-8"
         >
-          <h3 className="mb-2 font-serif text-xl font-bold text-gray-900">
+          <h3 className="mb-2 font-serif text-xl font-bold text-ink">
             The 20-second cervix check
           </h3>
-          <p className="mb-6 text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="mb-6 text-xs leading-relaxed text-ink-muted sm:text-sm">
             Cervix height decides how a cup sits more than anything else, and
             it's easy to find. <b>During your period,</b> wash your hands and
             slide one finger into your vagina until you feel your cervix (it's
@@ -1639,10 +1643,10 @@ export default function MenstrualCupPageClient({
               <span className="font-serif text-xs font-bold text-[#7E4D77]">
                 1st knuckle
               </span>
-              <h4 className="mt-1 mb-2 text-xs font-bold tracking-wider text-gray-900 uppercase">
+              <h4 className="mt-1 mb-2 text-xs font-bold tracking-wider text-ink uppercase">
                 LOW CERVIX
               </h4>
-              <p className="text-xs leading-relaxed text-gray-600">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 A shorter cup sits more comfortably. You may want to trim or
                 remove the stem. Teen (XS) or Medium suit most.
               </p>
@@ -1652,10 +1656,10 @@ export default function MenstrualCupPageClient({
               <span className="font-serif text-xs font-bold text-[#7E4D77]">
                 2nd knuckle
               </span>
-              <h4 className="mt-1 mb-2 text-xs font-bold tracking-wider text-gray-900 uppercase">
+              <h4 className="mt-1 mb-2 text-xs font-bold tracking-wider text-ink uppercase">
                 AVERAGE CERVIX
               </h4>
-              <p className="text-xs leading-relaxed text-gray-600">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 The most common: almost any size works. Pick by age, flow and
                 birth history using the table above.
               </p>
@@ -1665,17 +1669,17 @@ export default function MenstrualCupPageClient({
               <span className="font-serif text-xs font-bold text-[#7E4D77]">
                 3rd knuckle / can't reach
               </span>
-              <h4 className="mt-1 mb-2 text-xs font-bold tracking-wider text-gray-900 uppercase">
+              <h4 className="mt-1 mb-2 text-xs font-bold tracking-wider text-ink uppercase">
                 HIGH CERVIX
               </h4>
-              <p className="text-xs leading-relaxed text-gray-600">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 You have plenty of room: keep the full stem to help you reach
                 the base. Medium or Large work well.
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 rounded-xl border border-[#7E4D77]/20 bg-[#F3E6F0]/50 p-3.5 text-xs text-gray-700">
+          <div className="flex items-center gap-2 rounded-xl border border-[#7E4D77]/20 bg-[#F3E6F0]/50 p-3.5 text-xs text-ink-muted">
             <Info className="h-4 w-4 shrink-0 text-[#7E4D77]" />
             <span>
               Cervix height can shift a little across your cycle, so check on a
@@ -1697,10 +1701,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             FOR TEENS & FIRST-TIMERS
           </span>
-          <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mb-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             A cup, the teen way: do's & don'ts
           </h2>
-          <p className="mb-8 max-w-2xl text-xs text-gray-600 sm:text-sm">
+          <p className="mb-8 max-w-2xl text-xs text-ink-muted sm:text-sm">
             Trying a cup as a teen is completely safe and normal. Keep these
             simple do's and don'ts in mind and you'll be a pro within a couple
             of cycles.
@@ -1711,7 +1715,7 @@ export default function MenstrualCupPageClient({
               <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-emerald-700">
                 <Check className="h-5 w-5 text-emerald-600" /> Do
               </h3>
-              <ul className="space-y-3.5 text-xs text-gray-700 sm:text-sm">
+              <ul className="space-y-3.5 text-xs text-ink-muted sm:text-sm">
                 <li className="flex items-start gap-3">
                   <span className="shrink-0 font-bold text-emerald-600">✓</span>
                   <span>
@@ -1754,7 +1758,7 @@ export default function MenstrualCupPageClient({
               <h3 className="mb-4 flex items-center gap-2 text-base font-bold text-rose-700">
                 <X className="h-5 w-5 text-rose-600" /> Don't
               </h3>
-              <ul className="space-y-3.5 text-xs text-gray-700 sm:text-sm">
+              <ul className="space-y-3.5 text-xs text-ink-muted sm:text-sm">
                 <li className="flex items-start gap-3">
                   <span className="shrink-0 font-bold text-rose-600">✕</span>
                   <span>
@@ -1800,10 +1804,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             AN HONEST COMPARISON
           </span>
-          <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mb-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             Cup vs pads vs tampons
           </h2>
-          <p className="mb-8 max-w-2xl text-xs text-gray-600 sm:text-sm">
+          <p className="mb-8 max-w-2xl text-xs text-ink-muted sm:text-sm">
             Same job, three very different experiences. Here's how a cup
             actually stacks up, no exaggeration.
           </p>
@@ -1817,102 +1821,102 @@ export default function MenstrualCupPageClient({
                     <th className="w-1/4 bg-[#B076A8] p-4 text-xs font-bold tracking-wider text-white uppercase">
                       OVY CUP
                     </th>
-                    <th className="w-1/4 p-4 text-xs font-semibold tracking-wider text-gray-500 uppercase">
+                    <th className="w-1/4 p-4 text-xs font-semibold tracking-wider text-ink-muted uppercase">
                       PADS
                     </th>
-                    <th className="w-1/4 p-4 text-xs font-semibold tracking-wider text-gray-500 uppercase">
+                    <th className="w-1/4 p-4 text-xs font-semibold tracking-wider text-ink-muted uppercase">
                       TAMPONS
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">Wear time</td>
+                    <td className="p-4 font-bold text-ink">Wear time</td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
                       Up to 12 hours
                     </td>
-                    <td className="p-4 text-gray-600">4 to 6 hours</td>
-                    <td className="p-4 text-gray-600">4 to 8 hours</td>
+                    <td className="p-4 text-ink-muted">4 to 6 hours</td>
+                    <td className="p-4 text-ink-muted">4 to 8 hours</td>
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">Capacity</td>
+                    <td className="p-4 font-bold text-ink">Capacity</td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
                       Up to 3x a tampon
                     </td>
-                    <td className="p-4 text-gray-600">Surface only</td>
-                    <td className="p-4 text-gray-600">~10 ml</td>
+                    <td className="p-4 text-ink-muted">Surface only</td>
+                    <td className="p-4 text-ink-muted">~10 ml</td>
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">Reusable</td>
+                    <td className="p-4 font-bold text-ink">Reusable</td>
                     <td className="bg-pink-50/30 p-4 font-bold text-emerald-700">
                       Yes, for years
                     </td>
-                    <td className="p-4 text-gray-600">No</td>
-                    <td className="p-4 text-gray-600">No</td>
+                    <td className="p-4 text-ink-muted">No</td>
+                    <td className="p-4 text-ink-muted">No</td>
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">
+                    <td className="p-4 font-bold text-ink">
                       Cost per year
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
-                      ~₹50 to 60*
+                      A fraction of a year&apos;s pads*
                     </td>
-                    <td className="p-4 text-gray-600">₹2,000 to 3,000</td>
-                    <td className="p-4 text-gray-600">₹2,500 to 3,500</td>
+                    <td className="p-4 text-ink-muted">A new pack every month</td>
+                    <td className="p-4 text-ink-muted">A new pack every month</td>
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">
+                    <td className="p-4 font-bold text-ink">
                       Waste per year
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
                       Almost none
                     </td>
-                    <td className="p-4 text-gray-600">~120 pads</td>
-                    <td className="p-4 text-gray-600">~120 + applicators</td>
+                    <td className="p-4 text-ink-muted">~120 pads</td>
+                    <td className="p-4 text-ink-muted">~120 + applicators</td>
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">
+                    <td className="p-4 font-bold text-ink">
                       Dryness & odour
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
                       Collects, neither
                     </td>
-                    <td className="p-4 text-gray-600">Can feel damp</td>
-                    <td className="p-4 text-gray-600">Can dry you out</td>
+                    <td className="p-4 text-ink-muted">Can feel damp</td>
+                    <td className="p-4 text-ink-muted">Can dry you out</td>
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">
+                    <td className="p-4 font-bold text-ink">
                       Swim • sleep • sport
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-emerald-700">
                       All three
                     </td>
-                    <td className="p-4 text-gray-600">Limited</td>
-                    <td className="p-4 text-gray-600">Yes</td>
+                    <td className="p-4 text-ink-muted">Limited</td>
+                    <td className="p-4 text-ink-muted">Yes</td>
                   </tr>
                   <tr>
-                    <td className="p-4 font-bold text-gray-900">
+                    <td className="p-4 font-bold text-ink">
                       Anything showing?
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
                       Nothing, no string
                     </td>
-                    <td className="p-4 text-gray-600">Can be bulky</td>
-                    <td className="p-4 text-gray-600">Visible string</td>
+                    <td className="p-4 text-ink-muted">Can be bulky</td>
+                    <td className="p-4 text-ink-muted">Visible string</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div className="border-t border-gray-100 bg-gray-50 p-3 text-[11px] text-gray-400">
-              *Cup price spread across its years of use. Disposable figures
-              assume ~₹200 to 250 a month.
+            <div className="border-t border-gray-100 bg-gray-50 p-3 text-[12px] text-gray-400">
+              *One cup lasts for years, so its price is spread across every
+              cycle it covers.
             </div>
           </div>
         </div>
 
         {/* SUB-SECTION C: WHAT YOU GAIN THE DAY YOU SWITCH */}
         <div className="mb-16">
-          <h2 className="mb-6 font-serif text-2xl font-bold text-gray-900 sm:text-3xl">
+          <h2 className="mb-6 font-serif text-2xl font-bold text-ink sm:text-3xl">
             What you gain the day you switch
           </h2>
 
@@ -1922,10 +1926,10 @@ export default function MenstrualCupPageClient({
                 <Clock className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-gray-900">
+                <h4 className="text-sm font-bold text-ink">
                   12 hours, uninterrupted
                 </h4>
-                <p className="mt-1 text-xs leading-relaxed text-gray-600">
+                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
                   Sleep through the night, swim, run and travel without a single
                   change.
                 </p>
@@ -1937,10 +1941,10 @@ export default function MenstrualCupPageClient({
                 <ShieldCheck className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-gray-900">
+                <h4 className="text-sm font-bold text-ink">
                   3 to 5x more capacity
                 </h4>
-                <p className="mt-1 text-xs leading-relaxed text-gray-600">
+                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
                   Holds far more than a pad or tampon, so fewer bathroom trips on
                   heavy days.
                 </p>
@@ -1952,10 +1956,10 @@ export default function MenstrualCupPageClient({
                 <Droplets className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-gray-900">
+                <h4 className="text-sm font-bold text-ink">
                   No dryness, zero odour
                 </h4>
-                <p className="mt-1 text-xs leading-relaxed text-gray-600">
+                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
                   Silicone collects rather than absorbs, so moisture stays
                   balanced and flow never meets air.
                 </p>
@@ -1967,10 +1971,10 @@ export default function MenstrualCupPageClient({
                 <Zap className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-gray-900">
-                  Saves ₹3,000 to 5,000/year
+                <h4 className="text-sm font-bold text-ink">
+                  Costs a fraction of a year&apos;s pads
                 </h4>
-                <p className="mt-1 text-xs leading-relaxed text-gray-600">
+                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
                   Versus disposables, and one cup replaces years of throwaways.
                 </p>
               </div>
@@ -1981,10 +1985,10 @@ export default function MenstrualCupPageClient({
                 <Leaf className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-gray-900">
+                <h4 className="text-sm font-bold text-ink">
                   Thousands of pads diverted
                 </h4>
-                <p className="mt-1 text-xs leading-relaxed text-gray-600">
+                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
                   Kept out of landfill over years of cup use, versus single-use.
                 </p>
               </div>
@@ -1995,10 +1999,10 @@ export default function MenstrualCupPageClient({
                 <Heart className="h-5 w-5" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-gray-900">
+                <h4 className="text-sm font-bold text-ink">
                   Hypoallergenic, lower TSS risk
                 </h4>
-                <p className="mt-1 text-xs leading-relaxed text-gray-600">
+                <p className="mt-1 text-xs leading-relaxed text-ink-muted">
                   Latex-free silicone collects rather than absorbs, so TSS risk is
                   lower than tampons, though not zero. Empty within 12 hrs.
                 </p>
@@ -2016,10 +2020,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             MADE FOR REAL LIFE IN INDIA
           </span>
-          <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mb-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             The honest answers, woman to woman
           </h2>
-          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
             The questions everyone whispers about cups, answered without
             judgement, by people who get the Indian reality of shared bathrooms,
             hostels and family kitchens.
@@ -2038,10 +2042,10 @@ export default function MenstrualCupPageClient({
               <p className="mb-1 font-serif text-xs text-[#7E4D77] italic">
                 “Will it hurt to insert or wear?”
               </p>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 Hurt-free when you relax & fold
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 No. When positioned correctly, you shouldn't feel it at all.
                 Medical-grade silicone is velvety-soft and moulds to your body.
                 Relax your pelvic floor, wet the rim with clean water, and use
@@ -2062,10 +2066,10 @@ export default function MenstrualCupPageClient({
               <p className="mb-1 font-serif text-xs text-[#7E4D77] italic">
                 “Will it affect my virginity?”
               </p>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 It has nothing to do with virginity
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Virginity is about a person and their choices, never a product.
                 The hymen is a soft, stretchy rim of tissue that everyday things
                 like cycling, sport and yoga already stretch. A cup may gently
@@ -2083,10 +2087,10 @@ export default function MenstrualCupPageClient({
               <p className="mb-1 font-serif text-xs text-purple-700 italic">
                 “There's no sink inside the toilet...”
               </p>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 No private basin? Still easy
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 You only need to <b>fully wash the cup about twice a day</b>, so
                 a quick midday change rarely needs a sink at all. Empty into the
                 toilet, wipe with clean tissue or rinse from a small water
@@ -2107,10 +2111,10 @@ export default function MenstrualCupPageClient({
               <p className="mb-1 font-serif text-xs text-purple-700 italic">
                 “I live in a hostel / travel a lot.”
               </p>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 Built for hostels, PGs & trains
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Up to 12 hours of wear means you can insert in private before
                 college and empty at night: no mid-day stall drama. One tiny
                 cup replaces a whole month of pads in your bag. For shared
@@ -2127,10 +2131,10 @@ export default function MenstrualCupPageClient({
               <p className="mb-1 font-serif text-xs text-purple-700 italic">
                 “Is it clean to reuse?”
               </p>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 Your own cup is very hygienic
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Medical-grade silicone is non-porous, so nothing soaks in.
                 Sterilise by boiling before your first use and between periods;
                 during your period a rinse with mild, unscented soap is enough.
@@ -2147,10 +2151,10 @@ export default function MenstrualCupPageClient({
               <p className="mb-1 font-serif text-xs text-[#7E4D77] italic">
                 “Do I boil it every time?”
               </p>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 Boiling is start & end only
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 You sterilise by boiling just before a period begins and once
                 after it ends, <b>not</b> at every change. Five to seven
                 minutes in any clean pot does it (keep it from touching the base
@@ -2167,10 +2171,10 @@ export default function MenstrualCupPageClient({
               <p className="mb-1 font-serif text-xs text-[#7E4D77] italic">
                 “Is period blood impure?”
               </p>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 Your period is not impure
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Menstrual blood is clean, healthy and completely normal, and
                 there's nothing shameful about it. A cup simply lets you handle
                 your period with less waste, less cost and more comfort,
@@ -2186,10 +2190,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             THE 10-YEAR MATH
           </span>
-          <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mb-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             One cup. Years of savings.
           </h2>
-          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
             Disposables are a small bill every single month, for decades. A cup
             is a tiny fraction of that. Move the slider to see what switching
             could save <i>you</i>.
@@ -2201,7 +2205,7 @@ export default function MenstrualCupPageClient({
               {/* Left Controls */}
               <div className="space-y-6 md:col-span-6">
                 <div>
-                  <span className="mb-2 block text-xs font-bold tracking-wider text-gray-500 uppercase">
+                  <span className="mb-2 block text-xs font-bold tracking-wider text-ink-muted uppercase">
                     WHAT YOU SPEND ON PADS/TAMPONS A MONTH
                   </span>
                   <div className="font-serif text-3xl font-bold text-[#7E4D77]">
@@ -2233,7 +2237,7 @@ export default function MenstrualCupPageClient({
                     className={`cursor-pointer rounded-2xl px-4 py-2.5 text-xs font-bold transition-all ${
                       timeframeYears === 5
                         ? "bg-[#B076A8] text-white shadow-2xs"
-                        : "border border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100"
+                        : "border border-gray-200 bg-gray-50 text-ink-muted hover:bg-gray-100"
                     }`}
                   >
                     Over 5 years
@@ -2243,7 +2247,7 @@ export default function MenstrualCupPageClient({
                     className={`cursor-pointer rounded-2xl px-4 py-2.5 text-xs font-bold transition-all ${
                       timeframeYears === 10
                         ? "bg-[#B076A8] text-white shadow-2xs"
-                        : "border border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-100"
+                        : "border border-gray-200 bg-gray-50 text-ink-muted hover:bg-gray-100"
                     }`}
                   >
                     Over 10 years
@@ -2256,10 +2260,10 @@ export default function MenstrualCupPageClient({
                 <div className="mb-1 font-serif text-4xl font-bold text-[#7E4D77] sm:text-5xl">
                   ₹{calculatedSavings.savings.toLocaleString()}
                 </div>
-                <p className="mb-4 text-xs font-semibold text-gray-600">
+                <p className="mb-4 text-xs font-semibold text-ink-muted">
                   saved versus disposables
                 </p>
-                <p className="mx-auto max-w-xs text-[11px] leading-relaxed text-gray-500">
+                <p className="mx-auto max-w-xs text-[12px] leading-relaxed text-ink-muted">
                   That's after buying the Ovy cup, and about{" "}
                   <b>{calculatedSavings.padsSaved.toLocaleString()}</b>{" "}
                   pads/tampons kept out of landfill.
@@ -2274,23 +2278,23 @@ export default function MenstrualCupPageClient({
               <div className="mb-1 font-serif text-3xl font-bold text-[#7E4D77]">
                 2,400+
               </div>
-              <p className="text-xs leading-relaxed text-gray-600">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 disposable pads & tampons you'll skip over years of cup use
               </p>
             </div>
             <div className="rounded-3xl border border-gray-200/80 bg-white p-6 text-center shadow-2xs">
               <div className="mb-1 font-serif text-3xl font-bold text-[#7E4D77]">
-                ~₹20/mo
+                2 to 3 years
               </div>
-              <p className="text-xs leading-relaxed text-gray-600">
-                effective cost, replacing your cup every 2 to 3 years for hygiene
+              <p className="text-xs leading-relaxed text-ink-muted">
+                from one cup before you replace it for hygiene, a fraction of what pads cost over the same time
               </p>
             </div>
             <div className="rounded-3xl border border-gray-200/80 bg-white p-6 text-center shadow-2xs">
               <div className="mb-1 font-serif text-3xl font-bold text-[#7E4D77]">
                 1
               </div>
-              <p className="text-xs leading-relaxed text-gray-600">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 small thing in your bag instead of a monthly pharmacy run
               </p>
             </div>
@@ -2302,10 +2306,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             FULL TRANSPARENCY
           </span>
-          <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mb-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             One material. Nothing hidden.
           </h2>
-          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
             A cup is the simplest period product there is: one moulded piece,
             no adhesives, no fibres, no fragrance. Here's exactly what it is,
             and what it never contains.
@@ -2314,37 +2318,37 @@ export default function MenstrualCupPageClient({
           <div className="grid grid-cols-1 divide-y divide-gray-100 overflow-hidden rounded-3xl border border-gray-200/80 bg-white shadow-2xs md:grid-cols-2 md:divide-x md:divide-y-0">
             <div className="space-y-6 p-6">
               <div>
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   MADE OF
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   <b>100% medical-grade silicone</b> (Class VI biocompatible,
                   the grade used in implants & baby products)
                 </p>
               </div>
               <div className="border-t border-gray-100 pt-4">
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   FIRMNESS
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   <b>Soft to medium</b>: gentle on the bladder, yet firm enough to
                   pop open and seal reliably
                 </p>
               </div>
               <div className="border-t border-gray-100 pt-4">
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   PACKAGING
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   <b>Recycled card, 100% plastic-free</b>, bold and proud on
                   the outside
                 </p>
               </div>
               <div className="border-t border-gray-100 pt-4">
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   NO ANIMAL PRODUCTS
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   <b>Made without any animal-derived materials, ever</b>
                 </p>
               </div>
@@ -2352,37 +2356,37 @@ export default function MenstrualCupPageClient({
 
             <div className="space-y-6 p-6">
               <div>
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   NEVER CONTAINS
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   BPA, latex, phthalates, PVC, dyes, fragrance, bleach, heavy
                   metals or animal products
                 </p>
               </div>
               <div className="border-t border-gray-100 pt-4">
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   POUCH
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   <b>Breathable organic-cotton storage pouch</b>, included with
                   every cup
                 </p>
               </div>
               <div className="border-t border-gray-100 pt-4">
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   GENTLE ON YOU
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   A smooth, non-porous surface that's kind to sensitive skin and
                   easy to keep fresh
                 </p>
               </div>
               <div className="border-t border-gray-100 pt-4">
-                <span className="mb-1 block text-[10px] font-extrabold tracking-wider text-gray-400 uppercase">
+                <span className="mb-1 block text-[11px] font-extrabold tracking-wider text-gray-400 uppercase">
                   LIFESPAN
                 </span>
-                <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink sm:text-sm">
                   Cared for well it can last years; for best hygiene we suggest
                   replacing every 2 to 3 years
                 </p>
@@ -2396,10 +2400,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             GOOD TO KNOW
           </span>
-          <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mb-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             Safety, do's & don'ts
           </h2>
-          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
             A cup is very safe when used as directed. Please read this before
             your first use.
           </p>
@@ -2409,7 +2413,7 @@ export default function MenstrualCupPageClient({
               <span className="shrink-0 text-sm font-bold text-emerald-600">
                 ✓
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 <b>Do</b> empty the cup at least every 12 hours, and sterilise
                 by boiling 5 to 7 minutes between cycles.
               </p>
@@ -2418,7 +2422,7 @@ export default function MenstrualCupPageClient({
               <span className="shrink-0 text-sm font-bold text-emerald-600">
                 ✓
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 <b>Do</b> release the seal by pinching the base before removal,
                 never pull by the stem alone.
               </p>
@@ -2427,7 +2431,7 @@ export default function MenstrualCupPageClient({
               <span className="shrink-0 text-sm font-bold text-emerald-600">
                 ✓
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 <b>Do</b> store it in the <b>breathable cotton pouch</b>, never
                 an airtight container.
               </p>
@@ -2436,7 +2440,7 @@ export default function MenstrualCupPageClient({
               <span className="shrink-0 text-sm font-bold text-rose-600">
                 ✕
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 <b>Don't</b> use it when you're not menstruating, or as a
                 contraceptive. It does not prevent pregnancy or STIs.
               </p>
@@ -2445,7 +2449,7 @@ export default function MenstrualCupPageClient({
               <span className="shrink-0 text-sm font-bold text-rose-600">
                 ✕
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 <b>Don't</b> use during a vaginal infection. Speak to a doctor
                 first. With an IUD you can usually still use a cup: pinch the
                 base to release the suction before removing, and keep your
@@ -2456,14 +2460,14 @@ export default function MenstrualCupPageClient({
               <span className="shrink-0 text-sm font-bold text-rose-600">
                 ✕
               </span>
-              <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 <b>Don't</b> keep using a cup with tears, cracks, flaking, a
                 sticky film or a lasting odour. Replace it.
               </p>
             </div>
             <div className="flex items-start gap-3 border-t border-gray-100 pt-3">
               <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#7E4D77]" />
-              <p className="text-xs leading-relaxed text-gray-600">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 Remove the cup and seek medical help if you ever feel sudden
                 fever, faintness, vomiting, rash or unusual pain.
               </p>
@@ -2476,10 +2480,10 @@ export default function MenstrualCupPageClient({
           <span className="mb-2 block text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
             KEEP IT SPOTLESS
           </span>
-          <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mb-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             Cleaning & care, the simple way
           </h2>
-          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
+          <p className="mb-8 max-w-2xl text-xs leading-relaxed text-ink-muted sm:text-sm">
             Caring for a cup is easier than people fear. There are really just
             three moments: during the day, between periods, and storage.
           </p>
@@ -2490,10 +2494,10 @@ export default function MenstrualCupPageClient({
               <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-700">
                 <Cloud className="h-4 w-4" />
               </div>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 During your period
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Empty into the toilet, rinse with water and a{" "}
                 <b>mild, unscented, oil-free</b> soap, and flush the little air
                 holes clear (fill the cup, cover the top, squeeze). Reinsert.
@@ -2505,10 +2509,10 @@ export default function MenstrualCupPageClient({
               <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-pink-50 text-[#7E4D77]">
                 <CoffeeIcon className="h-4 w-4 text-[#7E4D77]" />
               </div>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 Between periods
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Sterilise by boiling in clean water for <b>5 to 7 minutes</b> (keep
                 it from touching the hot base so it can't scorch). No private
                 stove? A steam steriliser or a sterilising tablet works just as
@@ -2520,10 +2524,10 @@ export default function MenstrualCupPageClient({
               <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-purple-50 text-purple-700">
                 <Shield className="h-4 w-4" />
               </div>
-              <h3 className="mb-2 font-serif text-base font-bold text-gray-900">
+              <h3 className="mb-2 font-serif text-base font-bold text-ink">
                 Storing it
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Let it dry fully, then keep it in the{" "}
                 <b>breathable cotton pouch</b> it came with, never a plastic
                 bag or airtight box, which traps moisture. Some discolouration
@@ -2535,10 +2539,10 @@ export default function MenstrualCupPageClient({
           {/* 2 Bottom Cards Grid */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <div className="rounded-3xl border border-gray-200/80 bg-white p-6 shadow-2xs">
-              <h4 className="mb-3 font-serif text-sm font-bold text-gray-900">
+              <h4 className="mb-3 font-serif text-sm font-bold text-ink">
                 Please don't use...
               </h4>
-              <ul className="space-y-2 text-xs text-gray-600">
+              <ul className="space-y-2 text-xs text-ink-muted">
                 <li className="flex items-center gap-2">
                   <span className="font-bold text-rose-600">✕</span> Oil-based,
                   fragranced or antibacterial soaps
@@ -2555,10 +2559,10 @@ export default function MenstrualCupPageClient({
             </div>
 
             <div className="rounded-3xl border border-gray-200/80 bg-white p-6 shadow-2xs">
-              <h4 className="mb-3 font-serif text-sm font-bold text-gray-900">
+              <h4 className="mb-3 font-serif text-sm font-bold text-ink">
                 Replace it when...
               </h4>
-              <ul className="space-y-2 text-xs text-gray-600">
+              <ul className="space-y-2 text-xs text-ink-muted">
                 <li className="flex items-center gap-2">
                   <AlertTriangle className="h-3.5 w-3.5 shrink-0 text-amber-500" />{" "}
                   You see tears, cracks or torn air holes
@@ -2659,14 +2663,14 @@ export default function MenstrualCupPageClient({
           <div className="relative w-full max-w-lg rounded-3xl bg-white p-6 shadow-2xl transition-all sm:p-8 animate-in zoom-in-95 duration-150">
             <button
               onClick={() => setActiveQuickQuestionKey(null)}
-              className="absolute top-4 right-4 grid h-8 w-8 place-items-center rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-black cursor-pointer"
+              className="absolute top-4 right-4 grid h-8 w-8 place-items-center rounded-full bg-gray-100 text-ink-muted hover:bg-gray-200 hover:text-black cursor-pointer"
             >
               <X className="h-4 w-4" />
             </button>
             <span className="inline-block rounded-full bg-[#F3E6F0] px-3 py-1 text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase">
               {QUICK_QUESTIONS_DATA[activeQuickQuestionKey].badge}
             </span>
-            <h3 className="mt-2 font-serif text-2xl font-bold text-gray-900">
+            <h3 className="mt-2 font-serif text-2xl font-bold text-ink">
               {QUICK_QUESTIONS_DATA[activeQuickQuestionKey].title}
             </h3>
             <div className="mt-3 rounded-2xl bg-[#FAF9F5] border border-gray-100 p-4">
@@ -2674,7 +2678,7 @@ export default function MenstrualCupPageClient({
                 {QUICK_QUESTIONS_DATA[activeQuickQuestionKey].shortAnswer}
               </p>
             </div>
-            <p className="mt-4 text-xs leading-relaxed text-gray-700 sm:text-sm">
+            <p className="mt-4 text-xs leading-relaxed text-ink-muted sm:text-sm">
               {QUICK_QUESTIONS_DATA[activeQuickQuestionKey].detailedAnswer}
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
@@ -2693,7 +2697,7 @@ export default function MenstrualCupPageClient({
               </button>
               <button
                 onClick={() => setActiveQuickQuestionKey(null)}
-                className="cursor-pointer rounded-full border border-gray-200 px-6 py-3 text-xs sm:text-sm font-bold text-gray-700 hover:bg-gray-50"
+                className="cursor-pointer rounded-full border border-gray-200 px-6 py-3 text-xs sm:text-sm font-bold text-ink-muted hover:bg-gray-50"
               >
                 Got It
               </button>
@@ -2705,15 +2709,15 @@ export default function MenstrualCupPageClient({
       {/* Mobile Sticky Add Bar */}
       <div
         id="pdp-sticky-buy-bar"
-        className={`fixed right-0 bottom-[56px] md:bottom-0 left-0 z-40 flex items-center justify-between gap-3 border-t border-[#1A150F]/10 bg-white/95 p-3 shadow-lg backdrop-blur-md transition-transform duration-300 lg:hidden ${
+        className={`fixed right-0 bottom-[56px] md:bottom-0 left-0 z-40 flex items-center justify-between gap-3 border-t border-ink/10 bg-white/95 p-3 shadow-lg backdrop-blur-md transition-transform duration-300 lg:hidden ${
           showStickyBar ? "translate-y-0 pointer-events-auto pdp-sticky-active" : "translate-y-[115%] pointer-events-none"
         }`}
       >
         <div>
-          <span className="block text-[10px] font-bold text-[#7E4D77] uppercase">
+          <span className="block text-[11px] font-bold text-[#7E4D77] uppercase">
             {activeVariant?.size || activeVariant?.name || "Ovy Cup"}
           </span>
-          <b className="font-serif text-lg font-bold text-[#1A150F]">
+          <b className="font-serif text-lg font-bold text-ink">
             {priceMissing ? "" : `₹${price * quantity}`}
           </b>
         </div>
@@ -2721,7 +2725,7 @@ export default function MenstrualCupPageClient({
           {isOutOfStock ? (
             <button
               disabled
-              className="cursor-not-allowed rounded-full bg-gray-200 px-4 py-2 text-xs font-bold text-gray-500 shadow-none"
+              className="cursor-not-allowed rounded-full bg-gray-200 px-4 py-2 text-xs font-bold text-ink-muted shadow-none"
             >
               Out of stock
             </button>

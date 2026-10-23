@@ -45,7 +45,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
         
         {/* Mobile Top Kicker + Tab Capsule Switcher */}
         <div className="text-center mb-6">
-          <span className="text-[10px] font-bold tracking-widest text-[#602E55] uppercase block mb-2.5">
+          <span className="text-[11px] font-bold tracking-widest text-[#602E55] uppercase block mb-2.5">
             UP CLOSE
           </span>
 
@@ -118,7 +118,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                       className="object-cover"
                     />
                   </div>
-                  <p className="text-[9px] text-[#4A3B47] leading-tight font-medium">
+                  <p className="text-[12px] text-[#4A3B47] leading-tight font-medium">
                     The twist test: a used pad, wrung out. The core keeps what it took in.
                   </p>
                 </div>
@@ -127,7 +127,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
 
             {/* Title Block */}
             <div>
-              <span className="text-[10px] font-bold tracking-widest text-[#602E55] uppercase block mb-1">
+              <span className="text-[11px] font-bold tracking-widest text-[#602E55] uppercase block mb-1">
                 NOT YOUR AVERAGE PAD
               </span>
               <h2 className="font-serif text-2xl font-bold text-[#1F1915] leading-snug">
@@ -145,7 +145,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                   <h3 className="text-xs font-bold text-[#1F1915]">
                     Organic top sheet
                   </h3>
-                  <p className="text-[11px] text-[#5C524D] mt-0.5 leading-relaxed">
+                  <p className="text-[12px] text-[#5C524D] mt-0.5 leading-relaxed">
                     100% organic, cottony-soft, hypoallergenic fibres. Rash-free, never a plastic feel.
                   </p>
                 </div>
@@ -159,7 +159,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                   <h3 className="text-xs font-bold text-[#1F1915]">
                     Acquisition layer
                   </h3>
-                  <p className="text-[11px] text-[#5C524D] mt-0.5 leading-relaxed">
+                  <p className="text-[12px] text-[#5C524D] mt-0.5 leading-relaxed">
                     Natural fibres pull fluid away from the skin fast, so the surface stays dry.
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                   <h3 className="text-xs font-bold text-[#1F1915]">
                     Super-absorbent core
                   </h3>
-                  <p className="text-[11px] text-[#5C524D] mt-0.5 leading-relaxed">
+                  <p className="text-[12px] text-[#5C524D] mt-0.5 leading-relaxed">
                     A gel core that locks fluid and odour at source, instead of perfuming over it. Twist a used pad and nothing comes back out.
                   </p>
                 </div>
@@ -187,7 +187,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                   <h3 className="text-xs font-bold text-[#1F1915]">
                     Breathable backsheet
                   </h3>
-                  <p className="text-[11px] text-[#5C524D] mt-0.5 leading-relaxed">
+                  <p className="text-[12px] text-[#5C524D] mt-0.5 leading-relaxed">
                     Lets heat out, so there is no sweat build-up in an Indian summer. Extra-wide wings hold everything in place; the XL+ adds dual leak guards.
                   </p>
                 </div>
@@ -205,7 +205,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
               ].map((pill) => (
                 <span
                   key={pill}
-                  className="bg-[#F5EFF6] text-[#602E55] text-[11px] font-semibold px-3 py-1.5 rounded-full border border-[#E8DAEC]"
+                  className="bg-[#F5EFF6] text-[#602E55] text-[12px] font-semibold px-3 py-1.5 rounded-full border border-[#E8DAEC]"
                 >
                   {pill}
                 </span>
@@ -213,7 +213,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
             </div>
 
             {/* Footer Note */}
-            <p className="text-[11px] text-[#6B5E57] leading-relaxed">
+            <p className="text-[12px] text-ink-muted leading-relaxed">
               Every pad comes with its own biodegradable, compostable disposal bag. Roll, seal, bin. Never flush.
             </p>
           </div>
@@ -262,7 +262,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
 
             {/* Title Block */}
             <div>
-              <span className="text-[10px] font-bold tracking-widest text-[#602E55] uppercase block mb-1">
+              <span className="text-[11px] font-bold tracking-widest text-[#602E55] uppercase block mb-1">
                 OVY MENSTRUAL CUP
               </span>
               <h2 className="font-serif text-2xl font-bold text-[#1F1915] leading-snug">
@@ -271,7 +271,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
               <div className="font-serif italic text-lg font-normal text-[#C0428A] mt-0.5">
                 Choose by fit, not by age.
               </div>
-              <p className="text-[11px] text-[#5C524D] mt-2 leading-relaxed">
+              <p className="text-[12px] text-[#5C524D] mt-2 leading-relaxed">
                 Cervix height decides first, then flow, then whether you have given birth vaginally. Not age and not weight. Up to 12 hours between changes, 100% medical-grade silicone, and a cotton pouch in the box.
               </p>
             </div>
@@ -288,10 +288,10 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                     className="object-contain"
                   />
                 </div>
-                <h3 className="font-bold text-[11px] text-[#1F1915] leading-tight">
+                <h3 className="font-bold text-[12px] text-[#1F1915] leading-tight">
                   Teen XS <span className="font-medium text-[#602E55]">16ml</span>
                 </h3>
-                <span className="text-[8px] font-bold text-gray-400 uppercase mt-0.5">
+                <span className="text-[11px] font-bold text-gray-400 uppercase mt-0.5">
                   PINK
                 </span>
               </div>
@@ -306,10 +306,10 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                     className="object-contain"
                   />
                 </div>
-                <h3 className="font-bold text-[11px] text-[#1F1915] leading-tight">
+                <h3 className="font-bold text-[12px] text-[#1F1915] leading-tight">
                   Medium <span className="font-medium text-[#602E55]">25ml</span>
                 </h3>
-                <span className="text-[8px] font-bold text-gray-400 uppercase mt-0.5 leading-none">
+                <span className="text-[11px] font-bold text-gray-400 uppercase mt-0.5 leading-none">
                   PURPLE OR RAINBOW
                 </span>
               </div>
@@ -324,10 +324,10 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                     className="object-contain"
                   />
                 </div>
-                <h3 className="font-bold text-[11px] text-[#1F1915] leading-tight">
+                <h3 className="font-bold text-[12px] text-[#1F1915] leading-tight">
                   Large <span className="font-medium text-[#602E55]">35ml</span>
                 </h3>
-                <span className="text-[8px] font-bold text-gray-400 uppercase mt-0.5">
+                <span className="text-[11px] font-bold text-gray-400 uppercase mt-0.5">
                   WHITE
                 </span>
               </div>
@@ -339,7 +339,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                 <div className="font-serif text-base font-bold text-[#602E55]">
                   12 hrs
                 </div>
-                <p className="text-[9px] text-[#5C524D] leading-tight mt-0.5">
+                <p className="text-[12px] text-[#5C524D] leading-tight mt-0.5">
                   between changes, swim and sleep included
                 </p>
               </div>
@@ -348,7 +348,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                 <div className="font-serif text-base font-bold text-[#602E55]">
                   Years
                 </div>
-                <p className="text-[9px] text-[#5C524D] leading-tight mt-0.5">
+                <p className="text-[12px] text-[#5C524D] leading-tight mt-0.5">
                   from one cup. Replace every 2 to 3 for best hygiene
                 </p>
               </div>
@@ -357,7 +357,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                 <div className="font-serif text-base font-bold text-[#602E55]">
                   3
                 </div>
-                <p className="text-[9px] text-[#5C524D] leading-tight mt-0.5">
+                <p className="text-[12px] text-[#5C524D] leading-tight mt-0.5">
                   sizes, four colours, one fit for you
                 </p>
               </div>
@@ -436,43 +436,43 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
 
             {/* Title Block */}
             <div>
-              <span className="text-[10px] font-bold tracking-widest text-[#602E55] uppercase block mb-1">
+              <span className="text-[11px] font-bold tracking-widest text-[#602E55] uppercase block mb-1">
                 OVY DAILY LINERS
               </span>
               <h2 className="font-serif text-2xl font-bold text-[#1F1915] leading-snug">
                 Fresh every day,
               </h2>
-              <div className="font-serif italic text-lg font-normal text-[#2563EB] mt-0.5">
+              <div className="font-serif italic text-lg font-normal text-ovy mt-0.5">
                 the clean way.
               </div>
-              <p className="text-[11px] text-[#5C524D] mt-2 leading-relaxed">
+              <p className="text-[12px] text-[#5C524D] mt-2 leading-relaxed">
                 About 1mm thin and 190mm long, with a breathable, cottony-soft top sheet, no added fragrance and no added dyes. Individually wrapped, so one lives in every bag.
               </p>
             </div>
 
             {/* Quote Box */}
-            <div className="bg-white rounded-r-2xl border-l-4 border-[#2563EB] p-3.5 shadow-2xs">
+            <div className="bg-white rounded-r-2xl border-l-4 border-ovy p-3.5 shadow-2xs">
               <p className="font-serif text-xs font-medium text-[#1F1915] italic">
                 “If it is your period, it is a pad. If it is everything in between, it is a liner.”
               </p>
             </div>
 
             {/* 2-Column Checkmarks Grid */}
-            <div className="grid grid-cols-2 gap-2 text-[11px] text-[#1F1915]">
+            <div className="grid grid-cols-2 gap-2 text-[12px] text-[#1F1915]">
               <div className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-ovy shrink-0" />
                 <span>Everyday discharge</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-ovy shrink-0" />
                 <span>Spotting before or after a period</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-ovy shrink-0" />
                 <span>Light bladder leaks</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Check className="w-3.5 h-3.5 text-[#2563EB] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-ovy shrink-0" />
                 <span>Backup with a cup on light days</span>
               </div>
             </div>
@@ -483,10 +483,10 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                 <div className="font-serif text-lg font-bold text-[#602E55]">
                   40
                 </div>
-                <div className="text-[10px] font-bold text-[#1F1915] mt-0.5">
+                <div className="text-[12px] font-bold text-[#1F1915] mt-0.5">
                   about 10 days
                 </div>
-                <div className="text-[8px] text-gray-400">
+                <div className="text-[12px] text-gray-400">
                   Trying Ovy
                 </div>
               </div>
@@ -495,10 +495,10 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                 <div className="font-serif text-lg font-bold text-[#602E55]">
                   60
                 </div>
-                <div className="text-[10px] font-bold text-[#1F1915] mt-0.5">
+                <div className="text-[12px] font-bold text-[#1F1915] mt-0.5">
                   about a fortnight
                 </div>
-                <div className="text-[8px] text-gray-400">
+                <div className="text-[12px] text-gray-400">
                   Our pick for daily wear
                 </div>
               </div>
@@ -507,16 +507,16 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                 <div className="font-serif text-lg font-bold text-[#602E55]">
                   80
                 </div>
-                <div className="text-[10px] font-bold text-[#1F1915] mt-0.5">
+                <div className="text-[12px] font-bold text-[#1F1915] mt-0.5">
                   about three weeks
                 </div>
-                <div className="text-[8px] text-gray-400">
+                <div className="text-[12px] text-gray-400">
                   Best value per liner
                 </div>
               </div>
             </div>
 
-            <p className="text-[10px] text-gray-500 leading-tight">
+            <p className="text-[12px] text-ink-muted leading-tight">
               At a fresh liner every 3 to 4 hours, a full day is about four.
             </p>
 

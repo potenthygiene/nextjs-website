@@ -36,13 +36,13 @@ export default function AboutHero({ themeColor }: { themeColor?: any }) {
           />
 
           {/* Heading */}
-          <h2 className="text-4xl lg:text-5xl font-semibold leading-tight text-gray-900">
+          <h2 className="text-4xl lg:text-5xl font-semibold leading-tight text-ink">
             Empowering Hygiene for{" "}
             <span className="text-teal-600">Everyone & Everywhere</span>
           </h2>
 
           {/* Paragraph */}
-          <div className="space-y-4 text-gray-600 text-base leading-relaxed">
+          <div className="space-y-4 text-ink-muted text-base leading-relaxed">
             <p>
               At Potent Hygiene, we believe hygiene is for all. Our inclusive
               range of thoughtfully designed products supports the unique needs

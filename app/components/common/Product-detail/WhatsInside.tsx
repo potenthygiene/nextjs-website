@@ -57,7 +57,7 @@ export default function WhatsInside() {
         <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#7E4D77]">
           ENGINEERED IN LAYERS
         </span>
-        <h2 className="font-serif text-2xl font-semibold text-[#1A150F] sm:text-4xl">
+        <h2 className="font-serif text-2xl font-semibold text-ink sm:text-4xl">
           What’s inside
         </h2>
       </div>
@@ -199,10 +199,10 @@ export default function WhatsInside() {
 
                   {/* Layer Text Information */}
                   <div className="flex-1">
-                    <h3 className="font-serif text-lg font-semibold text-[#1A150F] group-hover:text-[#7E4D77]">
+                    <h3 className="font-serif text-lg font-semibold text-ink group-hover:text-[#7E4D77]">
                       {layer.title}
                     </h3>
-                    <p className="mt-1 text-sm leading-relaxed text-gray-600">
+                    <p className="mt-1 text-sm leading-relaxed text-ink-muted">
                       {layer.sub}
                     </p>
                   </div>
@@ -224,37 +224,37 @@ export default function WhatsInside() {
 
           <div className="flex flex-wrap items-center gap-4 sm:gap-8">
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">21</strong>
-              <span className="text-gray-700">pads</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">21</strong>
+              <span className="text-ink-muted">pads</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">4</strong>
-              <span className="text-gray-700">panty liners</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">4</strong>
+              <span className="text-ink-muted">panty liners</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">
                 Biodegradable
               </strong>
-              <span className="text-gray-700">disposal bag per pad</span>
+              <span className="text-ink-muted">disposal bag per pad</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer Specs: Free from & Care Notes */}
-      <div className="mt-6 space-y-3 border-t border-gray-100 pt-5 text-xs text-gray-600 sm:text-sm">
+      <div className="mt-6 space-y-3 border-t border-gray-100 pt-5 text-xs text-ink-muted sm:text-sm">
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-          <span className="w-28 flex-none font-bold text-[#1A150F]">Free from</span>
-          <span className="text-gray-700">
+          <span className="w-28 flex-none font-bold text-ink">Free from</span>
+          <span className="text-ink-muted">
             Chlorine bleach, parabens, added fragrance, dyes & synthetic plastic top layers.
           </span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-          <span className="w-28 flex-none font-bold text-[#1A150F]">Care</span>
-          <span className="leading-relaxed text-gray-700">
+          <span className="w-28 flex-none font-bold text-ink">Care</span>
+          <span className="leading-relaxed text-ink-muted">
             Change every 4 to 8 hours; roll, seal in the biodegradable bag and bin it. Never flush. For postpartum or very heavy / PCOS flow the XL+ is built for it; if you soak through an XL+ in under 2 hours, check with a doctor.
           </span>
         </div>

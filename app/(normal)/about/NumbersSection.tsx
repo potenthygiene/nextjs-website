@@ -6,12 +6,12 @@ const stats = [
     label: "Women reached across Bharat",
   },
   {
-    value: "3",
-    label: "D2C brands built from scratch",
+    value: "2",
+    label: "D2C brands built from scratch: Ovy and Looway",
   },
   {
     value: "100%",
-    label: "Dermatologically tested products",
+    label: "Of our pads and liners dermatologically tested",
   },
   {
     value: "23%",
@@ -55,7 +55,7 @@ const NumbersSection = () => {
       </p>
 
       {/* HEADING */}
-      <h2 className="text-3xl md:text-5xl font-serif text-gray-900 leading-tight mb-12">
+      <h2 className="text-3xl md:text-5xl font-serif text-ink leading-tight mb-12">
         Every figure represents <br />
         a{" "}
         <span className="text-teal-600 italic font-light">
@@ -76,7 +76,7 @@ const NumbersSection = () => {
               <p className="text-3xl font-serif text-teal-600 mb-2">
                 {item.value}
               </p>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-ink-muted leading-relaxed">
                 {item.label}
               </p>
             </div>
@@ -85,7 +85,7 @@ const NumbersSection = () => {
 
         {/* RIGHT - CONTENT */}
         <div>
-          <h3 className="text-xl md:text-2xl font-serif text-gray-900 mb-4">
+          <h3 className="text-xl md:text-2xl font-serif text-ink mb-4">
             The work that{" "}
             <span className="italic text-teal-600">
               matters most
@@ -93,13 +93,13 @@ const NumbersSection = () => {
             is the work no one else is doing.
           </h3>
 
-          <p className="text-gray-600 mb-4 leading-relaxed">
+          <p className="text-ink-muted mb-4 leading-relaxed">
             Anyone can sell a pad. Very few build an organic, dermatologically tested,
             pH-balanced range. Even fewer take menstrual health education into
             communities that need it most. We do both.
           </p>
 
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="text-ink-muted mb-6 leading-relaxed">
             We measure success not in revenue, but in the number of women who no longer
             silently endure discomfort, infections, or stigma.
           </p>
@@ -110,8 +110,8 @@ const NumbersSection = () => {
               <div key={i} className="flex items-start gap-3">
                 <span className="text-lg">{item.icon}</span>
                 <div>
-                  <p className="font-medium text-gray-900">{item.title}</p>
-                  <p className="text-sm text-gray-600">{item.desc}</p>
+                  <p className="font-medium text-ink">{item.title}</p>
+                  <p className="text-sm text-ink-muted">{item.desc}</p>
                 </div>
               </div>
             ))}

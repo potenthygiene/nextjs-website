@@ -205,7 +205,7 @@ export function OurStory(_props: Props) {
                       ? `${BTN_BASE} bg-emerald-700 text-white`
                       : canAddToCart
                         ? BTN_PRIMARY
-                        : `${BTN_BASE} bg-gray-200 text-gray-500`
+                        : `${BTN_BASE} bg-gray-200 text-ink-muted`
                   } w-full sm:w-auto`}
                 >
                   {added ? (

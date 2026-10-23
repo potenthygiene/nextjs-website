@@ -29,22 +29,22 @@ export default function NoToiletLoowaySection() {
   ];
 
   return (
-    <section className="w-full bg-[#F6F1E7] py-8 sm:py-16 lg:py-20 text-[#17271E]">
+    <section className="w-full bg-[#F6F1E7] py-8 sm:py-16 lg:py-20 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         <div className="max-w-3xl">
           {/* Subtitle / Kicker Badge */}
-          <span className="text-[10.5px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
+          <span className="text-[11px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
             MADE FOR LIFE&apos;S UNEXPECTED MOMENTS
           </span>
 
           {/* Main Heading */}
-          <h2 className="mt-2 sm:mt-3 font-serif text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-[#17271E]">
+          <h2 className="mt-2 sm:mt-3 font-serif text-2xl sm:text-4xl lg:text-5xl font-bold leading-tight text-ink">
             When there&apos;s no toilet,{" "}
             <span className="text-[#0E5C3A]">there&apos;s Looway.</span>
           </h2>
 
           {/* Description Paragraph */}
-          <p className="mt-2.5 sm:mt-4 text-xs sm:text-base leading-relaxed text-[#17271E]/75 font-normal">
+          <p className="mt-2.5 sm:mt-4 text-xs sm:text-base leading-relaxed text-ink-muted font-normal">
             The road from Jaipur to Jodhpur can run 300 km without a clean roadside
             toilet. A toddler who can&apos;t hold it on the highway. A night bus with a broken
             loo. A campsite with nowhere to go discreetly. These urine &amp; vomit bags are
@@ -68,12 +68,12 @@ export default function NoToiletLoowaySection() {
                   </div>
 
                   {/* Card Title */}
-                  <h3 className="mt-2.5 sm:mt-4 text-xs sm:text-base font-bold text-[#0A4A2E]">
+                  <h3 className="mt-2.5 sm:mt-4 text-xs sm:text-base font-bold text-ink">
                     {card.title}
                   </h3>
 
                   {/* Card Subtitle */}
-                  <p className="mt-1 sm:mt-1.5 text-[11px] sm:text-xs text-[#17271E]/70 leading-relaxed font-normal">
+                  <p className="mt-1 sm:mt-1.5 text-[12px] sm:text-xs text-ink-muted leading-relaxed font-normal">
                     {card.desc}
                   </p>
                 </div>

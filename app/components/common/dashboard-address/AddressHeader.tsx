@@ -11,9 +11,9 @@ export const AddressHeader = () => {
   return (
     <Card className="mb-6 flex justify-between rounded-[15px] border-none bg-white p-6 shadow-sm">
       <div className="space-y-1">
-        <h2 className="text-[18px] font-bold text-[#333333]">Address Book</h2>
+        <h2 className="text-[18px] font-bold text-ink">Address Book</h2>
 
-        <p className="text-[13px] font-medium text-gray-500">
+        <p className="text-[13px] font-medium text-ink-muted">
           Manage your delivery addresses
         </p>
       </div>

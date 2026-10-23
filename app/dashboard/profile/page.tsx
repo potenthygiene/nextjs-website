@@ -171,7 +171,7 @@ export default function ProfilePage() {
               Add details
             </button>
           )}
-          <p className="mt-2 text-[11.5px] text-[#3c6f76]">Birthday and anniversary can be set once. Birthday and anniversary coupons can&apos;t be combined with other coupons.</p>
+          <p className="mt-2 text-[12px] text-[#3c6f76]">Birthday and anniversary can be set once. Birthday and anniversary coupons can&apos;t be combined with other coupons.</p>
         </div>
       )}
 

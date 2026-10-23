@@ -62,8 +62,8 @@ function DashboardSidebarMenu({ onNavigate }: { onNavigate?: () => void }) {
             onClick={onNavigate}
             className={`group relative flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-200 ${
               isActive
-                ? "bg-[#C9E6EA] font-semibold text-[#333333]"
-                : "text-[#333333] hover:bg-gray-50"
+                ? "bg-[#C9E6EA] font-semibold text-ink"
+                : "text-ink hover:bg-gray-50"
             }`}
           >
             {isActive && (
@@ -110,7 +110,7 @@ export const DashboardMobileSidebar = () => {
         <Button
           type="button"
           variant="ghost"
-          className="group h-12 w-full justify-between rounded-xl px-4 text-[#333333] hover:bg-[#F8F6F1]"
+          className="group h-12 w-full justify-between rounded-xl px-4 text-ink hover:bg-[#F8F6F1]"
         >
           <span className="flex min-w-0 items-center gap-3">
             <ActiveIcon

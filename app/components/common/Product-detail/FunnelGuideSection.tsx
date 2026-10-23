@@ -243,24 +243,24 @@ export default function FunnelGuideSection() {
 
   return (
     <>
-      <section id="guide" className="w-full bg-[#fcf8f3] scroll-mt-32 sm:scroll-mt-36 py-12 sm:py-18 lg:py-22 text-[#2A1620]">
+      <section id="guide" className="w-full bg-[#fcf8f3] scroll-mt-32 sm:scroll-mt-36 py-12 sm:py-18 lg:py-22 text-ink">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
           {/* Eyebrow & Header */}
           <div className="max-w-3xl mb-8">
             <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2">
               WATCH, DON&apos;T READ
             </span>
-            <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-[#5A0E30] leading-[1.08] tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold text-ink leading-[1.08] tracking-tight">
               Step inside the Looway guide
             </h2>
-            <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
+            <p className="mt-3 text-sm sm:text-base lg:text-lg text-ink-muted leading-relaxed font-normal">
               Quick, tappable stories: how to use it, how to get a leak-free seal, how to keep it clean, and every kind of journey it saves. Tap a circle to enter, then tap or swipe through.
             </p>
           </div>
 
           {/* Top Question Pills Box */}
           <div className="rounded-2xl bg-[#fdeef4] border border-[#f8dce8] p-5 sm:p-6 mb-8 shadow-2xs">
-            <p className="text-xs sm:text-sm font-semibold text-[#5A0E30] mb-3">
+            <p className="text-xs sm:text-sm font-semibold text-ink mb-3">
               Got a question before you buy? Tap a common one, or dive into the full guide below.
             </p>
             <div className="flex flex-wrap gap-2 mb-4">
@@ -323,7 +323,7 @@ export default function FunnelGuideSection() {
                       <Play className="h-2 w-2 sm:h-2.5 sm:w-2.5 fill-white" />
                     </span>
                   </div>
-                  <span className="text-[10.5px] sm:text-[11px] font-bold text-[#5A0E30] leading-tight line-clamp-2">
+                  <span className="text-[12px] sm:text-[12px] font-bold text-ink leading-tight line-clamp-2">
                     {story.title}
                   </span>
                 </button>
@@ -341,10 +341,10 @@ export default function FunnelGuideSection() {
                     {ch.num}
                   </span>
                   <div>
-                    <span className="text-[10.5px] font-extrabold tracking-widest text-[#b51e60] uppercase block leading-none mb-1">
+                    <span className="text-[11px] font-extrabold tracking-widest text-[#b51e60] uppercase block leading-none mb-1">
                       {ch.eyebrow}
                     </span>
-                    <h3 className="font-serif text-xl sm:text-2xl font-extrabold text-[#5A0E30] leading-tight">
+                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-ink leading-tight">
                       {ch.title}
                     </h3>
                   </div>
@@ -365,10 +365,10 @@ export default function FunnelGuideSection() {
                       className="flex items-center justify-between rounded-2xl border border-[#f8dce8] bg-white p-4 sm:p-5 text-left shadow-2xs hover:border-[#a81a57] hover:shadow-xs transition-all cursor-pointer group"
                     >
                       <div>
-                        <h4 className="font-serif font-bold text-sm sm:text-base text-[#5A0E30] group-hover:text-[#a81a57] transition-colors">
+                        <h4 className="font-serif font-bold text-sm sm:text-base text-ink group-hover:text-[#a81a57] transition-colors">
                           {item.title}
                         </h4>
-                        <p className="text-xs text-[#2A1620]/60 mt-1 font-medium">
+                        <p className="text-xs text-ink-muted mt-1 font-medium">
                           {item.sub}
                         </p>
                       </div>
@@ -406,7 +406,7 @@ export default function FunnelGuideSection() {
                     <Filter className="h-4 w-4 stroke-[2]" />
                   </div>
                   <div>
-                    <span className="text-[9.5px] font-extrabold uppercase tracking-widest text-[#F4C430]">
+                    <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#F4C430]">
                       LOOWAY GUIDE
                     </span>
                     <h4 className="text-xs font-bold text-white truncate max-w-[190px]">
@@ -428,10 +428,10 @@ export default function FunnelGuideSection() {
 
             {/* Vertical Centered Story Content */}
             <div className="my-auto py-4 flex flex-col justify-center space-y-4">
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-white/70">
+              <span className="text-[11px] font-extrabold uppercase tracking-widest text-white/70">
                 Slide {activeSlideIndex + 1} of {activeStory.slides.length}
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#F4C430] leading-tight">
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#F4C430] leading-tight">
                 {activeStory.slides[activeSlideIndex].h}
               </h3>
               <p className="text-sm sm:text-base text-white/95 leading-relaxed font-medium">

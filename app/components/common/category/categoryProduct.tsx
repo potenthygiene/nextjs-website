@@ -61,7 +61,7 @@ export default function CategoryProducts({
 
           {/* Discount */}
           <div className="absolute top-2 right-2 z-10">
-            <div className="rounded-xl bg-[#016271] px-2 py-1 text-[10px] font-bold text-white">
+            <div className="rounded-xl bg-[#016271] px-2 py-1 text-[12px] font-bold text-white">
               25% OFF
             </div>
           </div>
@@ -75,18 +75,18 @@ export default function CategoryProducts({
               src={getImageUrl(product.bannerImage)}
               alt={product.name}
               fill
+              sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 25vw"
               className="object-cover transition-transform duration-500 group-hover:scale-105"
-              unoptimized
             />
           </div>
 
-          <span className="absolute bottom-23 left-1 w-fit rounded-full bg-[#10B981] px-2 py-0.5 text-[10px] text-white">
+          <span className="absolute bottom-23 left-1 w-fit rounded-full bg-[#10B981] px-2 py-0.5 text-[12px] text-white">
             Bestseller
           </span>
 
           {/* Content */}
           <div className="mt-4 flex flex-col space-y-3 rounded-lg px-1">
-            <h3 className="line-clamp-1 text-sm font-bold text-gray-800">
+            <h3 className="line-clamp-1 text-sm font-bold text-ink">
               {product.name}
             </h3>
 

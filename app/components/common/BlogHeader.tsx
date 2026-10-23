@@ -77,7 +77,7 @@ const BlogHeader = () => {
                         className={`flex items-center space-x-4 rounded-r-xl px-4 py-4 transition-all ${
                           link.active
                             ? "border-l-8 border-[#1A8D91] bg-[#D1E9EC] font-semibold text-[#1A8D91]"
-                            : "text-gray-600 hover:bg-gray-50"
+                            : "text-ink-muted hover:bg-gray-50"
                         }`}
                       >
                         <span>{link.icon}</span>

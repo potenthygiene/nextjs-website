@@ -35,15 +35,15 @@ export function CartItems() {
   return (
     <div className="mx-auto w-full max-w-4xl space-y-5">
       <div className="space-y-1">
-        <h2 className="text-xl font-semibold text-[#333333]">Your Bag</h2>
-        <p className="text-sm text-[#666666]">
+        <h2 className="text-xl font-semibold text-ink">Your Bag</h2>
+        <p className="text-sm text-ink-muted">
           {totalPacks} {totalPacks === 1 ? "pack" : "packs"} in your bag
         </p>
       </div>
 
       {items.length === 0 ? (
         <div className="py-12 text-center">
-          <p className="mb-4 text-gray-500">Your bag is empty</p>
+          <p className="mb-4 text-ink-muted">Your bag is empty</p>
           <button
             onClick={() => router.push("/shop")}
             className="mx-auto flex items-center gap-2 text-sm font-bold text-[#016271]"
@@ -88,7 +88,7 @@ export function CartItems() {
                           return (
                             <>
                               <div className="flex flex-wrap items-center gap-2">
-                                <h3 className="font-semibold text-[#333333] text-xs sm:text-base line-clamp-2 leading-snug">
+                                <h3 className="font-semibold text-ink text-xs sm:text-base line-clamp-2 leading-snug">
                                   {yatraKitData
                                     ? "Looway Yatra Kit"
                                     : getCleanProductTitle(item)}
@@ -96,11 +96,11 @@ export function CartItems() {
                                 {yatraKitData && (
                                   <>
                                     {yatraKitData.kitName && (
-                                      <span className="inline-flex items-center rounded-md bg-[#F3E6F0] px-2 py-0.5 text-[10.5px] sm:text-xs font-bold text-[#7E4D77] border border-[#9A5B90]/40">
+                                      <span className="inline-flex items-center rounded-md bg-[#F3E6F0] px-2 py-0.5 text-[12px] sm:text-xs font-bold text-[#7E4D77] border border-[#9A5B90]/40">
                                         {yatraKitData.kitName}
                                       </span>
                                     )}
-                                    <span className="inline-flex items-center rounded-md bg-[#EAF6F4] px-2 py-0.5 text-[10.5px] sm:text-xs font-bold text-[#116B66] border border-[#116B66]/20">
+                                    <span className="inline-flex items-center rounded-md bg-[#EAF6F4] px-2 py-0.5 text-[12px] sm:text-xs font-bold text-[#116B66] border border-[#116B66]/20">
                                       Travel Kit
                                     </span>
                                   </>
@@ -110,12 +110,12 @@ export function CartItems() {
                               {!item.mixBoxRecipe && !yatraKitData && (badge || freeLinersCount > 0) && (
                                 <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
                                   {badge && (
-                                    <span className="inline-flex items-center rounded-md bg-[#F4EFF3] px-2 py-0.5 text-[10.5px] sm:text-xs font-semibold text-[#7E4D77] border border-[#E9DFE7]">
+                                    <span className="inline-flex items-center rounded-md bg-[#F4EFF3] px-2 py-0.5 text-[12px] sm:text-xs font-semibold text-[#7E4D77] border border-[#E9DFE7]">
                                       {badge}
                                     </span>
                                   )}
                                   {freeLinersCount > 0 && (
-                                    <span className="inline-flex items-center gap-1 rounded-md bg-[#E6F4EA] px-2 py-0.5 text-[10.5px] sm:text-xs font-bold text-[#15803D] border border-[#BFE3CA] shadow-2xs">
+                                    <span className="inline-flex items-center gap-1 rounded-md bg-[#E6F4EA] px-2 py-0.5 text-[12px] sm:text-xs font-bold text-[#15803D] border border-[#BFE3CA] shadow-2xs">
                                       🎁 +{freeLinersCount} Free Liners
                                     </span>
                                   )}
@@ -123,7 +123,7 @@ export function CartItems() {
                               )}
 
                               {!item.mixBoxRecipe && !yatraKitData && isPad && (
-                                <p className="text-[11px] text-gray-500">
+                                <p className="text-[12px] text-ink-muted">
                                   {item.quantity} box{item.quantity === 1 ? "" : "es"} ({item.quantity * 21} pads)
                                 </p>
                               )}
@@ -136,7 +136,7 @@ export function CartItems() {
                                     </p>
                                   )}
                                   <div>
-                                    <span className="inline-flex items-center gap-1 rounded-md bg-[#E6F4EA] px-2 py-0.5 text-[11px] font-bold text-[#15803D] border border-[#BFE3CA]">
+                                    <span className="inline-flex items-center gap-1 rounded-md bg-[#E6F4EA] px-2 py-0.5 text-[12px] font-bold text-[#15803D] border border-[#BFE3CA]">
                                       ✓ Free Intimate Wipes ({yatraKitData.freeWipesCount || 10} wipes) included
                                     </span>
                                   </div>
@@ -149,10 +149,10 @@ export function CartItems() {
                                     {formatMixBoxRecipe(item.mixBoxRecipe)}
                                   </p>
                                   <div className="flex flex-wrap items-center gap-1.5">
-                                    <span className="inline-flex items-center gap-1 rounded-md bg-[#E6F4EA] px-2 py-0.5 text-[10.5px] sm:text-xs font-bold text-[#15803D] border border-[#BFE3CA] shadow-2xs">
+                                    <span className="inline-flex items-center gap-1 rounded-md bg-[#E6F4EA] px-2 py-0.5 text-[12px] sm:text-xs font-bold text-[#15803D] border border-[#BFE3CA] shadow-2xs">
                                       🎁 +{(item.boxCount || item.quantity || 1) * 4} Free Liners
                                     </span>
-                                    <p className="text-[11px] text-gray-500">
+                                    <p className="text-[12px] text-ink-muted">
                                       {item.quantity} box{item.quantity === 1 ? "" : "es"} ({item.quantity * 21} pads)
                                     </p>
                                   </div>
@@ -169,7 +169,7 @@ export function CartItems() {
                           ₹{lineTotal}
                         </span>
                         {item.quantity > 1 && (
-                          <span className="text-[11px] sm:text-xs text-gray-400 font-normal">
+                          <span className="text-[12px] sm:text-xs text-gray-400 font-normal">
                             (₹{item.price} each)
                           </span>
                         )}
@@ -185,11 +185,11 @@ export function CartItems() {
                               key={size.id}
                               className="flex items-center justify-between rounded-lg bg-gray-50 px-2.5 py-1.5 text-xs sm:text-sm"
                             >
-                              <span className="text-gray-600 truncate">
+                              <span className="text-ink-muted truncate">
                                 {size.name}
                               </span>
 
-                              <span className="rounded-md bg-white px-1.5 py-0.5 text-[11px] sm:text-sm font-semibold text-gray-800 shadow-2xs shrink-0">
+                              <span className="rounded-md bg-white px-1.5 py-0.5 text-[12px] sm:text-sm font-semibold text-ink shadow-2xs shrink-0">
                                 Qty: {size.qty}
                               </span>
                             </div>
@@ -271,7 +271,7 @@ export function CartItems() {
                             </Button>
                           </div>
 
-                          <span className="text-[10px] text-gray-400 font-medium hidden sm:inline">
+                          <span className="text-[12px] text-gray-400 font-medium hidden sm:inline">
                             Max {maxQty}
                           </span>
                         </div>

@@ -86,8 +86,8 @@ const HERO_SLIDES: HeroSlide[] = [
   {
     hook: "One cup. Twelve hours. Zero waste.",
     sub: "Medical-grade silicone, up to 12 hours between changes, and a 30-second size finder so you get it right first time.",
-    cta: { label: "Shop the cup", href: "/menstrual-cup" },
-    cta2: { label: "Find my size", href: "/menstrual-cup?scroll=size-finder#size-finder" },
+    cta: { label: "Shop the cup", href: "/product-detail/ovy-cup" },
+    cta2: { label: "Find my size", href: "/product-detail/ovy-cup?scroll=size-finder#size-finder" },
     image: "/product-images/cup-rbw.jpg",
     image2: "/product-images/cup.jpg",
     alt: "Ovy reusable menstrual cup with its carry pouch",
@@ -189,7 +189,7 @@ export function Hero() {
         type="button"
         onClick={() => setIsPaused((prev) => !prev)}
         aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
-        className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#016271]"
+        className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-ink-muted transition-colors hover:bg-gray-100 hover:text-[#016271]"
       >
         {isPaused ? (
           <Play className="h-3.5 w-3.5 fill-current" />
@@ -231,7 +231,7 @@ export function Hero() {
                   sizes="(max-width: 640px) 40vw, 200px"
                 />
                 {slide.stickers[0] && (
-                  <span className="absolute top-2 right-2 z-20 max-w-[calc(100%-16px)] rounded-full bg-white/95 px-2.5 py-1 text-[11px] leading-tight font-bold text-[#016271] shadow-md">
+                  <span className="absolute top-2 right-2 z-20 max-w-[calc(100%-16px)] rounded-full bg-white/95 px-2.5 py-1 text-[12px] leading-tight font-bold text-[#016271] shadow-md">
                     {slide.stickers[0]}
                   </span>
                 )}

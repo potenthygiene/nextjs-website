@@ -61,25 +61,25 @@ export default function FunnelMarketComparisonSection() {
   };
 
   return (
-    <section id="why-looway" className="w-full bg-[#f8f1ea] py-12 sm:py-18 lg:py-22 text-[#2A1620]">
+    <section id="why-looway" className="w-full bg-[#f8f1ea] py-12 sm:py-18 lg:py-22 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="mb-8 sm:mb-10 max-w-3xl">
           <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2">
             WHY LOOWAY
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-[#5A0E30] leading-[1.08] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold text-ink leading-[1.08] tracking-tight">
             Better than the market alternatives
           </h2>
-          <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
+          <p className="mt-3 text-sm sm:text-base lg:text-lg text-ink-muted leading-relaxed font-normal">
             Everything a clean, dignified pee needs, standing up and fully dressed. Here&apos;s how the Looway funnel compares to the usual options at a glance.
           </p>
         </div>
 
         {/* Mobile Scroll Hint */}
         <div className="flex items-center justify-between sm:hidden mb-2">
-          <span className="text-[10.5px] font-bold text-[#b51e60]">← Swipe table to compare →</span>
-          <span className="text-[10px] font-medium text-[#2A1620]/50">6 features</span>
+          <span className="text-[12px] font-bold text-[#b51e60]">← Swipe table to compare →</span>
+          <span className="text-[12px] font-medium text-ink-muted/80">6 features</span>
         </div>
 
         {/* Comparison Table Container */}
@@ -112,7 +112,7 @@ export default function FunnelMarketComparisonSection() {
                     className="transition-colors hover:bg-[#fdeef4]/40"
                   >
                     {/* Feature Title */}
-                    <td className="py-4 px-6 font-bold text-[#5A0E30]">
+                    <td className="py-4 px-6 font-bold text-ink">
                       {row.feature}
                     </td>
 
@@ -124,21 +124,21 @@ export default function FunnelMarketComparisonSection() {
                     </td>
 
                     {/* Hovering / Squatting */}
-                    <td className="py-4 px-4 text-center text-[#2A1620]/40">
+                    <td className="py-4 px-4 text-center text-ink-muted/80">
                       <div className="flex items-center justify-center">
                         {renderIcon(row.hovering)}
                       </div>
                     </td>
 
                     {/* Paper Seat Covers */}
-                    <td className="py-4 px-4 text-center text-[#2A1620]/40">
+                    <td className="py-4 px-4 text-center text-ink-muted/80">
                       <div className="flex items-center justify-center">
                         {renderIcon(row.paperCovers)}
                       </div>
                     </td>
 
                     {/* Just Holding It */}
-                    <td className="py-4 px-4 text-center text-[#2A1620]/40">
+                    <td className="py-4 px-4 text-center text-ink-muted/80">
                       <div className="flex items-center justify-center">
                         {renderIcon(row.holding)}
                       </div>

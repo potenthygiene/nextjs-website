@@ -11,15 +11,15 @@ const Page = () => {
         <div className="w-full max-w-3xl flex flex-col items-center gap-10">
 
         
-          <h1 className="text-3xl sm:text-4xl font-bold text-black text-center">
+          <h1 className="text-3xl sm:text-4xl font-bold text-ink text-center">
             Terms & Condition
           </h1>
 
           
-   <div className="w-full bg-[#F8F6F1] md:rounded-2xl rounded-none shadow-sm border border-neutral-200 p-6 sm:p-8 lg:p-10 space-y-6 text-neutral-800 leading-relaxed">
+   <div className="w-full bg-[#F8F6F1] md:rounded-2xl rounded-none shadow-sm border border-neutral-200 p-6 sm:p-8 lg:p-10 space-y-6 text-ink leading-relaxed">
 
   <div>
-    <h2 className="font-bold text-black">Acceptance of Terms</h2>
+    <h2 className="font-bold text-ink">Acceptance of Terms</h2>
     <p className="mt-3">
       Welcome to Potent Hygiene. By accessing or using our website, mobile application, 
       or purchasing our products, you agree to be bound by these Terms & Conditions. 
@@ -31,7 +31,7 @@ const Page = () => {
   </div>
 
   <div>
-    <h2 className="font-bold text-black">Use of Website and Services</h2>
+    <h2 className="font-bold text-ink">Use of Website and Services</h2>
     <ul className="list-disc pl-6 space-y-2 mt-3">
       <li>Provide accurate, current, and complete information during registration and checkout</li>
       <li>Maintain confidentiality of your account credentials</li>
@@ -43,7 +43,7 @@ const Page = () => {
   </div>
 
   <div>
-    <h2 className="font-bold text-black">Product Information and Medical Disclaimers</h2>
+    <h2 className="font-bold text-ink">Product Information and Medical Disclaimers</h2>
     <p className="mt-3">
       Product descriptions, images, videos, and other content are provided for informational 
       purposes only. Products are not intended to diagnose, treat, cure, or prevent any disease.
@@ -56,7 +56,7 @@ const Page = () => {
   </div>
 
   <div>
-    <h2 className="font-bold text-black">Pricing and Payment</h2>
+    <h2 className="font-bold text-ink">Pricing and Payment</h2>
     <ul className="list-disc pl-6 space-y-2 mt-3">
       <li>Prices are displayed in Indian Rupees (INR) and include applicable taxes unless stated otherwise</li>
       <li>Payment must be completed successfully for order confirmation</li>
@@ -66,7 +66,7 @@ const Page = () => {
   </div>
 
   <div>
-    <h2 className="font-bold text-black">Promotional Offers</h2>
+    <h2 className="font-bold text-ink">Promotional Offers</h2>
     <ul className="list-disc pl-6 space-y-2 mt-3">
       <li>Offers, discounts, and coupons are subject to specific terms and validity periods</li>
       <li>Offers cannot be combined unless explicitly stated</li>
@@ -75,7 +75,7 @@ const Page = () => {
   </div>
 
   <div>
-    <h2 className="font-bold text-black">Intellectual Property Rights</h2>
+    <h2 className="font-bold text-ink">Intellectual Property Rights</h2>
     <p className="mt-3">
       All content on this website including text, logos, graphics, images, product designs, 
       and software is the intellectual property of Potent Hygiene and protected under applicable laws.
@@ -83,7 +83,7 @@ const Page = () => {
   </div>
 
   <div>
-    <h2 className="font-bold text-black">Order Cancellation & Refund</h2>
+    <h2 className="font-bold text-ink">Order Cancellation & Refund</h2>
     <ul className="list-disc pl-6 space-y-2 mt-3">
       <li>Orders can be cancelled before dispatch</li>
       <li>A cancelled order is refunded in full</li>
@@ -93,7 +93,7 @@ const Page = () => {
   </div>
 
   <div>
-    <h2 className="font-bold text-black">Contact Information</h2>
+    <h2 className="font-bold text-ink">Contact Information</h2>
     <p className="mt-3">
       Potent Hygiene Solutions Pvt. Ltd. <br />
       Email: care@potenthygiene.com

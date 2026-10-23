@@ -143,17 +143,17 @@ export default function WhereToUseSection() {
   };
 
   return (
-    <section id="where-to-use" className="w-full bg-[#FBF8F1] scroll-mt-32 sm:scroll-mt-36 py-8 sm:py-16 lg:py-20 text-[#17271E]">
+    <section id="where-to-use" className="w-full bg-[#FBF8F1] scroll-mt-32 sm:scroll-mt-36 py-8 sm:py-16 lg:py-20 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl">
-          <span className="text-[10.5px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
+          <span className="text-[11px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
             ANYWHERE A TOILET ISN&apos;T
           </span>
-          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0A4A2E]">
+          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-ink">
             Where you&apos;ll be glad you packed one
           </h2>
-          <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-[#17271E]/75 font-normal">
+          <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-ink-muted font-normal">
             Tap a situation to see how Looway saves the moment.
           </p>
         </div>
@@ -212,10 +212,10 @@ export default function WhereToUseSection() {
 
                     {/* Situation Label */}
                     <span
-                      className={`mt-2 text-[10.5px] sm:text-[11px] font-bold leading-tight transition-colors max-w-[90px] sm:max-w-[100px] ${
+                      className={`mt-2 text-[12px] sm:text-[12px] font-bold leading-tight transition-colors max-w-[90px] sm:max-w-[100px] ${
                         isActive
-                          ? "text-[#0A4A2E] underline underline-offset-4 decoration-2 decoration-[#0E5C3A]"
-                          : "text-[#17271E]/60 group-hover:text-[#0A4A2E]"
+                          ? "text-ink underline underline-offset-4 decoration-2 decoration-[#0E5C3A]"
+                          : "text-ink-muted group-hover:text-[#0A4A2E]"
                       }`}
                     >
                       {stop.title}
@@ -237,17 +237,17 @@ export default function WhereToUseSection() {
 
             <div className="flex-1 min-w-0">
               {/* Situation Title */}
-              <h3 className="font-serif text-base sm:text-2xl font-bold text-[#0A4A2E]">
+              <h3 className="font-serif text-base sm:text-2xl font-bold text-ink">
                 {currentStop.title}
               </h3>
 
               {/* Situation Description */}
-              <p className="mt-1.5 sm:mt-2 text-xs sm:text-base leading-relaxed text-[#17271E]/80 font-normal">
+              <p className="mt-1.5 sm:mt-2 text-xs sm:text-base leading-relaxed text-ink-muted font-normal">
                 {currentStop.desc}
               </p>
 
               {/* Bottom Tag / Keep in location */}
-              <div className="mt-3 sm:mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#EBF5EF] px-3 sm:px-3.5 py-1 sm:py-1.5 text-[11px] sm:text-xs font-semibold text-[#0E5C3A]">
+              <div className="mt-3 sm:mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#EBF5EF] px-3 sm:px-3.5 py-1 sm:py-1.5 text-[12px] sm:text-xs font-semibold text-[#0E5C3A]">
                 <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5 stroke-[3]" />
                 <span>Keep a pack in {currentStop.keepIn}</span>
               </div>

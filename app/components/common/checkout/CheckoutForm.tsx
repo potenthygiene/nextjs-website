@@ -218,8 +218,8 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b border-gray-100 pb-3">
         <div>
-          <h2 className="text-xl font-bold text-[#1A150F]">Delivery Address</h2>
-          <p className="text-xs text-gray-500">Select where you want your order delivered</p>
+          <h2 className="text-xl font-bold text-ink">Delivery Address</h2>
+          <p className="text-xs text-ink-muted">Select where you want your order delivered</p>
         </div>
 
         {address.length > 0 && !showAddressForm && (
@@ -275,8 +275,8 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
                         className="flex flex-col items-start justify-start gap-1.5 cursor-pointer w-full text-left"
                       >
                         <div className="flex flex-wrap items-center justify-start gap-2 text-left">
-                          <span className="flex items-center gap-1.5 font-bold text-gray-900 text-base">
-                            <User className="h-4 w-4 text-gray-500" />
+                          <span className="flex items-center gap-1.5 font-bold text-ink text-base">
+                            <User className="h-4 w-4 text-ink-muted" />
                             {recipientName}
                           </span>
 
@@ -288,13 +288,13 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
                         </div>
 
                         {recipientPhone && (
-                          <div className="flex items-center justify-start gap-1.5 text-xs sm:text-sm font-semibold text-gray-700 text-left">
+                          <div className="flex items-center justify-start gap-1.5 text-xs sm:text-sm font-semibold text-ink-muted text-left">
                             <Phone className="h-3.5 w-3.5 text-gray-400" />
                             <span>Courier Contact: +91 {recipientPhone}</span>
                           </div>
                         )}
 
-                        <div className="flex items-start justify-start gap-1.5 text-xs sm:text-sm text-gray-600 text-left">
+                        <div className="flex items-start justify-start gap-1.5 text-xs sm:text-sm text-ink-muted text-left">
                           <MapPin className="h-3.5 w-3.5 text-gray-400 shrink-0 mt-0.5" />
                           <span>
                             {streetLine}
@@ -315,7 +315,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
                           e.stopPropagation();
                           handleStartEdit(item);
                         }}
-                        className="h-8 px-2.5 text-xs text-gray-600 hover:text-[#016271] hover:bg-[#E2F4F7]"
+                        className="h-8 px-2.5 text-xs text-ink-muted hover:text-[#016271] hover:bg-[#E2F4F7]"
                       >
                         <Edit3 className="h-3.5 w-3.5 mr-1" />
                         Edit
@@ -346,10 +346,10 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
         <Card className="border border-gray-200 bg-white shadow-sm rounded-2xl overflow-hidden">
           <div className="bg-[#FAF8F5] px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <div>
-              <h3 className="text-base font-bold text-[#1A150F]">
+              <h3 className="text-base font-bold text-ink">
                 {editingAddressId ? "Edit Shipping Address" : "Add Shipping Address"}
               </h3>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-ink-muted">
                 Please provide accurate details for smooth courier delivery
               </p>
             </div>
@@ -359,7 +359,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
                 variant="ghost"
                 size="sm"
                 onClick={handleCancelForm}
-                className="text-xs text-gray-500 hover:text-gray-900"
+                className="text-xs text-ink-muted hover:text-gray-900"
               >
                 Cancel
               </Button>
@@ -370,7 +370,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               {/* Full Name */}
               <div className="space-y-1.5">
-                <Label htmlFor="checkout-fullName" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-fullName" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   Full Name <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -391,11 +391,11 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
 
               {/* Phone */}
               <div className="space-y-1.5">
-                <Label htmlFor="checkout-phone" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-phone" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   Mobile Number (10 digits) <span className="text-red-500">*</span>
                 </Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-ink-muted">
                     +91
                   </span>
                   <Input
@@ -419,13 +419,13 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
                     {errors.phone}
                   </p>
                 ) : (
-                  <p className="text-[11px] text-gray-400">Required for courier delivery calls &amp; OTP</p>
+                  <p className="text-[12px] text-gray-400">Required for courier delivery calls &amp; OTP</p>
                 )}
               </div>
 
               {/* Street Address */}
               <div className="space-y-1.5 md:col-span-2">
-                <Label htmlFor="checkout-street" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-street" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   House / Flat / Street <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -446,7 +446,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
 
               {/* Locality */}
               <div className="space-y-1.5 md:col-span-2">
-                <Label htmlFor="checkout-locality" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-locality" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   Locality / Landmark <span className="text-gray-400 font-normal lowercase">(optional)</span>
                 </Label>
                 <Input
@@ -461,7 +461,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
 
               {/* City */}
               <div className="space-y-1.5">
-                <Label htmlFor="checkout-city" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-city" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   City <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -482,7 +482,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
 
               {/* State Dropdown */}
               <div className="space-y-1.5">
-                <Label htmlFor="checkout-state" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-state" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   State <span className="text-red-500">*</span>
                 </Label>
                 <select
@@ -513,7 +513,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
 
               {/* PIN Code */}
               <div className="space-y-1.5">
-                <Label htmlFor="checkout-pincode" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-pincode" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   PIN Code (6 digits) <span className="text-red-500">*</span>
                 </Label>
                 <Input
@@ -540,7 +540,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
 
               {/* Country (Fixed to India) */}
               <div className="space-y-1.5">
-                <Label htmlFor="checkout-country" className="text-xs font-bold text-gray-700 uppercase tracking-wider">
+                <Label htmlFor="checkout-country" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
                   Country
                 </Label>
                 <Input
@@ -568,7 +568,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
               />
               <Label
                 htmlFor="checkout-isDefault"
-                className="text-xs font-medium text-gray-600 cursor-pointer"
+                className="text-xs font-medium text-ink-muted cursor-pointer"
               >
                 Set as default shipping address
               </Label>
@@ -591,7 +591,7 @@ const CheckoutForm = ({ selected, setSelected, address, setAddress }: any) => {
                   variant="outline"
                   onClick={handleCancelForm}
                   disabled={isSaving}
-                  className="h-12 rounded-xl border-gray-300 font-semibold text-gray-700 hover:bg-gray-50 sm:px-8"
+                  className="h-12 rounded-xl border-gray-300 font-semibold text-ink-muted hover:bg-gray-50 sm:px-8"
                 >
                   Cancel
                 </Button>

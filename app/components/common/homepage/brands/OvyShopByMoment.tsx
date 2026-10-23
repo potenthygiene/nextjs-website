@@ -224,7 +224,7 @@ export function OvyShopByMoment({
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto mb-8 max-w-3xl text-center">
-          <span className="mb-2 inline-block rounded-full border border-gray-200 bg-white/90 px-4 py-1 text-[10px] font-bold tracking-widest text-[#016271] uppercase shadow-2xs sm:text-[11px]">
+          <span className="mb-2 inline-block rounded-full border border-gray-200 bg-white/90 px-4 py-1 text-[11px] font-bold tracking-widest text-[#016271] uppercase shadow-2xs sm:text-[11px]">
             SHOP BY MOMENT
           </span>
           <h2 className="font-serif text-3xl font-bold text-[#1F1915] sm:text-5xl">
@@ -299,7 +299,7 @@ export function OvyShopByMoment({
 
               {/* Title & Badge */}
               <div className="flex flex-col pt-1">
-                <span className="mb-1 text-[10px] font-bold tracking-wider text-[#C42B5B] uppercase">
+                <span className="mb-1 text-[11px] font-bold tracking-wider text-[#C42B5B] uppercase">
                   {currentMoment.badge}
                 </span>
                 <h3 className="font-serif text-xl leading-tight font-bold text-[#602E55]">
@@ -329,7 +329,7 @@ export function OvyShopByMoment({
                   <div className="text-xs font-bold text-[#1F1915]">
                     {currentProductTitle}
                   </div>
-                  <div className="text-[10px] text-gray-500">
+                  <div className="text-[12px] text-ink-muted">
                     {currentProductSubtitle}
                   </div>
                 </div>
@@ -345,15 +345,15 @@ export function OvyShopByMoment({
             {/* Price & Add to Bag Row */}
             <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
               <div>
-                <div className="text-[9px] font-bold tracking-wider text-gray-400 uppercase">
+                <div className="text-[11px] font-bold tracking-wider text-gray-400 uppercase">
                   PRICE
                 </div>
-                <div className="mt-0.5 font-serif text-2xl leading-none font-extrabold text-[#1F1915]">
+                <div className="mt-0.5 font-serif text-2xl leading-none font-bold text-[#1F1915]">
                   {currentProductPrice > 0
                     ? `₹${currentProductPrice}`
                     : "Price unavailable"}
                 </div>
-                <div className="mt-1 text-[10px] font-semibold text-emerald-700">
+                <div className="mt-1 text-[12px] font-semibold text-emerald-700">
                   {freeShippingMessage}
                 </div>
               </div>
@@ -455,7 +455,7 @@ export function OvyShopByMoment({
                       <div className="text-sm font-bold text-[#1F1915]">
                         {currentProductTitle}
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-ink-muted">
                         {currentProductSubtitle}
                       </div>
                     </div>
@@ -472,10 +472,10 @@ export function OvyShopByMoment({
               {/* Price & Add to Bag Row */}
               <div className="mt-6 flex max-w-lg items-center justify-between border-t border-gray-100 pt-4">
                 <div>
-                  <div className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                  <div className="text-[11px] font-bold tracking-wider text-gray-400 uppercase">
                     PRICE
                   </div>
-                  <div className="mt-0.5 font-serif text-3xl leading-none font-extrabold text-[#1F1915]">
+                  <div className="mt-0.5 font-serif text-3xl leading-none font-bold text-[#1F1915]">
                     {currentProductPrice > 0
                       ? `₹${currentProductPrice}`
                       : "Price unavailable"}

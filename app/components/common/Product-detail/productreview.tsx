@@ -2,6 +2,7 @@
 
 import { Star, ThumbsUp, User } from "lucide-react";
 import { WriteReviewModal } from "../dashboard-review/WriteReviewModal";
+import { getReviewStats } from "@/lib/reviewStats";
 
 export default function ProductReviews({ reviews, product, themeColor }: any) {
   const safeReviews = Array.isArray(reviews) ? reviews : [];
@@ -10,43 +11,16 @@ export default function ProductReviews({ reviews, product, themeColor }: any) {
   const lightColor = themeColor?.lightColor || "#E6F4F6";
   const textColor = themeColor?.textColor || "#016271";
 
-  const reviewCounts = [1, 2, 3, 4, 5].reduce(
-    (acc: Record<number, number>, stars) => ({
-      ...acc,
-      [stars]: safeReviews.filter((review: any) => Number(review.rating) === stars)
-        .length,
-    }),
-    {},
-  );
-
-  const ratings = [
-    { stars: 5, count: reviewCounts[5] || 0 },
-    { stars: 4, count: reviewCounts[4] || 0 },
-    { stars: 3, count: reviewCounts[3] || 0 },
-    { stars: 2, count: reviewCounts[2] || 0 },
-    { stars: 1, count: reviewCounts[1] || 0 },
-  ];
-
-  const totalReviews = ratings.reduce((sum, r) => sum + r.count, 0);
-
-  // Avoid divide by 0
-  const averageRating =
-    totalReviews === 0
-      ? "0.0"
-      : (
-          ratings.reduce((sum, r) => sum + r.stars * r.count, 0) / totalReviews
-        ).toFixed(1);
-
-  // Convert to percentage
-  const ratingBreakdown = ratings.map((r) => ({
-    stars: r.stars,
-    percent:
-      totalReviews === 0 ? 0 : Math.round((r.count / totalReviews) * 100),
-  }));
+  // Rating summary from real, approved reviews only (never hardcoded).
+  const stats = getReviewStats(safeReviews);
+  const totalReviews = stats.count;
+  const averageRating = stats.averageLabel;
+  const ratingBreakdown = stats.breakdown;
 
   return (
     <div className="py-10">
-      {/* TOP SUMMARY CARD */}
+      {/* TOP SUMMARY CARD: hidden until there is at least one real review */}
+      {totalReviews > 0 && (
       <div className="bg-gray-100 border border-gray-200 rounded-xl p-8 flex flex-col md:flex-row justify-between gap-10">
         {/* LEFT */}
         <div className="flex-1">
@@ -60,7 +34,14 @@ export default function ProductReviews({ reviews, product, themeColor }: any) {
                 {Array(5)
                   .fill(0)
                   .map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-400" />
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${
+                        i < Math.round(stats.average)
+                          ? "fill-yellow-400"
+                          : "fill-gray-200 text-gray-200"
+                      }`}
+                    />
                   ))}
               </div>
               <p className="text-xs text-gray-500 mt-1">
@@ -101,6 +82,7 @@ export default function ProductReviews({ reviews, product, themeColor }: any) {
           ))}
         </div>
       </div>
+      )}
 
       {/* REVIEW LIST */}
       <div className="mt-10 space-y-8">
@@ -139,12 +121,12 @@ export default function ProductReviews({ reviews, product, themeColor }: any) {
                   <div className="flex-1 min-w-0">
                     {/* Name + Badge */}
                     <div className="flex items-center gap-3 flex-wrap">
-                      <p className="font-medium">{review.name || "Verified Buyer"}</p>
+                      <p className="font-medium">{review.name || "Potent customer"}</p>
                       <span
                         style={{ backgroundColor: lightColor, color: textColor }}
                         className="text-xs px-2 py-0.5 rounded-full font-medium"
                       >
-                        Verified Purchase
+                        Checked review
                       </span>
                     </div>
 

@@ -34,7 +34,7 @@ export default function FilterBar({ total }: any) {
         <div className="relative z-10 max-w-2xl">
          
 
-          <h1 className="font-serif text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+          <h1 className="font-serif text-2xl sm:text-4xl font-bold tracking-tight leading-tight">
             Shop All Essentials
           </h1>
 
@@ -64,7 +64,7 @@ export default function FilterBar({ total }: any) {
                 className={`whitespace-nowrap rounded-xl px-3.5 py-2 text-xs font-bold transition-all cursor-pointer ${
                   isSelected
                     ? "bg-[#075965] text-white shadow-xs"
-                    : "bg-[#FAF8F3] text-[#17271E]/75 hover:bg-[#E4F0E8] hover:text-[#0E5C3A]"
+                    : "bg-[#FAF8F3] text-ink-muted hover:bg-[#E6F4F6] hover:text-teal"
                 }`}
               >
                 {tab.label}
@@ -74,8 +74,8 @@ export default function FilterBar({ total }: any) {
         </div>
 
         {/* Counter Badge */}
-        <div className="flex items-center gap-2 text-xs font-bold text-[#0A4A2E] bg-[#F1F7F3] px-3 py-2 rounded-xl border border-[#0E5C3A]/15 shrink-0">
-          <PackageCheck className="h-4 w-4 text-[#0E5C3A]" />
+        <div className="flex items-center gap-2 text-xs font-bold text-ink bg-[#E6F4F6] px-3 py-2 rounded-xl border border-teal/15 shrink-0">
+          <PackageCheck className="h-4 w-4 text-teal" />
           <span>Showing {visibleTotal} Products </span>
         </div>
       </div>

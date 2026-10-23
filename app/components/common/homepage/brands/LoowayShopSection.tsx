@@ -363,7 +363,7 @@ export function LoowayShopSection({
           <span className="mb-2 block text-[11px] font-bold tracking-widest text-[#0B6E7D] uppercase">
             SHOP LOOWAY
           </span>
-          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-[#1A150F] sm:text-[46px] sm:leading-[49.68px]">
+          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-ink sm:text-[46px] sm:leading-[49.68px]">
             Three kinds of toilet on a trip.
           </h2>
           <div className="mt-1">
@@ -414,7 +414,7 @@ export function LoowayShopSection({
                 {/* 1. MOBILE CARD VIEW (block md:hidden) */}
                 <div className="block p-4 md:hidden">
                   {/* Top Kicker Badge */}
-                  <div className="mb-2 text-[10px] font-bold tracking-wider text-gray-500 uppercase">
+                  <div className="mb-2 text-[11px] font-bold tracking-wider text-ink-muted uppercase">
                     {product.badge}
                   </div>
 
@@ -424,7 +424,7 @@ export function LoowayShopSection({
                     <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-2xl border border-gray-100 bg-[#F3FAF8] p-2">
                       <button
                         onClick={() => toggleWishlist(product)}
-                        className="absolute top-1.5 right-1.5 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-2xs transition-colors hover:text-red-500"
+                        className="absolute top-1.5 right-1.5 z-10 flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-ink-muted shadow-2xs transition-colors hover:text-red-500"
                         aria-label="Toggle Wishlist"
                       >
                         <Heart
@@ -453,7 +453,7 @@ export function LoowayShopSection({
                         </p>
                       </div>
 
-                      <p className="mt-1 text-[11px] font-medium leading-snug text-[#5C7275]">
+                      <p className="mt-1 text-[12px] font-medium leading-snug text-[#5C7275]">
                         {product.audience || product.bullets.join(" · ")}
                       </p>
                     </div>
@@ -474,10 +474,10 @@ export function LoowayShopSection({
                           className={`rounded-xl border p-2 text-left transition-all ${
                             isSelected
                               ? "border-2 border-[#0B6E7D] bg-teal-50/70 font-bold text-[#0B6E7D] shadow-2xs"
-                              : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                              : "border-gray-200 bg-white text-ink-muted hover:border-gray-300"
                           }`}
                         >
-                          <div className="text-[9px] font-semibold tracking-wider text-gray-400 uppercase leading-none">
+                          <div className="text-[11px] font-semibold tracking-wider text-gray-400 uppercase leading-none">
                             {variant.label}
                           </div>
                           <div className="mt-1 font-serif text-xs font-bold text-[#1F1915]">
@@ -517,7 +517,7 @@ export function LoowayShopSection({
                   </div>
 
                   {/* Mobile Footer Note */}
-                  <p className="mt-2 text-[10px] leading-tight text-gray-400">
+                  <p className="mt-2 text-[12px] leading-tight text-gray-400">
                     {product.footerNote}
                   </p>
                 </div>
@@ -528,7 +528,7 @@ export function LoowayShopSection({
                   <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-2xl bg-[#F3FAF8] p-3">
                     {/* Top Badge */}
                     <div className="absolute top-3 left-3 z-10">
-                      <span className="rounded-full border border-gray-100 bg-white/95 px-3 py-1 text-[9px] font-bold tracking-wider text-gray-700 uppercase shadow-2xs sm:text-[10px]">
+                      <span className="rounded-full border border-gray-100 bg-white/95 px-3 py-1 text-[11px] font-bold tracking-wider text-ink-muted uppercase shadow-2xs sm:text-[11px]">
                         {product.badge}
                       </span>
                     </div>
@@ -536,7 +536,7 @@ export function LoowayShopSection({
                     {/* Wishlist Button */}
                     <button
                       onClick={() => toggleWishlist(product)}
-                      className="absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-500 shadow-2xs transition-colors hover:text-red-500"
+                      className="absolute top-3 right-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-ink-muted shadow-2xs transition-colors hover:text-red-500"
                     >
                       <Heart
                         className={`h-4 w-4 ${isLiked ? "fill-red-500 text-red-500" : ""}`}
@@ -566,7 +566,7 @@ export function LoowayShopSection({
                       >
                         {product.tagline}
                       </div>
-                      <div className="mt-1 text-[11px] font-medium text-gray-400">
+                      <div className="mt-1 text-[12px] font-medium text-gray-400">
                         {product.audience}
                       </div>
 
@@ -595,10 +595,10 @@ export function LoowayShopSection({
                               className={`rounded-xl border p-2 text-left text-xs transition-all ${
                                 isSelected
                                   ? "border-[#0B6E7D] bg-teal-50/60 font-bold text-[#0B6E7D]"
-                                  : "border-gray-200 bg-white text-gray-600 hover:border-gray-300"
+                                  : "border-gray-200 bg-white text-ink-muted hover:border-gray-300"
                               }`}
                             >
-                              <div className="text-[10px] font-semibold tracking-wider uppercase">
+                              <div className="text-[11px] font-semibold tracking-wider uppercase">
                                 {variant.label}
                               </div>
                               <div className="font-bold">₹{variant.price}</div>
@@ -637,7 +637,7 @@ export function LoowayShopSection({
                     </div>
 
                     {/* Footer Note */}
-                    <p className="text-[10px] leading-tight text-gray-400">
+                    <p className="text-[12px] leading-tight text-gray-400">
                       {product.footerNote}
                     </p>
                   </div>
@@ -698,7 +698,7 @@ export function LoowayShopSection({
                 <div className="font-serif text-xl font-bold text-[#1F1915]">
                   {comboPrice > 0 ? `₹${comboPrice}` : "Price unavailable"}
                 </div>
-                <div className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+                <div className="rounded-full bg-emerald-50 px-2 py-0.5 text-[12px] font-bold text-emerald-700">
                   Free delivery
                 </div>
               </div>
@@ -736,7 +736,7 @@ export function LoowayShopSection({
         </div>
 
         {/* Subtext below Combo Banner */}
-        <p className="mx-auto mt-4 max-w-3xl text-center text-[11px] leading-relaxed text-gray-500">
+        <p className="mx-auto mt-4 max-w-3xl text-center text-[12px] leading-relaxed text-ink-muted">
           Seat covers and bags can also come on a schedule, monthly or every two
           months: choose Subscribe on each product page. Pause or cancel in two
           clicks.

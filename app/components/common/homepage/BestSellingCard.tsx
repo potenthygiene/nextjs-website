@@ -252,7 +252,7 @@ export default function BestsellingCard({
         {/* Badge */}
         {badgeLabel && (
           <div className="absolute top-2 left-2 z-20 sm:top-3 sm:left-3">
-            <span className="rounded-full border border-white/60 bg-white/95 px-2 py-0.5 text-[11px] font-bold text-[#016271] shadow-md backdrop-blur-md sm:px-3 sm:py-1 sm:text-xs">
+            <span className="rounded-full border border-white/60 bg-white/95 px-2 py-0.5 text-[12px] font-bold text-[#016271] shadow-md backdrop-blur-md sm:px-3 sm:py-1 sm:text-xs">
               {badgeLabel}
             </span>
           </div>
@@ -272,7 +272,7 @@ export default function BestsellingCard({
             onClick={handleToggleWishlist}
             aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
             aria-pressed={isWishlisted}
-            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/95 text-gray-600 shadow-md backdrop-blur-md transition-colors hover:text-red-500 sm:h-9 sm:w-9"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/95 text-ink-muted shadow-md backdrop-blur-md transition-colors hover:text-red-500 sm:h-9 sm:w-9"
           >
             <Heart
               className={`h-4 w-4 ${isWishlisted ? "fill-red-500 text-red-500" : ""}`}
@@ -285,7 +285,7 @@ export default function BestsellingCard({
               type="button"
               onClick={handleQuickViewClick}
               aria-label={`Quick view: ${product.name}`}
-              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-md backdrop-blur-md transition-colors hover:text-[#016271] sm:h-9 sm:w-9"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/95 text-ink-muted shadow-md backdrop-blur-md transition-colors hover:text-[#016271] sm:h-9 sm:w-9"
             >
               <Eye className="h-4 w-4" />
             </button>
@@ -298,7 +298,6 @@ export default function BestsellingCard({
           className="relative block h-full w-full"
         >
           <Image
-            unoptimized
             src={getImageUrl(
               product.image || product.bannerImage || "/product.png",
             )}
@@ -367,7 +366,7 @@ export default function BestsellingCard({
                     </option>
                   ))}
                 </select>
-                <ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-3.5 w-3.5 -translate-y-1/2 text-gray-700" />
+                <ChevronDown className="pointer-events-none absolute top-1/2 right-2 h-3.5 w-3.5 -translate-y-1/2 text-ink-muted" />
               </div>
             )}
             {variants.length <= 1 && (
@@ -384,7 +383,7 @@ export default function BestsellingCard({
             <button
               type="button"
               disabled
-              className={`flex min-h-11 cursor-not-allowed items-center justify-center gap-1.5 rounded-full bg-gray-200 text-sm font-semibold text-gray-500 shadow-none ${
+              className={`flex min-h-11 cursor-not-allowed items-center justify-center gap-1.5 rounded-full bg-gray-200 text-sm font-semibold text-ink-muted shadow-none ${
                 isFifthMobileCard ? "w-auto px-4 sm:w-full" : "w-full px-3"
               }`}
             >

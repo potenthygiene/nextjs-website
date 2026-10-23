@@ -18,7 +18,7 @@ export type QuizTheme = {
   ink: string;
 };
 
-export const OVY_QUIZ_THEME: QuizTheme = { accent: "#9A5B90", accentDark: "#7E4D77", soft: "#F3E6F0", ink: "#1A150F" };
+export const OVY_QUIZ_THEME: QuizTheme = { accent: "#9A5B90", accentDark: "#7E4D77", soft: "#F3E6F0", ink: "#1F1915" };
 export const NEUTRAL_QUIZ_THEME: QuizTheme = { accent: "#016271", accentDark: "#014b57", soft: "#E3F3F5", ink: "#1A1A1A" };
 
 export function themeStyle(theme: QuizTheme): React.CSSProperties {
@@ -108,7 +108,7 @@ export function QuizProgress({ step, total, done, label }: { step: number; total
     <div className="mb-5">
       <div className="mb-2 flex items-center justify-between text-[11px] font-bold tracking-wider text-[var(--quiz-accent-dark)] uppercase">
         <span>{done ? "Your result" : `Question ${step} of ${total}`}</span>
-        {label ? <span className="text-gray-500 normal-case tracking-normal font-semibold">{label}</span> : null}
+        {label ? <span className="text-ink-muted normal-case tracking-normal font-semibold">{label}</span> : null}
       </div>
       <div
         className="h-1.5 w-full overflow-hidden rounded-full bg-gray-200"
@@ -143,7 +143,7 @@ export function QuizQuestion({
       className={`animate-in fade-in duration-300 ${direction === "back" ? "slide-in-from-left-4" : "slide-in-from-right-4"}`}
     >
       <h3 className="font-serif text-xl leading-snug font-bold text-[var(--quiz-ink)] sm:text-2xl">{step.question}</h3>
-      {step.helper ? <p className="mt-1.5 text-xs leading-relaxed text-gray-600 sm:text-sm">{step.helper}</p> : null}
+      {step.helper ? <p className="mt-1.5 text-xs leading-relaxed text-ink-muted sm:text-sm">{step.helper}</p> : null}
       <div className={`mt-4 grid gap-2.5 ${columns === 2 ? "sm:grid-cols-2" : ""}`} role="group" aria-label={step.question}>
         {step.options.map((opt) => {
           const isOn = selected === opt.id;
@@ -161,7 +161,7 @@ export function QuizQuestion({
             >
               <span className="min-w-0 flex-1">
                 <b className="block text-sm font-semibold text-[var(--quiz-ink)]">{opt.label}</b>
-                {opt.sub ? <small className="mt-0.5 block text-xs font-medium text-gray-500">{opt.sub}</small> : null}
+                {opt.sub ? <small className="mt-0.5 block text-xs font-medium text-ink-muted">{opt.sub}</small> : null}
               </span>
               <span
                 className={`flex h-6 w-6 flex-none items-center justify-center rounded-full border transition-colors ${
@@ -184,7 +184,7 @@ export function QuizBackButton({ onClick, label = "Back" }: { onClick: () => voi
     <button
       type="button"
       onClick={onClick}
-      className="mt-4 inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-[var(--quiz-ink)]"
+      className="mt-4 inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink-muted transition hover:bg-gray-100 hover:text-[var(--quiz-ink)]"
     >
       <ArrowLeft className="h-4 w-4" /> {label}
     </button>
@@ -280,7 +280,7 @@ export function QuizResult(props: QuizResultProps) {
             </div>
           ) : null}
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-gray-500">{productName}</p>
+            <p className="text-xs font-semibold text-ink-muted">{productName}</p>
             {sizeLabel ? <p className="mt-0.5 font-serif text-lg leading-snug font-bold text-[var(--quiz-ink)]">{sizeLabel}</p> : null}
             {typeof price === "number" && price > 0 ? (
               <p className="mt-1 flex items-baseline gap-2">
@@ -288,18 +288,18 @@ export function QuizResult(props: QuizResultProps) {
                 {showStrike ? <span className="text-xs text-gray-400 line-through">{formatInr(strikePrice as number)}</span> : null}
               </p>
             ) : priceNote ? (
-              <p className="mt-1 text-xs font-medium text-gray-500">{priceNote}</p>
+              <p className="mt-1 text-xs font-medium text-ink-muted">{priceNote}</p>
             ) : null}
           </div>
         </div>
-        <p className="mt-3 text-sm leading-relaxed text-gray-700">{description}</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink-muted">{description}</p>
 
         {reasons.length > 0 ? (
           <div className="mt-3 rounded-2xl bg-white/80 p-3">
             <p className="mb-1.5 text-xs font-bold tracking-wide text-[var(--quiz-ink)] uppercase">Why this pick</p>
             <ul className="space-y-1.5">
               {reasons.map((r) => (
-                <li key={r} className="flex items-start gap-2 text-xs leading-relaxed text-gray-700 sm:text-sm">
+                <li key={r} className="flex items-start gap-2 text-xs leading-relaxed text-ink-muted sm:text-sm">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-[var(--quiz-accent)]" />
                   <span>{r}</span>
                 </li>
@@ -313,7 +313,7 @@ export function QuizResult(props: QuizResultProps) {
             <p className="mb-1.5 text-xs font-bold tracking-wide text-[var(--quiz-ink)] uppercase">In the box</p>
             <ul className="grid gap-1 sm:grid-cols-2">
               {contents.map((c) => (
-                <li key={c} className="flex items-start gap-2 text-xs text-gray-700">
+                <li key={c} className="flex items-start gap-2 text-xs text-ink-muted">
                   <Check className="mt-0.5 h-3.5 w-3.5 flex-none text-[var(--quiz-accent)]" />
                   <span>{c}</span>
                 </li>
@@ -332,9 +332,9 @@ export function QuizResult(props: QuizResultProps) {
 
       {alternative ? (
         <div className="mt-4 rounded-2xl border border-gray-200 bg-white p-3.5">
-          <p className="text-xs font-bold tracking-wide text-gray-500 uppercase">Also worth a look</p>
+          <p className="text-xs font-bold tracking-wide text-ink-muted uppercase">Also worth a look</p>
           <p className="mt-1 text-sm font-bold text-[var(--quiz-ink)]">{alternative.title}</p>
-          <p className="mt-0.5 text-xs leading-relaxed text-gray-600">{alternative.why}</p>
+          <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">{alternative.why}</p>
           {alternative.action ? (
             alternative.action.href ? (
               <Link
@@ -364,7 +364,7 @@ export function QuizResult(props: QuizResultProps) {
           </p>
           <ul className="space-y-1.5">
             {tips.map((t) => (
-              <li key={t} className="text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <li key={t} className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                 {t}
               </li>
             ))}
@@ -384,7 +384,7 @@ export function QuizResult(props: QuizResultProps) {
         <button
           type="button"
           onClick={onRetake}
-          className="mt-4 inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-gray-600 transition hover:bg-gray-100 hover:text-[var(--quiz-ink)]"
+          className="mt-4 inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-full px-3 text-sm font-semibold text-ink-muted transition hover:bg-gray-100 hover:text-[var(--quiz-ink)]"
         >
           <RotateCcw className="h-4 w-4" /> Retake quiz
         </button>
@@ -424,14 +424,14 @@ export function QuizModal({
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-[96] flex items-end justify-center sm:items-center sm:p-5" style={themeStyle(theme)} role="dialog" aria-modal="true" aria-label={label}>
-      <div className="animate-in fade-in absolute inset-0 bg-[#1A150F]/50 backdrop-blur-xs duration-200" onClick={onClose} />
+      <div className="animate-in fade-in absolute inset-0 bg-ink/50 backdrop-blur-xs duration-200" onClick={onClose} />
       <div className="animate-in slide-in-from-bottom-8 sm:zoom-in-95 relative max-h-[92vh] w-full max-w-[560px] overflow-y-auto overscroll-contain rounded-t-3xl bg-white p-5 pb-8 shadow-2xl duration-300 sm:rounded-3xl sm:p-8">
         <div className="mb-3 flex items-center justify-between gap-3">
-          <span className="text-xs font-bold tracking-wider text-gray-500 uppercase">{label}</span>
+          <span className="text-xs font-bold tracking-wider text-ink-muted uppercase">{label}</span>
           <button
             type="button"
             onClick={onClose}
-            className="flex h-11 w-11 flex-none cursor-pointer items-center justify-center rounded-full bg-[#F4F1E8] text-gray-600 transition hover:text-[#1A150F]"
+            className="flex h-11 w-11 flex-none cursor-pointer items-center justify-center rounded-full bg-[#F4F1E8] text-ink-muted transition hover:text-ink"
             aria-label="Close quiz"
           >
             <X className="h-5 w-5" />

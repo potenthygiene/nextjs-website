@@ -146,17 +146,17 @@ export default function FunnelWhereToUseSection() {
   }, [activeStopIndex]);
 
   return (
-    <section id="where-to-use" className="w-full bg-[#fcf8f3] py-12 sm:py-18 lg:py-22 text-[#2A1620]">
+    <section id="where-to-use" className="w-full bg-[#fcf8f3] py-12 sm:py-18 lg:py-22 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="max-w-3xl mb-8">
           <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2">
             ANYWHERE A TOILET ISN&apos;T
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-[#5A0E30] leading-[1.08] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold text-ink leading-[1.08] tracking-tight">
             Where you&apos;ll be glad you packed one
           </h2>
-          <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
+          <p className="mt-3 text-sm sm:text-base lg:text-lg text-ink-muted leading-relaxed font-normal">
             Tap a situation to see how Looway saves the moment.
           </p>
         </div>
@@ -214,8 +214,8 @@ export default function FunnelWhereToUseSection() {
 
                     {/* Node Title */}
                     <span
-                      className={`text-[11px] sm:text-xs font-bold leading-tight transition-colors ${
-                        isSelected ? "text-[#a81a57]" : "text-[#2A1620]/75 group-hover:text-[#5A0E30]"
+                      className={`text-[12px] sm:text-xs font-bold leading-tight transition-colors ${
+                        isSelected ? "text-[#a81a57]" : "text-ink-muted group-hover:text-[#5A0E30]"
                       }`}
                     >
                       {stop.title}
@@ -230,18 +230,18 @@ export default function FunnelWhereToUseSection() {
         {/* Selected Stop Card Box */}
         <div className="rounded-2xl sm:rounded-3xl border border-[#f8dce8] bg-white p-6 sm:p-8 shadow-xs flex flex-col md:flex-row gap-5 sm:gap-6 items-start">
           {/* Mustard Yellow Square Icon Box */}
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F4C430] text-[#5A0E30] shrink-0 shadow-2xs">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F4C430] text-ink shrink-0 shadow-2xs">
             {React.createElement(activeStop.icon, { className: "h-7 w-7 stroke-[2]" })}
           </div>
 
           <div className="flex-1 min-w-0">
             {/* Title */}
-            <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#5A0E30] mb-2">
+            <h3 className="font-serif text-xl sm:text-2xl font-bold text-ink mb-2">
               {activeStop.title}
             </h3>
 
             {/* Description */}
-            <p className="text-xs sm:text-base text-[#2A1620]/80 leading-relaxed font-normal mb-4">
+            <p className="text-xs sm:text-base text-ink-muted leading-relaxed font-normal mb-4">
               {activeStop.desc}
             </p>
 

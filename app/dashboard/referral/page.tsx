@@ -12,6 +12,12 @@ import ShareReferralClient from "./ShareReferralClient";
 import { Suspense } from "react";
 
 import { generateUniqueReferralCode } from "@/lib/referralCode";
+import {
+  MAX_REFERRALS_PER_MONTH,
+  REFERRAL_FRIEND_LINE,
+  REFERRAL_REFERRER_LINE,
+  REWARD_CREDIT_LIMIT_LINE,
+} from "@/lib/rewardsRules";
 
 export const dynamic = "force-dynamic";
 
@@ -44,7 +50,7 @@ const page = async () => {
     <div className="flex flex-col gap-6">
       <RewardsReferrelHeader
         tittle="Referral Program"
-        description="Share your unique code with friends: you earn ₹100 and they get ₹100 off"
+        description={`Share your link. ${REFERRAL_FRIEND_LINE} ${REFERRAL_REFERRER_LINE}`}
       />
       <RewardReferrelOverview
         tittle="Total Referral Earnings"
@@ -76,7 +82,7 @@ const page = async () => {
                 </div>
                 <p className="font-medium">2. Friend Places Order</p>
                 <p className="text-sm text-gray-500">
-                  They get ₹100 off on their first order of ₹399 or more
+                  {REFERRAL_FRIEND_LINE}
                 </p>
               </div>
 
@@ -87,10 +93,13 @@ const page = async () => {
                 </div>
                 <p className="font-medium">3. Order Delivered, You Earn</p>
                 <p className="text-sm text-gray-500">
-                  You get ₹100 credit when their order is delivered (up to 5/month)
+                  {REFERRAL_REFERRER_LINE} Up to {MAX_REFERRALS_PER_MONTH} friends a month.
                 </p>
               </div>
             </div>
+            <p className="mt-6 text-center text-xs text-gray-500">
+              {REWARD_CREDIT_LIMIT_LINE}
+            </p>
           </CardContent>
         </Card>
 

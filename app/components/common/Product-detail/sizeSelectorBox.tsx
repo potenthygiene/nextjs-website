@@ -217,14 +217,14 @@ export default function SizeSelectorBox({
       {/* Title & Subtitle */}
       <div>
         <div className="flex items-center justify-between gap-2">
-          <h2 className="font-serif text-lg sm:text-xl font-bold text-[#1A150F]">
+          <h2 className="font-serif text-lg sm:text-xl font-bold text-ink">
             Mix Your Box (21 Pads)
           </h2>
           <span className="rounded-full bg-[#F3E6F0] px-3 py-1 text-xs font-bold text-[#7E4D77]">
             4 Free Liners Included
           </span>
         </div>
-        <p className="mt-1 text-xs font-medium text-gray-600">
+        <p className="mt-1 text-xs font-medium text-ink-muted">
           Default mix: 6 L + 9 XL + 6 XL+ pads. Adjust quantities to fit your flow.
         </p>
       </div>
@@ -232,7 +232,7 @@ export default function SizeSelectorBox({
       {/* Preset / Shortcut Buttons */}
       <div>
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-gray-600">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-ink-muted">
             Flow Shortcuts:
           </span>
         </div>
@@ -253,7 +253,7 @@ export default function SizeSelectorBox({
                 className={`cursor-pointer rounded-full border px-3 py-1.5 text-xs font-semibold transition active:scale-95 ${
                   isSelected
                     ? "border-[#9A5B90] bg-[#F3E6F0] text-[#7E4D77] font-bold shadow-xs"
-                    : "border-gray-300/80 bg-white text-gray-700 hover:border-[#9A5B90] hover:bg-[#F3E6F0] hover:text-[#7E4D77]"
+                    : "border-gray-300/80 bg-white text-ink-muted hover:border-[#9A5B90] hover:bg-[#F3E6F0] hover:text-[#7E4D77]"
                 }`}
               >
                 {sc.name === "Recommended" && (
@@ -286,16 +286,16 @@ export default function SizeSelectorBox({
               <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <span className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">
+                    <span className="font-serif text-base sm:text-lg font-bold text-ink">
                       {item.name}
                     </span>
                     {padSizeKey && (
-                      <span className="rounded bg-[#F3E6F0] px-1.5 py-0.5 text-[10px] font-bold text-[#7E4D77]">
+                      <span className="rounded bg-[#F3E6F0] px-1.5 py-0.5 text-[12px] font-bold text-[#7E4D77]">
                         {padSizeKey}
                       </span>
                     )}
                   </div>
-                  <p className="mt-0.5 text-xs text-gray-500 line-clamp-1">
+                  <p className="mt-0.5 text-xs text-ink-muted line-clamp-1">
                     {displayDetails}
                   </p>
                 </div>
@@ -306,13 +306,13 @@ export default function SizeSelectorBox({
                     type="button"
                     disabled={item.quantity <= 0}
                     onClick={() => updateQty(item.name, "dec")}
-                    className="grid h-8 w-8 place-items-center rounded-full border border-gray-300 bg-gray-50 text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30 cursor-pointer"
+                    className="grid h-8 w-8 place-items-center rounded-full border border-gray-300 bg-gray-50 text-ink-muted transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-30 cursor-pointer"
                     aria-label={`Decrease ${item.name}`}
                   >
                     <Minus size={14} />
                   </button>
 
-                  <span className="min-w-7 text-center font-bold text-[#1A150F] text-base">
+                  <span className="min-w-7 text-center font-bold text-ink text-base">
                     {item.quantity}
                   </span>
 
@@ -364,7 +364,7 @@ export default function SizeSelectorBox({
             className={`rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap ${
               isBoxComplete
                 ? "bg-emerald-600 text-white"
-                : "bg-gray-200 text-gray-800"
+                : "bg-gray-200 text-ink"
             }`}
           >
             {calculatedTotal} / {MIX_BOX_PAD_UNIT} pads
@@ -376,10 +376,10 @@ export default function SizeSelectorBox({
       {setBoxQuantity && (
         <div className="pt-2 border-t border-gray-200/80">
           <div className="mb-2 flex items-baseline justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-gray-700">
+            <span className="text-xs font-bold uppercase tracking-wider text-ink-muted">
               BOXES IN THIS ORDER
             </span>
-            <span className="text-[11px] font-semibold text-gray-500">
+            <span className="text-[12px] font-semibold text-ink-muted">
               Up to {maxBoxesAllowed} {maxBoxesAllowed === 1 ? "box" : "boxes"} per order
             </span>
           </div>
@@ -405,7 +405,7 @@ export default function SizeSelectorBox({
                       ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-50"
                       : isSelected
                         ? "border-[#9A5B90] bg-[#9A5B90] text-white shadow-xs"
-                        : "border-gray-200/80 bg-white text-[#1A150F] hover:border-[#9A5B90]"
+                        : "border-gray-200/80 bg-white text-ink hover:border-[#9A5B90]"
                   }`}
                 >
                   {num} {num === 1 ? "Box" : "Boxes"} ({num * 21} pads + {num * 4} liners)
@@ -415,7 +415,7 @@ export default function SizeSelectorBox({
           </div>
 
           {/* Need more note */}
-          <div className="mt-2.5 text-xs text-gray-500">
+          <div className="mt-2.5 text-xs text-ink-muted">
             Need more? Write to{" "}
             <a
               href="mailto:care@potenthygiene.com"
@@ -425,8 +425,8 @@ export default function SizeSelectorBox({
             </a>
           </div>
 
-          <div className="mt-3 rounded-xl border border-gray-200/80 bg-white/80 p-3 text-xs leading-relaxed text-gray-600">
-            <span className="font-bold text-[#1A150F]">Subscriptions:</span>{" "}
+          <div className="mt-3 rounded-xl border border-gray-200/80 bg-white/80 p-3 text-xs leading-relaxed text-ink-muted">
+            <span className="font-bold text-ink">Subscriptions:</span>{" "}
             Monthly and Cycle Sync: 1 box per delivery. Every 2 months: up to 2 boxes. The split stays fixed; to change it, cancel and start a new subscription.
           </div>
         </div>

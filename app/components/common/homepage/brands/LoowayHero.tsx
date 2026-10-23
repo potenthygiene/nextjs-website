@@ -101,17 +101,13 @@ export function LoowayHero({
           <div className="order-2 flex flex-col text-left lg:order-1 lg:col-span-6">
             {/* Kicker Badge */}
             <div>
-              <span className="mb-4 inline-block rounded-full border border-teal-100 bg-white/90 px-3.5 py-1 text-[10px] font-bold tracking-widest text-[#0B6E7D] uppercase shadow-2xs sm:text-xs">
+              <span className="mb-4 inline-block rounded-full border border-teal-100 bg-white/90 px-3.5 py-1 text-[11px] font-bold tracking-widest text-[#0B6E7D] uppercase shadow-2xs sm:text-xs">
                 LOOWAY BY POTENT HYGIENE
               </span>
             </div>
 
             <h1
               className="looway-hero-headline mb-3 text-[42px] leading-[42.84px] font-semibold sm:text-[56px] sm:leading-[57.12px] lg:text-[70px] lg:leading-[71.4px]"
-              style={{
-                fontFamily:
-                  '"Rupee", var(--font-fredoka), "Fredoka", "Fredoka Fallback", sans-serif',
-              }}
             >
               <span className="block text-[#0F6DA6]">Filthy seat?</span>
               <span className="block text-[#C02670]">Squat toilet?</span>
@@ -216,10 +212,10 @@ export function LoowayHero({
 
                 <div className="relative z-30 -mt-3.5 text-center sm:-mt-5">
                   <div className="inline-block rounded-xl border border-gray-100/80 bg-white px-2 py-1 shadow-md transition-transform group-hover/card:scale-105 sm:rounded-2xl sm:px-5 sm:py-2.5">
-                    <div className="text-[9px] font-bold tracking-tight text-gray-500 sm:text-xs">
+                    <div className="text-[12px] font-bold tracking-tight text-ink-muted sm:text-xs">
                       {seatCovers.label}
                     </div>
-                    <div className="mt-0.5 text-[11px] leading-tight font-extrabold text-[#1F1915] sm:text-base">
+                    <div className="mt-0.5 text-[12px] leading-tight font-extrabold text-[#1F1915] sm:text-base">
                       {seatCovers.price > 0
                         ? `from ₹${seatCovers.price}`
                         : "View product"}
@@ -271,7 +267,7 @@ export function LoowayHero({
 
                 <div className="relative z-30 -mt-4 text-center sm:-mt-6">
                   <div className="inline-block rounded-xl border border-pink-100 bg-white px-2.5 py-1 shadow-lg transition-transform group-hover/card:scale-105 sm:rounded-2xl sm:px-7 sm:py-3">
-                    <div className="text-[9.5px] font-bold tracking-tight text-gray-500 sm:text-sm">
+                    <div className="text-[12px] font-bold tracking-tight text-ink-muted sm:text-sm">
                       {funnel.label}
                     </div>
                     <div className="mt-0.5 text-xs leading-tight font-extrabold text-[#1F1915] sm:text-xl">
@@ -325,10 +321,10 @@ export function LoowayHero({
 
                 <div className="relative z-30 -mt-3.5 text-center sm:-mt-5">
                   <div className="inline-block rounded-xl border border-gray-100/80 bg-white px-2 py-1 shadow-md transition-transform group-hover/card:scale-105 sm:rounded-2xl sm:px-5 sm:py-2.5">
-                    <div className="text-[9px] font-bold tracking-tight text-gray-500 sm:text-xs">
+                    <div className="text-[12px] font-bold tracking-tight text-ink-muted sm:text-xs">
                       {pukeBags.label}
                     </div>
-                    <div className="mt-0.5 text-[11px] leading-tight font-extrabold text-[#1F1915] sm:text-base">
+                    <div className="mt-0.5 text-[12px] leading-tight font-extrabold text-[#1F1915] sm:text-base">
                       {pukeBags.price > 0
                         ? `from ₹${pukeBags.price}`
                         : "View product"}

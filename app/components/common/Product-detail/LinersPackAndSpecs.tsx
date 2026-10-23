@@ -28,7 +28,7 @@ export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: 
         <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#7E4D77]">
           THE DETAILS
         </span>
-        <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#1A150F]">
+        <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-ink">
           What&apos;s in the pack &amp; specs
         </h2>
       </div>
@@ -100,8 +100,8 @@ export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: 
               key={idx}
               className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 gap-1 sm:gap-4 hover:bg-[#FAF6F8]/50 transition-colors"
             >
-              <span className="font-bold text-[#1A150F] w-44 shrink-0">{item.k}</span>
-              <span className="text-gray-600 sm:text-right font-medium">{item.v}</span>
+              <span className="font-bold text-ink w-44 shrink-0">{item.k}</span>
+              <span className="text-ink-muted sm:text-right font-medium">{item.v}</span>
             </div>
           ))}
         </div>
@@ -118,40 +118,40 @@ export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: 
 
           <div className="flex flex-wrap items-center gap-4 sm:gap-8">
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">{count}</strong>
-              <span className="text-gray-700">Daily Liners</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">{count}</strong>
+              <span className="text-ink-muted">Daily Liners</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">190mm</strong>
-              <span className="text-gray-700">length</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">190mm</strong>
+              <span className="text-ink-muted">length</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">~1mm</strong>
-              <span className="text-gray-700">ultra-thin profile</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">~1mm</strong>
+              <span className="text-ink-muted">ultra-thin profile</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">100%</strong>
-              <span className="text-gray-700">Individually wrapped</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">100%</strong>
+              <span className="text-ink-muted">Individually wrapped</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer Specs: Free from & Care Notes */}
-      <div className="mt-6 space-y-3 border-t border-gray-100 pt-5 text-xs text-gray-600 sm:text-sm">
+      <div className="mt-6 space-y-3 border-t border-gray-100 pt-5 text-xs text-ink-muted sm:text-sm">
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-          <span className="w-28 flex-none font-bold text-[#1A150F]">Free from</span>
-          <span className="text-gray-700">
+          <span className="w-28 flex-none font-bold text-ink">Free from</span>
+          <span className="text-ink-muted">
             Chlorine bleach, parabens, added fragrance, dyes &amp; synthetic plastic top layers.
           </span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-          <span className="w-28 flex-none font-bold text-[#1A150F]">Care</span>
-          <span className="leading-relaxed text-gray-700">
+          <span className="w-28 flex-none font-bold text-ink">Care</span>
+          <span className="leading-relaxed text-ink-muted">
             Change every 3 to 4 hours or whenever damp; roll, wrap in its silent pouch and bin it. Never flush. Not designed for period flow: use Ovy organic pads or a menstrual cup for period flow.
           </span>
         </div>

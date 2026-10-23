@@ -239,14 +239,14 @@ export const EmailVerificationClient = () => {
                   Email Verified Successfully
                 </h3>
 
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-ink-muted">
                   Your email verification is successfully completed.
                 </p>
 
                 {/* Welcome offer for new customers (const/coupons.ts) */}
                 <div className="mt-4 rounded-xl border border-dashed border-[#9FD3D6] bg-[#F3FAFB] px-3 py-2.5 text-left">
                   <p className="text-[11px] font-bold uppercase tracking-wider text-[#016271]">Your welcome gift</p>
-                  <p className="mt-0.5 text-sm text-gray-700">
+                  <p className="mt-0.5 text-sm text-ink-muted">
                     Credit in your Rewards, plus <strong className="font-mono">FIRSTCARE15</strong> for 15% off your first order of ₹399 or more. On a bigger bag, add a Stock Up coupon on top.
                   </p>
                 </div>

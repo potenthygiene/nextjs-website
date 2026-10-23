@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { notFound } from "next/navigation";
 import Product from "../../../components/common/Product-detail/product";
 import TrustBadges from "../../../components/common/Product-detail/trustbadges";
 import AboutProduct from "../../../components/common/Product-detail/aboutproduct";
@@ -23,7 +24,7 @@ import {
   ovyTeen,
   PRODUCTS_STATIC_CONTENT,
 } from "@/const/productsContent";
-import { productMetadata } from "@/const/seo";
+import { PRODUCT_SEO, productMetadata } from "@/const/seo";
 import { resolveCanonicalSlug } from "@/lib/productSlugs";
 import { getProductOnce } from "@/lib/productCache";
 
@@ -32,7 +33,13 @@ export const revalidate = 0;
 
 export async function generateMetadata({ params }: any) {
   const { slug } = await params;
-  return productMetadata(resolveCanonicalSlug(slug));
+  const canonicalSlug = resolveCanonicalSlug(slug);
+  // Unknown product: answer with a real 404 (search engines get the metadata
+  // before the page streams, so this sets the status for them).
+  if (!PRODUCT_SEO[canonicalSlug] && !(await getProductOnce(canonicalSlug))) {
+    notFound();
+  }
+  return productMetadata(canonicalSlug);
 }
 
 export default async function Page({ params }: any) {
@@ -126,7 +133,7 @@ export default async function Page({ params }: any) {
   }
 
   if (!product) {
-    return <div className="py-20 text-center">Product not found</div>;
+    notFound();
   }
 
   const themeColor =
@@ -146,6 +153,7 @@ export default async function Page({ params }: any) {
           // variants={product}
           productInfo={product}
           themeColor={themeColor}
+          reviews={reviewWithMedia}
         />
         <TrustBadges themeColor={themeColor} />
         <AboutProduct variant={product} themeColor={themeColor} />

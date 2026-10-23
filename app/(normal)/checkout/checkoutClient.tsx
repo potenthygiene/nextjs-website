@@ -91,8 +91,8 @@ export default function CheckoutClient({ address }: any) {
           <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#E2F4F7] text-[#016271]">
             <ShoppingBag className="h-10 w-10" />
           </div>
-          <h1 className="mb-2 text-2xl font-bold text-[#1A150F]">Your bag is empty</h1>
-          <p className="mb-6 max-w-sm text-sm text-gray-500">
+          <h1 className="mb-2 text-2xl font-bold text-ink">Your bag is empty</h1>
+          <p className="mb-6 max-w-sm text-sm text-ink-muted">
             You don’t have any items in your bag yet. Please add items to your bag before proceeding to checkout.
           </p>
           <Link
@@ -113,8 +113,8 @@ export default function CheckoutClient({ address }: any) {
           <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#E2F4F7] text-[#016271]">
             <ShoppingBag className="h-10 w-10" />
           </div>
-          <h1 className="mb-2 text-2xl font-bold text-[#1A150F]">Your bag is empty</h1>
-          <p className="mb-6 max-w-sm text-sm text-gray-500">
+          <h1 className="mb-2 text-2xl font-bold text-ink">Your bag is empty</h1>
+          <p className="mb-6 max-w-sm text-sm text-ink-muted">
             No active subscription item found. Explore our toxin-free period & hygiene care essentials.
           </p>
           <Link
@@ -135,8 +135,8 @@ export default function CheckoutClient({ address }: any) {
           <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-[#E2F4F7] text-[#016271]">
             <ShoppingBag className="h-10 w-10" />
           </div>
-          <h1 className="mb-2 text-2xl font-bold text-[#1A150F]">Your bag is empty</h1>
-          <p className="mb-6 max-w-sm text-sm text-gray-500">
+          <h1 className="mb-2 text-2xl font-bold text-ink">Your bag is empty</h1>
+          <p className="mb-6 max-w-sm text-sm text-ink-muted">
             No item selected for checkout. Explore our toxin-free period &amp; hygiene care essentials.
           </p>
           <Link

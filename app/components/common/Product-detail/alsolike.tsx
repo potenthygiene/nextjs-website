@@ -12,7 +12,7 @@ export default function RelatedProducts({ products, themeColor }: any) {
     return (
       <section className="mx-auto w-full pb-16">
         <div className="mb-8 py-4">
-          <h2 className="mb-8 text-2xl font-semibold text-gray-900">
+          <h2 className="mb-8 text-2xl font-semibold text-ink">
             You May Also Like
           </h2>
 
@@ -31,7 +31,7 @@ export default function RelatedProducts({ products, themeColor }: any) {
                   <button className="absolute top-2 left-2 rounded-full bg-white p-1 shadow">
                     <Heart
                       style={{ color: themeColor.darkColor }}
-                      className="h-4 w-4 text-gray-500"
+                      className="h-4 w-4 text-ink-muted"
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = themeColor;
                       }}
@@ -72,7 +72,7 @@ export default function RelatedProducts({ products, themeColor }: any) {
 
                   <Link href={product.slug}>
                     {/* Title */}
-                    <h3 className="mt-3 text-sm leading-snug font-medium text-gray-900">
+                    <h3 className="mt-3 text-sm leading-snug font-medium text-ink">
                       {product.name}
                     </h3>
                   </Link>
@@ -84,13 +84,13 @@ export default function RelatedProducts({ products, themeColor }: any) {
                       .map((_, i) => (
                         <Star key={i} className="h-4 w-4 fill-yellow-400" />
                       ))}
-                    <span className="ml-1 text-xs text-gray-500">
+                    <span className="ml-1 text-xs text-ink-muted">
                       ({product.reviewCount})
                     </span>
                   </div>
 
                   {startingPrice ? (
-                    <p className="mt-3 text-sm font-semibold text-gray-700">
+                    <p className="mt-3 text-sm font-semibold text-ink-muted">
                       {startingPrice}
                     </p>
                   ) : null}

@@ -6,126 +6,14 @@ import { Star, CheckCircle2, ChevronLeft, ChevronRight, Check } from "lucide-rea
 import { WriteReviewModal } from "../dashboard-review/WriteReviewModal";
 import ProductReviews from "./productreview";
 import { lowayProductDetailsPage } from "@/const/globalconst";
+import { getReviewRating, getReviewStats } from "@/lib/reviewStats";
 
-type Review = {
-  id: number;
-  name: string;
-  city: string;
-  group: string;
-  stage: string;
-  stars: number;
-  quote: string;
-};
-
-const REVIEWS_DATA: Review[] = [
-  {
-    id: 1,
-    name: "Meena Iyer",
-    city: "Chennai",
-    group: "seniors",
-    stage: "Senior traveller",
-    stars: 5,
-    quote:
-      "At 68 my knees can't take squatting and I won't sit on a public seat. This gave me back the confidence to travel with my daughters. Practising once at home first made it easy.",
-  },
-  {
-    id: 2,
-    name: "Kavya Rawat",
-    city: "Dehradun",
-    group: "travellers",
-    stage: "Trekker",
-    stars: 4,
-    quote:
-      "Took it on a four-day trek. No more wandering off looking for a private bush. Takes a couple of goes to trust the seal, so definitely practise at home first, but then it's brilliant.",
-  },
-  {
-    id: 3,
-    name: "Sneha Kulkarni",
-    city: "Bengaluru",
-    group: "travellers",
-    stage: "Daily commuter",
-    stars: 5,
-    quote:
-      "Our office washroom at peak hours is grim. Now I stand, go, and I'm back at my desk without a second thought. Slips into my handbag pouch and no one's any wiser.",
-  },
-  {
-    id: 4,
-    name: "Lakshmi Menon",
-    city: "Kochi",
-    group: "joint",
-    stage: "Arthritis",
-    stars: 5,
-    quote:
-      "My knees won't let me squat any more and I refuse to sit on public toilets. This has genuinely given me my freedom back. I stand, I go, and I've stopped planning my whole day around finding a clean bathroom.",
-  },
-  {
-    id: 5,
-    name: "Divya Nair",
-    city: "Ahmedabad",
-    group: "mums",
-    stage: "Mum-to-be",
-    stars: 5,
-    quote:
-      "Third-trimester travel and a tiny bladder do not mix. This has been the one thing that made long drives bearable. Soft, comfortable, and completely safe to use externally.",
-  },
-  {
-    id: 6,
-    name: "Ritu Sharma",
-    city: "Delhi",
-    group: "travellers",
-    stage: "Festival-goer",
-    stars: 4,
-    quote:
-      "Sunburn festival, thirty women in the loo queue, and I just walked past all of them. Total game-changer. Took me one practice run at home to get the angle right, worth it.",
-  },
-  {
-    id: 7,
-    name: "Fatima Sheikh",
-    city: "Hyderabad",
-    group: "seniors",
-    stage: "Caring for mum",
-    stars: 5,
-    quote:
-      "I bought it for my mother who can't lower onto low toilets any more. It's given her independence on outings again; she calls it her little freedom. Reusable and easy to wash.",
-  },
-  {
-    id: 8,
-    name: "Nisha Reddy",
-    city: "Hyderabad",
-    group: "travellers",
-    stage: "Road-tripper",
-    stars: 5,
-    quote:
-      "I was sceptical it wouldn't leak, but after two tries in the bathroom I was completely sold. Now it lives in my car door. Every woman who drives long distances should own one.",
-  },
-  {
-    id: 9,
-    name: "Ananya Bose",
-    city: "Kolkata",
-    group: "travellers",
-    stage: "Still practising",
-    stars: 3,
-    quote:
-      "Honest review: it took me four or five goes at home before I stopped leaking a little, so there's a real learning curve, so practise before you rely on it. Once the angle clicks it does work, but three stars because it isn't foolproof on day one.",
-  },
-];
-
+// Only real, admin-approved reviews from the database are shown here.
+// Never add hardcoded reviews, ratings, counts or star breakdowns.
 const FILTERS = [
   { id: "all", label: "All reviews" },
   { id: "s5", label: "5★" },
   { id: "s4", label: "4★" },
-  { id: "travellers", label: "Travellers" },
-  { id: "joint", label: "Joint pain" },
-  { id: "mums", label: "Mums-to-be" },
-  { id: "seniors", label: "Seniors" },
-];
-
-const STAR_BREAKDOWN = [
-  { stars: 5, count: 104, pct: "86%" },
-  { stars: 4, count: 12, pct: "10%" },
-  { stars: 3, count: 3, pct: "2.5%" },
-  { stars: 2, count: 1, pct: "1%" },
-  { stars: 1, count: 1, pct: "1%" },
 ];
 
 export default function FunnelReviewsSection({
@@ -138,25 +26,34 @@ export default function FunnelReviewsSection({
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const combinedReviews = useMemo(() => {
-    const fromDb = (submittedReviews || []).map((r: any) => ({
-      id: `db-${r.id}`,
-      name: r.name || "Verified Buyer",
-      city: "Verified Purchase",
-      group: "all",
-      stage: "Verified Buyer",
-      stars: Number(r.rating) || 5,
-      quote: r.message || "",
-      media: r.media || [],
-    }));
-    return [...fromDb, ...REVIEWS_DATA];
-  }, [submittedReviews]);
+  const stats = useMemo(() => getReviewStats(submittedReviews), [submittedReviews]);
+
+  const combinedReviews = useMemo(
+    () =>
+      (submittedReviews || [])
+        .filter((r: any) => getReviewRating(r) !== null)
+        .map((r: any) => ({
+          id: `db-${r.id}`,
+          name: r.name || "Customer",
+          city: r.createdAt
+            ? new Date(r.createdAt).toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })
+            : "",
+          stage: "Customer review",
+          stars: getReviewRating(r) as number,
+          quote: r.message || "",
+          media: r.media || [],
+        })),
+    [submittedReviews],
+  );
 
   const filteredReviews = combinedReviews.filter((rev: any) => {
     if (activeFilter === "all") return true;
-    if (activeFilter === "s5") return rev.stars === 5;
-    if (activeFilter === "s4") return rev.stars === 4;
-    return rev.group === activeFilter;
+    const m = /^s([1-5])$/.exec(activeFilter);
+    return m ? rev.stars === Number(m[1]) : true;
   });
 
   const scrollLeft = () => {
@@ -184,6 +81,12 @@ export default function FunnelReviewsSection({
           </h2>
         </div>
 
+        {stats.count === 0 ? (
+          <p className="text-sm font-medium opacity-70">
+            No reviews yet. Be the first to share your experience!
+          </p>
+        ) : (
+        <>
         {/* Rating Breakdown Top Summary Card */}
         <div className="rounded-2xl sm:rounded-3xl border border-[#f8dce8] bg-[#FAF1E6]/50 p-5 sm:p-8 md:p-10 shadow-2xs mb-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
@@ -192,7 +95,7 @@ export default function FunnelReviewsSection({
               <div className="flex items-center justify-between md:justify-start md:gap-4">
                 <div className="flex items-baseline gap-2">
                   <span className="font-serif text-5xl sm:text-6xl font-extrabold text-[#5A0E30]">
-                    4.8
+                    {stats.averageLabel}
                   </span>
                   <span className="text-lg sm:text-xl font-semibold text-[#2A1620]/50">
                     / 5
@@ -203,19 +106,24 @@ export default function FunnelReviewsSection({
                   {/* 5 Stars */}
                   <div className="flex items-center gap-1 text-[#F4C430] my-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-[#F4C430]" />
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                          i < Math.round(stats.average) ? "fill-[#F4C430]" : "fill-gray-200 text-gray-200"
+                        }`}
+                      />
                     ))}
                   </div>
 
                   <div className="text-xs font-semibold text-[#2A1620]/70">
-                    <strong className="text-[#5A0E30] font-bold">121</strong> verified reviews
+                    <strong className="text-[#5A0E30] font-bold">{stats.count}</strong> {stats.count === 1 ? "review" : "reviews"}
                   </div>
                 </div>
               </div>
 
               <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#15803D]">
                 <CheckCircle2 className="h-4 w-4 text-[#15803D]" />
-                <span>Every review from a verified purchase</span>
+                <span>Every review is checked before it goes live</span>
               </div>
 
               {/* Write a review button hidden on PDP as requested */}
@@ -234,12 +142,10 @@ export default function FunnelReviewsSection({
               </div>
 
               <div className="space-y-2 text-xs font-semibold">
-                {STAR_BREAKDOWN.map((row) => (
+                {stats.breakdown.map((row) => (
                   <button
                     key={row.stars}
-                    onClick={() =>
-                      setActiveFilter(row.stars === 5 ? "s5" : row.stars === 4 ? "s4" : "all")
-                    }
+                    onClick={() => setActiveFilter(`s${row.stars}`)}
                     className="flex w-full items-center gap-3 group text-left rounded-lg p-1 transition-colors hover:bg-white/60 cursor-pointer"
                   >
                     <span className="w-6 font-bold text-[#5A0E30] shrink-0">
@@ -248,7 +154,7 @@ export default function FunnelReviewsSection({
                     <div className="h-3 flex-1 rounded-full bg-[#f8dce8]/60 overflow-hidden">
                       <div
                         className="h-full rounded-full bg-[#F4C430] transition-all duration-500"
-                        style={{ width: row.pct }}
+                        style={{ width: `${row.percent}%` }}
                       />
                     </div>
                     <span className="w-8 text-right text-[#2A1620]/70 font-bold shrink-0">
@@ -351,7 +257,7 @@ export default function FunnelReviewsSection({
                       {rev.stage}
                     </span>
                     <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#15803D]">
-                      <Check className="h-3 w-3 stroke-[3]" /> Verified purchase
+                      <Check className="h-3 w-3 stroke-[3]" /> Checked review
                     </span>
                   </div>
                 </div>
@@ -359,6 +265,9 @@ export default function FunnelReviewsSection({
             ))}
           </div>
         </div>
+
+        </>
+        )}
 
         {/* Customer Reviews from DB */}
         {submittedReviews && submittedReviews.length > 0 && (

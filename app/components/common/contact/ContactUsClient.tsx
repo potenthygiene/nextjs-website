@@ -34,8 +34,8 @@ const CONTACT_INFO = [
     href: "tel:+916375881514",
     btnText: "Call Now",
     badge: "Direct Support",
-    accentBg: "bg-emerald-50 border-emerald-200 text-emerald-800",
-    iconBg: "bg-[#0E5C3A] text-white",
+    accentBg: "bg-[#E6F4F6] border-emerald-200 text-emerald-800",
+    iconBg: "bg-teal text-white",
   },
   {
     id: "whatsapp",
@@ -149,7 +149,7 @@ export default function ContactUsClient() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFCF9] text-[#17271E]">
+    <div className="min-h-screen bg-[#FDFCF9] text-ink-muted">
       {/* HERO BANNER SECTION */}
       <section className="relative overflow-hidden bg-[#075965] py-14 sm:py-20 text-white">
         {/* Decorative background glows */}
@@ -162,7 +162,7 @@ export default function ContactUsClient() {
             <span>We&apos;re Here For You</span>
           </div>
 
-          <h1 className="mt-4 font-serif text-3xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-white">
+          <h1 className="mt-4 font-serif text-3xl font-bold tracking-tight sm:text-5xl md:text-6xl text-white">
             Get in Touch with Potent Hygiene
           </h1>
 
@@ -180,7 +180,7 @@ export default function ContactUsClient() {
             return (
               <div
                 key={item.id}
-                className="group relative flex flex-col justify-between rounded-3xl border border-[#E4DED0] bg-white p-5 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#0E5C3A]/30"
+                className="group relative flex flex-col justify-between rounded-3xl border border-[#E4DED0] bg-white p-5 sm:p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-teal/30"
               >
                 <div>
                   <div className="flex items-center justify-between">
@@ -190,19 +190,19 @@ export default function ContactUsClient() {
                       <Icon className="h-6 w-6" />
                     </div>
                     <span
-                      className={`rounded-full border px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider uppercase ${item.accentBg}`}
+                      className={`rounded-full border px-2.5 py-0.5 text-[11px] font-extrabold tracking-wider uppercase ${item.accentBg}`}
                     >
                       {item.badge}
                     </span>
                   </div>
 
-                  <h3 className="mt-4 text-base font-bold text-[#0A4A2E]">
+                  <h3 className="mt-4 text-base font-bold text-ink">
                     {item.title}
                   </h3>
-                  <p className="mt-1 text-xs font-semibold text-[#0E5C3A] break-words">
+                  <p className="mt-1 text-xs font-semibold text-teal break-words">
                     {item.value}
                   </p>
-                  <p className="mt-1 text-[11px] text-[#17271E]/65 leading-tight">
+                  <p className="mt-1 text-[12px] text-ink-muted leading-tight">
                     {item.subtitle}
                   </p>
                 </div>
@@ -212,7 +212,7 @@ export default function ContactUsClient() {
                     href={item.href}
                     target={item.isExternal ? "_blank" : "_self"}
                     rel={item.isExternal ? "noreferrer" : undefined}
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#F1F7F3] px-3.5 py-2 text-xs font-bold text-[#0E5C3A] transition-all group-hover:bg-[#075965] group-hover:text-white"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#E6F4F6] px-3.5 py-2 text-xs font-bold text-teal transition-all group-hover:bg-[#075965] group-hover:text-white"
                   >
                     <span>{item.btnText}</span>
                     <ArrowRight className="h-3.5 w-3.5" />
@@ -234,28 +234,28 @@ export default function ContactUsClient() {
                 <HeartHandshake className="h-5 w-5" />
               </div>
               <div>
-                <h2 className="font-serif text-2xl font-extrabold text-[#0A4A2E] sm:text-3xl">
+                <h2 className="font-serif text-2xl font-bold text-ink sm:text-3xl">
                   Send Us a Message
                 </h2>
-                <p className="text-xs text-[#17271E]/70 sm:text-sm font-medium">
+                <p className="text-xs text-ink-muted sm:text-sm font-medium">
                   Fill out the form below and our customer care team will get back to you.
                 </p>
               </div>
             </div>
 
             {isSubmitted ? (
-              <div className="mt-8 rounded-2xl bg-[#F1F7F3] p-6 text-center border border-[#0E5C3A]/20">
-                <CheckCircle2 className="mx-auto h-12 w-12 text-[#0E5C3A]" />
-                <h3 className="mt-3 text-lg font-extrabold text-[#0A4A2E]">
+              <div className="mt-8 rounded-2xl bg-[#E6F4F6] p-6 text-center border border-teal/20">
+                <CheckCircle2 className="mx-auto h-12 w-12 text-teal" />
+                <h3 className="mt-3 text-lg font-bold text-ink">
                   Message Received!
                 </h3>
-                <p className="mt-2 text-xs sm:text-sm text-[#17271E]/80 leading-relaxed max-w-md mx-auto">
+                <p className="mt-2 text-xs sm:text-sm text-ink-muted leading-relaxed max-w-md mx-auto">
                   Thank you for reaching out to Potent Hygiene. We have received your query and will reply via email/phone shortly.
                 </p>
                 <button
                   type="button"
                   onClick={() => setIsSubmitted(false)}
-                  className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#075965] px-5 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-[#0A4A2E]"
+                  className="mt-5 inline-flex items-center gap-2 rounded-xl bg-[#075965] px-5 py-2.5 text-xs font-bold text-white shadow-xs transition-all hover:bg-teal-deep"
                 >
                   Send Another Message
                 </button>
@@ -265,7 +265,7 @@ export default function ContactUsClient() {
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {/* Name */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#0A4A2E] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
                       Your Full Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -274,13 +274,13 @@ export default function ContactUsClient() {
                       placeholder="e.g. Ananya Sharma"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-[#17271E] outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15"
+                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-ink-muted outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15"
                     />
                   </div>
 
                   {/* Email */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#0A4A2E] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
                       Email Address <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -289,7 +289,7 @@ export default function ContactUsClient() {
                       placeholder="e.g. ananya@gmail.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-[#17271E] outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15"
+                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-ink-muted outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15"
                     />
                   </div>
                 </div>
@@ -297,7 +297,7 @@ export default function ContactUsClient() {
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   {/* Phone */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#0A4A2E] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
                       Phone Number (Optional)
                     </label>
                     <input
@@ -305,19 +305,19 @@ export default function ContactUsClient() {
                       placeholder="e.g. +91 98765 43210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-[#17271E] outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15"
+                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-ink-muted outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15"
                     />
                   </div>
 
                   {/* Topic / Subject */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#0A4A2E] mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
                       Inquiry Topic
                     </label>
                     <select
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-[#17271E] outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15 cursor-pointer"
+                      className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-ink-muted outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15 cursor-pointer"
                     >
                       <option value="Product Inquiry">Product Inquiry (Ovy / Looway)</option>
                       <option value="Order Tracking">Order & Delivery Status</option>
@@ -330,7 +330,7 @@ export default function ContactUsClient() {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#0A4A2E] mb-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-ink mb-1.5">
                     Your Message <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -339,7 +339,7 @@ export default function ContactUsClient() {
                     placeholder="Tell us how we can help you..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-[#17271E] outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15 resize-none"
+                    className="w-full rounded-xl border border-[#E4DED0] bg-[#FAF8F3]/50 px-4 py-3 text-sm text-ink-muted outline-none transition focus:border-[#075965] focus:bg-white focus:ring-2 focus:ring-[#075965]/15 resize-none"
                   />
                 </div>
 
@@ -347,7 +347,7 @@ export default function ContactUsClient() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#075965] px-6 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:bg-[#0A4A2E] active:scale-[0.99] disabled:opacity-60 cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#075965] px-6 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:bg-teal-deep active:scale-[0.99] disabled:opacity-60 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <span>Sending Message...</span>
@@ -359,8 +359,8 @@ export default function ContactUsClient() {
                   )}
                 </button>
 
-                <div className="flex items-center justify-center gap-2 pt-2 text-[11px] font-semibold text-[#17271E]/60">
-                  <ShieldCheck className="h-4 w-4 text-[#0E5C3A]" />
+                <div className="flex items-center justify-center gap-2 pt-2 text-[12px] font-semibold text-ink-muted">
+                  <ShieldCheck className="h-4 w-4 text-teal" />
                   <span>🔒 100% Privacy Protected • Your information is never shared</span>
                 </div>
               </form>
@@ -381,12 +381,12 @@ export default function ContactUsClient() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#075965]/90 via-[#075965]/30 to-transparent" />
                 <div className="absolute top-4 left-4">
-                  <span className="rounded-full bg-white/90 backdrop-blur-md px-3 py-1 text-[11px] font-extrabold text-[#075965] shadow-xs">
+                  <span className="rounded-full bg-white/90 backdrop-blur-md px-3 py-1 text-[12px] font-extrabold text-[#075965] shadow-xs">
                     ✦ Made in Jaipur, India
                   </span>
                 </div>
                 <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <p className="font-serif text-lg font-extrabold leading-snug sm:text-xl">
+                  <p className="font-serif text-lg font-bold leading-snug sm:text-xl">
                     &ldquo;Built for Indian bodies, Indian toilets &amp; Indian journeys.&rdquo;
                   </p>
                   <p className="mt-1 text-xs text-emerald-100/90 font-medium">
@@ -398,58 +398,58 @@ export default function ContactUsClient() {
 
             {/* QUICK ACTIONS & HELPFUL LINKS */}
             <div className="rounded-3xl border border-[#E4DED0] bg-[#FAF8F3] p-6 space-y-4">
-              <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0E5C3A] flex items-center gap-2">
-                <Heart className="h-4 w-4 text-[#0E5C3A]" />
+              <h3 className="text-xs font-bold uppercase tracking-wider text-teal flex items-center gap-2">
+                <Heart className="h-4 w-4 text-teal" />
                 <span>Quick Self-Service Links</span>
               </h3>
 
               <div className="space-y-2.5">
                 <Link
                   href="/quiz"
-                  className="flex items-center justify-between rounded-2xl bg-white p-3.5 border border-[#E4DED0]/80 transition-all hover:border-[#0E5C3A] hover:shadow-xs group"
+                  className="flex items-center justify-between rounded-2xl bg-white p-3.5 border border-[#E4DED0]/80 transition-all hover:border-teal hover:shadow-xs group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-50 text-[#075965]">
                       <Heart className="h-4 w-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-[#0A4A2E]">Find What I Need Quiz</div>
-                      <div className="text-[10.5px] text-[#17271E]/65">Take 1-min test to match products</div>
+                      <div className="text-xs font-bold text-ink">Find What I Need Quiz</div>
+                      <div className="text-[12px] text-ink-muted">Take 1-min test to match products</div>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-[#0E5C3A] transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 text-teal transition-transform group-hover:translate-x-1" />
                 </Link>
 
                 <Link
                   href="/faq"
-                  className="flex items-center justify-between rounded-2xl bg-white p-3.5 border border-[#E4DED0]/80 transition-all hover:border-[#0E5C3A] hover:shadow-xs group"
+                  className="flex items-center justify-between rounded-2xl bg-white p-3.5 border border-[#E4DED0]/80 transition-all hover:border-teal hover:shadow-xs group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 text-[#0E5C3A]">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#E6F4F6] text-teal">
                       <HelpCircle className="h-4 w-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-[#0A4A2E]">Frequently Asked Questions</div>
-                      <div className="text-[10.5px] text-[#17271E]/65">Instant answers to top queries</div>
+                      <div className="text-xs font-bold text-ink">Frequently Asked Questions</div>
+                      <div className="text-[12px] text-ink-muted">Instant answers to top queries</div>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-[#0E5C3A] transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 text-teal transition-transform group-hover:translate-x-1" />
                 </Link>
 
                 <Link
                   href="/shop"
-                  className="flex items-center justify-between rounded-2xl bg-white p-3.5 border border-[#E4DED0]/80 transition-all hover:border-[#0E5C3A] hover:shadow-xs group"
+                  className="flex items-center justify-between rounded-2xl bg-white p-3.5 border border-[#E4DED0]/80 transition-all hover:border-teal hover:shadow-xs group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 text-[#D97706]">
                       <PackageCheck className="h-4 w-4" />
                     </div>
                     <div>
-                      <div className="text-xs font-bold text-[#0A4A2E]">Explore Full Catalog</div>
-                      <div className="text-[10.5px] text-[#17271E]/65">Browse Ovy &amp; Looway ranges</div>
+                      <div className="text-xs font-bold text-ink">Explore Full Catalog</div>
+                      <div className="text-[12px] text-ink-muted">Browse Ovy &amp; Looway ranges</div>
                     </div>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-[#0E5C3A] transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 text-teal transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
             </div>
@@ -461,13 +461,13 @@ export default function ContactUsClient() {
       <section className="border-t border-[#E4DED0] bg-white py-12 sm:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-8">
           <div className="text-center mb-10">
-            <span className="rounded-full bg-[#F1F7F3] px-3.5 py-1 text-xs font-bold text-[#0E5C3A] border border-[#0E5C3A]/20">
+            <span className="rounded-full bg-[#E6F4F6] px-3.5 py-1 text-xs font-bold text-teal border border-teal/20">
               Got Questions?
             </span>
-            <h2 className="mt-3 font-serif text-2xl font-extrabold text-[#0A4A2E] sm:text-4xl">
+            <h2 className="mt-3 font-serif text-2xl font-bold text-ink sm:text-4xl">
               Frequently Asked Questions
             </h2>
-            <p className="mt-2 text-xs sm:text-sm text-[#17271E]/70 font-medium">
+            <p className="mt-2 text-xs sm:text-sm text-ink-muted font-medium">
               Quick answers to the most common inquiries from our customers.
             </p>
           </div>
@@ -483,18 +483,18 @@ export default function ContactUsClient() {
                   <button
                     type="button"
                     onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                    className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-xs sm:text-sm font-bold text-[#0A4A2E] cursor-pointer"
+                    className="flex w-full items-center justify-between p-4 sm:p-5 text-left text-xs sm:text-sm font-bold text-ink cursor-pointer"
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
-                      className={`h-4 w-4 text-[#0E5C3A] shrink-0 transition-transform duration-300 ${
+                      className={`h-4 w-4 text-teal shrink-0 transition-transform duration-300 ${
                         isOpen ? "rotate-180" : ""
                       }`}
                     />
                   </button>
 
                   {isOpen && (
-                    <div className="px-4 pb-5 pt-0 text-xs sm:text-sm text-[#17271E]/75 leading-relaxed font-medium border-t border-[#E4DED0]/50 pt-3">
+                    <div className="px-4 pb-5 pt-0 text-xs sm:text-sm text-ink-muted leading-relaxed font-medium border-t border-[#E4DED0]/50 pt-3">
                       {faq.answer}
                     </div>
                   )}

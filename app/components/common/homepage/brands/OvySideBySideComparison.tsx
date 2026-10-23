@@ -75,7 +75,7 @@ export function OvySideBySideComparison() {
               key={item.featureKey}
               className="bg-white rounded-2xl p-4 border border-gray-150 shadow-2xs"
             >
-              <div className="text-[10px] font-bold tracking-wider text-gray-500 uppercase mb-2">
+              <div className="text-[11px] font-bold tracking-wider text-ink-muted uppercase mb-2">
                 {item.featureTitle}
               </div>
 
@@ -91,10 +91,10 @@ export function OvySideBySideComparison() {
 
               {/* Usual Pack Row */}
               <div>
-                <div className="text-[10px] font-bold text-[#602E55] uppercase tracking-wider mb-0.5">
+                <div className="text-[11px] font-bold text-[#602E55] uppercase tracking-wider mb-0.5">
                   THE USUAL PACK
                 </div>
-                <div className="text-xs text-gray-500 leading-snug">
+                <div className="text-xs text-ink-muted leading-snug">
                   {item.usualValue}
                 </div>
               </div>
@@ -112,7 +112,7 @@ export function OvySideBySideComparison() {
           <div className="col-span-7 bg-white/70 rounded-3xl p-4 sm:p-6 border border-gray-200/60 overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm">
               <thead>
-                <tr className="border-b border-gray-100 text-gray-400 uppercase text-[10px] font-bold tracking-wider">
+                <tr className="border-b border-gray-100 text-gray-400 uppercase text-[11px] font-bold tracking-wider">
                   <th className="py-3 px-2 w-1/4"></th>
                   <th className="py-3 px-3 text-[#602E55] bg-purple-50/70 rounded-t-xl w-5/12 font-extrabold">
                     OVY
@@ -133,7 +133,7 @@ export function OvySideBySideComparison() {
                     >
                       {item.ovyValue}
                     </td>
-                    <td className="py-4 px-3 text-gray-500 align-top leading-snug">
+                    <td className="py-4 px-3 text-ink-muted align-top leading-snug">
                       {item.usualValue}
                     </td>
                   </tr>

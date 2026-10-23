@@ -6,17 +6,17 @@ const AboutPage = () => {
     <section className="">
 
       <div className=" container py-12 xl:py-16 text-center">
-        <h2 className="text-2xl sm:text-3xl xl:text-4xl font-semibold text-gray-900 mb-6">
+        <h2 className="text-2xl sm:text-3xl xl:text-4xl font-semibold text-ink mb-6">
           About Potent Hygiene
         </h2>
 
-        <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-7xl mx-auto">
+        <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-7xl mx-auto">
           Potent Hygiene was built to make feminine care safer, sustainable, and more comfortable.
           We believe every woman deserves access to hygiene products that prioritize her health,
           comfort, and the planet&apos;s well-being.
         </p>
 
-        <p className="mt-5 text-sm sm:text-base text-gray-600 leading-relaxed max-w-7xl mx-auto">
+        <p className="mt-5 text-sm sm:text-base text-ink-muted leading-relaxed max-w-7xl mx-auto">
           Our products are thoughtfully designed with care, backed by research, and crafted to empower
           women to live confidently through every phase of their menstrual cycle.
         </p>
@@ -45,7 +45,7 @@ const AboutPage = () => {
                 How It All Started
               </h2>
 
-              <p className="text-gray-800 text-sm sm:text-base leading-relaxed">
+              <p className="text-ink text-sm sm:text-base leading-relaxed">
                 The journey of Potent Hygiene began with a simple yet powerful
                 realization: women deserve better. For too long, the menstrual
                 hygiene market has been dominated by products that prioritize
@@ -53,7 +53,7 @@ const AboutPage = () => {
                 over sustainability.
               </p>
 
-              <p className="text-gray-800 text-sm sm:text-base leading-relaxed">
+              <p className="text-ink text-sm sm:text-base leading-relaxed">
                 Our founder, Divita Agarwal, driven by personal experiences and conversations
                 with countless women, identified critical gaps in the industry:
                 products causing rashes, discomfort, and environmental harm.
@@ -62,7 +62,7 @@ const AboutPage = () => {
               </p>
 
 
-              <p className="text-gray-800 text-sm sm:text-base leading-relaxed">
+              <p className="text-ink text-sm sm:text-base leading-relaxed">
                 Today, Potent Hygiene stands as a trusted partner for thousands
                 of women across India, and we&apos;re just getting started.
               </p>

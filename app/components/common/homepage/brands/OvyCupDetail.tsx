@@ -155,10 +155,10 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                   Teen XS{" "}
                   <span className="font-semibold text-[#602E55]">16ml</span>
                 </h3>
-                <span className="my-0.5 text-[9px] font-bold tracking-widest text-gray-400 uppercase">
+                <span className="my-0.5 text-[11px] font-bold tracking-widest text-gray-400 uppercase">
                   PINK
                 </span>
-                <p className="mt-1 text-[11px] leading-tight font-normal text-[#5C524D]">
+                <p className="mt-1 text-[12px] leading-tight font-normal text-[#5C524D]">
                   First periods and first-timers. Before any birth. Folds no
                   wider than a tampon.
                 </p>
@@ -178,10 +178,10 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                   Medium{" "}
                   <span className="font-semibold text-[#602E55]">25ml</span>
                 </h3>
-                <span className="my-0.5 text-[9px] font-bold tracking-widest text-gray-400 uppercase">
+                <span className="my-0.5 text-[11px] font-bold tracking-widest text-gray-400 uppercase">
                   PURPLE OR RAINBOW
                 </span>
-                <p className="mt-1 text-[11px] leading-tight font-normal text-[#5C524D]">
+                <p className="mt-1 text-[12px] leading-tight font-normal text-[#5C524D]">
                   The everyday all-rounder. No vaginal birth yet, C-section mums
                   included.
                 </p>
@@ -201,10 +201,10 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                   Large{" "}
                   <span className="font-semibold text-[#602E55]">35ml</span>
                 </h3>
-                <span className="my-0.5 text-[9px] font-bold tracking-widest text-gray-400 uppercase">
+                <span className="my-0.5 text-[11px] font-bold tracking-widest text-gray-400 uppercase">
                   WHITE
                 </span>
-                <p className="mt-1 text-[11px] leading-tight font-normal text-[#5C524D]">
+                <p className="mt-1 text-[12px] leading-tight font-normal text-[#5C524D]">
                   After a vaginal birth, a heavier or longer flow, or a higher
                   cervix.
                 </p>
@@ -217,7 +217,7 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                 <div className="font-serif text-xl font-bold text-[#602E55] sm:text-2xl">
                   12 hrs
                 </div>
-                <p className="mt-0.5 text-[11px] leading-tight text-[#5C524D]">
+                <p className="mt-0.5 text-[12px] leading-tight text-[#5C524D]">
                   between changes, swim and sleep included
                 </p>
               </div>
@@ -226,7 +226,7 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                 <div className="font-serif text-xl font-bold text-[#602E55] sm:text-2xl">
                   Years
                 </div>
-                <p className="mt-0.5 text-[11px] leading-tight text-[#5C524D]">
+                <p className="mt-0.5 text-[12px] leading-tight text-[#5C524D]">
                   from one cup. Replace every 2 to 3 for best hygiene
                 </p>
               </div>
@@ -235,7 +235,7 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                 <div className="font-serif text-xl font-bold text-[#602E55] sm:text-2xl">
                   3
                 </div>
-                <p className="mt-0.5 text-[11px] leading-tight text-[#5C524D]">
+                <p className="mt-0.5 text-[12px] leading-tight text-[#5C524D]">
                   sizes, four colours, one fit for you
                 </p>
               </div>
@@ -274,9 +274,9 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
             </div>
 
             {/* Footer Note */}
-            <p className="text-[11px] leading-relaxed font-normal text-[#6B5E57]">
-              Latex-free, BPA-free, hypoallergenic. The cup ships in plain,
-              plastic-free recycled card.
+            <p className="text-[12px] leading-relaxed font-normal text-ink-muted">
+              Latex-free, BPA-free, hypoallergenic. The cup ships in our bold,
+              plastic-free recycled card box.
             </p>
           </div>
         </div>

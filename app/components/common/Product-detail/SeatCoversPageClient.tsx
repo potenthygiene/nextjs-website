@@ -43,6 +43,7 @@ import {
 import { toast } from "sonner";
 import { addToCart as addToCartAction } from "@/store/cartActions";
 import { getImageUrl } from "@/lib/imageUrl";
+import { getReviewStats, reviewCountLabel } from "@/lib/reviewStats";
 import {
   getPdpSubscriptionDiscount,
   getPdpSubscriptionPlans,
@@ -78,27 +79,17 @@ const StopIconMap: Record<string, React.ComponentType<any>> = {
   access: Briefcase,
 };
 
-const REVIEW_FILTERS = [
-  { id: "all", label: "All reviews" },
-  { id: "5star", label: "5★" },
-  { id: "4star", label: "4★" },
-  { id: "travel", label: "Travel" },
-  { id: "school", label: "Schools & Colleges" },
-  { id: "pregnancy", label: "Pregnancy" },
-  { id: "seniors", label: "Seniors" },
-];
-
 export default function SeatCoversPageClient({
   product,
   reviewWithMedia,
   content,
 }: Props) {
+  const reviewStats = useMemo(() => getReviewStats(reviewWithMedia), [reviewWithMedia]);
   const router = useRouter();
   const [selectedModeId, setSelectedModeId] = useState<string>("once");
   const [quantity, setQuantity] = useState<number>(1);
   const maxQuantity = Number(product?.maxQuantityPurchase) || 6;
   const [activeStopIndex, setActiveStopIndex] = useState<number>(0);
-  const [activeReviewFilter, setActiveReviewFilter] = useState<string>("all");
   const [activeNavId, setActiveNavId] = useState<string>("pdp-hero");
   const [openWhoIndex, setOpenWhoIndex] = useState<number | null>(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
@@ -379,56 +370,6 @@ export default function SeatCoversPageClient({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeStory, howToUseModalOpen, specsModalOpen, safetyModalOpen]);
-
-  // Filtered reviews logic
-  const filteredReviews = useMemo(() => {
-    const dbReviews = (reviewWithMedia || []).map((r: any) => ({
-      name: r.name || "Verified Buyer",
-      stars: Number(r.rating) || 5,
-      quote: r.message,
-      city: "Verified Purchase",
-      group: "all",
-      stage: "Verified Buyer",
-      isDbReview: true,
-      media: r.media,
-    }));
-    const staticReviews = content?.REVIEWS || [];
-    const reviews = [...dbReviews, ...staticReviews];
-    if (activeReviewFilter === "all") return reviews;
-    if (activeReviewFilter.endsWith("star")) {
-      const star = parseInt(activeReviewFilter, 10);
-      return reviews.filter((r: any) => Number(r.stars) === star);
-    }
-    if (activeReviewFilter === "travel")
-      return reviews.filter(
-        (r: any) =>
-          r.group === "travellers" ||
-          (r.quote &&
-            (r.quote.toLowerCase().includes("flight") ||
-              r.quote.toLowerCase().includes("road"))),
-      );
-    if (activeReviewFilter === "school")
-      return reviews.filter(
-        (r: any) =>
-          r.quote &&
-          (r.quote.toLowerCase().includes("school") ||
-            r.quote.toLowerCase().includes("college")),
-      );
-    if (activeReviewFilter === "pregnancy")
-      return reviews.filter(
-        (r: any) =>
-          r.group === "expecting" ||
-          (r.quote && r.quote.toLowerCase().includes("pregnant")),
-      );
-    if (activeReviewFilter === "seniors")
-      return reviews.filter(
-        (r: any) =>
-          r.group === "seniors" ||
-          r.group === "jointpain" ||
-          (r.quote && r.quote.toLowerCase().includes("knee")),
-      );
-    return reviews;
-  }, [content?.REVIEWS, reviewWithMedia, activeReviewFilter]);
 
   // Cart action integration with dynamic DB variant resolution
   const handleAddToCart = async () => {
@@ -714,21 +655,22 @@ export default function SeatCoversPageClient({
                 <span className="inline-block rounded-full bg-[#0F6DA6] px-3.5 py-1 text-xs font-extrabold tracking-wider text-white uppercase">
                   LOOWAY · TRAVEL HYGIENE
                 </span>
-                <h1 className="mt-3 font-serif text-3xl font-extrabold tracking-tight text-[#083B5C] sm:text-4xl lg:text-5xl">
+                <h1 className="mt-3 font-serif text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
                   Looway Disposable Toilet Seat Covers
                 </h1>
-                <p className="mt-2 text-sm font-medium text-gray-600 sm:text-base">
+                <p className="mt-2 text-sm font-medium text-ink-muted sm:text-base">
                   Biodegradable, water-resistant seat protection for dirty
                   public toilets.
                 </p>
 
-                {/* Rating & Reviews */}
+                {/* Rating & Reviews: real reviews only */}
+                {reviewStats.count > 0 && (
                 <div className="mt-3 flex items-center gap-2 text-xs sm:text-sm">
                   <div className="flex text-[#F4C430]">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className="h-4 w-4 fill-[#F4C430] text-[#F4C430]"
+                        className={`h-4 w-4 ${i < Math.round(reviewStats.average) ? "fill-[#F4C430] text-[#F4C430]" : "fill-gray-200 text-gray-200"}`}
                       />
                     ))}
                   </div>
@@ -740,13 +682,14 @@ export default function SeatCoversPageClient({
                     }
                     className="cursor-pointer font-semibold text-[#0F6DA6] hover:underline"
                   >
-                    4.8 out of 5 
+                    {reviewStats.averageLabel} out of 5 ({reviewCountLabel(reviewStats.count)})
                   </button>
                 </div>
+                )}
               </div>
 
               {/* Key Bullet Highlights */}
-              <div className="flex flex-wrap gap-2 text-xs font-semibold text-[#083B5C]">
+              <div className="flex flex-wrap gap-2 text-xs font-semibold text-ink">
                 <span className="rounded-full border border-[#D3EDFA] bg-[#EAF6FD] px-3 py-1">
                   ✓ Unfolds in seconds
                 </span>
@@ -760,7 +703,7 @@ export default function SeatCoversPageClient({
 
               {/* Pack Selector */}
               <div className="space-y-3 border-t border-b border-[#D3E4EF] py-5">
-                <div className="flex items-center justify-between text-xs font-bold tracking-wider text-[#083B5C] uppercase">
+                <div className="flex items-center justify-between text-xs font-bold tracking-wider text-ink uppercase">
                   <span>1. Select Pack Size</span>
                   <span className="font-semibold text-[#0F6DA6] normal-case">
                     Free delivery on orders of ₹399 and above
@@ -781,19 +724,19 @@ export default function SeatCoversPageClient({
                         }`}
                       >
                         {pack.flag ? (
-                          <span className="absolute -top-3 right-3 rounded-full bg-[#C6E82E] px-2.5 py-0.5 text-[10px] font-extrabold text-[#083B5C] uppercase shadow-xs">
+                          <span className="absolute -top-3 right-3 rounded-full bg-[#C6E82E] px-2.5 py-0.5 text-[11px] font-extrabold text-[#083B5C] uppercase shadow-xs">
                             {pack.flag}
                           </span>
                         ) : pack.isInStock === false ? (
-                          <span className="absolute -top-3 right-3 rounded-full bg-stone-200 px-2.5 py-0.5 text-[10px] font-bold text-stone-600 uppercase shadow-xs">
+                          <span className="absolute -top-3 right-3 rounded-full bg-stone-200 px-2.5 py-0.5 text-[11px] font-bold text-stone-600 uppercase shadow-xs">
                             Out of stock
                           </span>
                         ) : null}
                         <div>
-                          <p className="font-serif text-lg font-bold text-[#083B5C]">
+                          <p className="font-serif text-lg font-bold text-ink">
                             {pack.name}
                           </p>
-                          <p className="mt-0.5 text-xs leading-tight text-gray-500">
+                          <p className="mt-0.5 text-xs leading-tight text-ink-muted">
                             {pack.sub}
                           </p>
                         </div>
@@ -815,7 +758,7 @@ export default function SeatCoversPageClient({
 
               {/* Purchase Mode */}
               <div className="space-y-3">
-                <span className="block text-xs font-bold tracking-wider text-[#083B5C] uppercase">
+                <span className="block text-xs font-bold tracking-wider text-ink uppercase">
                   2. Purchase Mode
                 </span>
                 <div className="space-y-2">
@@ -863,15 +806,15 @@ export default function SeatCoversPageClient({
                             )}
                           </div>
                           <div>
-                            <p className="text-sm font-bold text-[#083B5C]">
+                            <p className="text-sm font-bold text-ink">
                               {mode.label}
                             </p>
-                            <p className="text-xs text-gray-500">{mode.desc}</p>
+                            <p className="text-xs text-ink-muted">{mode.desc}</p>
                           </div>
                         </div>
 
                         {mode.badge && (
-                          <span className="rounded-full bg-[#0F6DA6] px-2.5 py-0.5 text-[11px] font-bold text-white">
+                          <span className="rounded-full bg-[#0F6DA6] px-2.5 py-0.5 text-[12px] font-bold text-white">
                             {mode.badge}
                           </span>
                         )}
@@ -885,7 +828,7 @@ export default function SeatCoversPageClient({
               <div className="space-y-4 rounded-3xl border border-[#D3E4EF] bg-white p-5 shadow-sm">
                 <div className="flex items-baseline justify-between">
                   <div>
-                    <span className="font-serif text-3xl font-extrabold text-[#083B5C]">
+                    <span className="font-serif text-3xl font-bold text-ink">
                       {priceMissing ? "Price unavailable" : `₹${totalPrice}`}
                     </span>
                     {!priceMissing && totalMrp > totalPrice && (
@@ -905,10 +848,10 @@ export default function SeatCoversPageClient({
                 {/* Quantity Stepper */}
                 <div className="flex items-center justify-between">
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold tracking-wider text-[#083B5C] uppercase">
+                    <span className="text-xs font-bold tracking-wider text-ink uppercase">
                       Quantity
                     </span>
-                    <span className="text-[11px] font-medium text-gray-500">
+                    <span className="text-[12px] font-medium text-ink-muted">
                       Maximum {maxQuantity} per order
                     </span>
                   </div>
@@ -921,7 +864,7 @@ export default function SeatCoversPageClient({
                     >
                       -
                     </button>
-                    <span className="w-10 text-center text-sm font-bold text-[#083B5C]">
+                    <span className="w-10 text-center text-sm font-bold text-ink">
                       {quantity}
                     </span>
                     <button
@@ -947,7 +890,7 @@ export default function SeatCoversPageClient({
                   <button
                     type="button"
                     disabled
-                    className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-gray-200 py-4 text-base font-bold text-gray-500 shadow-none"
+                    className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-gray-200 py-4 text-base font-bold text-ink-muted shadow-none"
                   >
                     Out of stock
                   </button>
@@ -992,7 +935,7 @@ export default function SeatCoversPageClient({
               <div className="my-2 space-y-4">
                 {/* Image 1: Water-resistant, Biodegradable, Fresh cover every use */}
                 <div className="border-t border-b border-[#D3E4EF]/80 pt-3 pb-3">
-                  <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-semibold text-slate-700 sm:text-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-semibold text-ink-muted sm:text-sm">
                     <div className="flex items-center gap-2">
                       <Shield className="h-4.5 w-4.5 stroke-[1.75] text-[#0F6DA6]" />
                       <span>Water-resistant</span>
@@ -1009,7 +952,7 @@ export default function SeatCoversPageClient({
                 </div>
 
                 {/* Image 2: Support & Guarantee Banner */}
-                <div className="py-1 text-xs text-slate-600 sm:text-sm">
+                <div className="py-1 text-xs text-ink-muted sm:text-sm">
                   <span>
                     Questions? Email{" "}
                     <a
@@ -1023,10 +966,10 @@ export default function SeatCoversPageClient({
 
                 {/* Image 3: Shop With Confidence */}
                 <div className="space-y-3 border-t border-[#D3E4EF]/80 pt-4">
-                  <h4 className="text-xs font-extrabold tracking-wider text-slate-700 uppercase">
+                  <h4 className="text-xs font-bold tracking-wider text-ink-muted uppercase">
                     SHOP WITH CONFIDENCE
                   </h4>
-                  <div className="grid grid-cols-1 gap-x-4 gap-y-2.5 text-xs font-medium text-slate-700 sm:grid-cols-2 sm:text-sm">
+                  <div className="grid grid-cols-1 gap-x-4 gap-y-2.5 text-xs font-medium text-ink-muted sm:grid-cols-2 sm:text-sm">
                     <div className="flex items-center gap-2">
                       <Shield className="h-4.5 w-4.5 shrink-0 stroke-[1.75] text-[#0F6DA6]" />
                       <span>Biodegradable, plastic-free paper</span>
@@ -1045,7 +988,7 @@ export default function SeatCoversPageClient({
 
               {/* Pincode Availability Checker */}
               <div className="space-y-2 rounded-2xl border border-[#D3E4EF] bg-[#EAF6FD] p-4">
-                <div className="flex items-center gap-2 text-xs font-bold text-[#083B5C]">
+                <div className="flex items-center gap-2 text-xs font-bold text-ink">
                   <Truck className="h-4 w-4 text-[#0F6DA6]" />
                   <span>Check Delivery & Pincode Availability</span>
                 </div>
@@ -1135,11 +1078,11 @@ export default function SeatCoversPageClient({
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#1E9BD7] uppercase">
               A CLEAN SEAT, EVERYWHERE
             </span>
-            <h2 className="font-serif text-3xl leading-tight font-extrabold text-[#083B5C] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl leading-tight font-bold text-ink sm:text-4xl lg:text-5xl">
               When the seat's filthy,{" "}
               <span className="text-[#0F6DA6]">just cover & sit.</span>
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-gray-600 sm:text-base">
+            <p className="mt-4 text-sm leading-relaxed text-ink-muted sm:text-base">
               The airport boarding lounge. The mall bathroom on level three. The
               restroom at the highway food court. The waiting room at the
               railway station. Every one comes with the same silent negotiation:
@@ -1156,10 +1099,10 @@ export default function SeatCoversPageClient({
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#EAF6FD] text-[#0F6DA6]">
                   <Trash2 className="h-5 w-5" />
                 </div>
-                <h3 className="mb-1.5 text-base font-bold text-[#083B5C]">
+                <h3 className="mb-1.5 text-base font-bold text-ink">
                   Dirty public seats
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Unfold a cover and sit: your skin never touches the seat. No
                   hovering, no crouching, no dread.
                 </p>
@@ -1171,10 +1114,10 @@ export default function SeatCoversPageClient({
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#EAF6FD] text-[#0F6DA6]">
                   <Heart className="h-5 w-5" />
                 </div>
-                <h3 className="mb-1.5 text-base font-bold text-[#083B5C]">
+                <h3 className="mb-1.5 text-base font-bold text-ink">
                   School & period days
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   School and college toilets are often the grimmest of all, and
                   worst on a period day. Your daughter lays a cover and sits,
                   clean and confident.
@@ -1187,10 +1130,10 @@ export default function SeatCoversPageClient({
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#EAF6FD] text-[#0F6DA6]">
                   <Baby className="h-5 w-5" />
                 </div>
-                <h3 className="mb-1.5 text-base font-bold text-[#083B5C]">
+                <h3 className="mb-1.5 text-base font-bold text-ink">
                   Out with babies & toddlers
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Travelling with little ones who touch everything? Place a
                   cover so a restaurant, mall or highway seat is a clean place
                   for them to sit.
@@ -1203,10 +1146,10 @@ export default function SeatCoversPageClient({
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#EAF6FD] text-[#0F6DA6]">
                   <Car className="h-5 w-5" />
                 </div>
-                <h3 className="mb-1.5 text-base font-bold text-[#083B5C]">
+                <h3 className="mb-1.5 text-base font-bold text-ink">
                   Travel, highways & offices
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Airports, trains, the dhaba loo, the office at peak hours: a
                   slim box in your bag means every Western seat is sorted.
                 </p>
@@ -1226,10 +1169,10 @@ export default function SeatCoversPageClient({
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#1E9BD7] uppercase">
               WHY IT WORKS
             </span>
-            <h2 className="font-serif text-3xl font-extrabold text-[#083B5C] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl lg:text-5xl">
               How it works
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
+            <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
               It couldn't be simpler. Unfold the cover, push out the centre
               panel, lay it flat over the seat, and sit. The water-resistant
               paper covers every inch your skin would touch and keeps the seat's
@@ -1240,19 +1183,19 @@ export default function SeatCoversPageClient({
           <div className="mb-6 grid grid-cols-1 gap-5 md:grid-cols-3">
             {/* Step 1 Card */}
             <div className="relative flex flex-col justify-between rounded-3xl border border-[#D3E4EF] bg-white p-6 shadow-xs">
-              <span className="pointer-events-none absolute top-3 right-6 font-serif text-6xl font-extrabold text-[#D8EBF7]">
+              <span className="pointer-events-none absolute top-3 right-6 font-serif text-6xl font-bold text-[#D8EBF7]">
                 1
               </span>
               <div>
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0F6DA6] text-white">
                   <ShieldAlert className="h-6 w-6 text-[#C6E82E]" />
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-[#083B5C]">
+                <h3 className="mb-2 text-lg font-bold text-ink">
                   Unfold & drop the panel
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Open the cover fully, then push out the{" "}
-                  <strong className="font-bold text-[#083B5C]">
+                  <strong className="font-bold text-ink">
                     perforated centre panel
                   </strong>{" "}
                   so it hangs down into the bowl. That flap anchors the cover in
@@ -1263,19 +1206,19 @@ export default function SeatCoversPageClient({
 
             {/* Step 2 Card */}
             <div className="relative flex flex-col justify-between rounded-3xl border border-[#D3E4EF] bg-white p-6 shadow-xs">
-              <span className="pointer-events-none absolute top-3 right-6 font-serif text-6xl font-extrabold text-[#D8EBF7]">
+              <span className="pointer-events-none absolute top-3 right-6 font-serif text-6xl font-bold text-[#D8EBF7]">
                 2
               </span>
               <div>
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0F6DA6] text-white">
                   <ShieldCheck className="h-6 w-6 text-[#C6E82E]" />
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-[#083B5C]">
+                <h3 className="mb-2 text-lg font-bold text-ink">
                   Lay it edge to edge
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Spread the cover over the seat so it lies flat:{" "}
-                  <strong className="font-bold text-[#083B5C]">
+                  <strong className="font-bold text-ink">
                     front, sides and back all covered
                   </strong>
                   , no gaps. The water-resistant side faces up, ready for you to
@@ -1286,20 +1229,20 @@ export default function SeatCoversPageClient({
 
             {/* Step 3 Card */}
             <div className="relative flex flex-col justify-between rounded-3xl border border-[#D3E4EF] bg-white p-6 shadow-xs">
-              <span className="pointer-events-none absolute top-3 right-6 font-serif text-6xl font-extrabold text-[#D8EBF7]">
+              <span className="pointer-events-none absolute top-3 right-6 font-serif text-6xl font-bold text-[#D8EBF7]">
                 3
               </span>
               <div>
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0F6DA6] text-white">
                   <CheckCircle2 className="h-6 w-6 text-[#C6E82E]" />
                 </div>
-                <h3 className="mb-2 text-lg font-bold text-[#083B5C]">
+                <h3 className="mb-2 text-lg font-bold text-ink">
                   Sit, then fold & bin
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Sit down normally on a clean, dry surface. When you're done,
                   lift the cover, fold it and drop it in the bin.{" "}
-                  <strong className="font-bold text-[#083B5C]">
+                  <strong className="font-bold text-ink">
                     never flush it
                   </strong>
                   . Close the box to keep the rest flat and dry.
@@ -1309,8 +1252,8 @@ export default function SeatCoversPageClient({
           </div>
 
           {/* Bottom Blue Notice Strip */}
-          <div className="rounded-r-2xl border-l-4 border-[#0F6DA6] bg-[#E2F1FB] p-4 text-xs text-slate-700 sm:text-sm">
-            <strong className="font-bold text-[#083B5C]">
+          <div className="rounded-r-2xl border-l-4 border-[#0F6DA6] bg-[#E2F1FB] p-4 text-xs text-ink-muted sm:text-sm">
+            <strong className="font-bold text-ink">
               No technique, no learning curve.
             </strong>{" "}
             If you can unfold a tissue, you can use a Looway cover. Most people
@@ -1329,10 +1272,10 @@ export default function SeatCoversPageClient({
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#1E9BD7] uppercase">
               WATCH, DON'T READ
             </span>
-            <h2 className="font-serif text-3xl font-extrabold text-[#083B5C] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl lg:text-5xl">
               Step inside the Looway guide
             </h2>
-            <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
+            <p className="mt-3 text-sm leading-relaxed text-ink-muted sm:text-base">
               Quick, tappable stories: how to open and place a cover, why we
               say bin it (never flush), the honest truth about germs and seats,
               and every place one saves your day. Tap a circle to enter, then
@@ -1342,7 +1285,7 @@ export default function SeatCoversPageClient({
 
           {/* Got a question box */}
           <div className="mb-5 rounded-3xl border border-[#D3E4EF] bg-white/90 p-5 shadow-xs">
-            <p className="mb-3 text-xs font-semibold text-gray-600 sm:text-sm">
+            <p className="mb-3 text-xs font-semibold text-ink-muted sm:text-sm">
               Got a question before you buy? Tap a common one, or dive into the
               full guide below.
             </p>
@@ -1443,7 +1386,7 @@ export default function SeatCoversPageClient({
                     <Play className="ml-0.5 h-2.5 w-2.5 fill-white" />
                   </div>
                 </div>
-                <span className="mt-2 line-clamp-2 text-[11px] leading-tight font-bold text-[#083B5C]">
+                <span className="mt-2 line-clamp-2 text-[12px] leading-tight font-bold text-ink">
                   {bubble.name}
                 </span>
               </button>
@@ -1461,7 +1404,7 @@ export default function SeatCoversPageClient({
                 <span className="text-xs font-extrabold tracking-wider text-[#0F6DA6] uppercase">
                   START HERE ·{" "}
                 </span>
-                <span className="text-xs font-bold text-[#083B5C]">
+                <span className="text-xs font-bold text-ink">
                   Master it
                 </span>
               </div>
@@ -1496,10 +1439,10 @@ export default function SeatCoversPageClient({
                     className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#D3E4EF] bg-white p-4 text-left shadow-xs transition-all hover:border-[#0F6DA6]"
                   >
                     <div>
-                      <p className="text-sm font-bold text-[#083B5C]">
+                      <p className="text-sm font-bold text-ink">
                         {item.title}
                       </p>
-                      <p className="mt-0.5 text-xs text-gray-500">{item.sub}</p>
+                      <p className="mt-0.5 text-xs text-ink-muted">{item.sub}</p>
                     </div>
                     <ChevronRight className="h-4 w-4 shrink-0 text-[#0F6DA6]" />
                   </button>
@@ -1516,7 +1459,7 @@ export default function SeatCoversPageClient({
                 <span className="text-xs font-extrabold tracking-wider text-[#0F6DA6] uppercase">
                   WHERE IT WORKS ·{" "}
                 </span>
-                <span className="text-xs font-bold text-[#083B5C]">
+                <span className="text-xs font-bold text-ink">
                   Any Western seat
                 </span>
               </div>
@@ -1551,10 +1494,10 @@ export default function SeatCoversPageClient({
                     className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#D3E4EF] bg-white p-4 text-left shadow-xs transition-all hover:border-[#0F6DA6]"
                   >
                     <div>
-                      <p className="text-sm font-bold text-[#083B5C]">
+                      <p className="text-sm font-bold text-ink">
                         {item.title}
                       </p>
-                      <p className="mt-0.5 text-xs text-gray-500">{item.sub}</p>
+                      <p className="mt-0.5 text-xs text-ink-muted">{item.sub}</p>
                     </div>
                     <ChevronRight className="h-4 w-4 shrink-0 text-[#0F6DA6]" />
                   </button>
@@ -1571,7 +1514,7 @@ export default function SeatCoversPageClient({
                 <span className="text-xs font-extrabold tracking-wider text-[#0F6DA6] uppercase">
                   MADE FOR YOU ·{" "}
                 </span>
-                <span className="text-xs font-bold text-[#083B5C]">
+                <span className="text-xs font-bold text-ink">
                   For everyone who sits
                 </span>
               </div>
@@ -1606,10 +1549,10 @@ export default function SeatCoversPageClient({
                     className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#D3E4EF] bg-white p-4 text-left shadow-xs transition-all hover:border-[#0F6DA6]"
                   >
                     <div>
-                      <p className="text-sm font-bold text-[#083B5C]">
+                      <p className="text-sm font-bold text-ink">
                         {item.title}
                       </p>
-                      <p className="mt-0.5 text-xs text-gray-500">{item.sub}</p>
+                      <p className="mt-0.5 text-xs text-ink-muted">{item.sub}</p>
                     </div>
                     <ChevronRight className="h-4 w-4 shrink-0 text-[#0F6DA6]" />
                   </button>
@@ -1626,7 +1569,7 @@ export default function SeatCoversPageClient({
                 <span className="text-xs font-extrabold tracking-wider text-[#0F6DA6] uppercase">
                   GOOD TO KNOW ·{" "}
                 </span>
-                <span className="text-xs font-bold text-[#083B5C]">
+                <span className="text-xs font-bold text-ink">
                   The honest bit
                 </span>
               </div>
@@ -1656,10 +1599,10 @@ export default function SeatCoversPageClient({
                     className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#D3E4EF] bg-white p-4 text-left shadow-xs transition-all hover:border-[#0F6DA6]"
                   >
                     <div>
-                      <p className="text-sm font-bold text-[#083B5C]">
+                      <p className="text-sm font-bold text-ink">
                         {item.title}
                       </p>
-                      <p className="mt-0.5 text-xs text-gray-500">{item.sub}</p>
+                      <p className="mt-0.5 text-xs text-ink-muted">{item.sub}</p>
                     </div>
                     <ChevronRight className="h-4 w-4 shrink-0 text-[#0F6DA6]" />
                   </button>
@@ -1680,7 +1623,7 @@ export default function SeatCoversPageClient({
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#1E9BD7] uppercase">
               THE DETAILS
             </span>
-            <h2 className="font-serif text-3xl font-extrabold text-[#083B5C] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl lg:text-5xl">
               What's in the pack & specs
             </h2>
           </div>
@@ -1760,10 +1703,10 @@ export default function SeatCoversPageClient({
                     key={key}
                     className="flex p-3.5 transition-colors hover:bg-[#F5FAFD] sm:p-4"
                   >
-                    <span className="w-1/3 shrink-0 font-bold text-[#083B5C]">
+                    <span className="w-1/3 shrink-0 font-bold text-ink">
                       {key}
                     </span>
-                    <span className="w-2/3 leading-relaxed text-gray-700">
+                    <span className="w-2/3 leading-relaxed text-ink-muted">
                       {val}
                     </span>
                   </div>
@@ -1781,19 +1724,19 @@ export default function SeatCoversPageClient({
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="rounded-3xl border-2 border-[#9FCB1E] bg-[#EAF6FD] p-6 shadow-xs sm:p-8">
-            <h3 className="mb-6 flex items-center gap-3 font-serif text-2xl font-bold text-[#083B5C]">
+            <h3 className="mb-6 flex items-center gap-3 font-serif text-2xl font-bold text-ink">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#C6E82E] text-lg font-extrabold text-[#083B5C] shadow-xs">
                 !
               </div>
               Use it safely
             </h3>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-4 text-xs leading-relaxed text-slate-700 sm:text-sm md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-8 gap-y-4 text-xs leading-relaxed text-ink-muted sm:text-sm md:grid-cols-2">
               <div className="space-y-4">
                 <div className="flex items-start gap-2.5">
                   <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
                   <p>
-                    <strong className="font-bold text-[#083B5C]">
+                    <strong className="font-bold text-ink">
                       Single use only.
                     </strong>{" "}
                     One cover per sitting. Don't reuse a cover once you've sat
@@ -1821,7 +1764,7 @@ export default function SeatCoversPageClient({
                 <div className="flex items-start gap-2.5">
                   <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
                   <p>
-                    <strong className="font-bold text-[#083B5C]">
+                    <strong className="font-bold text-ink">
                       Do not flush.
                     </strong>{" "}
                     Always fold the used cover and drop it in a waste bin.
@@ -1840,11 +1783,11 @@ export default function SeatCoversPageClient({
                 <div className="flex items-start gap-2.5">
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#0F6DA6]" />
                   <p>
-                    <strong className="font-bold text-[#083B5C]">
+                    <strong className="font-bold text-ink">
                       Pregnancy:
                     </strong>{" "}
                     safe to use throughout pregnancy.{" "}
-                    <strong className="font-bold text-[#083B5C]">
+                    <strong className="font-bold text-ink">
                       Elderly & limited-mobility users:
                     </strong>{" "}
                     sit directly with full confidence, no need to hover or
@@ -1860,17 +1803,17 @@ export default function SeatCoversPageClient({
       {/* "Where to use" Location Explorer Section */}
       <section
         id="where-to-use"
-        className="bg-[#FAF7F2] py-14 text-[#083B5C] sm:py-20"
+        className="bg-[#FAF7F2] py-14 text-ink sm:py-20"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="mb-8 max-w-3xl">
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#0F6DA6] uppercase">
               WHERE IT EARNS ITS SPOT
             </span>
-            <h2 className="font-serif text-3xl font-extrabold text-[#083B5C] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl lg:text-5xl">
               Every place you'll be glad you packed it
             </h2>
-            <p className="mt-2 text-sm text-gray-600 sm:text-base">
+            <p className="mt-2 text-sm text-ink-muted sm:text-base">
               Select a location to see how a slim box of covers in your bag
               saves the day.
             </p>
@@ -1911,7 +1854,7 @@ export default function SeatCoversPageClient({
                       <span
                         className={`mt-3 line-clamp-2 text-xs leading-tight font-bold transition-colors ${
                           isActive
-                            ? "font-extrabold text-[#083B5C]"
+                            ? "font-extrabold text-ink"
                             : "text-[#0F6DA6] group-hover:text-[#083B5C]"
                         }`}
                       >
@@ -1931,7 +1874,7 @@ export default function SeatCoversPageClient({
                     prev > 0 ? prev - 1 : content.STOPS.length - 1,
                   )
                 }
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 shadow-sm transition-colors hover:bg-gray-100"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-ink-muted shadow-sm transition-colors hover:bg-gray-100"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
@@ -1941,7 +1884,7 @@ export default function SeatCoversPageClient({
                     prev < content.STOPS.length - 1 ? prev + 1 : 0,
                   )
                 }
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 shadow-sm transition-colors hover:bg-gray-100"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-ink-muted shadow-sm transition-colors hover:bg-gray-100"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -1952,17 +1895,17 @@ export default function SeatCoversPageClient({
           {content?.STOPS?.[activeStopIndex] && (
             <div className="rounded-3xl border border-[#E5DAC9] bg-white p-6 shadow-sm transition-all sm:p-8">
               <div className="flex flex-col items-start gap-5 sm:gap-6 md:flex-row">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#C6E82E] text-[#083B5C] shadow-sm sm:h-16 sm:w-16">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[#C6E82E] text-ink shadow-sm sm:h-16 sm:w-16">
                   {React.createElement(
                     StopIconMap[content.STOPS[activeStopIndex][0]] || MapPin,
                     { className: "h-7 w-7 sm:h-8 sm:w-8" },
                   )}
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-serif text-2xl font-bold text-[#083B5C] sm:text-3xl">
+                  <h3 className="font-serif text-2xl font-bold text-ink sm:text-3xl">
                     {content.STOPS[activeStopIndex][1]}
                   </h3>
-                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 sm:text-base">
+                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted sm:text-base">
                     {content.STOPS[activeStopIndex][2]}
                   </p>
 
@@ -1971,7 +1914,7 @@ export default function SeatCoversPageClient({
                       <Check className="h-4 w-4 text-[#0F6DA6]" />
                       <span>
                         Pack in{" "}
-                        <strong className="font-bold text-[#083B5C]">
+                        <strong className="font-bold text-ink">
                           {content.STOPS[activeStopIndex][3]}
                         </strong>
                       </span>
@@ -1994,7 +1937,7 @@ export default function SeatCoversPageClient({
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#0F6DA6] uppercase">
               IDEAL FOR EVERYONE
             </span>
-            <h2 className="font-serif text-3xl font-extrabold text-[#083B5C] sm:text-4xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl">
               Who uses Looway seat covers?
             </h2>
           </div>
@@ -2031,10 +1974,10 @@ export default function SeatCoversPageClient({
                     <item.icon className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="mb-1.5 text-lg font-bold text-[#083B5C]">
+                    <h3 className="mb-1.5 text-lg font-bold text-ink">
                       {item.title}
                     </h3>
-                    <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                    <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                       {item.desc}
                     </p>
                   </div>
@@ -2052,7 +1995,7 @@ export default function SeatCoversPageClient({
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#0F6DA6] uppercase">
               WHY LOOWAY COVERS?
             </span>
-            <h2 className="font-serif text-3xl font-extrabold text-[#083B5C] sm:text-4xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl">
               Looway paper covers vs other methods
             </h2>
           </div>
@@ -2078,62 +2021,62 @@ export default function SeatCoversPageClient({
               </thead>
               <tbody className="divide-y divide-[#D3E4EF]">
                 <tr>
-                  <td className="p-4 font-bold text-[#083B5C]">
+                  <td className="p-4 font-bold text-ink">
                     100% No-contact skin barrier
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
                     ✓ Yes, complete coverage
                   </td>
-                  <td className="p-4 text-gray-500">
+                  <td className="p-4 text-ink-muted">
                     ✕ No, one slip means contact
                   </td>
-                  <td className="p-4 text-gray-500">
+                  <td className="p-4 text-ink-muted">
                     ✕ Paper shifts & soaks through
                   </td>
-                  <td className="p-4 text-gray-500">
+                  <td className="p-4 text-ink-muted">
                     ✕ Leaves seat wet to sit on
                   </td>
                 </tr>
                 <tr>
-                  <td className="p-4 font-bold text-[#083B5C]">
+                  <td className="p-4 font-bold text-ink">
                     No knee, back or squat strain
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
                     ✓ Yes, sit comfortably
                   </td>
-                  <td className="p-4 text-gray-500">
+                  <td className="p-4 text-ink-muted">
                     ✕ Painful on knees & back
                   </td>
-                  <td className="p-4 font-semibold text-gray-700">
+                  <td className="p-4 font-semibold text-ink-muted">
                     ✓ Sit down
                   </td>
-                  <td className="p-4 font-semibold text-gray-700">
+                  <td className="p-4 font-semibold text-ink-muted">
                     ✓ Sit down
                   </td>
                 </tr>
                 <tr>
-                  <td className="p-4 font-bold text-[#083B5C]">
+                  <td className="p-4 font-bold text-ink">
                     Stays in place while sitting
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
                     ✓ Yes, bowl flap anchors it
                   </td>
-                  <td className="p-4 text-gray-500">N/A</td>
-                  <td className="p-4 text-gray-500">✕ Slides around easily</td>
-                  <td className="p-4 font-semibold text-gray-700">N/A</td>
+                  <td className="p-4 text-ink-muted">N/A</td>
+                  <td className="p-4 text-ink-muted">✕ Slides around easily</td>
+                  <td className="p-4 font-semibold text-ink-muted">N/A</td>
                 </tr>
                 <tr>
-                  <td className="p-4 font-bold text-[#083B5C]">
+                  <td className="p-4 font-bold text-ink">
                     Plastic-free & eco-disposal
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
                     ✓ Plain paper: fold & bin
                   </td>
-                  <td className="p-4 text-gray-500">N/A</td>
-                  <td className="p-4 text-gray-500">
+                  <td className="p-4 text-ink-muted">N/A</td>
+                  <td className="p-4 text-ink-muted">
                     Wastes rolls of toilet paper
                   </td>
-                  <td className="p-4 text-gray-500">
+                  <td className="p-4 text-ink-muted">
                     Aerosol / plastic bottle packaging
                   </td>
                 </tr>
@@ -2146,14 +2089,14 @@ export default function SeatCoversPageClient({
       {/* "Loved on every trip out" Reviews Section */}
       <section
         id="reviews"
-        className="bg-[#FAF7F2] py-14 text-[#083B5C] sm:py-20"
+        className="bg-[#FAF7F2] py-14 text-ink sm:py-20"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           <div className="mb-6 max-w-3xl">
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#0F6DA6] uppercase">
               WHAT BUYERS SAY
             </span>
-            <h2 className="font-serif text-3xl font-extrabold text-[#083B5C] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl lg:text-5xl">
               Loved on every trip out
             </h2>
           </div>
@@ -2277,19 +2220,19 @@ export default function SeatCoversPageClient({
                 <span className="text-xs font-bold text-[#0F6DA6] uppercase">
                   STEP-BY-STEP GUIDE
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-[#083B5C]">
+                <h3 className="font-serif text-2xl font-bold text-ink">
                   How to use Looway Seat Covers
                 </h3>
               </div>
               <button
                 onClick={() => setHowToUseModalOpen(false)}
-                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
+                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-ink-muted transition-colors hover:bg-gray-200"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="space-y-4 text-xs text-gray-700 sm:text-sm">
+            <div className="space-y-4 text-xs text-ink-muted sm:text-sm">
               <div className="space-y-1 rounded-2xl border border-[#D3E4EF] bg-[#F5FAFD] p-4">
                 <span className="block font-bold text-[#0F6DA6]">
                   Step 1: Open & Take One
@@ -2349,13 +2292,13 @@ export default function SeatCoversPageClient({
                 <span className="text-xs font-bold text-[#0F6DA6] uppercase">
                   PRODUCT SPECIFICATIONS
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-[#083B5C]">
+                <h3 className="font-serif text-2xl font-bold text-ink">
                   Full Technical Specs
                 </h3>
               </div>
               <button
                 onClick={() => setSpecsModalOpen(false)}
-                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
+                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-ink-muted transition-colors hover:bg-gray-200"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -2367,8 +2310,8 @@ export default function SeatCoversPageClient({
                   key={spec[0]}
                   className="flex items-center justify-between py-2.5"
                 >
-                  <span className="font-medium text-gray-500">{spec[0]}</span>
-                  <span className="font-bold text-[#083B5C]">{spec[1]}</span>
+                  <span className="font-medium text-ink-muted">{spec[0]}</span>
+                  <span className="font-bold text-ink">{spec[1]}</span>
                 </div>
               ))}
             </div>
@@ -2394,19 +2337,19 @@ export default function SeatCoversPageClient({
                 <span className="text-xs font-bold text-[#0F6DA6] uppercase">
                   HYGIENE & SAFETY
                 </span>
-                <h3 className="font-serif text-2xl font-bold text-[#083B5C]">
+                <h3 className="font-serif text-2xl font-bold text-ink">
                   Safety & Disposal Information
                 </h3>
               </div>
               <button
                 onClick={() => setSafetyModalOpen(false)}
-                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200"
+                className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-gray-100 text-ink-muted transition-colors hover:bg-gray-200"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="space-y-4 text-xs leading-relaxed text-gray-700 sm:text-sm">
+            <div className="space-y-4 text-xs leading-relaxed text-ink-muted sm:text-sm">
               <div className="space-y-1 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-900">
                 <strong className="flex items-center gap-1.5 font-bold">
                   <Trash2 className="h-4 w-4 text-amber-700" /> Bin Only, Never
@@ -2456,7 +2399,7 @@ export default function SeatCoversPageClient({
       )}
 
       {/* Floating Section Quick-Nav Strap */}
-      <div className="no-scrollbar fixed bottom-[72px] left-1/2 z-40 flex max-w-[94vw] -translate-x-1/2 items-center gap-2 overflow-x-auto rounded-full border border-[#E5DAC9] bg-[#FAF7F2]/95 px-3 py-2 shadow-xl backdrop-blur-md md:bottom-6">
+      <div className="no-scrollbar fixed bottom-[72px] left-1/2 z-40 hidden md:flex max-w-[94vw] -translate-x-1/2 items-center gap-2 overflow-x-auto rounded-full border border-[#E5DAC9] bg-[#FAF7F2]/95 px-3 py-2 shadow-xl backdrop-blur-md md:bottom-6">
         {[
           { id: "pdp-hero", label: "Packs & Buy" },
           { id: "clean-seat", label: "Clean seat" },

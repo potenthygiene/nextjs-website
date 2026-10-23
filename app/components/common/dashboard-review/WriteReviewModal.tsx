@@ -157,13 +157,13 @@ export const WriteReviewModal = ({
 
       <DialogContent className="rounded-xl p-5 sm:max-w-[440px] bg-white max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-[18px] font-semibold text-[#2D3748]">
+          <DialogTitle className="text-[18px] font-semibold text-ink">
             Write a Review
           </DialogTitle>
         </DialogHeader>
 
         <div className="my-1 rounded-xl bg-[#E9F7F9] p-3 text-xs">
-          <p className="font-bold text-[#2D3748]">{productName}</p>
+          <p className="font-bold text-ink">{productName}</p>
           <p className="font-semibold text-[#016271] mt-0.5">
             Earn ₹50 on review (credited on approval) • 1 photo required
           </p>
@@ -172,7 +172,7 @@ export const WriteReviewModal = ({
         <div className="space-y-4 text-center">
           {/* Rating */}
           <div className="space-y-1.5">
-            <label className="block text-left text-[14px] font-semibold text-[#333333]">
+            <label className="block text-left text-[14px] font-semibold text-ink">
               Your Rating
             </label>
 
@@ -192,7 +192,7 @@ export const WriteReviewModal = ({
 
           {/* User Name */}
           <div className="space-y-1 text-left">
-            <label className="text-[14px] font-semibold text-[#333333]">
+            <label className="text-[14px] font-semibold text-ink">
               Your Name / Nickname
             </label>
             <Input
@@ -205,7 +205,7 @@ export const WriteReviewModal = ({
 
           {/* Review Text */}
           <div className="space-y-1 text-left">
-            <label className="text-[14px] font-semibold text-[#333333]">
+            <label className="text-[14px] font-semibold text-ink">
               Your Review
             </label>
 
@@ -223,7 +223,7 @@ export const WriteReviewModal = ({
 
           {/* Photo Upload */}
           <div className="space-y-1.5 text-left">
-            <label className="text-[14px] font-semibold text-[#333333] flex items-center justify-between">
+            <label className="text-[14px] font-semibold text-ink flex items-center justify-between">
               <span>Attach Product Photo <span className="text-red-500">*</span></span>
               <span className="text-xs font-semibold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full">
                 1 photo required 

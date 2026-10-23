@@ -117,7 +117,7 @@ export default function BirthdayRewardCard({
           </div>
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-base font-bold text-gray-900">
+              <h3 className="text-base font-bold text-ink">
                 Birthday Cash Credit (+₹50)
               </h3>
               {isLocked ? (
@@ -131,7 +131,7 @@ export default function BirthdayRewardCard({
                 </span>
               )}
             </div>
-            <p className="mt-0.5 text-xs text-gray-600 sm:text-sm">
+            <p className="mt-0.5 text-xs text-ink-muted sm:text-sm">
               {isLocked
                 ? `Birthday saved (${savedDisplay}). Set once; changes go through support. Valid for 3 months.`
                 : "Add your day and month to receive ₹50 on your birthday (valid for 3 months). Can be set once; changes go through support."}
@@ -140,8 +140,8 @@ export default function BirthdayRewardCard({
         </div>
 
         {isLocked ? (
-          <div className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-xs font-semibold text-gray-600 sm:shrink-0">
-            <Lock className="h-3.5 w-3.5 text-gray-500" />
+          <div className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-xs font-semibold text-ink-muted sm:shrink-0">
+            <Lock className="h-3.5 w-3.5 text-ink-muted" />
             <span>Birthday: {savedDisplay} (Locked)</span>
           </div>
         ) : (

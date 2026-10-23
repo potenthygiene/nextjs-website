@@ -82,21 +82,6 @@ type Props = {
   mappedProducts: Partial<Record<YatraKitItemKey, YatraMappedProduct>>;
 };
 
-const REVIEW_FILTERS = [
-  { id: "all", label: "All reviews" },
-  { id: "5star", label: "5★" },
-  { id: "4star", label: "4★" },
-  { id: "pilgrimage", label: "Pilgrimage" },
-  { id: "roadtrips", label: "Road trips" },
-  { id: "flights", label: "Flights" },
-  { id: "families", label: "Families" },
-  { id: "periods", label: "Periods" },
-  { id: "pregnancy", label: "Pregnancy" },
-  { id: "seniors", label: "Seniors" },
-  { id: "treks", label: "Treks" },
-  { id: "hygiene", label: "Hygiene-cautious" },
-];
-
 function useColumnsCount() {
   const [cols, setCols] = useState(4);
 
@@ -149,11 +134,9 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
   };
 
   const [activeStopIndex, setActiveStopIndex] = useState(0);
-  const [activeReviewFilter, setActiveReviewFilter] = useState("all");
   const [activeNavId, setActiveNavId] = useState("choose-kit");
 
   const stepperRef = React.useRef<HTMLDivElement>(null);
-  const reviewsRef = React.useRef<HTMLDivElement>(null);
 
   const [showNudge, setShowNudge] = useState(false);
 
@@ -295,59 +278,6 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const filteredReviews = useMemo(() => {
-    if (!content.REVIEWS) return [];
-    if (activeReviewFilter === "all") return content.REVIEWS;
-    if (activeReviewFilter === "5star")
-      return content.REVIEWS.filter((r: any) => r.stars === 5);
-    if (activeReviewFilter === "4star")
-      return content.REVIEWS.filter((r: any) => r.stars === 4);
-    if (activeReviewFilter === "pilgrimage")
-      return content.REVIEWS.filter(
-        (r: any) =>
-          r.group === "pilgrims" ||
-          (r.quote && r.quote.toLowerCase().includes("yatra")) ||
-          (r.quote && r.quote.toLowerCase().includes("pilgrim")) ||
-          (r.stage && r.stage.toLowerCase().includes("yatra")),
-      );
-    if (activeReviewFilter === "roadtrips")
-      return content.REVIEWS.filter(
-        (r: any) =>
-          r.group === "travellers" ||
-          (r.quote && r.quote.toLowerCase().includes("road")) ||
-          (r.quote && r.quote.toLowerCase().includes("drive")) ||
-          (r.stage && r.stage.toLowerCase().includes("tripper")),
-      );
-    if (activeReviewFilter === "flights")
-      return content.REVIEWS.filter(
-        (r: any) =>
-          (r.quote && r.quote.toLowerCase().includes("flight")) ||
-          (r.quote && r.quote.toLowerCase().includes("airport")),
-      );
-    if (activeReviewFilter === "pregnancy")
-      return content.REVIEWS.filter(
-        (r: any) =>
-          r.group === "expecting" ||
-          (r.quote && r.quote.toLowerCase().includes("pregnant")) ||
-          (r.stage && r.stage.toLowerCase().includes("mum")),
-      );
-    if (activeReviewFilter === "seniors")
-      return content.REVIEWS.filter(
-        (r: any) =>
-          r.group === "seniors" ||
-          r.group === "jointpain" ||
-          (r.quote && r.quote.toLowerCase().includes("knee")),
-      );
-    if (activeReviewFilter === "hygiene")
-      return content.REVIEWS.filter(
-        (r: any) =>
-          r.group === "hygiene" ||
-          (r.quote && r.quote.toLowerCase().includes("uti")) ||
-          (r.stage && r.stage.toLowerCase().includes("uti")),
-      );
-    return content.REVIEWS;
-  }, [content.REVIEWS, activeReviewFilter]);
 
   const [quantities, setQuantities] = useState<Record<string, YatraKitRecipe>>(
     () => {
@@ -654,7 +584,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                 LOOWAY · TRAVEL HYGIENE
               </span>
 
-              <h1 className="mt-4 font-serif text-4xl font-extrabold tracking-tight text-[#145C58] sm:text-5xl md:text-6xl">
+              <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight text-[#145C58] sm:text-5xl md:text-6xl">
                 Looway Yatra Kit
               </h1>
 
@@ -665,12 +595,12 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
 
 
               {/* Description Paragraph */}
-              <p className="mt-4 text-xs leading-relaxed text-gray-700 sm:text-sm">
+              <p className="mt-4 text-xs leading-relaxed text-ink-muted sm:text-sm">
                 Dirty Western seats, squat toilets you can't use, or no toilet
                 at all: one kit handles every situation, and Ovy period care is
                 there when you need it. Pick one of 11 ready-made kits, open it,
                 and change exactly what's inside.{" "}
-                <strong className="font-bold text-gray-900">
+                <strong className="font-bold text-ink">
                   Every kit includes free intimate wipes.
                 </strong>{" "}
                 Buy once, for everyone.
@@ -722,7 +652,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
             {/* Right Side Card Container */}
             <div className="flex flex-col items-center lg:items-end">
               <div className="w-full max-w-md rounded-[28px] border border-white/80 bg-white p-6 shadow-xl sm:p-7">
-                <h2 className="mb-4 text-lg font-extrabold text-[#145C58] sm:text-xl">
+                <h2 className="mb-4 text-lg font-bold text-[#145C58] sm:text-xl">
                   Every toilet situation, covered
                 </h2>
 
@@ -768,7 +698,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                         <h3 className="text-xs font-bold text-[#145C58] sm:text-sm">
                           {scene.t}
                         </h3>
-                        <p className="mt-0.5 text-xs leading-snug text-gray-600">
+                        <p className="mt-0.5 text-xs leading-snug text-ink-muted">
                           {scene.s}
                         </p>
                       </div>
@@ -859,7 +789,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                     <p className="text-xs font-bold text-white sm:text-sm">
                       {item.label}
                     </p>
-                    <p className="text-[11px] text-white/80">{item.sub}</p>
+                    <p className="text-[12px] text-white/80">{item.sub}</p>
                   </div>
                 </div>
               );
@@ -874,10 +804,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
           <span className="inline-block text-xs font-bold tracking-widest text-[#168A82] uppercase">
             Choose and adjust
           </span>
-          <h2 className="mt-2 font-serif text-3xl font-extrabold text-[#0A3B39] sm:text-4xl">
+          <h2 className="mt-2 font-serif text-3xl font-bold text-ink sm:text-4xl">
             Open a kit, change what is inside
           </h2>
-          <p className="mt-2 max-w-2xl text-xs text-gray-600 sm:text-sm">
+          <p className="mt-2 max-w-2xl text-xs text-ink-muted sm:text-sm">
             Select any ready-made kit below to view contents. Adjust item
             quantities or add extra products. Your total updates automatically.
           </p>
@@ -911,23 +841,23 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                         <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                       </div>
                       {tier.best && (
-                        <span className="rounded-full bg-[#E8A33D] px-2 py-0.5 text-[9px] font-bold text-[#3A2708] uppercase sm:text-[10px]">
+                        <span className="rounded-full bg-[#E8A33D] px-2 py-0.5 text-[11px] font-bold text-[#3A2708] uppercase sm:text-[11px]">
                           Popular
                         </span>
                       )}
                     </div>
-                    <h3 className="line-clamp-1 text-xs leading-tight font-bold text-[#0A3B39] sm:text-base">
+                    <h3 className="line-clamp-1 text-xs leading-tight font-bold text-ink sm:text-base">
                       {tier.name}
                     </h3>
-                    <p className="mt-0.5 text-[10px] font-semibold tracking-wider text-[#168A82] uppercase sm:text-xs">
+                    <p className="mt-0.5 text-[11px] font-semibold tracking-wider text-[#168A82] uppercase sm:text-xs">
                       {tier.tag}
                     </p>
                   </div>
 
                   <div className="mt-3 flex items-center justify-between border-t border-gray-100 pt-2">
                     <span
-                      className={`text-[11px] font-bold sm:text-xs ${
-                        selected ? "text-[#116B66]" : "text-gray-500"
+                      className={`text-[12px] font-bold sm:text-xs ${
+                        selected ? "text-[#116B66]" : "text-ink-muted"
                       }`}
                     >
                       {selected ? "Selected ✓" : "Customize →"}
@@ -946,10 +876,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                         <span className="text-[11px] font-bold tracking-widest text-[#168A82] uppercase">
                           Customizing Kit
                         </span>
-                        <h3 className="mt-0.5 font-serif text-2xl font-bold text-[#0A3B39] sm:text-3xl">
+                        <h3 className="mt-0.5 font-serif text-2xl font-bold text-ink sm:text-3xl">
                           {activeKit.name}
                         </h3>
-                        <p className="mt-1 text-xs text-gray-600">
+                        <p className="mt-1 text-xs text-ink-muted">
                           {activeKit.tag}: modify quantities below to fit your
                           exact journey.
                         </p>
@@ -958,7 +888,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                         <p className="text-[11px] font-bold tracking-wider text-[#168A82] uppercase">
                           Kit total
                         </p>
-                        <p className="text-2xl font-extrabold text-[#0A3B39] sm:text-3xl">
+                        <p className="text-2xl font-extrabold text-ink sm:text-3xl">
                           {activeTotal > 0 ? `₹${activeTotal}` : "Price unavailable"}
                         </p>
                       </div>
@@ -966,7 +896,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
 
                     {/* Free Shipping Progress Indicator */}
                     <div className="mt-4 rounded-xl border border-[#E5DAC9] bg-white p-3">
-                      <div className="mb-1.5 flex items-center justify-between text-xs font-bold text-[#0A3B39]">
+                      <div className="mb-1.5 flex items-center justify-between text-xs font-bold text-ink">
                         <span>Free shipping progress</span>
                         <span>
                           {!(activeTotal > 0)
@@ -990,10 +920,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                     <div className="mt-5 space-y-3">
                       {activeContents.length === 0 ? (
                         <div className="rounded-xl border border-dashed border-[#E5DAC9] bg-white/60 p-6 text-center">
-                          <p className="text-sm font-bold text-[#0A3B39]">
+                          <p className="text-sm font-bold text-ink">
                             Your kit has no items yet
                           </p>
-                          <p className="mt-1 text-xs text-gray-500">
+                          <p className="mt-1 text-xs text-ink-muted">
                             Choose items from the extras section below to build your customized kit.
                           </p>
                         </div>
@@ -1011,16 +941,16 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                             >
                               <div>
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <p className="text-sm font-bold text-[#0A3B39] sm:text-base">
+                                  <p className="text-sm font-bold text-ink sm:text-base">
                                     {product?.title || key}
                                   </p>
                                   {isAtMax && (
-                                    <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                                    <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[12px] font-semibold text-amber-700">
                                       Max {maxLimit} reached
                                     </span>
                                   )}
                                 </div>
-                                <p className="text-xs text-gray-500">
+                                <p className="text-xs text-ink-muted">
                                   {product
                                     ? `${product.variantName}${Number(product.price) > 0 ? ` · ₹${product.price} each` : ""}`
                                     : "Standard travel pack"}
@@ -1029,7 +959,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                                 {/* Size & Pack options selector */}
                                 {groupVariants && groupVariants.options.length > 1 && (
                                   <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                                    <span className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                                    <span className="text-[11px] font-bold tracking-wider text-gray-400 uppercase">
                                       {group === "pads"
                                         ? "Size:"
                                         : group === "cup"
@@ -1043,7 +973,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                                           key={v.key}
                                           type="button"
                                           onClick={() => switchItemVariant(key, v.key)}
-                                          className={`cursor-pointer rounded-md px-2 py-0.5 text-[11px] font-semibold transition-all ${
+                                          className={`cursor-pointer rounded-md px-2 py-0.5 text-[12px] font-semibold transition-all ${
                                             isSelected
                                               ? "bg-[#116B66] text-white shadow-xs"
                                               : "border border-[#116B66]/30 bg-[#F4FAF9] text-[#116B66] hover:bg-[#116B66]/10"
@@ -1058,7 +988,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                               </div>
 
                               <div className="flex items-center justify-between gap-4 sm:justify-end">
-                                <span className="text-sm font-extrabold text-[#0A3B39] sm:text-base">
+                                <span className="text-sm font-extrabold text-ink sm:text-base">
                                   {Number(product?.price) > 0 ? `₹${Number(product?.price) * qty}` : ""}
                                 </span>
                                 <div className="flex items-center overflow-hidden rounded-lg border border-[#116B66]/30 bg-[#F4FAF9]">
@@ -1070,7 +1000,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                                   >
                                     <Minus className="h-3.5 w-3.5" />
                                   </button>
-                                  <span className="w-8 text-center text-sm font-bold text-[#0A3B39]">
+                                  <span className="w-8 text-center text-sm font-bold text-ink">
                                     {qty}
                                   </span>
                                   <button
@@ -1104,16 +1034,16 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                           </span>
                         </div>
                       ) : (
-                        <div className="flex items-center justify-between rounded-xl border border-dashed border-gray-300 bg-gray-50/80 p-3.5 sm:p-4 text-gray-500">
+                        <div className="flex items-center justify-between rounded-xl border border-dashed border-gray-300 bg-gray-50/80 p-3.5 sm:p-4 text-ink-muted">
                           <div>
-                            <p className="text-sm font-bold text-gray-700">
+                            <p className="text-sm font-bold text-ink-muted">
                               Intimate Wipes
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-ink-muted">
                               10 pH-balanced individually wrapped wipes · Unlocks when kit has at least 2 distinct products
                             </p>
                           </div>
-                          <span className="rounded-full border border-gray-300 bg-white px-3 py-1 text-xs font-semibold text-gray-500">
+                          <span className="rounded-full border border-gray-300 bg-white px-3 py-1 text-xs font-semibold text-ink-muted">
                             Locked (add ≥2 products)
                           </span>
                         </div>
@@ -1123,7 +1053,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                     {/* Add Extras Section */}
                     {extras.length > 0 && (
                       <div className="mt-6 border-t border-[#E5DAC9] pt-5">
-                        <h4 className="mb-3 text-sm font-bold text-[#0A3B39]">
+                        <h4 className="mb-3 text-sm font-bold text-ink">
                           Add extra items to your kit
                         </h4>
                         <div className="grid gap-3 sm:grid-cols-2">
@@ -1133,10 +1063,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                               className="flex items-center justify-between gap-3 rounded-xl border border-[#E5DAC9] bg-white p-3 sm:p-3.5"
                             >
                               <div>
-                                <p className="text-xs font-bold text-[#0A3B39] sm:text-sm">
+                                <p className="text-xs font-bold text-ink sm:text-sm">
                                   {item.name}
                                 </p>
-                                <p className="line-clamp-1 text-[11px] text-gray-500">
+                                <p className="line-clamp-1 text-[12px] text-ink-muted">
                                   {item.blurb}
                                 </p>
                               </div>
@@ -1188,7 +1118,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
       {/* Three Toilets Section (One kit, every toilet) */}
       <section
         id="every-toilet"
-        className="bg-gradient-to-b from-[#EEF7F5] via-[#F4FAF8] to-[#FAF7F2] py-14 text-[#0A3B39] sm:py-20"
+        className="bg-gradient-to-b from-[#EEF7F5] via-[#F4FAF8] to-[#FAF7F2] py-14 text-ink sm:py-20"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           {/* Section Header */}
@@ -1196,11 +1126,11 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
             <span className="mb-3 block text-xs font-bold tracking-widest text-[#116B66] uppercase">
               ONE KIT, EVERY TOILET
             </span>
-            <h2 className="font-serif text-3xl leading-[1.15] font-extrabold tracking-tight text-[#0A3B39] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl leading-[1.15] font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
               Three toilets you'll meet on a trip.{" "}
               <span className="text-[#116B66]">One kit for all of them.</span>
             </h2>
-            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-gray-600 sm:text-base">
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink-muted sm:text-base">
               Travel throws three kinds of toilet at you, and most people are
               only ready for one. A filthy Western seat you don't want to touch.
               A squat pan you can't or won't use. And the long stretches
@@ -1218,12 +1148,12 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#D7EFEA] text-[#116B66]">
                   <ShieldCheck className="h-5 w-5" />
                 </div>
-                <h3 className="mb-2 text-base font-bold text-[#0A3B39] sm:text-lg">
+                <h3 className="mb-2 text-base font-bold text-ink sm:text-lg">
                   Dirty Western seat
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Lay a{" "}
-                  <strong className="font-bold text-[#0A3B39]">
+                  <strong className="font-bold text-ink">
                     disposable cover
                   </strong>{" "}
                   and sit: your skin never touches a wet, shared seat. No
@@ -1238,12 +1168,12 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#D7EFEA] text-[#116B66]">
                   <Compass className="h-5 w-5" />
                 </div>
-                <h3 className="mb-2 text-base font-bold text-[#0A3B39] sm:text-lg">
+                <h3 className="mb-2 text-base font-bold text-ink sm:text-lg">
                   Squat toilet you can't use
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
                   The{" "}
-                  <strong className="font-bold text-[#0A3B39]">
+                  <strong className="font-bold text-ink">
                     stand-to-pee funnel
                   </strong>{" "}
                   lets you go standing, without touching anything, a lifesaver
@@ -1258,11 +1188,11 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#D7EFEA] text-[#116B66]">
                   <ShoppingBag className="h-5 w-5" />
                 </div>
-                <h3 className="mb-2 text-base font-bold text-[#0A3B39] sm:text-lg">
+                <h3 className="mb-2 text-base font-bold text-ink sm:text-lg">
                   No toilet at all
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                  <strong className="font-bold text-[#0A3B39]">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
+                  <strong className="font-bold text-ink">
                     Pee & puke bags
                   </strong>{" "}
                   handle the long drives, the traffic jams and the treks where
@@ -1277,11 +1207,11 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-[#D7EFEA] text-[#116B66]">
                   <Briefcase className="h-5 w-5" />
                 </div>
-                <h3 className="mb-2 text-base font-bold text-[#0A3B39] sm:text-lg">
+                <h3 className="mb-2 text-base font-bold text-ink sm:text-lg">
                   The mess in between
                 </h3>
-                <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                  <strong className="font-bold text-[#0A3B39]">
+                <p className="text-xs leading-relaxed text-ink-muted sm:text-sm">
+                  <strong className="font-bold text-ink">
                     Intimate wipes, free with every kit.
                   </strong>{" "}
                   Ten individually-wrapped, pH-balanced wipes to freshen up
@@ -1298,12 +1228,12 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                 <Heart className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-[#0A3B39] sm:text-lg">
+                <h3 className="text-base font-bold text-ink sm:text-lg">
                   And if your cycle falls on the trip...
                 </h3>
-                <p className="mt-1 text-xs leading-relaxed text-gray-600 sm:text-sm">
+                <p className="mt-1 text-xs leading-relaxed text-ink-muted sm:text-sm">
                   Open any kit and add{" "}
-                  <strong className="font-bold text-[#0A3B39]">
+                  <strong className="font-bold text-ink">
                     Ovy pads, liners or a menstrual cup
                   </strong>{" "}
                   , so a period on the road is never a crisis.
@@ -1317,7 +1247,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
       {/* Where you'll be glad you packed it Section (Matching User Design) */}
       <section
         id="where-to-use"
-        className="bg-[#FAF7F2] py-14 text-[#0A3B39] sm:py-20"
+        className="bg-[#FAF7F2] py-14 text-ink sm:py-20"
       >
         <div className="container mx-auto px-4 sm:px-6 lg:px-12">
           {/* Header */}
@@ -1325,10 +1255,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
             <span className="mb-2 block text-xs font-bold tracking-widest text-[#116B66] uppercase">
               EVERY TRIP, SORTED
             </span>
-            <h2 className="font-serif text-3xl font-extrabold tracking-tight text-[#0A3B39] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
               Where you'll be glad you packed it
             </h2>
-            <p className="mt-2 text-sm text-gray-600 sm:text-base">
+            <p className="mt-2 text-sm text-ink-muted sm:text-base">
               Tap a place to see how the Yatra Kit earns its spot in your bag.
             </p>
           </div>
@@ -1374,7 +1304,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                       <span
                         className={`mt-3 line-clamp-2 text-xs leading-tight font-bold transition-colors ${
                           isActive
-                            ? "font-extrabold text-[#0A3B39]"
+                            ? "font-extrabold text-ink"
                             : "text-[#168A82] group-hover:text-[#0A3B39]"
                         }`}
                       >
@@ -1394,7 +1324,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                     prev > 0 ? prev - 1 : content.STOPS.length - 1,
                   );
                 }}
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 shadow-sm transition-colors hover:border-gray-400 hover:bg-gray-100"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-ink-muted shadow-sm transition-colors hover:border-gray-400 hover:bg-gray-100"
                 aria-label="Previous location"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -1405,7 +1335,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                     prev < content.STOPS.length - 1 ? prev + 1 : 0,
                   );
                 }}
-                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 shadow-sm transition-colors hover:border-gray-400 hover:bg-gray-100"
+                className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-gray-300 bg-white text-ink-muted shadow-sm transition-colors hover:border-gray-400 hover:bg-gray-100"
                 aria-label="Next location"
               >
                 <ChevronRight className="h-4 w-4" />
@@ -1427,10 +1357,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
 
                 {/* Content Box */}
                 <div className="flex-1">
-                  <h3 className="font-serif text-2xl font-bold tracking-tight text-[#0A3B39] sm:text-3xl">
+                  <h3 className="font-serif text-2xl font-bold tracking-tight text-ink sm:text-3xl">
                     {content.STOPS[activeStopIndex][1]}
                   </h3>
-                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-gray-600 sm:text-base">
+                  <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted sm:text-base">
                     {content.STOPS[activeStopIndex][2]}
                   </p>
 
@@ -1440,7 +1370,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                       <Check className="h-4 w-4 text-[#116B66]" />
                       <span>
                         Keep your kit in{" "}
-                        <strong className="font-bold text-[#0A3B39]">
+                        <strong className="font-bold text-ink">
                           {content.STOPS[activeStopIndex][3]}
                         </strong>
                       </span>
@@ -1494,14 +1424,14 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
       <div className="pdp-sticky-active fixed bottom-[56px] left-0 right-0 z-40 border-t border-[#E5DAC9] bg-[#FAF7F2]/98 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.12)] backdrop-blur-md md:hidden">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[10px] font-bold tracking-wider text-[#168A82] uppercase">
+            <p className="truncate text-[11px] font-bold tracking-wider text-[#168A82] uppercase">
               {activeKit?.name || "Yatra Kit"}
             </p>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-lg font-extrabold text-[#0A3B39]">
+              <span className="text-lg font-extrabold text-ink">
                 {activeTotal > 0 ? `₹${activeTotal}` : ""}
               </span>
-              <span className="text-[11px] text-gray-500">
+              <span className="text-[12px] text-ink-muted">
                 · {totalItemsInKit} {totalItemsInKit === 1 ? "item" : "items"}
               </span>
             </div>
@@ -1542,10 +1472,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
 
           {/* Content */}
           <div className="flex-1 pr-3">
-            <h4 className="text-xs font-bold text-[#0A3B39] sm:text-sm">
+            <h4 className="text-xs font-bold text-ink sm:text-sm">
               One kit, every toilet?
             </h4>
-            <p className="mt-0.5 text-[11px] leading-tight text-gray-500 sm:text-xs">
+            <p className="mt-0.5 text-[12px] leading-tight text-ink-muted sm:text-xs">
               See how covers, funnel and bags work together.
             </p>
           </div>

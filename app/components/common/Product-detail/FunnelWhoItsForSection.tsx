@@ -82,17 +82,17 @@ export default function FunnelWhoItsForSection() {
   };
 
   return (
-    <section id="who-its-for" className="w-full bg-[#fdeef4] scroll-mt-32 sm:scroll-mt-36 py-12 sm:py-18 lg:py-22 text-[#2A1620]">
+    <section id="who-its-for" className="w-full bg-[#fdeef4] scroll-mt-32 sm:scroll-mt-36 py-12 sm:py-18 lg:py-22 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="max-w-3xl mb-8 sm:mb-12">
           <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2">
             FOR EVERY WOMAN
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-[#5A0E30] leading-[1.08] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold text-ink leading-[1.08] tracking-tight">
             Who it&apos;s for
           </h2>
-          <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
+          <p className="mt-3 text-sm sm:text-base lg:text-lg text-ink-muted leading-relaxed font-normal">
             For women and girls on the move: travellers, mums-to-be, and anyone who struggles with squatting or dirty public toilets. Tap a card to see how it helps.
           </p>
         </div>
@@ -124,7 +124,7 @@ export default function FunnelWhoItsForSection() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-serif text-sm sm:text-base lg:text-lg font-bold text-[#5A0E30] truncate">
+                    <h3 className="font-serif text-sm sm:text-base lg:text-lg font-bold text-ink truncate">
                       {aud.title}
                     </h3>
                   </div>
@@ -143,7 +143,7 @@ export default function FunnelWhoItsForSection() {
 
                 {/* Expanded Body Content */}
                 {isOpen && (
-                  <div className="mt-3 border-t border-[#f8dce8] pt-3 text-xs sm:text-sm text-[#2A1620]/80 leading-relaxed font-normal animate-in fade-in duration-200">
+                  <div className="mt-3 border-t border-[#f8dce8] pt-3 text-xs sm:text-sm text-ink-muted leading-relaxed font-normal animate-in fade-in duration-200">
                     {aud.desc}
                   </div>
                 )}

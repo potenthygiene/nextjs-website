@@ -111,7 +111,7 @@ export function LoowayYatraKitSection() {
             <span className="mb-2 block text-[11px] font-bold tracking-widest text-[#006573] uppercase">
               LOOWAY YATRA KIT
             </span>
-            <h2 className="mb-2 font-serif text-[27px] leading-[29.16px] font-semibold text-[#1A150F] sm:text-[46px] sm:leading-[49.68px]">
+            <h2 className="mb-2 font-serif text-[27px] leading-[29.16px] font-semibold text-ink sm:text-[46px] sm:leading-[49.68px]">
               Eleven ready-made kits.
             </h2>
             <div className="mb-4">
@@ -250,24 +250,24 @@ export function LoowayYatraKitSection() {
                   className={`group flex transform flex-col justify-between rounded-2xl bg-[#004851] p-3.5 text-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] sm:p-6 ${tiltDirection} min-h-[180px] sm:min-h-[220px] cursor-pointer hover:shadow-xl`}
                 >
                   <div>
-                    <span className="mb-1 block text-[9px] font-bold tracking-wider text-teal-200 uppercase sm:text-[10px] sm:tracking-widest">
+                    <span className="mb-1 block text-[11px] font-bold tracking-wider text-teal-200 uppercase sm:text-[11px] sm:tracking-widest">
                       {kit.kicker}
                     </span>
                     <h3 className="mb-1.5 font-serif text-base font-bold leading-tight text-white sm:mb-2 sm:text-xl">
                       {kit.title}
                     </h3>
-                    <p className="text-[11px] leading-relaxed font-normal text-white/85 sm:text-xs">
+                    <p className="text-[12px] leading-relaxed font-normal text-white/85 sm:text-xs">
                       {kit.contents}
                     </p>
                   </div>
 
                   <div className="mt-3 space-y-1 border-t border-white/10 pt-3 sm:mt-4 sm:space-y-1.5 sm:pt-4">
-                    <div className="text-[10px] font-bold text-[#F6D353] sm:text-xs">
+                    <div className="text-[12px] font-bold text-[#F6D353] sm:text-xs">
                       + 10 free intimate wipes
                     </div>
                     <Link
                       href={kit.id ? `/looway-yatra-kit?kit=${kit.id}#choose-kit` : "/looway-yatra-kit#choose-kit"}
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-white group-hover:underline sm:text-xs"
+                      className="inline-flex items-center gap-1 text-[12px] font-bold text-white group-hover:underline sm:text-xs"
                     >
                       <span>See it in the builder</span>
                       <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1.5 sm:h-3.5 sm:w-3.5" />
@@ -284,13 +284,13 @@ export function LoowayYatraKitSection() {
                   className={`group col-span-2 flex transform flex-col justify-between rounded-2xl bg-[#F6D353] p-4 text-[#004851] shadow-sm transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] sm:p-6 lg:col-span-1 ${tiltDirection} min-h-[150px] sm:min-h-[220px] cursor-pointer border border-yellow-300 hover:shadow-xl`}
                 >
                   <div>
-                    <span className="mb-1 block text-[9px] font-bold tracking-wider uppercase opacity-80 sm:text-[10px] sm:tracking-widest">
+                    <span className="mb-1 block text-[11px] font-bold tracking-wider uppercase opacity-80 sm:text-[11px] sm:tracking-widest">
                       {kit.kicker}
                     </span>
                     <h3 className="mb-1.5 font-serif text-base font-bold leading-tight sm:mb-2 sm:text-xl">
                       {kit.title}
                     </h3>
-                    <p className="text-[11px] leading-relaxed font-normal text-[#004851]/90 sm:text-xs">
+                    <p className="text-[12px] leading-relaxed font-normal text-[#004851]/90 sm:text-xs">
                       {kit.contents}
                     </p>
                   </div>
@@ -298,7 +298,7 @@ export function LoowayYatraKitSection() {
                   <div className="mt-3 border-t border-black/10 pt-3 sm:mt-4 sm:pt-4">
                     <Link
                       href={kit.id ? `/looway-yatra-kit?kit=${kit.id}#choose-kit` : "/looway-yatra-kit#choose-kit"}
-                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004851] group-hover:underline sm:text-xs"
+                      className="inline-flex items-center gap-1 text-[12px] font-bold text-[#004851] group-hover:underline sm:text-xs"
                     >
                       <span>Open the builder</span>
                       <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1.5 sm:h-3.5 sm:w-3.5" />
@@ -316,24 +316,24 @@ export function LoowayYatraKitSection() {
                 className={`${isExtraOnMobile ? "hidden sm:flex" : "flex"} group transform flex-col justify-between rounded-2xl border border-teal-100/80 bg-white p-3.5 shadow-2xs transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] sm:p-6 ${tiltDirection} min-h-[180px] sm:min-h-[220px] cursor-pointer hover:shadow-xl`}
               >
                 <div>
-                  <span className="mb-1 block text-[9px] font-bold tracking-wider text-gray-400 uppercase sm:text-[10px] sm:tracking-widest">
+                  <span className="mb-1 block text-[11px] font-bold tracking-wider text-gray-400 uppercase sm:text-[11px] sm:tracking-widest">
                     {kit.kicker}
                   </span>
                   <h3 className="mb-1.5 font-serif text-base font-bold leading-tight text-[#1F1915] sm:mb-2 sm:text-xl">
                     {kit.title}
                   </h3>
-                  <p className="text-[11px] leading-relaxed font-normal text-[#5C7275] sm:text-xs">
+                  <p className="text-[12px] leading-relaxed font-normal text-[#5C7275] sm:text-xs">
                     {kit.contents}
                   </p>
                 </div>
 
                 <div className="mt-3 space-y-1 border-t border-gray-100 pt-3 sm:mt-4 sm:space-y-1.5 sm:pt-4">
-                  <div className="text-[10px] font-bold text-emerald-600 sm:text-xs">
+                  <div className="text-[12px] font-bold text-emerald-600 sm:text-xs">
                     + 10 free intimate wipes
                   </div>
                   <Link
                     href={kit.id ? `/looway-yatra-kit?kit=${kit.id}#choose-kit` : "/looway-yatra-kit#choose-kit"}
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-[#004851] group-hover:underline sm:text-xs"
+                    className="inline-flex items-center gap-1 text-[12px] font-bold text-[#004851] group-hover:underline sm:text-xs"
                   >
                     <span>See it in the builder</span>
                     <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1.5 sm:h-3.5 sm:w-3.5" />

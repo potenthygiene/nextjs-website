@@ -310,7 +310,7 @@ export default function LoowayFaqSection({
     colPrefix: string,
   ) => (
     <div key={groupIdx} className="mb-6 space-y-2">
-      <h4 className="mb-2.5 text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
+      <h4 className="mb-2.5 text-[11px] font-bold tracking-widest text-[#0E5C3A] uppercase">
         {group.title}
       </h4>
       <div className="space-y-2">
@@ -340,7 +340,7 @@ export default function LoowayFaqSection({
               </button>
 
               {isOpen && (
-                <div className="border-t border-[#E4DED0]/60 px-3.5 pt-3 pb-4 text-xs leading-relaxed font-normal text-[#17271E]/80 sm:px-4.5 sm:text-sm">
+                <div className="border-t border-[#E4DED0]/60 px-3.5 pt-3 pb-4 text-xs leading-relaxed font-normal text-ink-muted sm:px-4.5 sm:text-sm">
                   {item.a}
                 </div>
               )}
@@ -354,15 +354,15 @@ export default function LoowayFaqSection({
   return (
     <section
       id="faq"
-      className="w-full scroll-mt-32 bg-[#F1F7F3] py-8 text-[#17271E] sm:scroll-mt-36 sm:py-16 lg:py-20"
+      className="w-full scroll-mt-32 bg-[#F1F7F3] py-8 text-ink sm:scroll-mt-36 sm:py-16 lg:py-20"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Header */}
         <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-12">
-          <span className="mb-1.5 block text-[10.5px] font-extrabold tracking-widest text-[#0E5C3A] uppercase sm:mb-2 sm:text-xs">
+          <span className="mb-1.5 block text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase sm:mb-2 sm:text-xs">
             GOOD TO KNOW
           </span>
-          <h2 className="font-serif text-2xl leading-tight font-extrabold text-[#0A4A2E] sm:text-4xl lg:text-[40px]">
+          <h2 className="font-serif text-2xl leading-tight font-bold text-ink sm:text-4xl lg:text-[40px]">
             Frequently asked questions
           </h2>
         </div>
@@ -373,7 +373,7 @@ export default function LoowayFaqSection({
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`rounded-full px-3.5 py-1.5 text-[11px] font-extrabold whitespace-nowrap transition-all ${
+              className={`rounded-full px-3.5 py-1.5 text-[12px] font-extrabold whitespace-nowrap transition-all ${
                 activeCategory === cat.id
                   ? "bg-[#0E5C3A] text-white shadow-2xs"
                   : "border border-[#E4DED0] bg-white text-[#17271E]/80"

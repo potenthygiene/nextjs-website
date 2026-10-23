@@ -5,6 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy } from "lucide-react";
 import { toast } from "sonner";
+import {
+  REFERRAL_FRIEND_BONUS_RUPEES,
+  REFERRAL_FRIEND_LINE,
+  REFERRAL_REFERRER_LINE,
+  SIGNUP_BONUS_RUPEES,
+} from "@/lib/rewardsRules";
 
 export default function ShareReferralClient({ userDetail }: any) {
   const [origin, setOrigin] = useState("");
@@ -31,7 +37,7 @@ export default function ShareReferralClient({ userDetail }: any) {
   };
 
   const handleWhatsAppShare = () => {
-    const shareMessage = `Hey! Join Potent Hygiene with my link ${referralLink || ""} (or code ${referralCode}) and get 15% off your first order with FIRSTCARE15, plus ₹150 credit to spend. Free delivery on ₹399+.`;
+    const shareMessage = `Hey! Join Potent Hygiene with my link ${referralLink || ""} (or code ${referralCode}) and get ₹${REFERRAL_FRIEND_BONUS_RUPEES} credit on top of the ₹${SIGNUP_BONUS_RUPEES} welcome credit, plus 15% off your first order with FIRSTCARE15. Free delivery on ₹399+.`;
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`;
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   };
@@ -43,13 +49,13 @@ export default function ShareReferralClient({ userDetail }: any) {
         <div className="rounded-xl border border-dashed border-[#9FD3D6] bg-[#F3FAFB] p-3.5">
           <p className="text-[11px] font-bold uppercase tracking-wider text-[#016271]">Your friend gets</p>
           <p className="mt-1 text-sm text-gray-800">
-            <strong className="font-mono">FIRSTCARE15</strong>: 15% off their first order of ₹399+, plus ₹150 credit when they join with your link.
+            {REFERRAL_FRIEND_LINE} <strong className="font-mono">FIRSTCARE15</strong> is 15% off a first order of ₹399+.
           </p>
         </div>
         <div className="rounded-xl border border-dashed border-[#dcc0d4] bg-[#FFF7FB] p-3.5">
           <p className="text-[11px] font-bold uppercase tracking-wider text-[#7E4D77]">You get</p>
           <p className="mt-1 text-sm text-gray-800">
-            <strong className="font-mono">SHARECARE15</strong>: 15% off, once for every friend whose first order is delivered, and you can add it to any store coupon. Plus ₹100 credit.
+            {REFERRAL_REFERRER_LINE} <strong className="font-mono">SHARECARE15</strong> is 15% off, once for every such friend, and adds on to any store coupon.
           </p>
         </div>
       </div>

@@ -69,6 +69,7 @@ import {
   resolveStaticSizeKey,
 } from "@/lib/productStaticContent";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
+import { getReviewStats, reviewCountLabel } from "@/lib/reviewStats";
 import { OffersForYou } from "@/app/components/common/offers/Offers";
 import {
   OVY_QUIZ_THEME,
@@ -108,7 +109,12 @@ type DeliveryStatus =
       courier?: never;
     };
 
-export default function ProductDetailPage({ productInfo, themeColor }: any) {
+export default function ProductDetailPage({
+  productInfo,
+  themeColor,
+  reviews,
+}: any) {
+  const reviewStats = useMemo(() => getReviewStats(reviews), [reviews]);
   const router = useRouter();
 
   const slug = productInfo?.slug || "";
@@ -1086,7 +1092,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
               className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold whitespace-nowrap transition-all sm:px-5 sm:py-2.5 sm:text-sm ${
                 selectedPlanType === "pickSize"
                   ? "bg-[#9A5B90] text-white shadow-xs"
-                  : "text-[#1A150F]/70 hover:text-[#1A150F]"
+                  : "text-ink/70 hover:text-ink"
               }`}
             >
               <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -1105,13 +1111,13 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   ? "cursor-not-allowed text-black/40"
                   : selectedPlanType === "mixYourBox"
                     ? "bg-[#9A5B90] text-white shadow-xs"
-                    : "cursor-pointer text-[#1A150F]/70 hover:text-[#1A150F]"
+                    : "cursor-pointer text-ink/70 hover:text-ink"
               }`}
             >
               <PackageCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               Mix Your Box
               {!canCustomizeBox && (
-                <span className="ml-0.5 rounded-full bg-[#F3E6F0] px-1.5 py-0.5 font-sans text-[9px] font-extrabold tracking-wider text-[#7E4D77] uppercase sm:text-[10px]">
+                <span className="ml-0.5 rounded-full bg-[#F3E6F0] px-1.5 py-0.5 font-sans text-[11px] font-extrabold tracking-wider text-[#7E4D77] uppercase sm:text-[11px]">
                   Soon
                 </span>
               )}
@@ -1127,7 +1133,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           <div>
             <div className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden rounded-2xl border border-gray-200/80 bg-[#FBF1FB] p-3 shadow-xs sm:rounded-3xl sm:p-6">
               <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 sm:top-4 sm:left-4">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-[#7E4D77] shadow-xs backdrop-blur-xs sm:px-3.5 sm:py-1.5 sm:text-xs">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1 text-[12px] font-semibold text-[#7E4D77] shadow-xs backdrop-blur-xs sm:px-3.5 sm:py-1.5 sm:text-xs">
                   <CheckCircle2 className="h-3.5 w-3.5 text-[#7E4D77] sm:h-4 sm:w-4" />{" "}
                   100% Organic Cotton • Dermatologically Tested
                 </span>
@@ -1149,10 +1155,10 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   />
                 </div>
               ) : (
-                <div className="grid h-full place-items-center p-6 text-center text-gray-500 sm:p-8">
+                <div className="grid h-full place-items-center p-6 text-center text-ink-muted sm:p-8">
                   <div>
                     <Heart className="mx-auto mb-2 h-7 w-7 text-[#9A5B90] sm:h-8 sm:w-8" />
-                    <p className="font-semibold text-gray-900">
+                    <p className="font-semibold text-ink">
                       Ovy Organic Pad
                     </p>
                   </div>
@@ -1164,7 +1170,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   <button
                     type="button"
                     onClick={handlePrevImage}
-                    className="absolute top-1/2 left-2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white/90 text-[#1A150F] shadow-md transition-all hover:scale-105 hover:bg-white sm:left-3 sm:h-10 sm:w-10"
+                    className="absolute top-1/2 left-2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white/90 text-ink shadow-md transition-all hover:scale-105 hover:bg-white sm:left-3 sm:h-10 sm:w-10"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -1172,7 +1178,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   <button
                     type="button"
                     onClick={handleNextImage}
-                    className="absolute top-1/2 right-2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white/90 text-[#1A150F] shadow-md transition-all hover:scale-105 hover:bg-white sm:right-3 sm:h-10 sm:w-10"
+                    className="absolute top-1/2 right-2 z-10 flex h-8 w-8 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white/90 text-ink shadow-md transition-all hover:scale-105 hover:bg-white sm:right-3 sm:h-10 sm:w-10"
                     aria-label="Next image"
                   >
                     <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -1222,7 +1228,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
               .map((highlight: string, idx: number) => (
                 <div
                   key={idx}
-                  className="flex items-start gap-2.5 text-xs leading-snug text-[#1A150F]/80 sm:text-base"
+                  className="flex items-start gap-2.5 text-xs leading-snug text-ink/80 sm:text-base"
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-[#9A5B90] sm:h-4.5 sm:w-4.5" />
                   <span>{highlight}</span>
@@ -1241,7 +1247,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           </div>
 
           {/* Product Title */}
-          <h1 className="font-serif text-2xl leading-tight font-bold text-[#1A150F] sm:text-4xl lg:text-[40px]">
+          <h1 className="font-serif text-2xl leading-tight font-bold text-ink sm:text-4xl lg:text-[40px]">
             {productInfo?.name || "Ovy Organic Soft Sanitary Pads"}
           </h1>
 
@@ -1254,7 +1260,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
               className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold transition-all sm:text-sm ${
                 isWishlisted
                   ? "border-rose-300 bg-rose-50 text-rose-600 shadow-xs hover:bg-rose-100"
-                  : "border-gray-300/80 bg-white text-gray-700 shadow-xs hover:border-[#9A5B90] hover:text-[#7E4D77]"
+                  : "border-gray-300/80 bg-white text-ink-muted shadow-xs hover:border-[#9A5B90] hover:text-[#7E4D77]"
               }`}
             >
               {isWishlistUpdating ? (
@@ -1264,7 +1270,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   className={`h-4 w-4 transition-transform active:scale-125 ${
                     isWishlisted
                       ? "fill-rose-500 text-rose-500"
-                      : "text-gray-600"
+                      : "text-ink-muted"
                   }`}
                 />
               )}
@@ -1279,7 +1285,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           </div>
 
           {/* Size & Meta Summary */}
-          <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-gray-600 sm:text-sm">
+          <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-ink-muted sm:text-sm">
             {isLiners ? (
               <>
                 <span>{activeVariant?.name || selectedSize || "Pack of 60"}</span>
@@ -1292,7 +1298,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                       : "60 Liners per pack"}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-gray-400" />
-                <span className="rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[11px] font-semibold text-[#7E4D77] sm:text-xs">
+                <span className="rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[12px] font-semibold text-[#7E4D77] sm:text-xs">
                   Daily Freshness · 190mm
                 </span>
               </>
@@ -1302,7 +1308,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                 <span className="h-1 w-1 rounded-full bg-gray-400" />
                 <span>8 Panties per box</span>
                 <span className="h-1 w-1 rounded-full bg-gray-400" />
-                <span className="rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[11px] font-semibold text-[#7E4D77] sm:text-xs">
+                <span className="rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[12px] font-semibold text-[#7E4D77] sm:text-xs">
                   {activeVariant?.name?.includes("XXL")
                     ? "Waist ~44 to 56 in"
                     : "Waist ~28 to 44 in"}
@@ -1324,7 +1330,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     : "21 Pads + 4 Free Liners"}
                 </span>
                 <span className="h-1 w-1 rounded-full bg-gray-400" />
-                <span className="rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[11px] font-semibold text-[#7E4D77] sm:text-xs">
+                <span className="rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[12px] font-semibold text-[#7E4D77] sm:text-xs">
                   {selectedPlanType === "mixYourBox"
                     ? "All Flow Types"
                     : activeVariant?.flowType ||
@@ -1335,26 +1341,32 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
             )}
           </div>
 
-          {/* Rating Row */}
-          <div className="flex items-center gap-2 text-xs text-gray-600 sm:text-sm">
-            <div className="inline-flex gap-0.5 text-[#9A5B90]">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className="h-3.5 w-3.5 fill-[#9A5B90] text-[#9A5B90] sm:h-4 sm:w-4"
-                />
-              ))}
+          {/* Rating Row: only from real, approved reviews */}
+          {reviewStats.count > 0 && (
+            <div className="flex items-center gap-2 text-xs text-ink-muted sm:text-sm">
+              <div className="inline-flex gap-0.5 text-[#9A5B90]">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${
+                      i < Math.round(reviewStats.average)
+                        ? "fill-[#9A5B90] text-[#9A5B90]"
+                        : "fill-gray-200 text-gray-200"
+                    }`}
+                  />
+                ))}
+              </div>
+              <span>
+                <b>{reviewStats.averageLabel}/5</b> ({reviewCountLabel(reviewStats.count)})
+              </span>
             </div>
-            <span>
-              <b>4.8/5</b> 
-            </span>
-          </div>
+          )}
 
           {/* Description */}
-          <p className="text-xs leading-relaxed text-gray-600 sm:text-base">
+          <p className="text-xs leading-relaxed text-ink-muted sm:text-base">
             {displayDescription || (
               <>
-                <strong className="font-semibold text-[#1A150F]">
+                <strong className="font-semibold text-ink">
                   Rash-free, toxin-free organic sanitary pads
                 </strong>{" "}
                 with a super-absorbent SAP gel core & 100% biodegradable disposal
@@ -1368,7 +1380,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           {selectedPlanType === "pickSize" && (
             <div>
               <div className="mb-2.5 flex items-baseline justify-between">
-                <span className="text-[11px] font-bold tracking-wider text-gray-700 uppercase sm:text-xs">
+                <span className="text-[11px] font-bold tracking-wider text-ink-muted uppercase sm:text-xs">
                   {isLiners || isPanty ? "SELECT PACK" : "SELECT SIZE"}
                 </span>
                 {isPads && (
@@ -1465,23 +1477,23 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                       } ${isVariantOutOfStock ? "opacity-80" : ""}`}
                     >
                       <div className="flex items-start justify-between gap-1">
-                        <div className="font-serif text-base font-semibold text-[#1A150F] sm:text-xl">
+                        <div className="font-serif text-base font-semibold text-ink sm:text-xl">
                           {sizeName}
                         </div>
                         {isVariantComingSoon ? (
-                          <span className="rounded-full bg-[#F3E6F0] px-1.5 py-0.5 text-[9px] font-bold text-[#7E4D77] sm:text-[10px]">
+                          <span className="rounded-full bg-[#F3E6F0] px-1.5 py-0.5 text-[12px] font-bold text-[#7E4D77] sm:text-[12px]">
                             Coming soon
                           </span>
                         ) : isVariantOutOfStock && (
-                          <span className="rounded-full bg-red-100 px-1.5 py-0.5 text-[9px] font-bold text-red-600 sm:text-[10px]">
+                          <span className="rounded-full bg-red-100 px-1.5 py-0.5 text-[12px] font-bold text-red-600 sm:text-[12px]">
                             Out of Stock
                           </span>
                         )}
                       </div>
-                      <div className="mt-0.5 text-[10px] font-medium text-gray-600 sm:text-xs">
+                      <div className="mt-0.5 text-[12px] font-medium text-ink-muted sm:text-xs">
                         {subText}
                       </div>
-                      <div className="mt-1 line-clamp-1 text-[10px] font-semibold tracking-tight text-[#7E4D77] sm:mt-2 sm:text-xs">
+                      <div className="mt-1 line-clamp-1 text-[12px] font-semibold tracking-tight text-[#7E4D77] sm:mt-2 sm:text-xs">
                         {flowDesc}
                       </div>
                       <div
@@ -1519,7 +1531,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                       </div>
                       <table className="w-full border-collapse text-left text-xs sm:text-sm">
                         <thead>
-                          <tr className="border-b border-gray-100 font-serif text-sm font-semibold text-[#1A150F]">
+                          <tr className="border-b border-gray-100 font-serif text-sm font-semibold text-ink">
                             <th className="p-3" />
                             <th
                               className={`p-3 text-center ${selectedSize.includes("240") ? "bg-[#F3E6F0] text-[#7E4D77]" : ""}`}
@@ -1538,9 +1550,9 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                             </th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 text-gray-600">
+                        <tbody className="divide-y divide-gray-100 text-ink-muted">
                           <tr>
-                            <th className="p-3 font-semibold text-[#1A150F]">
+                            <th className="p-3 font-semibold text-ink">
                               Length
                             </th>
                             <td className="p-3 text-center">240mm</td>
@@ -1548,7 +1560,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                             <td className="p-3 text-center">320mm</td>
                           </tr>
                           <tr>
-                            <th className="p-3 font-semibold text-[#1A150F]">
+                            <th className="p-3 font-semibold text-ink">
                               Flow
                             </th>
                             <td className="p-3 text-center">Light</td>
@@ -1556,7 +1568,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                             <td className="p-3 text-center">Heavy/Night</td>
                           </tr>
                           <tr>
-                            <th className="p-3 font-semibold text-[#1A150F]">
+                            <th className="p-3 font-semibold text-ink">
                               Coverage
                             </th>
                             <td className="p-3 text-center">Standard</td>
@@ -1586,10 +1598,10 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                 <Heart className="h-4.5 w-4.5 sm:h-5.5 sm:w-5.5" />
               </div>
               <div className="min-w-0 flex-1">
-                <b className="block text-xs font-bold tracking-tight text-[#1A150F] sm:text-base">
+                <b className="block text-xs font-bold tracking-tight text-ink sm:text-base">
                   Unsure which size is right for your flow?
                 </b>
-                <span className="text-[11px] text-gray-600 sm:text-sm">
+                <span className="text-[12px] text-ink-muted sm:text-sm">
                   Take our 30-second Period Fit Quiz for a custom recommendation
                 </span>
               </div>
@@ -1602,7 +1614,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           {/* BUY BOX CONTAINER */}
           <div className="space-y-4 rounded-2xl border border-gray-200/80 bg-white p-4 shadow-sm sm:space-y-5 sm:rounded-3xl sm:p-7">
             {/* Plan Selection Header */}
-            <div className="text-[11px] font-bold tracking-wider text-gray-500 uppercase sm:text-xs">
+            <div className="text-[11px] font-bold tracking-wider text-ink-muted uppercase sm:text-xs">
               SELECT ORDER TYPE & FREQUENCY
             </div>
 
@@ -1645,20 +1657,20 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-2 text-sm font-semibold text-[#1A150F]">
+                      <div className="flex flex-wrap items-center gap-2 text-sm font-semibold text-ink">
                         <span>{plan.label}</span>
                         {discountPercentage > 0 && (
-                          <span className="rounded-full bg-[#9A5B90] px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-white uppercase">
+                          <span className="rounded-full bg-[#9A5B90] px-2.5 py-0.5 text-[11px] font-extrabold tracking-wider text-white uppercase">
                             SAVE {discountPercentage}%
                           </span>
                         )}
                         {plan.subscriptionType === "cycle_sync" && (
-                          <span className="rounded-full bg-emerald-700 px-2.5 py-0.5 text-[10px] font-extrabold tracking-wider text-white uppercase">
+                          <span className="rounded-full bg-emerald-700 px-2.5 py-0.5 text-[11px] font-extrabold tracking-wider text-white uppercase">
                             CYCLE SYNCED
                           </span>
                         )}
                       </div>
-                      <span className="mt-0.5 block text-xs text-gray-500">
+                      <span className="mt-0.5 block text-xs text-ink-muted">
                         {plan.id === "buy_once"
                           ? "Single box order, no commitment"
                           : plan.subscriptionType === "cycle_sync"
@@ -1668,7 +1680,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     </div>
 
                     <div className="flex-none text-right whitespace-nowrap">
-                      <b className="font-serif text-lg font-semibold text-[#1A150F]">
+                      <b className="font-serif text-lg font-semibold text-ink">
                         {priceMissing ? "" : `₹${Math.round(discountedPrice)}`}
                       </b>
                       {!priceMissing && discountPercentage > 0 && (
@@ -1689,8 +1701,8 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-white text-[#7E4D77]">
                     <RotateCcw className="h-5 w-5" />
                   </div>
-                  <div className="flex-1 text-xs leading-snug text-gray-600 sm:text-sm">
-                    <b className="font-bold text-[#1A150F]">
+                  <div className="flex-1 text-xs leading-snug text-ink-muted sm:text-sm">
+                    <b className="font-bold text-ink">
                       Cycle Sync Rhythm
                     </b>
                     <div>
@@ -1702,7 +1714,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div>
-                    <label className="text-xs font-bold tracking-wider text-gray-700 uppercase">
+                    <label className="text-xs font-bold tracking-wider text-ink-muted uppercase">
                       Next Period Date
                     </label>
                     <input
@@ -1719,7 +1731,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-bold tracking-wider text-gray-700 uppercase">
+                    <label className="text-xs font-bold tracking-wider text-ink-muted uppercase">
                       Cycle Length (Days)
                     </label>
                     <input
@@ -1775,7 +1787,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
             {/* Quantity Stepper (for Pick a Size mode) */}
             {isQuantityChangable && (
               <div>
-                <div className="mb-2.5 text-xs font-bold tracking-wider text-gray-500 uppercase">
+                <div className="mb-2.5 text-xs font-bold tracking-wider text-ink-muted uppercase">
                   QUANTITY {isLiners ? "(PACKS)" : isPanty ? "(PACKS)" : "(BOXES)"}
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
@@ -1789,7 +1801,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                         className={`h-11 w-11 cursor-pointer rounded-xl border-2 text-sm font-semibold transition-all ${
                           quantity === num
                             ? "border-[#9A5B90] bg-[#9A5B90] text-white"
-                            : "border-gray-200/80 bg-white text-[#1A150F] hover:border-[#9A5B90]"
+                            : "border-gray-200/80 bg-white text-ink hover:border-[#9A5B90]"
                         }`}
                       >
                         {num}
@@ -1806,9 +1818,9 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     >
                       -
                     </button>
-                    <span className="min-w-12 text-center text-sm font-semibold text-[#1A150F]">
+                    <span className="min-w-12 text-center text-sm font-semibold text-ink">
                       {quantity}
-                      <small className="block text-[10px] font-normal text-gray-500">
+                      <small className="block text-[12px] font-normal text-ink-muted">
                         {isLiners || isPanty
                           ? `pack${quantity > 1 ? "s" : ""}`
                           : `box${quantity > 1 ? "es" : ""}`}
@@ -1833,7 +1845,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
             <div className="flex items-end justify-between gap-4 border-y border-gray-100 py-4">
               <div>
                 <div className="flex items-baseline gap-2.5">
-                  <span className="font-serif text-3xl font-bold tracking-tight text-[#1A150F] sm:text-4xl">
+                  <span className="font-serif text-3xl font-bold tracking-tight text-ink sm:text-4xl">
                     {typeof totalAmount === "number"
                       ? `₹${totalAmount}`
                       : priceMissing
@@ -1847,8 +1859,8 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   )}
                 </div>
                 {typeof totalAmount === "number" && (
-                  <div className="mt-0.5 text-xs text-gray-600">
-                    <b className="font-semibold text-[#1A150F]">
+                  <div className="mt-0.5 text-xs text-ink-muted">
+                    <b className="font-semibold text-ink">
                       ₹
                       {(
                         totalAmount /
@@ -1875,22 +1887,22 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
             </div>
 
             {/* Feature Note */}
-            <div className="flex items-center gap-3 text-xs text-gray-600 sm:text-sm">
+            <div className="flex items-center gap-3 text-xs text-ink-muted sm:text-sm">
               <div className="flex h-8 w-8 flex-none items-center justify-center rounded-xl bg-[#E4F1F1] text-[#1A8D91]">
                 <Leaf className="h-4.5 w-4.5" />
               </div>
               {isLiners ? (
                 <span>
-                  100% Breathable cottony-soft top sheet · <b className="font-semibold text-[#1A150F]">190mm daily coverage</b>
+                  100% Breathable cottony-soft top sheet · <b className="font-semibold text-ink">190mm daily coverage</b>
                 </span>
               ) : isPanty ? (
                 <span>
-                  Super-absorbent 360° coverage · <b className="font-semibold text-[#1A150F]">holds up to 5 pads</b>
+                  Super-absorbent 360° coverage · <b className="font-semibold text-ink">holds up to 5 pads</b>
                 </span>
               ) : (
                 <span>
                   Includes{" "}
-                  <b className="font-semibold text-[#1A150F]">
+                  <b className="font-semibold text-ink">
                     4 Free Organic Panty Liners
                   </b>{" "}
                   in every 21-pad box!
@@ -1904,7 +1916,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                 <button
                   type="button"
                   disabled
-                  className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-gray-200 p-4 text-base font-bold text-gray-500 shadow-none"
+                  className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-gray-200 p-4 text-base font-bold text-ink-muted shadow-none"
                 >
                   Out of Stock
                 </button>
@@ -1943,12 +1955,12 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
             {/* Shop With Confidence & Trust Assurance Section */}
             <div className="space-y-4 pt-3">
               {/* Shipping Sub-header */}
-              <div className="text-center text-xs font-medium text-gray-500 sm:text-sm">
+              <div className="text-center text-xs font-medium text-ink-muted sm:text-sm">
                 Free delivery on orders of ₹399 and above · ships in 24 to 48 hrs · secure checkout
               </div>
 
               {/* Satisfaction Guarantee */}
-              <div className="text-center text-xs text-gray-700 sm:text-sm">
+              <div className="text-center text-xs text-ink-muted sm:text-sm">
                 Questions? Email{" "}
                 <a
                   href="mailto:care@potenthygiene.com"
@@ -1960,11 +1972,11 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
 
               {/* Shop With Confidence Bullets */}
               <div className="pt-2">
-                <div className="mb-3 text-xs font-bold tracking-wider text-gray-700 uppercase">
+                <div className="mb-3 text-xs font-bold tracking-wider text-ink-muted uppercase">
                   SHOP WITH CONFIDENCE
                 </div>
 
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs font-semibold text-gray-700 sm:text-sm">
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-2.5 text-xs font-semibold text-ink-muted sm:text-sm">
                   <div className="flex items-center gap-2">
                     <ShieldCheck className="h-4.5 w-4.5 shrink-0 text-[#9A5B90]" />
                     <span>Skin-friendly & derma-tested</span>
@@ -1985,7 +1997,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                 <div className="flex items-center gap-2.5 text-[#1A8D91]">
                   <Truck className="h-5 w-5 shrink-0" />
                 </div>
-                <div className="flex items-start gap-2.5 text-xs leading-relaxed font-medium text-gray-700 sm:text-sm">
+                <div className="flex items-start gap-2.5 text-xs leading-relaxed font-medium text-ink-muted sm:text-sm">
                   <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#1A8D91]" />
                   <span>
                     For hygiene and safety, sanitary products are non-returnable
@@ -2062,7 +2074,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   ].map((pm) => (
                     <span
                       key={pm}
-                      className="rounded-lg border border-gray-200 bg-gray-50/80 px-2.5 py-1 text-[11px] font-semibold text-gray-700"
+                      className="rounded-lg border border-gray-200 bg-gray-50/80 px-2.5 py-1 text-[12px] font-semibold text-ink-muted"
                     >
                       {pm}
                     </span>
@@ -2075,7 +2087,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           {/* Quick Specs Section (Outside the card box) */}
           <div className="pt-4">
             <div className="mb-4 border-b border-gray-200/80 pb-2">
-              <span className="text-xs font-bold tracking-wider text-gray-500 uppercase">
+              <span className="text-xs font-bold tracking-wider text-ink-muted uppercase">
                 QUICK SPECS
               </span>
             </div>
@@ -2085,8 +2097,8 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                 const v = Array.isArray(spec) ? spec[1] : spec?.value;
                 return (
                   <div key={i} className="bg-white p-3.5">
-                    <div className="text-xs text-gray-500">{k}</div>
-                    <div className="mt-0.5 text-sm font-semibold text-[#1A150F]">{v}</div>
+                    <div className="text-xs text-ink-muted">{k}</div>
+                    <div className="mt-0.5 text-sm font-semibold text-ink">{v}</div>
                   </div>
                 );
               })}
@@ -2097,7 +2109,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
 
       {/* Trust & Guarantee Strap (First Component Bottom Strap) */}
       <div className="mt-8 rounded-2xl border border-gray-200/80 bg-white p-3.5 px-4 shadow-xs sm:rounded-full sm:px-8">
-        <div className="grid grid-cols-2 gap-3.5 text-xs font-semibold text-[#1A150F]/80 sm:flex sm:items-center sm:justify-between sm:text-sm">
+        <div className="grid grid-cols-2 gap-3.5 text-xs font-semibold text-ink/80 sm:flex sm:items-center sm:justify-between sm:text-sm">
           <div className="flex items-center gap-2">
             <Lock className="h-4 w-4 flex-none text-[#1A8D91]" />
             <span>Secure transactions</span>
@@ -2222,10 +2234,10 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
         }`}
       >
         <div className="min-w-0">
-          <div className="font-serif text-lg sm:text-xl font-bold text-[#1A150F]">
+          <div className="font-serif text-lg sm:text-xl font-bold text-ink">
             {typeof totalAmount === "number" ? `₹${totalAmount}` : ""}
           </div>
-          <div className="text-xs text-gray-500 truncate">
+          <div className="text-xs text-ink-muted truncate">
             {isOutOfStock
               ? "Out of stock"
               : effectivePurchaseType === "subscription"
@@ -2241,7 +2253,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           <button
             type="button"
             disabled
-            className="flex-1 max-w-[280px] cursor-not-allowed rounded-2xl bg-gray-200 p-3.5 text-sm font-bold text-gray-500 shadow-none"
+            className="flex-1 max-w-[280px] cursor-not-allowed rounded-2xl bg-gray-200 p-3.5 text-sm font-bold text-ink-muted shadow-none"
           >
             Out of Stock
           </button>

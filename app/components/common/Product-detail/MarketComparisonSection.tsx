@@ -51,18 +51,18 @@ export default function MarketComparisonSection() {
   ];
 
   return (
-    <section id="why-looway" className="w-full bg-[linear-gradient(90deg,#E4F0E8_0%,#F1F7F3_30%,#FBF8F1_80%)] scroll-mt-32 sm:scroll-mt-36 py-8 sm:py-16 text-[#17271E]">
+    <section id="why-looway" className="w-full bg-[linear-gradient(90deg,#E4F0E8_0%,#F1F7F3_30%,#FBF8F1_80%)] scroll-mt-32 sm:scroll-mt-36 py-8 sm:py-16 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
 
         {/* Header */}
         <div className="mb-6 sm:mb-8 max-w-2xl">
-          <span className="text-[10.5px] sm:text-xs font-extrabold tracking-widest text-[#0E5C3A] uppercase block mb-1.5 sm:mb-2">
+          <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#0E5C3A] uppercase block mb-1.5 sm:mb-2">
             WHY LOOWAY
           </span>
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[40px] font-extrabold text-[#073B24] leading-tight">
+          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[40px] font-bold text-ink leading-tight">
             Better than the market alternatives
           </h2>
-          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-[#17271E]/80 leading-relaxed font-semibold">
+          <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-ink-muted leading-relaxed font-semibold">
             Everything a clean, mess-free journey needs, in one bag. Here&apos;s how Looway compares to the usual options at a glance.
           </p>
         </div>
@@ -70,8 +70,8 @@ export default function MarketComparisonSection() {
 
         {/* Comparison Table Container */}
         <div className="flex items-center justify-between sm:hidden mb-2">
-          <span className="text-[10.5px] font-bold text-[#0E5C3A]">← Swipe table to compare →</span>
-          <span className="text-[10px] font-medium text-[#17271E]/50">6 features</span>
+          <span className="text-[12px] font-bold text-[#0E5C3A]">← Swipe table to compare →</span>
+          <span className="text-[12px] font-medium text-ink-muted/80">6 features</span>
         </div>
         <div className="overflow-x-auto no-scrollbar [::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <div className="min-w-[720px] overflow-hidden rounded-2xl sm:rounded-3xl border border-[#D5CDBF] bg-white shadow-sm">
@@ -102,7 +102,7 @@ export default function MarketComparisonSection() {
                     className="transition-colors hover:bg-[#FBF8F1]/60"
                   >
                     {/* Feature Title */}
-                    <td className="py-4 px-6 font-bold text-[#073B24]">
+                    <td className="py-4 px-6 font-bold text-ink">
                       {row.feature}
                     </td>
 
@@ -114,7 +114,7 @@ export default function MarketComparisonSection() {
                     </td>
 
                     {/* Ordinary Bag */}
-                    <td className="py-4 px-4 text-center text-[#17271E]/40">
+                    <td className="py-4 px-4 text-center text-ink-muted/80">
                       <div className="flex items-center justify-center">
                         {(row.ordinaryBag as any) === false ? (
                           <X className="h-4 w-4 stroke-[2.2] text-gray-400" />
@@ -125,7 +125,7 @@ export default function MarketComparisonSection() {
                     </td>
 
                     {/* Cheaper Disposables */}
-                    <td className="py-4 px-4 text-center text-[#17271E]/40">
+                    <td className="py-4 px-4 text-center text-ink-muted/80">
                       <div className="flex items-center justify-center">
                         {(row.cheaperDisposables as any) === false ? (
                           <X className="h-4 w-4 stroke-[2.2] text-gray-400" />
@@ -136,7 +136,7 @@ export default function MarketComparisonSection() {
                     </td>
 
                     {/* Making Do */}
-                    <td className="py-4 px-4 text-center text-[#17271E]/40">
+                    <td className="py-4 px-4 text-center text-ink-muted/80">
                       <div className="flex items-center justify-center">
                         {(row.makingDo as any) === false ? (
                           <X className="h-4 w-4 stroke-[2.2] text-gray-400" />
@@ -153,7 +153,7 @@ export default function MarketComparisonSection() {
         </div>
 
         {/* Bottom Tagline */}
-        <div className="mt-6 text-center text-xs sm:text-sm font-bold text-[#073B24]">
+        <div className="mt-6 text-center text-xs sm:text-sm font-bold text-ink">
           <span className="inline-flex items-center justify-center gap-1.5">
             <Check className="h-4 w-4 stroke-[3] text-[#0E5C3A] shrink-0" />
             Looway is the only option that does all six. That&apos;s why it&apos;s built for the journey, not improvised for it.

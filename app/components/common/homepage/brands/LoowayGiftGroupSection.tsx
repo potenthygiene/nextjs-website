@@ -12,7 +12,7 @@ export function LoowayGiftGroupSection() {
           {/* Card 1: Gift Kit (Dark Teal) */}
           <div className="bg-[#004851] text-white rounded-[2rem] p-6 sm:p-8 lg:p-10 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow">
             <div>
-              <span className="text-[10px] sm:text-xs font-bold tracking-widest text-[#F6D353] uppercase block mb-3">
+              <span className="text-[11px] sm:text-xs font-bold tracking-widest text-[#F6D353] uppercase block mb-3">
                 SEND ONE WITH MAA AND PAPA
               </span>
               <h2 className="font-serif text-2xl sm:text-2xl lg:text-3xl font-bold text-white leading-tight mb-3">
@@ -37,7 +37,7 @@ export function LoowayGiftGroupSection() {
           {/* Card 2: Group Travelling (Cream Yellow) */}
           <div className="bg-[#FFF8D6] text-[#1F1915] rounded-[2rem] p-6 sm:p-8 lg:p-10 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow border border-yellow-200/80">
             <div>
-              <span className="text-[10px] sm:text-xs font-bold tracking-widest text-[#006573] uppercase block mb-3">
+              <span className="text-[11px] sm:text-xs font-bold tracking-widest text-[#006573] uppercase block mb-3">
                 TRAVELLING AS A GROUP?
               </span>
               <h2 className="font-serif text-2xl sm:text-2xl lg:text-3xl font-bold text-[#1F1915] leading-tight mb-3">

@@ -41,13 +41,13 @@ export const RecentOrders = ({ orders }: { orders: any[] }) => {
                   </span>
 
                   <Badge
-                    className={`${formatted.badgeClasses} text-[10px] px-2 py-0 h-5 font-semibold`}
+                    className={`${formatted.badgeClasses} text-[12px] px-2 py-0 h-5 font-semibold`}
                   >
                     {formatted.statusText}
                   </Badge>
                 </div>
 
-                <p className="text-[11px] text-gray-400 font-medium">
+                <p className="text-[12px] text-gray-400 font-medium">
                   {formatted.items} item(s) | {formatted.date}
                 </p>
               </div>

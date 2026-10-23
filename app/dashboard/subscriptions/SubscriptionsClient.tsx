@@ -330,7 +330,7 @@ export function SubscriptionsClient({
     return (
       <Card className="border-none bg-white p-8 text-center shadow-sm">
         <h1 className="text-xl font-bold text-gray-950">Subscriptions</h1>
-        <p className="mt-2 text-sm text-gray-500">
+        <p className="mt-2 text-sm text-ink-muted">
           You do not have any subscriptions yet.
         </p>
         <div className="mt-5">
@@ -352,7 +352,7 @@ export function SubscriptionsClient({
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-xl font-bold text-gray-950">Subscriptions</h1>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-ink-muted">
               Pause or cancel in two clicks. Manage your recurring deliveries and
               Cycle Sync plans.
             </p>
@@ -372,10 +372,10 @@ export function SubscriptionsClient({
       <div className="space-y-4">
         {activeAndPaused.length === 0 ? (
           <Card className="border border-dashed border-gray-200 bg-white p-6 text-center shadow-xs">
-            <p className="text-sm font-medium text-gray-700">
+            <p className="text-sm font-medium text-ink-muted">
               You have no active or paused subscriptions right now.
             </p>
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-ink-muted">
               Subscribe on any product page for up to 15% off on autopilot.
             </p>
           </Card>
@@ -435,7 +435,7 @@ export function SubscriptionsClient({
                       <div className="grid gap-3 sm:grid-cols-3">
                         {/* Next 3 delivery dates */}
                         <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5 sm:col-span-1">
-                          <div className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
+                          <div className="flex items-center gap-1.5 text-xs font-medium text-ink-muted">
                             <Truck className="h-3.5 w-3.5 text-[#016271]" />
                             <span>Next 3 Deliveries</span>
                           </div>
@@ -444,7 +444,7 @@ export function SubscriptionsClient({
                               Deliveries on hold while paused
                             </p>
                           ) : (
-                            <ul className="mt-1.5 space-y-1 text-xs font-semibold text-gray-900">
+                            <ul className="mt-1.5 space-y-1 text-xs font-semibold text-ink">
                               {nextDeliveries.map((d, idx) => (
                                 <li
                                   key={idx}
@@ -453,7 +453,7 @@ export function SubscriptionsClient({
                                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#016271]" />
                                   <span>{formatDate(d)}</span>
                                   {idx === 0 && (
-                                    <span className="rounded bg-[#016271]/10 px-1.5 py-0.2 text-[10px] font-bold text-[#016271]">
+                                    <span className="rounded bg-[#016271]/10 px-1.5 py-0.2 text-[12px] font-bold text-[#016271]">
                                       Next
                                     </span>
                                   )}
@@ -465,7 +465,7 @@ export function SubscriptionsClient({
 
                         {/* Next Charge Date */}
                         <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                          <p className="text-xs font-medium text-gray-500">
+                          <p className="text-xs font-medium text-ink-muted">
                             Next Charge Date
                           </p>
                           <p className="mt-1.5 text-sm font-bold text-gray-950">
@@ -473,20 +473,20 @@ export function SubscriptionsClient({
                               ? "Paused (No charge)"
                               : formatDate(nextCharge)}
                           </p>
-                          <p className="mt-0.5 text-[11px] text-gray-400">
+                          <p className="mt-0.5 text-[12px] text-gray-400">
                             Auto-billed via Razorpay
                           </p>
                         </div>
 
                         {/* Amount in ₹ */}
                         <div className="rounded-xl border border-gray-100 bg-gray-50/80 p-3.5">
-                          <p className="text-xs font-medium text-gray-500">
+                          <p className="text-xs font-medium text-ink-muted">
                             Amount per Delivery
                           </p>
                           <p className="mt-1.5 text-base font-bold text-gray-950">
                             {formatAmountInRupees(subscription.amount)}
                           </p>
-                          <p className="mt-0.5 text-[11px] text-gray-400">
+                          <p className="mt-0.5 text-[12px] text-gray-400">
                             Subscriber savings included
                           </p>
                         </div>
@@ -571,14 +571,14 @@ export function SubscriptionsClient({
             className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-5 py-4 text-left shadow-xs transition hover:bg-gray-50"
           >
             <div className="flex items-center gap-2.5">
-              <span className="text-sm font-bold text-gray-800">
+              <span className="text-sm font-bold text-ink">
                 Past subscriptions
               </span>
-              <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-600">
+              <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-ink-muted">
                 {pastSubscriptions.length}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-ink-muted">
               <span>{showPastSubscriptions ? "Hide" : "Show"}</span>
               {showPastSubscriptions ? (
                 <ChevronUp className="h-4 w-4" />
@@ -602,25 +602,25 @@ export function SubscriptionsClient({
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                         <div className="space-y-1">
                           <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="text-base font-bold text-gray-700">
+                            <h3 className="text-base font-bold text-ink-muted">
                               {subscription.productName}
                               {sizeLabel ? (
-                                <span className="ml-2 inline-flex items-center rounded-md bg-gray-200/80 px-2 py-0.5 text-xs font-semibold text-gray-700">
+                                <span className="ml-2 inline-flex items-center rounded-md bg-gray-200/80 px-2 py-0.5 text-xs font-semibold text-ink-muted">
                                   Size: {sizeLabel}
                                 </span>
                               ) : null}
                             </h3>
                             <Badge
                               variant="outline"
-                              className="border-gray-300 text-gray-500"
+                              className="border-gray-300 text-ink-muted"
                             >
                               Cancelled
                             </Badge>
                           </div>
 
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-ink-muted">
                             {getPlanScheduleDescription(subscription)} ·{" "}
-                            <span className="font-semibold text-gray-700">
+                            <span className="font-semibold text-ink-muted">
                               {formatAmountInRupees(subscription.amount)}
                             </span>
                             {subscription.endDate
@@ -635,7 +635,7 @@ export function SubscriptionsClient({
                             type="button"
                             variant="outline"
                             size="sm"
-                            className="self-start border-gray-300 text-xs text-gray-600 sm:self-center"
+                            className="self-start border-gray-300 text-xs text-ink-muted sm:self-center"
                           >
                             <Link
                               href={`/order-confirmation/${subscription.orderId}`}
@@ -671,7 +671,7 @@ export function SubscriptionsClient({
                 <AlertDialogTitle className="text-lg font-bold text-gray-950">
                   Why would you like to cancel?
                 </AlertDialogTitle>
-                <AlertDialogDescription className="text-xs text-gray-500">
+                <AlertDialogDescription className="text-xs text-ink-muted">
                   Sharing a quick reason is optional and helps us improve. Note:
                   to change your plan, size or quantity, cancel this subscription
                   and start a new one.
@@ -685,7 +685,7 @@ export function SubscriptionsClient({
                     className={`flex cursor-pointer items-center gap-2.5 rounded-xl border p-3 text-xs font-medium transition ${
                       selectedReason === reason
                         ? "border-[#016271] bg-[#F2F9FA] text-[#004851]"
-                        : "border-gray-200 text-gray-700 hover:border-gray-300"
+                        : "border-gray-200 text-ink-muted hover:border-gray-300"
                     }`}
                   >
                     <input
@@ -740,7 +740,7 @@ export function SubscriptionsClient({
                 <AlertDialogTitle className="text-lg font-bold text-gray-950">
                   Would you prefer to pause instead?
                 </AlertDialogTitle>
-                <AlertDialogDescription className="text-xs leading-relaxed text-gray-600">
+                <AlertDialogDescription className="text-xs leading-relaxed text-ink-muted">
                   If you just need a break or already have enough packs on hand,
                   you can <strong>pause</strong> your subscription now. You won’t
                   be charged while paused, and you can resume in one click
@@ -781,7 +781,7 @@ export function SubscriptionsClient({
                   size="sm"
                   disabled={isPending}
                   onClick={() => setCancelStep(1)}
-                  className="text-xs text-gray-500"
+                  className="text-xs text-ink-muted"
                 >
                   ← Back
                 </Button>
@@ -791,7 +791,7 @@ export function SubscriptionsClient({
                   size="sm"
                   disabled={isPending}
                   onClick={closeCancelFlow}
-                  className="text-xs text-gray-700"
+                  className="text-xs text-ink-muted"
                 >
                   Keep Subscription
                 </Button>
@@ -808,7 +808,7 @@ export function SubscriptionsClient({
                 <AlertDialogTitle className="text-lg font-bold text-gray-950">
                   Confirm subscription cancellation
                 </AlertDialogTitle>
-                <AlertDialogDescription className="text-xs leading-relaxed text-gray-600">
+                <AlertDialogDescription className="text-xs leading-relaxed text-ink-muted">
                   Are you sure you want to cancel{" "}
                   <strong>
                     {cancelTarget.productName}
@@ -829,7 +829,7 @@ export function SubscriptionsClient({
                   size="sm"
                   disabled={isPending}
                   onClick={() => setCancelStep(2)}
-                  className="text-xs text-gray-500"
+                  className="text-xs text-ink-muted"
                 >
                   ← Back
                 </Button>

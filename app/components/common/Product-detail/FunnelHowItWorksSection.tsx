@@ -13,7 +13,7 @@ export default function FunnelHowItWorksSection() {
       desc: (
         <>
           Hold the wide opening flush against your body so the back edge sits{" "}
-          <strong className="font-bold text-[#5A0E30]">just behind where you pee</strong>, about a thumb&apos;s width back, not forward. This is the seal, and it&apos;s the whole secret.
+          <strong className="font-bold text-ink">just behind where you pee</strong>, about a thumb&apos;s width back, not forward. This is the seal, and it&apos;s the whole secret.
         </>
       ),
     },
@@ -24,7 +24,7 @@ export default function FunnelHowItWorksSection() {
       desc: (
         <>
           Angle the spout down and away, then{" "}
-          <strong className="font-bold text-[#5A0E30]">start your stream gently</strong> until the seal feels solid. Standing slightly forward with feet apart helps the funnel catch every drop.
+          <strong className="font-bold text-ink">start your stream gently</strong> until the seal feels solid. Standing slightly forward with feet apart helps the funnel catch every drop.
         </>
       ),
     },
@@ -41,17 +41,17 @@ export default function FunnelHowItWorksSection() {
   ];
 
   return (
-    <section id="how-it-works" className="w-full bg-[#fcf8f3] py-12 sm:py-18 lg:py-22 text-[#2A1620]">
+    <section id="how-it-works" className="w-full bg-[#fcf8f3] py-12 sm:py-18 lg:py-22 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl">
           <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2 sm:mb-3">
             WHY IT DOESN&apos;T LEAK
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-[#5A0E30] leading-[1.08] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold text-ink leading-[1.08] tracking-tight">
             How it works
           </h2>
-          <p className="mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
+          <p className="mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg text-ink-muted leading-relaxed font-normal">
             It&apos;s simpler than it looks. The wide, soft rim makes a gentle seal against your body, and the ergonomic shape channels the flow down and away. Get the seal right and gravity does the rest: no leaks, no mess, nothing on you.
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function FunnelHowItWorksSection() {
                 className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-[#f8dce8] bg-white p-6 sm:p-7 shadow-xs hover:shadow-md transition-all duration-200"
               >
                 {/* Large Background Step Number */}
-                <span className="absolute top-3 right-5 font-serif text-5xl sm:text-6xl font-extrabold text-[#f8dce8]/70 select-none">
+                <span className="absolute top-3 right-5 font-serif text-5xl sm:text-6xl font-bold text-[#f8dce8]/70 select-none">
                   {st.step}
                 </span>
 
@@ -75,10 +75,10 @@ export default function FunnelHowItWorksSection() {
                   <IconComp className="h-6 w-6 stroke-[2.2]" />
                 </div>
 
-                <h3 className="font-serif text-lg sm:text-xl font-bold text-[#5A0E30] mb-2.5 relative z-10">
+                <h3 className="font-serif text-lg sm:text-xl font-bold text-ink mb-2.5 relative z-10">
                   {st.title}
                 </h3>
-                <div className="text-xs sm:text-sm text-[#2A1620]/75 leading-relaxed font-normal relative z-10">
+                <div className="text-xs sm:text-sm text-ink-muted leading-relaxed font-normal relative z-10">
                   {st.desc}
                 </div>
               </div>

@@ -114,11 +114,10 @@ export function InstagramFeed({
                 className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs border border-white/70 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 aspect-square w-44 sm:w-60 md:w-64 shrink-0 group block cursor-pointer"
               >
                 <Image
-                  unoptimized
                   src={img.src}
                   alt={img.alt}
                   fill
-                  sizes="256px"
+                  sizes="(max-width: 640px) 176px, (max-width: 768px) 240px, 256px"
                   className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                 />
               </a>

@@ -164,7 +164,7 @@ export const ClientResetPasswordConfirm = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-2 right-1 text-gray-500"
+                className="absolute top-2 right-1 text-ink-muted"
               >
                 {showPassword ? (
                   <IconEyeOff size={18} />
@@ -187,7 +187,7 @@ export const ClientResetPasswordConfirm = () => {
               <button
                 type="button"
                 onClick={() => setShowConfirm(!showConfirm)}
-                className="absolute top-2 right-1 text-gray-500"
+                className="absolute top-2 right-1 text-ink-muted"
               >
                 {showConfirm ? <IconEyeOff size={18} /> : <IconEye size={18} />}
               </button>
@@ -220,7 +220,7 @@ export const ClientResetPasswordConfirm = () => {
             Password Reset Successfully
           </h3>
 
-          <p className="mt-2 text-center text-sm text-gray-500">
+          <p className="mt-2 text-center text-sm text-ink-muted">
             Your password has been updated, you can now login.
           </p>
 

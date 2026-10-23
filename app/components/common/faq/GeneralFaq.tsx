@@ -25,7 +25,7 @@ function FaqItem({
         aria-controls={`${faq.id}-answer`}
         className="flex w-full cursor-pointer items-start justify-between gap-4 py-4 text-left"
       >
-        <span className="text-[15px] font-semibold text-gray-900 sm:text-base">
+        <span className="text-[15px] font-semibold text-ink sm:text-base">
           {faq.q}
         </span>
         <ChevronDown
@@ -35,7 +35,7 @@ function FaqItem({
         />
       </button>
       {open && (
-        <div id={`${faq.id}-answer`} className="pb-5 pr-8 text-sm leading-relaxed text-gray-600 sm:text-[15px]">
+        <div id={`${faq.id}-answer`} className="pb-5 pr-8 text-sm leading-relaxed text-ink-muted sm:text-[15px]">
           <p>{faq.a}</p>
           {faq.links && faq.links.length > 0 && (
             <div className="mt-3 flex flex-wrap gap-2">
@@ -98,10 +98,10 @@ export default function GeneralFaqPage() {
         <p className="text-xs font-semibold tracking-[0.2em] text-[#016271] uppercase">
           Help centre
         </p>
-        <h1 className="mt-3 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
+        <h1 className="mt-3 font-serif text-3xl font-bold text-ink sm:text-4xl">
           How can we help?
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-gray-600 sm:text-base">
+        <p className="mx-auto mt-3 max-w-xl text-sm text-ink-muted sm:text-base">
           Orders, delivery, payments, subscriptions and rewards. Questions about a
           specific product are answered on its own page.
         </p>
@@ -127,7 +127,7 @@ export default function GeneralFaqPage() {
               type="button"
               onClick={() => setQuery("")}
               aria-label="Clear search"
-              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1.5 text-gray-500 hover:bg-gray-100"
+              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-full p-1.5 text-ink-muted hover:bg-gray-100"
             >
               <X className="h-4 w-4" />
             </button>
@@ -150,7 +150,7 @@ export default function GeneralFaqPage() {
               className={`shrink-0 cursor-pointer rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                 group === g.id
                   ? "border-[#016271] bg-[#016271] text-white"
-                  : "border-gray-200 bg-white text-gray-700 hover:border-[#016271]/50"
+                  : "border-gray-200 bg-white text-ink-muted hover:border-[#016271]/50"
               }`}
             >
               {g.title}
@@ -161,7 +161,7 @@ export default function GeneralFaqPage() {
         {/* QUESTIONS */}
         <div className="mt-8 space-y-8">
           {query && (
-            <p className="text-sm text-gray-500" aria-live="polite">
+            <p className="text-sm text-ink-muted" aria-live="polite">
               {resultCount === 0
                 ? "No questions match your search."
                 : `${resultCount} question${resultCount === 1 ? "" : "s"} found`}

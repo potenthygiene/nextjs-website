@@ -36,11 +36,11 @@ export const LoowaySection = () => {
           </div>
 
 
-          <h3 className="text-2xl font-serif text-gray-900 mb-4">
+          <h3 className="text-2xl font-serif text-ink mb-4">
             No compromises on the road.
           </h3>
 
-          <p className="text-gray-600 mb-6 leading-relaxed">
+          <p className="text-ink-muted mb-6 leading-relaxed">
             Compact, reliable, and built for real Indian travel, from solo women trekkers to families on road trips.
           </p>
 
@@ -70,11 +70,11 @@ export const LoowaySection = () => {
             ✦ Your road, your rules: hygiene on the move
           </p>
 
-          <h2 className="text-xl md:text-2xl font-serif text-gray-900 mb-4">
+          <h2 className="text-xl md:text-2xl font-serif text-ink mb-4">
             Your Journey. Your Hygiene. Sorted.
           </h2>
 
-          <p className="text-gray-600 mb-6 leading-relaxed max-w-xl">
+          <p className="text-ink-muted mb-6 leading-relaxed max-w-xl">
             <strong>Looway is travel hygiene done right.</strong> Whether trekking the Himalayas or stuck in traffic, you’ve always got it handled.
           </p>
 
@@ -87,8 +87,8 @@ export const LoowaySection = () => {
               >
                 <span className="text-lg">{item.icon}</span>
                 <div>
-                  <p className="font-medium text-gray-900">{item.title}</p>
-                  <p className="text-sm text-gray-500">{item.desc}</p>
+                  <p className="font-medium text-ink">{item.title}</p>
+                  <p className="text-sm text-ink-muted">{item.desc}</p>
                 </div>
               </div>
             ))}

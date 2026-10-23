@@ -27,14 +27,14 @@ export default function PackAndSpecsSection() {
   ];
 
   return (
-    <section id="specs" className="w-full bg-[#F6F1E7] py-8 sm:py-16 lg:py-20 text-[#17271E]">
+    <section id="specs" className="w-full bg-[#F6F1E7] py-8 sm:py-16 lg:py-20 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl">
-          <span className="text-[10.5px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
+          <span className="text-[11px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
             THE DETAILS
           </span>
-          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0A4A2E]">
+          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-ink">
             What&apos;s in the pack &amp; specs
           </h2>
         </div>
@@ -91,10 +91,10 @@ export default function PackAndSpecsSection() {
                   idx % 2 === 0 ? "bg-[#FBF8F1]" : "bg-white"
                 }`}
               >
-                <div className="w-5/12 font-bold text-[#0A4A2E] shrink-0 text-[11px] sm:text-sm leading-tight sm:leading-normal">
+                <div className="w-5/12 font-bold text-ink shrink-0 text-[12px] sm:text-sm leading-tight sm:leading-normal">
                   {spec.k}
                 </div>
-                <div className="w-7/12 text-[#17271E]/80 font-normal leading-tight sm:leading-relaxed text-[11px] sm:text-sm text-right sm:text-left">
+                <div className="w-7/12 text-ink-muted font-normal leading-tight sm:leading-relaxed text-[12px] sm:text-sm text-right sm:text-left">
                   {spec.v}
                 </div>
               </div>

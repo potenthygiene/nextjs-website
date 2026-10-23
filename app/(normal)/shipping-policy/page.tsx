@@ -7,6 +7,7 @@ import {
   IconMapPin,
 } from "@tabler/icons-react";
 import { pageMetadata } from "@/const/seo";
+import { DELIVERY_TIME_TEXT } from "@/lib/shippingConfig";
 
 export const metadata = pageMetadata("shipping-policy");
 
@@ -15,13 +16,13 @@ const Page = () => {
     <div className="min-h-screen w-full bg-white">
       <div className="w-full flex items-start justify-center bg-white py-16 px-0 md:px-8">
         <div className="w-full max-w-3xl flex flex-col items-center gap-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-black text-center">
+          <h1 className="text-2xl sm:text-3xl font-bold text-ink text-center">
             Shipping Policy
           </h1>
 
-          <div className="w-full bg-[#F8F6F1] md:rounded-2xl rounded-none shadow-sm border border-neutral-200 p-6 sm:p-8 lg:p-10 space-y-6 text-neutral-800 leading-relaxed">
+          <div className="w-full bg-[#F8F6F1] md:rounded-2xl rounded-none shadow-sm border border-neutral-200 p-6 sm:p-8 lg:p-10 space-y-6 text-ink leading-relaxed">
             <section>
-              <h2 className="font-bold text-black">Overview</h2>
+              <h2 className="font-bold text-ink">Overview</h2>
               <p className="mt-2">
                 At Potent Hygiene, we are committed to delivering your orders
                 safely, quickly, and efficiently. This Shipping Policy outlines
@@ -31,7 +32,7 @@ const Page = () => {
             </section>
 
             <section>
-              <h2 className="font-bold text-black">Shipping Charges &amp; Free Delivery</h2>
+              <h2 className="font-bold text-ink">Shipping Charges &amp; Free Delivery</h2>
               <p className="mt-2">
                 We believe in simple, transparent delivery pricing:
               </p>
@@ -39,22 +40,22 @@ const Page = () => {
                 <div className="bg-white border rounded-xl p-4 flex flex-col gap-1.5 shadow-2xs">
                   <h3 className="font-semibold text-emerald-800">Orders ₹399 and Above</h3>
                   <p className="text-xl font-bold text-emerald-700">FREE Delivery</p>
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-ink-muted">
                     An order of exactly ₹399 or more qualifies for free standard delivery anywhere in India.
                   </p>
                 </div>
 
                 <div className="bg-white border rounded-xl p-4 flex flex-col gap-1.5 shadow-2xs">
-                  <h3 className="font-semibold text-neutral-800">Orders Below ₹399</h3>
+                  <h3 className="font-semibold text-ink">Orders Below ₹399</h3>
                   <p className="text-xl font-bold text-[#016271]">₹60 Delivery Fee</p>
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-ink-muted">
                     A flat courier shipping fee of ₹60 is applied to orders below ₹399.
                   </p>
                 </div>
               </div>
             </section>
             <section>
-              <h2 className="font-bold text-black">Order Processing Time</h2>
+              <h2 className="font-bold text-ink">Order Processing Time</h2>
               <p className="mt-2">
                 Once your order is successfully placed and payment is confirmed,
                 we begin processing immediately:
@@ -82,7 +83,7 @@ const Page = () => {
               </p>
             </section>
             <section>
-              <h2 className="font-bold text-black">Shipping Coverage</h2>
+              <h2 className="font-bold text-ink">Shipping Coverage</h2>
               <p className="mt-2">
                 Estimated delivery times vary based on your location:
               </p>
@@ -102,9 +103,9 @@ const Page = () => {
             </section>
   
             <section>
-              <h2 className="font-bold text-black">Delivery Timeline</h2>
+              <h2 className="font-bold text-ink">Delivery Timeline</h2>
               <p className="mt-2 mb-4">
-                Estimated delivery times vary based on your location:
+                {DELIVERY_TIME_TEXT} Estimated times by area:
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -116,10 +117,10 @@ const Page = () => {
                         size={18}
                       />
                     </div>
-                    <h3 className="font-semibold text-black">Metro Cities</h3>
+                    <h3 className="font-semibold text-ink">Metro Cities</h3>
                   </div>
 
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-ink-muted">
                     Delhi, Mumbai, Bangalore, Chennai, Kolkata, Hyderabad, Pune
                   </p>
 
@@ -136,10 +137,10 @@ const Page = () => {
                         size={18}
                       />
                     </div>
-                    <h3 className="font-semibold text-black">Tier 2 Cities</h3>
+                    <h3 className="font-semibold text-ink">Tier 2 Cities</h3>
                   </div>
 
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-ink-muted">
                     State capitals and major towns
                   </p>
 
@@ -153,12 +154,12 @@ const Page = () => {
                     <div className="h-9 w-9 rounded-lg bg-green-50 flex items-center justify-center">
                       <IconHome className="text-green-600" size={18} />
                     </div>
-                    <h3 className="font-semibold text-black">
+                    <h3 className="font-semibold text-ink">
                       Tier 3 Cities & Towns
                     </h3>
                   </div>
 
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-ink-muted">
                     Smaller cities and district headquarters
                   </p>
 
@@ -172,10 +173,10 @@ const Page = () => {
                     <div className="h-9 w-9 rounded-lg bg-teal-50 flex items-center justify-center">
                       <IconMapPin className="text-teal-600" size={18} />
                     </div>
-                    <h3 className="font-semibold text-black">Remote Areas</h3>
+                    <h3 className="font-semibold text-ink">Remote Areas</h3>
                   </div>
 
-                  <p className="text-sm text-neutral-600">
+                  <p className="text-sm text-ink-muted">
                     Rural locations and remote pin codes
                   </p>
 
@@ -186,7 +187,7 @@ const Page = () => {
               </div>
             </section>
             <section>
-              <h2 className="font-bold text-black">
+              <h2 className="font-bold text-ink">
                 Delivery Attempts and Failed Deliveries
               </h2>
 
@@ -211,7 +212,7 @@ const Page = () => {
               </ul>
             </section>
             <section>
-              <h2 className="font-bold text-black">
+              <h2 className="font-bold text-ink">
                 Packaging and Product Safety
               </h2>
               <ul className="list-disc pl-5 mt-3 space-y-1">
@@ -222,7 +223,7 @@ const Page = () => {
               </ul>
             </section>
             <section>
-              <h2 className="font-bold text-black">International Shipping</h2>
+              <h2 className="font-bold text-ink">International Shipping</h2>
               <p className="mt-2">
                 Currently, we only ship within India. International shipping
                 will be introduced soon as services expand.

@@ -204,7 +204,7 @@ export const RaiseSupportModal = ({
               allProductsHaveIssues
                 ? isAnyPending
                   ? "border-amber-300 bg-amber-50/70 text-amber-800 hover:bg-amber-100"
-                  : "border-gray-200 bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  : "border-gray-200 bg-gray-100 text-ink-muted hover:bg-gray-200"
                 : "border-[#016271] text-[#016271] hover:bg-cyan-50"
             }`}
           >
@@ -223,10 +223,10 @@ export const RaiseSupportModal = ({
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
               <IconCheck className="h-7 w-7 text-emerald-600" />
             </div>
-            <DialogTitle className="text-xl font-bold text-gray-900">
+            <DialogTitle className="text-xl font-bold text-ink">
               We&apos;ve got your message
             </DialogTitle>
-            <p className="text-sm text-gray-600 leading-relaxed max-w-sm mx-auto">
+            <p className="text-sm text-ink-muted leading-relaxed max-w-sm mx-auto">
               Our customer care team has received your issue request regarding Order #{order.id} and will assist you shortly.
             </p>
             <Button
@@ -239,15 +239,15 @@ export const RaiseSupportModal = ({
         ) : allProductsHaveIssues ? (
           <div className="py-2 space-y-4">
             <DialogHeader>
-              <DialogTitle className="text-[18px] font-bold text-[#2D3748] flex items-center gap-2">
-                <IconAlertCircle className={`h-5 w-5 ${isAnyPending ? "text-amber-600" : "text-gray-600"}`} />
+              <DialogTitle className="text-[18px] font-bold text-ink flex items-center gap-2">
+                <IconAlertCircle className={`h-5 w-5 ${isAnyPending ? "text-amber-600" : "text-ink-muted"}`} />
                 <span>{isAnyPending ? "Issue Under Review" : "Issue Closed"}</span>
               </DialogTitle>
             </DialogHeader>
 
             <div className={`rounded-xl border p-4 space-y-3 ${isAnyPending ? "border-amber-200 bg-amber-50/90" : "border-gray-200 bg-gray-50/90"}`}>
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-gray-900">
+                <span className="text-xs font-bold text-ink">
                   Order #{order.id}
                 </span>
                 <Badge className={`${
@@ -273,10 +273,10 @@ export const RaiseSupportModal = ({
                   className="rounded-lg bg-white p-3 border border-gray-200 text-xs text-slate-800 space-y-1.5"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="font-semibold text-slate-500 block text-[11px]">
+                    <span className="font-semibold text-slate-500 block text-[12px]">
                       Submitted Details:
                     </span>
-                    <Badge variant="outline" className="text-[10px] capitalize">
+                    <Badge variant="outline" className="text-[12px] capitalize">
                       {req.status === "cancelled" ? "Closed" : req.status}
                     </Badge>
                   </div>
@@ -284,8 +284,8 @@ export const RaiseSupportModal = ({
                     {req.userReason || "Issue raised by customer"}
                   </p>
                   {req.adminReason && (
-                    <div className="mt-1.5 pt-1.5 border-t border-gray-100 text-[11px] text-gray-600">
-                      <span className="font-semibold text-gray-700">Team Note: </span>
+                    <div className="mt-1.5 pt-1.5 border-t border-gray-100 text-[12px] text-ink-muted">
+                      <span className="font-semibold text-ink-muted">Team Note: </span>
                       <span>{req.adminReason}</span>
                     </div>
                   )}
@@ -303,7 +303,7 @@ export const RaiseSupportModal = ({
         ) : (
           <>
             <DialogHeader>
-              <DialogTitle className="text-[18px] font-bold text-[#2D3748] flex items-center gap-2">
+              <DialogTitle className="text-[18px] font-bold text-ink flex items-center gap-2">
                 <IconAlertCircle className="h-5 w-5 text-[#016271]" />
                 <span>Raise Support / Issue</span>
               </DialogTitle>
@@ -312,11 +312,11 @@ export const RaiseSupportModal = ({
             {/* Order info badge */}
             <div className="mt-2 rounded-xl bg-[#E2F2F5] p-3 space-y-1">
               <div className="flex items-center justify-between">
-                <p className="text-[13px] font-bold text-[#2D3748]">
+                <p className="text-[13px] font-bold text-ink">
                   Order #{order.id}
                 </p>
                 {orderDate && (
-                  <p className="text-[11px] font-medium text-gray-500">
+                  <p className="text-[12px] font-medium text-ink-muted">
                     {orderDate}
                   </p>
                 )}
@@ -326,7 +326,7 @@ export const RaiseSupportModal = ({
             {/* Product Selector if multi-item */}
             {items.length > 1 ? (
               <div className="space-y-1.5">
-                <label className="text-[13px] font-semibold text-[#2D3748]">
+                <label className="text-[13px] font-semibold text-ink">
                   Select Affected Product
                 </label>
                 <select
@@ -345,15 +345,15 @@ export const RaiseSupportModal = ({
                 </select>
               </div>
             ) : items.length === 1 ? (
-              <div className="rounded-lg border border-gray-200 bg-gray-50/70 px-3 py-2 text-xs text-gray-700">
-                <span className="font-semibold text-gray-500">Product: </span>
-                <span className="font-bold text-gray-900">{items[0].name}</span>
+              <div className="rounded-lg border border-gray-200 bg-gray-50/70 px-3 py-2 text-xs text-ink-muted">
+                <span className="font-semibold text-ink-muted">Product: </span>
+                <span className="font-bold text-ink">{items[0].name}</span>
               </div>
             ) : null}
 
             {/* Issue Description */}
             <div className="space-y-1.5">
-              <label className="text-[13px] font-semibold text-[#2D3748]">
+              <label className="text-[13px] font-semibold text-ink">
                 Describe your issue <span className="text-red-500">*</span>
               </label>
               <Textarea
@@ -362,7 +362,7 @@ export const RaiseSupportModal = ({
                 placeholder="Please describe the issue you are facing with this product/order (e.g., damaged packaging, missing item, wrong variant)..."
                 className="min-h-[105px] rounded-xl border-gray-300 focus-visible:ring-[#1B8392] text-xs leading-relaxed"
               />
-              <div className="flex justify-between items-center text-[11px]">
+              <div className="flex justify-between items-center text-[12px]">
                 <p
                   className={`font-bold uppercase ${
                     isOverLimit ? "text-red-600 font-extrabold" : "text-gray-400"
@@ -381,12 +381,12 @@ export const RaiseSupportModal = ({
             {/* Photo Upload Section (Min 0, Max 5, 1 recommended) */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-[13px] font-semibold text-[#2D3748] flex items-center gap-1.5">
+                <label className="text-[13px] font-semibold text-ink flex items-center gap-1.5">
                   <ImageIcon className="h-4 w-4 text-[#016271]" />
                   <span>Attach Photos</span>
-                  <span className="text-xs text-gray-500 font-normal">(Optional)</span>
+                  <span className="text-xs text-ink-muted font-normal">(Optional)</span>
                 </label>
-                <span className="text-[11px] font-medium text-gray-500">
+                <span className="text-[12px] font-medium text-ink-muted">
                   {photos.length}/5 photos
                 </span>
               </div>
@@ -408,7 +408,7 @@ export const RaiseSupportModal = ({
                       <span>Uploading photo...</span>
                     </div>
                   ) : (
-                    <div className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-ink-muted">
                       <UploadCloud className="h-4 w-4 text-[#016271]" />
                       <span>
                         {photos.length === 0

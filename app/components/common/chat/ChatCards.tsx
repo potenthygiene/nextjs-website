@@ -224,8 +224,8 @@ export function OffersCard({ offers, subscriptionSave, t = fill }: { offers: Liv
     },
     {
       icon: Tag,
-      title: t("Refer a friend: {you} for you, {friend} off for them", { you: rupees(r.referralYou), friend: rupees(r.referralFriend) }),
-      text: t("On their first order of {min} or more. Have a coupon? Apply it in your bag (coupons and credits don't combine).", { min: rupees(r.referralMinOrder) }),
+      title: t("Refer a friend: {friend} credit for them, {you} credit for you", { you: rupees(r.referralYou), friend: rupees(r.referralFriend) }),
+      text: t("Your credit lands when their first order of {min} or more is delivered, along with SHARECARE15. Credits work together with coupons.", { min: rupees(r.referralMinOrder) }),
     },
   ];
   return (

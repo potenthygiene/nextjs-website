@@ -11,7 +11,7 @@ export function OvySizedToFlow() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <span className="inline-block rounded-full border border-gray-200 bg-white/90 px-4 py-1 text-[10px] sm:text-[11px] font-bold tracking-widest text-[#016271] uppercase mb-2 shadow-2xs">
+          <span className="inline-block rounded-full border border-gray-200 bg-white/90 px-4 py-1 text-[11px] sm:text-[11px] font-bold tracking-widest text-[#016271] uppercase mb-2 shadow-2xs">
             WHICH PAD IS YOURS?
           </span>
           <h2 className="font-serif text-2.5xl sm:text-5xl font-bold text-[#1F1915] leading-tight">
@@ -39,23 +39,23 @@ export function OvySizedToFlow() {
                 }}
               />
               <div className="font-serif text-2xl sm:text-3xl font-bold text-[#8C4F7C]">L</div>
-              <div className="text-[10px] sm:text-xs font-bold text-gray-500 mt-0.5">240mm</div>
+              <div className="text-[12px] sm:text-xs font-bold text-ink-muted mt-0.5">240mm</div>
 
               <h3 className="font-serif text-xs sm:text-base font-bold text-[#1F1915] mt-2 sm:mt-3 leading-snug">
                 Light days
               </h3>
-              <p className="text-[10.5px] sm:text-xs text-[#5C524D] mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
+              <p className="text-[12px] sm:text-xs text-[#5C524D] mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
                 School, work, the commute, the tail end of a period.
               </p>
             </div>
 
             <div className="mt-4 sm:mt-6 border-t border-gray-100 pt-2 sm:pt-3">
-              <div className="text-[9.5px] sm:text-[11px] text-gray-400 font-medium leading-tight">
+              <div className="text-[12px] sm:text-[12px] text-gray-400 font-medium leading-tight">
                 Holds up to 100ml · 4 to 6 hours
               </div>
               <Link
                 href="/product-detail/ovy-pads?size=l#l"
-                className="inline-flex items-center gap-1 text-[10.5px] sm:text-xs font-bold text-[#8C4F7C] hover:underline mt-2 sm:mt-3"
+                className="inline-flex items-center gap-1 text-[12px] sm:text-xs font-bold text-[#8C4F7C] hover:underline mt-2 sm:mt-3"
               >
                 <span>Shop L</span>
                 <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
@@ -77,23 +77,23 @@ export function OvySizedToFlow() {
                 }}
               />
               <div className="font-serif text-2xl sm:text-3xl font-bold text-[#602E55]">XL</div>
-              <div className="text-[10px] sm:text-xs font-bold text-gray-500 mt-0.5">280mm</div>
+              <div className="text-[12px] sm:text-xs font-bold text-ink-muted mt-0.5">280mm</div>
 
               <h3 className="font-serif text-xs sm:text-base font-bold text-[#1F1915] mt-2 sm:mt-3 leading-snug">
                 The everyday workhorse
               </h3>
-              <p className="text-[10.5px] sm:text-xs text-[#5C524D] mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
+              <p className="text-[12px] sm:text-xs text-[#5C524D] mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
                 Medium to heavy days, full school or office days.
               </p>
             </div>
 
             <div className="mt-4 sm:mt-6 border-t border-gray-100 pt-2 sm:pt-3">
-              <div className="text-[9.5px] sm:text-[11px] text-gray-400 font-medium leading-tight">
+              <div className="text-[12px] sm:text-[12px] text-gray-400 font-medium leading-tight">
                 Holds up to 120ml · up to 8 hours
               </div>
               <Link
                 href="/product-detail/ovy-pads?size=xl#xl"
-                className="inline-flex items-center gap-1 text-[10.5px] sm:text-xs font-bold text-[#602E55] hover:underline mt-2 sm:mt-3"
+                className="inline-flex items-center gap-1 text-[12px] sm:text-xs font-bold text-[#602E55] hover:underline mt-2 sm:mt-3"
               >
                 <span>Shop XL</span>
                 <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
@@ -115,23 +115,23 @@ export function OvySizedToFlow() {
                 }}
               />
               <div className="font-serif text-2xl sm:text-3xl font-bold text-[#C42B5B]">XL+</div>
-              <div className="text-[10px] sm:text-xs font-bold text-gray-500 mt-0.5">320mm</div>
+              <div className="text-[12px] sm:text-xs font-bold text-ink-muted mt-0.5">320mm</div>
 
               <h3 className="font-serif text-xs sm:text-base font-bold text-[#1F1915] mt-2 sm:mt-3 leading-snug">
                 Heavy days and nights
               </h3>
-              <p className="text-[10.5px] sm:text-xs text-[#5C524D] mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
+              <p className="text-[12px] sm:text-xs text-[#5C524D] mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
                 Very heavy flow, overnight, postpartum, the first two days. A widened back and dual leak guards.
               </p>
             </div>
 
             <div className="mt-4 sm:mt-6 border-t border-gray-100 pt-2 sm:pt-3">
-              <div className="text-[9.5px] sm:text-[11px] text-gray-400 font-medium leading-tight">
+              <div className="text-[12px] sm:text-[12px] text-gray-400 font-medium leading-tight">
                 Holds up to 150ml · up to 8 hours
               </div>
               <Link
                 href="/product-detail/ovy-pads?size=xlplus#xlplus"
-                className="inline-flex items-center gap-1 text-[10.5px] sm:text-xs font-bold text-[#C42B5B] hover:underline mt-2 sm:mt-3"
+                className="inline-flex items-center gap-1 text-[12px] sm:text-xs font-bold text-[#C42B5B] hover:underline mt-2 sm:mt-3"
               >
                 <span>Shop XL+</span>
                 <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
@@ -153,23 +153,23 @@ export function OvySizedToFlow() {
                 }}
               />
               <div className="font-serif text-2xl sm:text-3xl font-bold text-white">Mix</div>
-              <div className="text-[10px] sm:text-xs font-medium text-purple-200 mt-0.5">Any split of 21</div>
+              <div className="text-[12px] sm:text-xs font-medium text-purple-200 mt-0.5">Any split of 21</div>
 
               <h3 className="font-serif text-xs sm:text-base font-bold text-white mt-2 sm:mt-3 leading-snug">
                 Your own box
               </h3>
-              <p className="text-[10.5px] sm:text-xs text-purple-100/90 mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
+              <p className="text-[12px] sm:text-xs text-purple-100/90 mt-1 sm:mt-1.5 leading-tight sm:leading-relaxed">
                 Flow changes across the month? Build 21 pads across L, XL and XL+. One flat price, whatever the split.
               </p>
             </div>
 
             <div className="mt-4 sm:mt-6 border-t border-purple-400/30 pt-2 sm:pt-3">
-              <div className="text-[9.5px] sm:text-[11px] text-purple-200/80 font-medium leading-tight">
+              <div className="text-[12px] sm:text-[12px] text-purple-200/80 font-medium leading-tight">
                 Suggested mix: 6 L · 9 XL · 6 XL+
               </div>
               <Link
                 href="/product-detail/ovy-pads#mix"
-                className="inline-flex items-center gap-1 text-[10.5px] sm:text-xs font-bold text-white hover:underline mt-2 sm:mt-3"
+                className="inline-flex items-center gap-1 text-[12px] sm:text-xs font-bold text-white hover:underline mt-2 sm:mt-3"
               >
                 <span>Build your box</span>
                 <ArrowRight className="h-3 w-3 sm:h-3.5 sm:w-3.5" />

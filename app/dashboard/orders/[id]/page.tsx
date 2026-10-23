@@ -127,7 +127,7 @@ export default async function DashboardOrderDetailsPage({ params }: any) {
             <h1 className="mt-1 text-xl font-bold break-all text-gray-950">
               #{order.id}
             </h1>
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-ink-muted">
               Ordered on {formatOrderDate(order.createdAt)}
             </p>
           </div>
@@ -199,11 +199,11 @@ export default async function DashboardOrderDetailsPage({ params }: any) {
               <span>Gift Mode Active: Prices hidden on parcel &amp; packing slip</span>
             </div>
             {giftNote && (
-              <div className="mt-2.5 rounded-lg bg-white/90 p-3 text-xs text-gray-700 border border-[#9A5B90]/15">
-                <span className="text-[10px] font-bold text-[#7E4D77] uppercase tracking-wider block">
+              <div className="mt-2.5 rounded-lg bg-white/90 p-3 text-xs text-ink-muted border border-[#9A5B90]/15">
+                <span className="text-[11px] font-bold text-[#7E4D77] uppercase tracking-wider block">
                   Included Gift Note for recipient:
                 </span>
-                <p className="mt-1 italic text-gray-900">“{giftNote}”</p>
+                <p className="mt-1 italic text-ink">“{giftNote}”</p>
               </div>
             )}
           </div>
@@ -245,13 +245,13 @@ export default async function DashboardOrderDetailsPage({ params }: any) {
                       <p className="font-semibold text-gray-950 text-sm sm:text-base">
                         {productName}
                       </p>
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
                         {size && (
                           <span className="rounded bg-teal-50 px-2 py-0.5 font-semibold text-[#016271] border border-[#016271]/20">
                             Size: {size}
                           </span>
                         )}
-                        <span className="font-medium text-gray-600">
+                        <span className="font-medium text-ink-muted">
                           Qty: {quantity}
                         </span>
                         {item.productSKU && (
@@ -312,19 +312,19 @@ export default async function DashboardOrderDetailsPage({ params }: any) {
 
             <div className="mt-4 space-y-3 text-sm">
               <div className="flex justify-between gap-4">
-                <span className="text-gray-500">Payment ID</span>
+                <span className="text-ink-muted">Payment ID</span>
                 <span className="max-w-36 truncate font-medium text-gray-950">
                   {order.payment?.gatewayPaymentId ?? "Not available"}
                 </span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-gray-500">Method</span>
+                <span className="text-ink-muted">Method</span>
                 <span className="font-semibold text-gray-950">
                   {formatPaymentMethod(order.payment?.modeOfPayment, order.payment?.paymentMeta)}
                 </span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-gray-500">Payment Status</span>
+                <span className="text-ink-muted">Payment Status</span>
                 <span className="font-semibold capitalize text-gray-950">
                   {isCanceled
                     ? refundInfo.refundStatus
@@ -336,7 +336,7 @@ export default async function DashboardOrderDetailsPage({ params }: any) {
 
               {/* Price Breakdown */}
               <div className="border-t border-gray-100 pt-3 space-y-2">
-                <div className="flex justify-between text-gray-600">
+                <div className="flex justify-between text-ink-muted">
                   <span>Subtotal</span>
                   <span className="font-semibold text-gray-950">
                     {formatPrice(order.pricingBreakdown?.subtotal ?? order.totalAmount)}
@@ -360,7 +360,7 @@ export default async function DashboardOrderDetailsPage({ params }: any) {
                     </span>
                   </div>
                 )}
-                <div className="flex justify-between text-gray-600">
+                <div className="flex justify-between text-ink-muted">
                   <span>Delivery</span>
                   <span className="font-semibold text-gray-950">
                     {order.pricingBreakdown?.shipping > 0
@@ -386,12 +386,12 @@ export default async function DashboardOrderDetailsPage({ params }: any) {
                 {getDeliveryHeader(isDelivered)}
               </h2>
             </div>
-            <div className="mt-4 text-sm leading-6 text-gray-600 space-y-1">
+            <div className="mt-4 text-sm leading-6 text-ink-muted space-y-1">
               {order.customerName && (
                 <p className="font-bold text-gray-950">{order.customerName}</p>
               )}
               {order.customerPhone && (
-                <p className="text-gray-700 font-medium">📞 {order.customerPhone}</p>
+                <p className="text-ink-muted font-medium">📞 {order.customerPhone}</p>
               )}
               <p className="mt-1">
                 {[order.addressLine1, order.addressLine2]

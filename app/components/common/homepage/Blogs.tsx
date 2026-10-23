@@ -21,7 +21,7 @@ export async function BlogSection() {
             Hygiene & Wellness Hub
           </h2>
 
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-ink-muted">
             Tips, guides, and insights for your menstrual health journey.
           </p>
         </div>
@@ -46,7 +46,7 @@ export async function BlogSection() {
 
                   {/* Category */}
                   {article.blogCategory && (
-                    <span className="absolute top-4 left-4 bg-[#1A8D91] text-white text-[10px] px-3 py-1 rounded-full font-semibold">
+                    <span className="absolute top-4 left-4 bg-[#1A8D91] text-white text-[12px] px-3 py-1 rounded-full font-semibold">
                       {article.blogCategory}
                     </span>
                   )}
@@ -61,12 +61,12 @@ export async function BlogSection() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-base font-semibold text-gray-900 leading-snug group-hover:text-[#1A8D91] transition">
+                  <h3 className="text-base font-semibold text-ink leading-snug group-hover:text-[#1A8D91] transition">
                     {article.title || "Untitled Blog"}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-gray-500 line-clamp-2">
+                  <p className="text-sm text-ink-muted line-clamp-2">
                     {article.metaDescription ||
                       "Read more about this article..."}
                   </p>

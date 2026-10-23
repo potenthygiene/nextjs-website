@@ -18,7 +18,7 @@ type Post = Awaited<ReturnType<typeof getJournalPosts>>[number];
 
 function Meta({ post }: { post: Post }) {
   return (
-    <p className="text-[12.5px] text-[#5C7275]">
+    <p className="text-[12.5px] text-ink-muted">
       {post.date}
       {post.readMinutes > 0 && ` · ${post.readMinutes} min read`}
     </p>
@@ -70,7 +70,7 @@ export default async function BlogPage() {
   const bySlug = new Map(posts.map((p) => [p.slug, p]));
 
   return (
-    <div className="min-h-screen bg-[#FDFCF9] text-[#33403F]">
+    <div className="min-h-screen bg-[#FDFCF9] text-ink">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(posts)) }} />
 
       {/* Masthead */}
@@ -78,16 +78,16 @@ export default async function BlogPage() {
         <div className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full bg-white/50" aria-hidden />
         <div className="pointer-events-none absolute -bottom-52 right-40 h-[380px] w-[380px] rounded-full bg-[#CFEAEC]/70" aria-hidden />
         <div className="relative mx-auto max-w-6xl px-4 pb-28 pt-12 sm:px-6 md:pb-32 md:pt-16">
-          <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-[13px] text-[#5C7275]">
+          <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-[13px] text-ink-muted">
             <Link href="/" className="hover:text-[#075965]">Home</Link>
             <span aria-hidden>/</span>
             <span className="font-medium text-[#075965]">Journal</span>
           </nav>
-          <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-[#016271]">The Potent Journal</p>
-          <h1 className={`${journalSerif.className} mt-4 max-w-4xl text-[40px] font-semibold leading-[1.04] tracking-[-0.02em] text-[#14302F] sm:text-[56px] md:text-[68px]`}>
-            Honest answers on health, periods and <span className="italic text-[#016271]">hygiene.</span>
+          <p className="text-[12px] font-bold uppercase tracking-[0.22em] text-teal">The Potent Journal</p>
+          <h1 className={`${journalSerif.className} mt-4 max-w-4xl text-[40px] font-semibold leading-[1.04] tracking-[-0.02em] text-ink sm:text-[56px] md:text-[68px]`}>
+            Honest answers on health, periods and <span className="italic text-teal">hygiene.</span>
           </h1>
-          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-[#46575A] sm:text-[18.5px]">
+          <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-ink-muted sm:text-[18.5px]">
             Clear, sourced guides for Indian bodies, Indian toilets and Indian journeys. No euphemisms, no scare stories, just what you need to know.
           </p>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-[13.5px] font-medium text-[#075965]">
@@ -117,16 +117,16 @@ export default async function BlogPage() {
                 />
               </div>
               <div className="flex flex-1 flex-col p-6 sm:p-8">
-                <p className="text-[11.5px] font-semibold uppercase tracking-[0.16em] text-[#016271]">
+                <p className="text-[11.5px] font-semibold uppercase tracking-[0.16em] text-teal">
                   Latest · {lead.blogCategory}
                 </p>
-                <h2 className={`${journalSerif.className} mt-3 text-[26px] font-semibold leading-[1.15] text-[#14302F] group-hover:text-[#075965] sm:text-[32px]`}>
+                <h2 className={`${journalSerif.className} mt-3 text-[26px] font-semibold leading-[1.15] text-ink group-hover:text-[#075965] sm:text-[32px]`}>
                   {lead.title}
                 </h2>
-                <p className="mt-3 line-clamp-2 text-[15.5px] leading-relaxed text-[#46575A]">{lead.metaDescription}</p>
+                <p className="mt-3 line-clamp-2 text-[15.5px] leading-relaxed text-ink-muted">{lead.metaDescription}</p>
                 <div className="mt-auto flex items-center justify-between gap-4 pt-5">
                   <Meta post={lead} />
-                  <span className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-[#016271] transition-all group-hover:gap-2.5">
+                  <span className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-teal transition-all group-hover:gap-2.5">
                     Read article <ArrowRight className="h-4 w-4" />
                   </span>
                 </div>
@@ -144,8 +144,8 @@ export default async function BlogPage() {
                     <Image src={getImageUrl(p.image)} alt="" fill sizes="170px" className="object-cover object-[84%_50%]" />
                   </div>
                   <div className="flex flex-col justify-center p-4 sm:p-5">
-                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#016271]">{p.blogCategory}</p>
-                    <h3 className={`${journalSerif.className} mt-1.5 line-clamp-3 text-[17px] font-semibold leading-snug text-[#14302F] group-hover:text-[#075965] sm:text-[19px]`}>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-teal">{p.blogCategory}</p>
+                    <h3 className={`${journalSerif.className} mt-1.5 line-clamp-3 text-[17px] font-semibold leading-snug text-ink group-hover:text-[#075965] sm:text-[19px]`}>
                       {p.title}
                     </h3>
                     <div className="mt-2"><Meta post={p} /></div>
@@ -155,13 +155,13 @@ export default async function BlogPage() {
 
               {alsoNew.length > 0 && (
                 <div className="rounded-[24px] border border-[#E1ECEE] bg-white p-5">
-                  <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#5C7275]">Also new</p>
+                  <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-ink-muted">Also new</p>
                   <ol className="divide-y divide-[#EEF3F3]">
                     {alsoNew.map((p, i) => (
                       <li key={p.slug}>
                         <Link href={`/blog/${p.slug}`} className="group flex items-start gap-3 py-2.5">
                           <span className={`${journalSerif.className} w-5 shrink-0 text-[18px] font-semibold text-[#9FD3D6]`}>{i + 1}</span>
-                          <span className="text-[14.5px] font-medium leading-snug text-[#14302F] group-hover:text-[#016271]">{p.title}</span>
+                          <span className="text-[14.5px] font-medium leading-snug text-ink group-hover:text-teal">{p.title}</span>
                         </Link>
                       </li>
                     ))}
@@ -176,7 +176,7 @@ export default async function BlogPage() {
       {/* Topics */}
       <section aria-labelledby="topics-heading" className="mx-auto mt-20 max-w-6xl px-4 sm:px-6">
         <div className="mb-7 flex items-end justify-between gap-4">
-          <h2 id="topics-heading" className={`${journalSerif.className} text-[28px] font-semibold text-[#14302F] sm:text-[34px]`}>
+          <h2 id="topics-heading" className={`${journalSerif.className} text-[28px] font-semibold text-ink sm:text-[34px]`}>
             Explore by topic
           </h2>
         </div>
@@ -196,7 +196,7 @@ export default async function BlogPage() {
                 <p className={`${journalSerif.className} relative text-[19px] font-semibold leading-tight sm:text-[22px]`} style={{ color: theme.ink }}>
                   {t.name}
                 </p>
-                <p className="relative mt-1.5 text-[13.5px] leading-snug text-[#46575A] sm:text-[14.5px]">{t.blurb}</p>
+                <p className="relative mt-1.5 text-[13.5px] leading-snug text-ink-muted sm:text-[14.5px]">{t.blurb}</p>
                 <p className="relative mt-4 inline-flex items-center gap-1 text-[12.5px] font-semibold" style={{ color: theme.ink }}>
                   {n} {n === 1 ? "guide" : "guides"} <ArrowUpRight className="h-3.5 w-3.5" />
                 </p>
@@ -236,7 +236,7 @@ export default async function BlogPage() {
 
       {/* All articles */}
       <section id="articles" aria-labelledby="all-heading" className="mx-auto max-w-6xl scroll-mt-28 px-4 py-20 sm:px-6">
-        <h2 id="all-heading" className={`${journalSerif.className} mb-8 text-[28px] font-semibold text-[#14302F] sm:text-[34px]`}>
+        <h2 id="all-heading" className={`${journalSerif.className} mb-8 text-[28px] font-semibold text-ink sm:text-[34px]`}>
           All articles
         </h2>
         <Suspense fallback={<BlogListSkeleton />}>
@@ -256,11 +256,11 @@ export default async function BlogPage() {
         </Link>
         <Link href="/faq" className="group flex items-center justify-between gap-6 rounded-[24px] bg-[#EEF5EF] p-6 sm:p-8">
           <div>
-            <p className="text-[11.5px] font-bold uppercase tracking-[0.18em] text-[#0E5C3A]">Quick answers</p>
-            <p className={`${journalSerif.className} mt-2 text-[24px] font-semibold leading-tight text-[#163826]`}>Orders, delivery and subscriptions</p>
-            <p className="mt-2 text-[14.5px] text-[#41584A]">Everything about buying from Potent, in one place.</p>
+            <p className="text-[11.5px] font-bold uppercase tracking-[0.18em] text-teal">Quick answers</p>
+            <p className={`${journalSerif.className} mt-2 text-[24px] font-semibold leading-tight text-ink`}>Orders, delivery and subscriptions</p>
+            <p className="mt-2 text-[14.5px] text-ink-muted">Everything about buying from Potent, in one place.</p>
           </div>
-          <ArrowRight className="h-6 w-6 shrink-0 text-[#0E5C3A] transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="h-6 w-6 shrink-0 text-teal transition-transform group-hover:translate-x-1" />
         </Link>
       </section>
 

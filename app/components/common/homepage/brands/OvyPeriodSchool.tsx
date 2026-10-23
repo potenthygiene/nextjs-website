@@ -113,7 +113,7 @@ export function OvyPeriodSchool() {
                 <h3 className="font-serif font-bold text-xs sm:text-sm text-[#1F1915] mb-1.5 leading-snug">
                   {article.title}
                 </h3>
-                <p className="text-[11px] sm:text-xs text-[#5C524D] leading-relaxed font-normal">
+                <p className="text-[12px] sm:text-xs text-[#5C524D] leading-relaxed font-normal">
                   {article.desc}
                 </p>
               </div>

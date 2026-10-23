@@ -24,7 +24,7 @@ export const MyReviewCard = ({ review }: { review: any }) => (
       <div className="flex-1">
         {/* Name + Badge */}
         <div className="flex flex-wrap items-center gap-2">
-          <p className="font-semibold text-[#2D3748]">{review.name}</p>
+          <p className="font-semibold text-ink">{review.name}</p>
           {review.productName && (
             <span className="text-xs bg-[#E9F7F9] text-[#016271] font-medium px-2.5 py-0.5 rounded-full">
               {review.productName}

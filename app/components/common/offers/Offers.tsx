@@ -157,14 +157,14 @@ export function OffersForYou({ brand = "any", className = "" }: { brand?: Brand;
             {ladder.map((c) => (
               <span key={c.code} className="shrink-0 rounded-xl bg-white px-3 py-2 text-center shadow-[0_1px_6px_-3px_rgba(0,0,0,0.2)]">
                 <span className={`block text-[14px] font-bold ${ink}`}>₹{c.flat} off</span>
-                <span className="block text-[11px] text-[#6d5767]">on ₹{c.minimumOrderValue}+</span>
-                <span className="mt-0.5 block font-mono text-[10.5px] font-bold tracking-wide text-[#a08a99]">{c.code}</span>
+                <span className="block text-[12px] text-[#6d5767]">on ₹{c.minimumOrderValue}+</span>
+                <span className="mt-0.5 block font-mono text-[12px] font-bold tracking-wide text-[#a08a99]">{c.code}</span>
               </span>
             ))}
           </div>
         </div>
       )}
-      <p className="mt-2.5 text-[11.5px] text-[#8a7484]">One store coupon per order, plus FIRSTCARE15 or SHARECARE15 on top. Rewards credit applies too. Free delivery on ₹399+.</p>
+      <p className="mt-2.5 text-[12px] text-[#8a7484]">One store coupon per order, plus FIRSTCARE15 or SHARECARE15 on top. Rewards credit applies too. Free delivery on ₹399+.</p>
     </div>
   );
 }
@@ -195,7 +195,7 @@ export function OffersBand({ title = "Offers running now", className = "" }: { t
               <span>
                 <Icon className={`h-5 w-5 ${hot ? "text-white" : "text-[#9A5C93]"}`} aria-hidden />
                 <span className="mt-2 block text-[15px] font-bold leading-snug">{c.description}</span>
-                <span className={`mt-1 block text-[11.5px] ${hot ? "text-white/85" : "text-[#8a7484]"}`}>{couponConditions(c)}</span>
+                <span className={`mt-1 block text-[12px] ${hot ? "text-white/85" : "text-[#8a7484]"}`}>{couponConditions(c)}</span>
               </span>
               <span className="mt-3">
                 <CopyCode code={c.code} tone={hot ? "light" : "ovy"} />
@@ -217,7 +217,7 @@ export function OfferTag({ className = "" }: { className?: string }) {
   const c = festive || pair;
   if (!c) return null;
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full bg-[#FBEFF8] px-2 py-0.5 text-[11px] font-semibold text-[#7E4D77] ${className}`}>
+    <span className={`inline-flex items-center gap-1 rounded-full bg-[#FBEFF8] px-2 py-0.5 text-[12px] font-semibold text-[#7E4D77] ${className}`}>
       <Tag className="h-3 w-3" aria-hidden />
       {festive ? `Extra ${festive.percent}% off: ${festive.code}` : `Buy any 2: ${pair!.percent}% off`}
     </span>

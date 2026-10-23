@@ -1,24 +1,7 @@
-import SeatCoversPageClient from "@/app/components/common/Product-detail/SeatCoversPageClient";
-import { loowayToiletSeatCovers } from "@/const/productsContent";
-import { getProductReviews } from "@/helper";
-import { getFullProductDetails } from "@/helper/product/action";
-import { productMetadata } from "@/const/seo";
+import { permanentRedirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-// Same page as /product-detail/looway-toilet-seat-covers, so it points Google there.
-export const metadata = productMetadata("looway-toilet-seat-covers");
-
-export default async function LoowayToiletSeatCoversPage() {
-  const slug = "looway-toilet-seat-covers";
-  const product = await getFullProductDetails(slug);
-  const reviewWithMedia = await getProductReviews(slug);
-
-  return (
-    <SeatCoversPageClient
-      product={product || { id: "seat-covers-db-id", slug: "looway-toilet-seat-covers", name: "Looway Disposable Toilet Seat Covers" }}
-      reviewWithMedia={reviewWithMedia}
-      content={loowayToiletSeatCovers}
-    />
-  );
+// Duplicate of /product-detail/looway-toilet-seat-covers. next.config.ts redirects this address
+// first; this keeps it a redirect if that rule is ever removed.
+export default function Page() {
+  permanentRedirect("/product-detail/looway-toilet-seat-covers");
 }

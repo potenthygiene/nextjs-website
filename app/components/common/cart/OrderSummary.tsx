@@ -169,8 +169,8 @@ export function OrderSummary() {
   return (
     <div className="rounded-xl border border-gray-200/90 bg-white p-5 sm:p-6 shadow-sm">
       <div className="mb-4 flex items-baseline justify-between">
-        <h2 className="text-xl font-bold text-[#333333]">Order Summary</h2>
-        <span className="text-xs text-gray-500 font-medium">
+        <h2 className="text-xl font-bold text-ink">Order Summary</h2>
+        <span className="text-xs text-ink-muted font-medium">
           {totalPacks} {totalPacks === 1 ? "pack" : "packs"}
         </span>
       </div>
@@ -179,7 +179,7 @@ export function OrderSummary() {
       {items.length > 0 && (
         <div className="mb-5 rounded-xl border border-gray-200/80 bg-gray-50/70 p-3 sm:p-3.5">
           <div className="mb-2 flex items-center justify-between">
-            <span className="text-[11px] font-bold text-gray-600 uppercase tracking-wider">
+            <span className="text-[11px] font-bold text-ink-muted uppercase tracking-wider">
               Items in this order ({totalPacks})
             </span>
           </div>
@@ -214,7 +214,7 @@ export function OrderSummary() {
 
                   {/* Details: Product, Size, Quantity */}
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-1 leading-tight">
+                    <h4 className="text-xs sm:text-sm font-semibold text-ink line-clamp-1 leading-tight">
                       {yatraKitData
                         ? "Looway Yatra Kit"
                         : cleanTitle}
@@ -222,26 +222,26 @@ export function OrderSummary() {
 
                     <div className="flex flex-wrap items-center gap-1.5 mt-1">
                       {yatraKitData?.kitName && (
-                        <span className="inline-flex items-center rounded bg-[#F3E6F0] px-1.5 py-0.5 text-[10px] font-bold text-[#7E4D77] border border-[#9A5B90]/40">
+                        <span className="inline-flex items-center rounded bg-[#F3E6F0] px-1.5 py-0.5 text-[12px] font-bold text-[#7E4D77] border border-[#9A5B90]/40">
                           {yatraKitData.kitName}
                         </span>
                       )}
                       {badge && !item.mixBoxRecipe && !yatraKitData && (
-                        <span className="inline-flex items-center rounded bg-[#F4EFF3] px-1.5 py-0.5 text-[10px] font-semibold text-[#7E4D77] border border-[#E9DFE7]">
+                        <span className="inline-flex items-center rounded bg-[#F4EFF3] px-1.5 py-0.5 text-[12px] font-semibold text-[#7E4D77] border border-[#E9DFE7]">
                           {badge}
                         </span>
                       )}
                       {freeLinersCount > 0 && !yatraKitData && (
-                        <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-1.5 py-0.5 text-[10px] font-bold text-[#15803D] border border-[#BFE3CA]">
+                        <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-1.5 py-0.5 text-[12px] font-bold text-[#15803D] border border-[#BFE3CA]">
                           🎁 +{freeLinersCount} Free Liners
                         </span>
                       )}
                       {yatraKitData && (
-                        <span className="inline-flex items-center rounded bg-[#EAF6F4] px-1.5 py-0.5 text-[10px] font-bold text-[#116B66] border border-[#116B66]/20">
+                        <span className="inline-flex items-center rounded bg-[#EAF6F4] px-1.5 py-0.5 text-[12px] font-bold text-[#116B66] border border-[#116B66]/20">
                           Travel Kit
                         </span>
                       )}
-                      <span className="text-[11px] font-medium text-gray-600 bg-white px-1.5 py-0.5 rounded border border-gray-200">
+                      <span className="text-[12px] font-medium text-ink-muted bg-white px-1.5 py-0.5 rounded border border-gray-200">
                         Qty: {qty}
                       </span>
                     </div>
@@ -249,12 +249,12 @@ export function OrderSummary() {
                     {yatraKitData && (
                       <div className="space-y-1 mt-1">
                         {kitContents && (
-                          <p className="text-[11px] font-medium text-[#116B66] leading-snug">
+                          <p className="text-[12px] font-medium text-[#116B66] leading-snug">
                             {kitContents}
                           </p>
                         )}
                         <div>
-                          <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-1.5 py-0.5 text-[10px] font-bold text-[#15803D] border border-[#BFE3CA]">
+                          <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-1.5 py-0.5 text-[12px] font-bold text-[#15803D] border border-[#BFE3CA]">
                             ✓ Free Intimate Wipes ({yatraKitData.freeWipesCount || 10} wipes) included
                           </span>
                         </div>
@@ -262,7 +262,7 @@ export function OrderSummary() {
                     )}
 
                     {item.mixBoxRecipe && !yatraKitData && (
-                      <p className="text-[11px] font-medium text-[#7E4D77] mt-1">
+                      <p className="text-[12px] font-medium text-[#7E4D77] mt-1">
                         {formatMixBoxRecipe(item.mixBoxRecipe)}
                       </p>
                     )}
@@ -270,7 +270,7 @@ export function OrderSummary() {
 
                   {/* Price */}
                   <div className="text-right shrink-0">
-                    <span className="text-xs sm:text-sm font-bold text-gray-900">
+                    <span className="text-xs sm:text-sm font-bold text-ink">
                       ₹{lineTotal.toFixed(2)}
                     </span>
                   </div>
@@ -318,7 +318,7 @@ export function OrderSummary() {
           onRemove={handleRemoveCoupon}
           busy={couponLoading}
         />
-        <p className="mt-2 text-[11.5px] text-gray-500">Your Rewards credit is applied on top at checkout.</p>
+        <p className="mt-2 text-[12px] text-ink-muted">Your Rewards credit is applied on top at checkout.</p>
       </div>
 
       {/* 🎁 Gift Option in Cart */}
@@ -335,7 +335,7 @@ export function OrderSummary() {
               <Gift className="h-4 w-4 shrink-0 text-[#9A5B90]" />
               <span>This is a gift</span>
             </div>
-            <p className="mt-0.5 text-[11px] text-[#7E4D77]/80">
+            <p className="mt-0.5 text-[12px] text-[#7E4D77]/80">
               Hides price on parcel &amp; slip · Includes your personal note
             </p>
           </div>
@@ -351,7 +351,7 @@ export function OrderSummary() {
               rows={2}
               className="w-full rounded-lg border border-gray-200 bg-white p-2.5 text-xs text-gray-800 placeholder-gray-400 focus:border-[#9A5B90] focus:outline-none focus:ring-1 focus:ring-[#9A5B90]"
             />
-            <div className="flex justify-between items-center text-[10px] text-gray-400">
+            <div className="flex justify-between items-center text-[12px] text-gray-400">
               <span>Prices will be omitted from the parcel &amp; slip</span>
               <span>{giftNote.length}/200</span>
             </div>
@@ -360,9 +360,9 @@ export function OrderSummary() {
       </div>
 
       <div className="space-y-3.5 border-b pb-5">
-        <div className="flex justify-between text-sm text-[#666666]">
+        <div className="flex justify-between text-sm text-ink-muted">
           <span>Subtotal</span>
-          <span className="font-bold text-[#333333]">
+          <span className="font-bold text-ink">
             ₹{subtotal.toFixed(2)}
           </span>
         </div>
@@ -374,40 +374,40 @@ export function OrderSummary() {
               <span className="font-bold">-₹{discount.toFixed(2)}</span>
             </div>
 
-            <div className="flex justify-between text-sm text-[#666666]">
+            <div className="flex justify-between text-sm text-ink-muted">
               <span>Discounted Subtotal</span>
-              <span className="font-bold text-[#333333]">
+              <span className="font-bold text-ink">
                 ₹{discountedSubtotal.toFixed(2)}
               </span>
             </div>
           </>
         )}
 
-        <div className="flex justify-between text-sm text-[#666666]">
+        <div className="flex justify-between text-sm text-ink-muted">
           <span>Shipping</span>
-          <span className="font-bold text-[#333333]">
+          <span className="font-bold text-ink">
             {shipping === 0 && subtotal > 0
               ? "Free Delivery"
               : `₹${shipping.toFixed(2)}`}
           </span>
         </div>
 
-        <div className="flex justify-between text-xs text-gray-500 pt-0.5">
+        <div className="flex justify-between text-xs text-ink-muted pt-0.5">
           <span>Taxes</span>
-          <span className="font-medium text-gray-600">Prices include GST</span>
+          <span className="font-medium text-ink-muted">Prices include GST</span>
         </div>
       </div>
 
       <div className="py-5">
         <div className="flex items-baseline justify-between">
           <div>
-            <span className="text-lg font-bold text-[#333333]">Total</span>
-            <p className="text-[11px] font-medium text-gray-500">
+            <span className="text-lg font-bold text-ink">Total</span>
+            <p className="text-[12px] font-medium text-ink-muted">
               Prices include GST
             </p>
           </div>
 
-          <span className="text-2xl font-black text-[#333333]">
+          <span className="text-2xl font-black text-ink">
             ₹{final.toFixed(2)}
           </span>
         </div>
@@ -421,7 +421,7 @@ export function OrderSummary() {
         Checkout
       </Button>
 
-      <div className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-gray-400">
+      <div className="mt-3 flex items-center justify-center gap-1.5 text-[12px] text-gray-400">
         <ShieldCheck className="h-4 w-4 text-[#00A86B]" />
         Secure 256-bit encrypted checkout
       </div>

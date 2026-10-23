@@ -62,11 +62,11 @@ const RoshniSection = () => {
           Social Impact Arm
         </p>
 
-        <h2 className="text-3xl md:text-5xl font-serif text-gray-900 leading-tight">
+        <h2 className="text-3xl md:text-5xl font-serif text-ink leading-tight">
           Roshni <span className="italic text-yellow-700">Manav Utthaan</span> Sansthaan
         </h2>
 
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="text-sm text-ink-muted mt-2">
           Reg. No. 580/JAIPUR/1997-98 ·  Gokul Vatika, Durgapura, Jaipur 302018
         </p>
 
@@ -81,19 +81,19 @@ const RoshniSection = () => {
         
         {/* LEFT CONTENT */}
         <div>
-          <p className="text-gray-700 leading-relaxed mb-4">
+          <p className="text-ink-muted leading-relaxed mb-4">
             <strong>Roshni Manav Utthaan Sansthaan</strong> is a registered NGO delivering
             menstrual hygiene education and awareness into India’s most underserved communities,
             without judgment, without agenda, and without expectation.
           </p>
 
-          <p className="text-gray-700 leading-relaxed mb-4">
+          <p className="text-ink-muted leading-relaxed mb-4">
             Divita Agarwal serves as <span className="italic text-yellow-700">Vice President</span>,
             driving initiatives across Rajasthan, reaching women in rural areas, schools,
             and health centres.
           </p>
 
-          <p className="text-gray-700 leading-relaxed mb-6">
+          <p className="text-ink-muted leading-relaxed mb-6">
             Because <span className="italic text-yellow-700">knowledge is the first form of dignity</span>.
           </p>
 
@@ -103,8 +103,8 @@ const RoshniSection = () => {
               <div key={i} className="flex gap-3 items-start">
                 <span className="text-xl">{item.icon}</span>
                 <div>
-                  <p className="font-medium text-gray-900">{item.title}</p>
-                  <p className="text-sm text-gray-600">{item.desc}</p>
+                  <p className="font-medium text-ink">{item.title}</p>
+                  <p className="text-sm text-ink-muted">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -153,8 +153,8 @@ const RoshniSection = () => {
             className="bg-white rounded-2xl p-6 text-center border border-gray-200 shadow-sm"
           >
             <div className="text-xl mb-2">{item.icon}</div>
-            <p className="text-2xl font-semibold text-gray-900">{item.value}</p>
-            <p className="text-sm text-gray-600 mt-1">{item.label}</p>
+            <p className="text-2xl font-semibold text-ink">{item.value}</p>
+            <p className="text-sm text-ink-muted mt-1">{item.label}</p>
           </div>
         ))}
       </div>

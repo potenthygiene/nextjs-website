@@ -317,7 +317,7 @@ export function PackingSlipModal({
           {/* Header */}
           <div className="flex justify-between items-start border-b border-gray-200 pb-5">
             <div>
-              <h1 className="text-2xl font-black tracking-tight text-[#016271]">
+              <h1 className="text-2xl font-bold tracking-tight text-[#016271]">
                 POTENT HYGIENE
               </h1>
               <p className="text-xs text-gray-500 mt-0.5">

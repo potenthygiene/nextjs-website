@@ -9,7 +9,7 @@ export function OvySixProofPoints() {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-          <span className="inline-block rounded-full border border-purple-200 bg-white/90 px-4 py-1 text-[10px] sm:text-[11px] font-bold tracking-widest text-[#602E55] uppercase mb-2 shadow-2xs">
+          <span className="inline-block rounded-full border border-purple-200 bg-white/90 px-4 py-1 text-[11px] sm:text-[11px] font-bold tracking-widest text-[#602E55] uppercase mb-2 shadow-2xs">
             TESTED. TRUSTED. SAFE.
           </span>
           <h2 className="font-serif text-3xl sm:text-5xl font-bold text-[#1F1915] leading-tight">
@@ -28,10 +28,10 @@ export function OvySixProofPoints() {
             <div className="rounded-full bg-purple-100 p-2 sm:p-3 text-[#602E55] mb-1.5 sm:mb-3 shrink-0">
               <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <h3 className="font-bold text-[10.5px] sm:text-sm text-[#1F1915] leading-snug">
+            <h3 className="font-bold text-[12px] sm:text-sm text-[#1F1915] leading-snug">
               Dermatologically tested
             </h3>
-            <p className="hidden sm:block text-xs text-gray-500 mt-2 leading-relaxed">
+            <p className="hidden sm:block text-xs text-ink-muted mt-2 leading-relaxed">
               On 24 human volunteers, in an ISO-certified lab, under a dermatologist.
             </p>
           </div>
@@ -41,10 +41,10 @@ export function OvySixProofPoints() {
             <div className="rounded-full bg-pink-100 p-2 sm:p-3 text-[#C42B5B] mb-1.5 sm:mb-3 shrink-0">
               <Check className="h-4 w-4 sm:h-5 sm:w-5 stroke-[2.5]" />
             </div>
-            <h3 className="font-bold text-[10.5px] sm:text-sm text-[#1F1915] leading-snug">
+            <h3 className="font-bold text-[12px] sm:text-sm text-[#1F1915] leading-snug">
               Non-irritant
             </h3>
-            <p className="hidden sm:block text-xs text-gray-500 mt-2 leading-relaxed">
+            <p className="hidden sm:block text-xs text-ink-muted mt-2 leading-relaxed">
               Tested to IS 4011:2018, the Indian Standard. Mean score 0.04 against a 2.0 threshold.
             </p>
           </div>
@@ -54,10 +54,10 @@ export function OvySixProofPoints() {
             <div className="rounded-full bg-blue-100 p-2 sm:p-3 text-[#1B6A85] mb-1.5 sm:mb-3 shrink-0">
               <Droplets className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <h3 className="font-bold text-[10.5px] sm:text-sm text-[#1F1915] leading-snug">
+            <h3 className="font-bold text-[12px] sm:text-sm text-[#1F1915] leading-snug">
               Rash-free
             </h3>
-            <p className="hidden sm:block text-xs text-gray-500 mt-2 leading-relaxed">
+            <p className="hidden sm:block text-xs text-ink-muted mt-2 leading-relaxed">
               Zero redness or swelling in 23 of 24 volunteers at 24 hours and again at day 8.
             </p>
           </div>
@@ -67,23 +67,23 @@ export function OvySixProofPoints() {
             <div className="rounded-full bg-purple-100 p-2 sm:p-3 text-[#602E55] mb-1.5 sm:mb-3 shrink-0">
               <Leaf className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <h3 className="font-bold text-[10.5px] sm:text-sm text-[#1F1915] leading-snug">
+            <h3 className="font-bold text-[12px] sm:text-sm text-[#1F1915] leading-snug">
               Toxin-free
             </h3>
-            <p className="hidden sm:block text-xs text-gray-500 mt-2 leading-relaxed">
+            <p className="hidden sm:block text-xs text-ink-muted mt-2 leading-relaxed">
               Certified for the Ovy menstrual range. No chlorine bleach, parabens, fragrance or dyes.
             </p>
           </div>
 
           {/* 5. pH-balanced */}
           <div className="rounded-xl sm:rounded-2xl bg-white p-2.5 sm:p-4 text-center shadow-xs border border-purple-100/70 flex flex-col items-center justify-start hover:shadow-md transition-all">
-            <div className="rounded-full bg-purple-100 p-2 sm:p-2.5 text-[#602E55] mb-1.5 sm:mb-3 font-bold text-[10px] sm:text-xs flex items-center justify-center h-8 w-8 sm:h-11 sm:w-11 shrink-0">
+            <div className="rounded-full bg-purple-100 p-2 sm:p-2.5 text-[#602E55] mb-1.5 sm:mb-3 font-bold text-[12px] sm:text-xs flex items-center justify-center h-8 w-8 sm:h-11 sm:w-11 shrink-0">
               pH
             </div>
-            <h3 className="font-bold text-[10.5px] sm:text-sm text-[#1F1915] leading-snug">
+            <h3 className="font-bold text-[12px] sm:text-sm text-[#1F1915] leading-snug">
               pH-balanced
             </h3>
-            <p className="hidden sm:block text-xs text-gray-500 mt-2 leading-relaxed">
+            <p className="hidden sm:block text-xs text-ink-muted mt-2 leading-relaxed">
               Certified. Kind to the skin's own balance, which sits at a different pH to the rest of you.
             </p>
           </div>
@@ -93,10 +93,10 @@ export function OvySixProofPoints() {
             <div className="rounded-full bg-blue-100 p-2 sm:p-3 text-[#1B6A85] mb-1.5 sm:mb-3 shrink-0">
               <Heart className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <h3 className="font-bold text-[10.5px] sm:text-sm text-[#1F1915] leading-snug">
+            <h3 className="font-bold text-[12px] sm:text-sm text-[#1F1915] leading-snug">
               Cruelty-free
             </h3>
-            <p className="hidden sm:block text-xs text-gray-500 mt-2 leading-relaxed">
+            <p className="hidden sm:block text-xs text-ink-muted mt-2 leading-relaxed">
               Certified. Never tested on animals, and vegan-friendly.
             </p>
           </div>
@@ -108,26 +108,26 @@ export function OvySixProofPoints() {
           <div className="grid grid-cols-3 gap-2 sm:gap-6 text-center divide-x divide-purple-400/30">
             <div>
               <div className="font-serif text-2xl sm:text-5xl font-bold text-white">24</div>
-              <div className="text-[9px] sm:text-xs text-purple-200 mt-0.5 sm:mt-1 font-medium">human volunteers</div>
+              <div className="text-[12px] sm:text-xs text-purple-200 mt-0.5 sm:mt-1 font-medium">human volunteers</div>
             </div>
 
             <div className="px-1">
               <div className="font-serif text-2xl sm:text-5xl font-bold text-white">0.04</div>
-              <div className="text-[9px] sm:text-xs text-purple-200 mt-0.5 sm:mt-1 font-medium leading-tight">
+              <div className="text-[12px] sm:text-xs text-purple-200 mt-0.5 sm:mt-1 font-medium leading-tight">
                 mean irritation score, against a 2.0 threshold
               </div>
             </div>
 
             <div className="px-1">
               <div className="font-serif text-2xl sm:text-5xl font-bold text-white">Day 8</div>
-              <div className="text-[9px] sm:text-xs text-purple-200 mt-0.5 sm:mt-1 font-medium leading-tight">
+              <div className="text-[12px] sm:text-xs text-purple-200 mt-0.5 sm:mt-1 font-medium leading-tight">
                 follow-up, all scores zero
               </div>
             </div>
           </div>
         </div>
 
-        <p className="text-center text-[9.5px] sm:text-xs text-gray-500 mt-3 sm:mt-4">
+        <p className="text-center text-[12px] sm:text-xs text-ink-muted mt-3 sm:mt-4">
           Study reports and certificates are held on file and shared on request: care@potenthygiene.com
         </p>
 

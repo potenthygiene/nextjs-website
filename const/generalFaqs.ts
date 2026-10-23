@@ -1,6 +1,8 @@
 // General questions for the FAQ page. Product questions live on each
 // product page, so nothing here repeats them.
 
+import { REFERRAL_FRIEND_LINE, REFERRAL_REFERRER_LINE } from "@/lib/rewardsRules";
+
 export type FaqLink = { label: string; href: string };
 export type GeneralFaq = { id: string; q: string; a: string; links?: FaqLink[] };
 export type FaqGroup = { id: string; title: string; faqs: GeneralFaq[] };
@@ -18,7 +20,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         id: "delivery-time",
         q: "How long does delivery take?",
-        a: "Orders ship within 24 to 48 hours and usually arrive in about 5 to 7 days, faster to metro cities. Every order is tracked end to end.",
+        a: "Orders ship within 24 to 48 hours and usually arrive 5 to 7 days after dispatch; remote areas can take longer. Every order is tracked end to end.",
       },
       {
         id: "delivery-cost",
@@ -164,7 +166,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         id: "referral",
         q: "How does referring a friend work?",
-        a: "Share your code or link from Account → Referral Program. Your friend gets a discount on their first order, and you earn credit once their first order of ₹399 or more is delivered. Your friend must be new to Potent Hygiene.",
+        a: `Share your code or link from Account → Referral Program. ${REFERRAL_FRIEND_LINE} ${REFERRAL_REFERRER_LINE} Your friend must be new to Potent Hygiene.`,
         links: [{ label: "Referral Program", href: "/dashboard/referral" }],
       },
     ],
@@ -181,7 +183,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         id: "packaging",
         q: "Do you ship in plain packaging?",
-        a: "Ovy orders arrive in Ovy's own packaging, because periods are normal and there is nothing to hide. The menstrual cup is the exception: it ships in a plain, unbranded outer box.",
+        a: "No. Every order arrives in our own bold packaging, because periods are normal and there is nothing to hide.",
       },
     ],
   },

@@ -54,7 +54,7 @@ const ProductPromise = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
         
         {/* Left Heading */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-gray-900 leading-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-ink leading-tight">
           Every label, <br />
           every{" "}
           <span className="text-teal-600 italic font-light">
@@ -63,7 +63,7 @@ const ProductPromise = () => {
         </h2>
 
         {/* Right Description */}
-        <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl">
+        <p className="text-ink-muted text-base md:text-lg leading-relaxed max-w-xl">
           No marketing language. Every commitment we carry is backed by third-party
           laboratory testing, because when we say skin-safe, we mean it and we can prove it.
         </p>
@@ -80,17 +80,17 @@ const ProductPromise = () => {
             <div className="text-2xl mb-4">{item.icon}</div>
 
             {/* Title */}
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-ink mb-2">
               {item.title}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm leading-relaxed mb-4">
+            <p className="text-ink-muted text-sm leading-relaxed mb-4">
               {item.desc}
             </p>
 
             {/* Tag */}
-            <span className="inline-block text-xs tracking-widest uppercase bg-gray-200 text-gray-700 px-3 py-1 rounded-full">
+            <span className="inline-block text-xs tracking-widest uppercase bg-gray-200 text-ink-muted px-3 py-1 rounded-full">
               {item.tag}
             </span>
           </div>

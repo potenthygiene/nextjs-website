@@ -49,7 +49,7 @@ export function LoowayComparisonSection() {
           <span className="mb-2 block text-[11px] font-bold tracking-widest text-[#006573] uppercase">
             THE OLD WAY, AND THE LOOWAY
           </span>
-          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-[#1A150F] sm:text-[46px] sm:leading-[49.68px]">
+          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-ink sm:text-[46px] sm:leading-[49.68px]">
             You have been making do. You don’t have to.
           </h2>
         </div>
@@ -76,17 +76,17 @@ export function LoowayComparisonSection() {
 
               {/* The Old Way (Center) */}
               <div className="space-y-1 md:w-[34%]">
-                <span className="block text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+                <span className="block text-[11px] font-bold tracking-widest text-ink-muted uppercase">
                   THE OLD WAY
                 </span>
-                <p className="text-xs leading-relaxed font-normal text-gray-500 sm:text-sm">
+                <p className="text-xs leading-relaxed font-normal text-ink-muted sm:text-sm">
                   {item.oldWay}
                 </p>
               </div>
 
               {/* The Looway Inner Card (Right) */}
               <div className="space-y-1 rounded-xl border border-gray-100/90 bg-white p-4 shadow-2xs sm:p-4.5 md:w-[34%]">
-                <span className="block text-[10px] font-bold tracking-widest text-[#006573] uppercase">
+                <span className="block text-[11px] font-bold tracking-widest text-[#006573] uppercase">
                   THE LOOWAY
                 </span>
                 <p className="text-xs leading-relaxed font-bold text-[#1F1915] sm:text-sm">

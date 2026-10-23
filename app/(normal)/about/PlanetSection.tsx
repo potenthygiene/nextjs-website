@@ -43,7 +43,7 @@ const PlanetSection = () => {
       </p>
 
       {/* HEADING */}
-      <h2 className="text-3xl md:text-5xl font-serif text-gray-900 leading-tight mb-12">
+      <h2 className="text-3xl md:text-5xl font-serif text-ink leading-tight mb-12">
         The crisis is real. <br />
         Our response is{" "}
         <span className="text-green-600 italic font-light">
@@ -94,7 +94,7 @@ const PlanetSection = () => {
         </div>
 
         {/* RIGHT - SOLUTION */}
-        <div className="bg-[#e8f2ec] text-gray-900 p-8 md:p-10">
+        <div className="bg-[#e8f2ec] text-ink p-8 md:p-10">
           <p className="text-xs tracking-widest text-green-600 uppercase mb-4">
             ● Our Response
           </p>
@@ -103,7 +103,7 @@ const PlanetSection = () => {
             Every Potent Hygiene product is the answer.
           </h3>
 
-          <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+          <p className="text-sm text-ink-muted mb-6 leading-relaxed">
             Organic materials that biodegrade naturally. Reusables that replace
             thousands of disposable pads. Packaging that reduces plastic waste.
           </p>
@@ -112,22 +112,22 @@ const PlanetSection = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-white p-4 rounded-lg shadow-sm">
               <p className="text-lg font-semibold">10yr</p>
-              <p className="text-xs text-gray-500">Cup lifespan</p>
+              <p className="text-xs text-ink-muted">Cup lifespan</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow-sm">
               <p className="text-lg font-semibold">3000</p>
-              <p className="text-xs text-gray-500">Pads replaced</p>
+              <p className="text-xs text-ink-muted">Pads replaced</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow-sm">
               <p className="text-lg font-semibold">100%</p>
-              <p className="text-xs text-gray-500">Free from toxins</p>
+              <p className="text-xs text-ink-muted">Free from toxins</p>
             </div>
 
             <div className="bg-white p-4 rounded-lg shadow-sm">
               <p className="text-lg font-semibold">0</p>
-              <p className="text-xs text-gray-500">Endocrine disruptors</p>
+              <p className="text-xs text-ink-muted">Endocrine disruptors</p>
             </div>
           </div>
         </div>
@@ -146,10 +146,10 @@ const PlanetSection = () => {
               className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition"
             >
               <div className="text-xl mb-3">{item.icon}</div>
-              <h4 className="font-semibold text-gray-900 mb-2">
+              <h4 className="font-semibold text-ink mb-2">
                 {item.title}
               </h4>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-sm text-ink-muted leading-relaxed">
                 {item.desc}
               </p>
             </div>

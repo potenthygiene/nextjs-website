@@ -35,7 +35,7 @@ export const EditAddressForm = ({
   onCancel,
 }: FormProps) => (
   <Card className="p-8 border-none shadow-sm bg-white rounded-[20px]">
-    <h3 className="text-[14px] font-bold text-[#2D3748] mb-8 uppercase tracking-[0.1em]">
+    <h3 className="text-[14px] font-bold text-ink mb-8 uppercase tracking-[0.1em]">
       Personal Details
     </h3>
 
@@ -108,7 +108,7 @@ export const EditAddressForm = ({
       <div className="space-y-6">
         {/* <div className="flex items-center space-x-2 ml-1">
           <Checkbox id="default-address" className="border-gray-300 data-[state=checked]:bg-[#1B8392]" />
-          <label htmlFor="default-address" className="text-[13px] text-gray-500 font-medium cursor-pointer">
+          <label htmlFor="default-address" className="text-[13px] text-ink-muted font-medium cursor-pointer">
             Set as default shipping address
           </label>
         </div> */}

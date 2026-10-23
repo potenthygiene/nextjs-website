@@ -76,7 +76,7 @@ export default function ReviewPage() {
       {reviewableProducts.length > 0 && (
         <div className="bg-white p-6 rounded-[20px] shadow-sm space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-[16px] font-bold text-[#2D3748]">
+            <h3 className="text-[16px] font-bold text-ink">
               Write a Review
             </h3>
             <span className="text-xs font-semibold text-[#1B8392] bg-[#E9F7F9] px-3 py-1 rounded-full">
@@ -96,7 +96,7 @@ export default function ReviewPage() {
       )}
 
       <div className="bg-white p-6 rounded-[20px] shadow-sm space-y-4">
-        <h3 className="text-[16px] font-bold text-[#2D3748]">Your Reviews</h3>
+        <h3 className="text-[16px] font-bold text-ink">Your Reviews</h3>
 
         {reviews?.length > 0 ? (
           reviews.map((review) => (

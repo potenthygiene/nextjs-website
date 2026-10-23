@@ -31,7 +31,7 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
         <span className="text-[11px] sm:text-xs font-extrabold uppercase tracking-widest text-[#7E4D77]">
           THE DETAILS
         </span>
-        <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-[#1A150F]">
+        <h2 className="font-serif text-2xl sm:text-4xl font-semibold text-ink">
           What&apos;s in the box &amp; specs
         </h2>
       </div>
@@ -103,8 +103,8 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
               key={idx}
               className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 gap-1 sm:gap-4 hover:bg-[#FAF6F8]/50 transition-colors"
             >
-              <span className="font-bold text-[#1A150F] w-44 shrink-0">{item.k}</span>
-              <span className="text-gray-600 sm:text-right font-medium">{item.v}</span>
+              <span className="font-bold text-ink w-44 shrink-0">{item.k}</span>
+              <span className="text-ink-muted sm:text-right font-medium">{item.v}</span>
             </div>
           ))}
         </div>
@@ -121,40 +121,40 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
 
           <div className="flex flex-wrap items-center gap-4 sm:gap-8">
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">8</strong>
-              <span className="text-gray-700">Disposable panties</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">8</strong>
+              <span className="text-ink-muted">Disposable panties</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">Up to 10 to 12h</strong>
-              <span className="text-gray-700">leak-free wear</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">Up to 10 to 12h</strong>
+              <span className="text-ink-muted">leak-free wear</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">5 Pads</strong>
-              <span className="text-gray-700">absorbency capacity</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">5 Pads</strong>
+              <span className="text-ink-muted">absorbency capacity</span>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">100%</strong>
-              <span className="text-gray-700">Tear-away removal</span>
+              <strong className="font-serif text-base sm:text-lg font-bold text-ink">100%</strong>
+              <span className="text-ink-muted">Tear-away removal</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer Specs: Free from & Care Notes */}
-      <div className="mt-6 space-y-3 border-t border-gray-100 pt-5 text-xs text-gray-600 sm:text-sm">
+      <div className="mt-6 space-y-3 border-t border-gray-100 pt-5 text-xs text-ink-muted sm:text-sm">
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-          <span className="w-28 flex-none font-bold text-[#1A150F]">Free from</span>
-          <span className="text-gray-700">
+          <span className="w-28 flex-none font-bold text-ink">Free from</span>
+          <span className="text-ink-muted">
             Chlorine bleach, parabens, added fragrances and synthetic dyes.
           </span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-          <span className="w-28 flex-none font-bold text-[#1A150F]">Care</span>
-          <span className="leading-relaxed text-gray-700">
+          <span className="w-28 flex-none font-bold text-ink">Care</span>
+          <span className="leading-relaxed text-ink-muted">
             Single-use only: tear the perforated sides to remove it, tuck it back into its wrapper and bin it. Never flush, and never wash and re-wear a used panty.
           </span>
         </div>

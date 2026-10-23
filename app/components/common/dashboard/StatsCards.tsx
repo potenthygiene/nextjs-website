@@ -40,7 +40,7 @@ export const StatsCards = ({
 
           <h3 className="text-xl font-bold">{item.value}</h3>
 
-          <p className="text-gray-500 text-sm">{item.label}</p>
+          <p className="text-ink-muted text-sm">{item.label}</p>
         </div>
       ))}
     </div>

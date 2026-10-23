@@ -74,7 +74,7 @@ export function CycleSync({
                 <h3 className="text-xs sm:text-lg font-bold text-[#1C2424] mb-1 sm:mb-2 leading-tight">
                   {item.title}
                 </h3>
-                <p className="text-[10px] sm:text-sm text-[#5C7275] leading-snug sm:leading-relaxed">
+                <p className="text-[12px] sm:text-sm text-[#5C7275] leading-snug sm:leading-relaxed">
                   {item.description}
                 </p>
               </div>

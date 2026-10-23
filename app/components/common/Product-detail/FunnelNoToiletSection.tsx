@@ -29,7 +29,7 @@ export default function FunnelNoToiletSection() {
   ];
 
   return (
-    <section id="no-toilet" className="w-full bg-[#fdeef4] scroll-mt-32 sm:scroll-mt-36 py-12 sm:py-18 lg:py-22 text-[#2A1620]">
+    <section id="no-toilet" className="w-full bg-[#fdeef4] scroll-mt-32 sm:scroll-mt-36 py-12 sm:py-18 lg:py-22 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Eyebrow */}
         <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2 sm:mb-3">
@@ -37,13 +37,13 @@ export default function FunnelNoToiletSection() {
         </span>
 
         {/* Main Heading */}
-        <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-[#5A0E30] leading-[1.08] tracking-tight max-w-4xl">
+        <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold text-ink leading-[1.08] tracking-tight max-w-4xl">
           When the toilet&apos;s <br/> filthy,{" "}
           <span className="text-[#a81a57]">just stand <br/> &amp; go.</span>
         </h2>
 
         {/* Sub-paragraph */}
-        <p className="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal max-w-3xl">
+        <p className="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg text-ink-muted leading-relaxed font-normal max-w-3xl">
           The road from Jaipur to Jodhpur can run 300 km without a single clean toilet. A trek with nowhere private to squat. A festival with a queue thirty women deep. A young girl at a school camp with no clean toilet in sight. The Looway Pee Funnel is built for all of it: stand up, stay covered, and never let your skin, or your daughter&apos;s, touch a dirty seat again.
         </p>
 
@@ -63,12 +63,12 @@ export default function FunnelNoToiletSection() {
                   </div>
 
                   {/* Card Title */}
-                  <h3 className="font-serif text-base sm:text-lg font-bold text-[#5A0E30] mb-2 leading-snug">
+                  <h3 className="font-serif text-base sm:text-lg font-bold text-ink mb-2 leading-snug">
                     {card.title}
                   </h3>
 
                   {/* Card Description */}
-                  <p className="text-xs sm:text-sm text-[#2A1620]/75 leading-relaxed font-normal">
+                  <p className="text-xs sm:text-sm text-ink-muted leading-relaxed font-normal">
                     {card.desc}
                   </p>
                 </div>

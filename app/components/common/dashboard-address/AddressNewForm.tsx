@@ -82,10 +82,10 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
   return (
     <Card className="rounded-[20px] border-gray-200 bg-white p-6 sm:p-8 shadow-sm max-w-3xl mx-auto">
       <div className="mb-8 border-b border-gray-100 pb-4">
-        <h3 className="text-lg font-bold text-[#2D3748]">
+        <h3 className="text-lg font-bold text-ink">
           Add New Address
         </h3>
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-ink-muted mt-1">
           Provide your full delivery details for courier shipping
         </p>
       </div>
@@ -93,7 +93,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
       <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Full Name */}
         <div className="space-y-2">
-          <Label htmlFor="new-fullName" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-fullName" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Full Name <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -116,11 +116,11 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
 
         {/* Phone */}
         <div className="space-y-2">
-          <Label htmlFor="new-phone" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-phone" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Mobile Phone (10 digits) <span className="text-red-500">*</span>
           </Label>
           <div className="relative">
-            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-ink-muted">
               +91
             </span>
             <Input
@@ -144,13 +144,13 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
               {errors.phone}
             </p>
           ) : (
-            <p className="text-[11px] text-gray-400">Courier delivery contact number</p>
+            <p className="text-[12px] text-gray-400">Courier delivery contact number</p>
           )}
         </div>
 
         {/* Address / Street */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="new-street" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-street" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             House / Flat No. &amp; Street <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -173,7 +173,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
 
         {/* Locality */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="new-locality" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-locality" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Locality / Area / Landmark <span className="text-gray-400 font-normal lowercase">(optional)</span>
           </Label>
           <Input
@@ -188,7 +188,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
 
         {/* City */}
         <div className="space-y-2">
-          <Label htmlFor="new-city" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-city" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             City <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -211,7 +211,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
 
         {/* State Dropdown */}
         <div className="space-y-2">
-          <Label htmlFor="new-state" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-state" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             State <span className="text-red-500">*</span>
           </Label>
           <select
@@ -242,7 +242,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
 
         {/* PIN Code */}
         <div className="space-y-2">
-          <Label htmlFor="new-pincode" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-pincode" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             PIN Code (6 digits) <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -269,7 +269,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
 
         {/* Country (Fixed to India) */}
         <div className="space-y-2">
-          <Label htmlFor="new-country" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="new-country" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Country
           </Label>
           <Input
@@ -289,7 +289,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
           checked={form.isDefault}
           onCheckedChange={(v) => setForm({ ...form, isDefault: Boolean(v) })}
         />
-        <label htmlFor="new-isDefault" className="text-sm font-medium text-gray-600 cursor-pointer">
+        <label htmlFor="new-isDefault" className="text-sm font-medium text-ink-muted cursor-pointer">
           Set as default shipping address
         </label>
       </div>
@@ -308,7 +308,7 @@ export const AddressNewForm = ({ onCancel }: { onCancel: () => void }) => {
           variant="outline"
           onClick={onCancel}
           disabled={isSaving}
-          className="h-14 flex-1 rounded-xl border-gray-300 text-base font-bold text-gray-700 hover:bg-gray-50"
+          className="h-14 flex-1 rounded-xl border-gray-300 text-base font-bold text-ink-muted hover:bg-gray-50"
         >
           Cancel
         </Button>

@@ -21,14 +21,14 @@ export default function FunnelPackAndSpecsSection() {
   ];
 
   return (
-    <section id="specs" className="w-full bg-[#f8f1ea] py-12 sm:py-18 lg:py-22 text-[#2A1620]">
+    <section id="specs" className="w-full bg-[#f8f1ea] py-12 sm:py-18 lg:py-22 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl mb-8 sm:mb-12">
           <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2">
             THE DETAILS
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-extrabold text-[#5A0E30] leading-[1.08] tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-5xl lg:text-[54px] font-bold text-ink leading-[1.08] tracking-tight">
             What&apos;s in the pack &amp; specs
           </h2>
         </div>
@@ -85,10 +85,10 @@ export default function FunnelPackAndSpecsSection() {
                   idx % 2 === 0 ? "bg-[#fcf8f3]/60" : "bg-white"
                 }`}
               >
-                <div className="w-5/12 sm:w-4/12 font-bold text-[#5A0E30] shrink-0 text-xs sm:text-sm leading-tight sm:leading-normal">
+                <div className="w-5/12 sm:w-4/12 font-bold text-ink shrink-0 text-xs sm:text-sm leading-tight sm:leading-normal">
                   {spec.k}
                 </div>
-                <div className="w-7/12 sm:w-8/12 text-[#2A1620]/80 font-normal leading-tight sm:leading-relaxed text-xs sm:text-sm">
+                <div className="w-7/12 sm:w-8/12 text-ink-muted font-normal leading-tight sm:leading-relaxed text-xs sm:text-sm">
                   {spec.v}
                 </div>
               </div>

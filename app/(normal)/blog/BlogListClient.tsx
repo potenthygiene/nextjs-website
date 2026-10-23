@@ -65,7 +65,7 @@ export default function BlogListClient({
 
   if (!initialBlogs.length) {
     return (
-      <div className="rounded-3xl border-2 border-dashed border-[#D6E6E8] bg-white py-20 text-center text-[#5C7275]">
+      <div className="rounded-3xl border-2 border-dashed border-[#D6E6E8] bg-white py-20 text-center text-ink-muted">
         New articles are on their way.
       </div>
     );
@@ -94,20 +94,20 @@ export default function BlogListClient({
         </div>
         <label className="relative block md:w-72">
           <span className="sr-only">Search the Journal</span>
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#5C7275]" />
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" />
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search: dengue, rash, UTI…"
-            className="h-11 w-full rounded-full border border-[#D6E6E8] bg-white pl-10 pr-10 text-[14.5px] text-[#14302F] outline-none placeholder:text-[#8AA0A3] focus:border-[#016271] focus:ring-2 focus:ring-[#016271]/15"
+            className="h-11 w-full rounded-full border border-[#D6E6E8] bg-white pl-10 pr-10 text-[14.5px] text-ink outline-none placeholder:text-[#8AA0A3] focus:border-[#016271] focus:ring-2 focus:ring-[#016271]/15"
           />
           {query && (
             <button
               type="button"
               onClick={() => setQuery("")}
               aria-label="Clear search"
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-[#5C7275] hover:bg-[#EEF3F3]"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-ink-muted hover:bg-[#EEF3F3]"
             >
               <X className="h-4 w-4" />
             </button>
@@ -115,14 +115,14 @@ export default function BlogListClient({
         </label>
       </div>
 
-      <p className="mb-6 text-[13.5px] text-[#5C7275]" aria-live="polite">
+      <p className="mb-6 text-[13.5px] text-ink-muted" aria-live="polite">
         {filtered.length} {filtered.length === 1 ? "article" : "articles"}
         {category !== ALL && ` in ${category}`}
         {query.trim() && ` matching "${query.trim()}"`}
       </p>
 
       {filtered.length === 0 ? (
-        <p className="py-16 text-center text-[#5C7275]">No articles match that yet. Try another word or topic.</p>
+        <p className="py-16 text-center text-ink-muted">No articles match that yet. Try another word or topic.</p>
       ) : (
         <div className="grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((post) => (
@@ -136,14 +136,14 @@ export default function BlogListClient({
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                 />
               </div>
-              <p className="mt-5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-[#016271]">
+              <p className="mt-5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-teal">
                 {post.blogCategory}
               </p>
-              <h3 className={`${journalSerif.className} mt-2 text-[21px] font-semibold leading-snug text-[#14302F] group-hover:text-[#075965]`}>
+              <h3 className={`${journalSerif.className} mt-2 text-[21px] font-semibold leading-snug text-ink group-hover:text-[#075965]`}>
                 {post.title}
               </h3>
-              <p className="mt-2.5 line-clamp-3 text-[15px] leading-relaxed text-[#46575A]">{excerpt(post, 150)}</p>
-              <p className="mt-4 text-[12.5px] text-[#5C7275]">
+              <p className="mt-2.5 line-clamp-3 text-[15px] leading-relaxed text-ink-muted">{excerpt(post, 150)}</p>
+              <p className="mt-4 text-[12.5px] text-ink-muted">
                 {post.date}
                 {post.readMinutes > 0 && ` · ${post.readMinutes} min read`}
               </p>

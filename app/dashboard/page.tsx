@@ -27,7 +27,7 @@ export default async function DashboardPage() {
         {/* HEADER */}
         <div className="relative mb-8 overflow-hidden rounded-2xl bg-linear-to-r from-[#016271] to-[#AFE7F1] p-10 text-white shadow-sm">
           <div className="relative z-10">
-            <h1 className="mb-2 text-3xl font-extrabold tracking-tight">
+            <h1 className="mb-2 text-3xl font-bold tracking-tight">
               Welcome back, {data.user.fullName || "User"}
             </h1>
 
@@ -43,7 +43,6 @@ export default async function DashboardPage() {
         {/* ORDERS */}
         <RecentOrders orders={data.orders} />
 
-        {/* <RecentRewards/> */}
       </div>
     </div>
   );

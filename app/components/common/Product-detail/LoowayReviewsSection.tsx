@@ -6,126 +6,14 @@ import { Star, CheckCircle2, ChevronLeft, ChevronRight, Check } from "lucide-rea
 import { WriteReviewModal } from "../dashboard-review/WriteReviewModal";
 import ProductReviews from "./productreview";
 import { lowayProductDetailsPage } from "@/const/globalconst";
+import { getReviewRating, getReviewStats, reviewCountLabel } from "@/lib/reviewStats";
 
-type Review = {
-  id: number;
-  name: string;
-  city: string;
-  group: string;
-  stage: string;
-  stars: number;
-  quote: string;
-};
-
-const REVIEWS_DATA: Review[] = [
-  {
-    id: 1,
-    name: "Divya Nair",
-    city: "Ahmedabad",
-    group: "families",
-    stage: "Parent",
-    stars: 5,
-    quote:
-      "Potty-training a toddler plus highway travel used to be a disaster, until these. Open, done, sealed. No more roadside emergencies.",
-  },
-  {
-    id: 2,
-    name: "Arjun Pillai",
-    city: "Kochi",
-    group: "travellers",
-    stage: "Traveller",
-    stars: 4,
-    quote:
-      "Night bus with a broken toilet, and this saved the whole trip. Solidifies fast and truly no odour. Would love a slightly wider opening.",
-  },
-  {
-    id: 3,
-    name: "Fatima Sheikh",
-    city: "Hyderabad",
-    group: "caregivers",
-    stage: "Caregiver",
-    stars: 5,
-    quote:
-      "For my mother who uses a wheelchair, this means independence on outings. Leak-proof and dignified. We reorder every single month now.",
-  },
-  {
-    id: 4,
-    name: "Prakash Verma",
-    city: "Nagpur",
-    group: "seniors",
-    stage: "Senior traveller",
-    stars: 5,
-    quote:
-      "At 72, long bus journeys were stressful. This is discreet, clean and simple. The picture guide made it easy the very first time.",
-  },
-  {
-    id: 5,
-    name: "Karan Malhotra",
-    city: "Delhi",
-    group: "travellers",
-    stage: "Road-tripper",
-    stars: 5,
-    quote:
-      "Delhi traffic is unpredictable. Stuck for 2 hours once, and this was the difference between misery and a non-event. Keep one in the car, always.",
-  },
-  {
-    id: 6,
-    name: "Sneha Kulkarni",
-    city: "Bengaluru",
-    group: "families",
-    stage: "Expecting mum",
-    stars: 5,
-    quote:
-      "Pregnancy meant sudden nausea and constant loo trips on my commute. Having these in my bag took away so much anxiety. Completely comfortable to use.",
-  },
-  {
-    id: 7,
-    name: "Ritika Shah",
-    city: "Surat",
-    group: "travellers",
-    stage: "First-timer",
-    stars: 3,
-    quote:
-      "It genuinely works, but the first time in a moving car I fumbled the seal and there was a small spill. By the third use I had the hang of it.",
-  },
-  {
-    id: 8,
-    name: "Sandeep Rao",
-    city: "Visakhapatnam",
-    group: "travellers",
-    stage: "Bus commuter",
-    stars: 2,
-    quote:
-      "Needed a few goes to get comfortable, and I found the opening a little narrow for me. The team did email me the picture guide and were helpful.",
-  },
-  {
-    id: 9,
-    name: "Neha Joshi",
-    city: "Indore",
-    group: "families",
-    stage: "Motion-sick traveller",
-    stars: 1,
-    quote:
-      "With bad motion sickness I couldn't manage a bag in a lurching bus. Support replied fast with tips and a partial credit. Great customer service.",
-  },
-];
-
+// Only real, admin-approved reviews from the database are shown here.
+// Never add hardcoded reviews, ratings, counts or star breakdowns.
 const FILTERS = [
   { id: "all", label: "All reviews" },
   { id: "s5", label: "5★" },
   { id: "s4", label: "4★" },
-  { id: "families", label: "Families" },
-  { id: "travellers", label: "Travellers" },
-  { id: "caregivers", label: "Caregivers" },
-  { id: "seniors", label: "Seniors" },
-];
-
-const STAR_BREAKDOWN = [
-  { stars: 5, count: 92, pct: "85%" },
-  { stars: 4, count: 11, pct: "10%" },
-  { stars: 3, count: 3, pct: "3%" },
-  { stars: 2, count: 1, pct: "1%" },
-  { stars: 1, count: 1, pct: "1%" },
 ];
 
 export default function LoowayReviewsSection({
@@ -138,25 +26,34 @@ export default function LoowayReviewsSection({
   const [activeFilter, setActiveFilter] = useState<string>("all");
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const combinedReviews = useMemo(() => {
-    const fromDb = (submittedReviews || []).map((r: any) => ({
-      id: `db-${r.id}`,
-      name: r.name || "Verified Buyer",
-      city: "Verified Purchase",
-      group: "all",
-      stage: "Verified Buyer",
-      stars: Number(r.rating) || 5,
-      quote: r.message || "",
-      media: r.media || [],
-    }));
-    return [...fromDb, ...REVIEWS_DATA];
-  }, [submittedReviews]);
+  const stats = useMemo(() => getReviewStats(submittedReviews), [submittedReviews]);
+
+  const combinedReviews = useMemo(
+    () =>
+      (submittedReviews || [])
+        .filter((r: any) => getReviewRating(r) !== null)
+        .map((r: any) => ({
+          id: `db-${r.id}`,
+          name: r.name || "Customer",
+          city: r.createdAt
+            ? new Date(r.createdAt).toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })
+            : "",
+          stage: "Customer review",
+          stars: getReviewRating(r) as number,
+          quote: r.message || "",
+          media: r.media || [],
+        })),
+    [submittedReviews],
+  );
 
   const filteredReviews = combinedReviews.filter((rev: any) => {
     if (activeFilter === "all") return true;
-    if (activeFilter === "s5") return rev.stars === 5;
-    if (activeFilter === "s4") return rev.stars === 4;
-    return rev.group === activeFilter;
+    const m = /^s([1-5])$/.exec(activeFilter);
+    return m ? rev.stars === Number(m[1]) : true;
   });
 
   const scrollLeft = () => {
@@ -184,6 +81,12 @@ export default function LoowayReviewsSection({
           </h2>
         </div>
 
+        {stats.count === 0 ? (
+          <p className="text-sm font-medium opacity-70">
+            No reviews yet. Be the first to share your experience!
+          </p>
+        ) : (
+        <>
         {/* Rating Breakdown Top Card */}
         <div className="rounded-2xl sm:rounded-3xl border border-[#E4DED0] bg-[#FAF6F0] p-4 sm:p-8 md:p-10 shadow-2xs mb-6 sm:mb-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-center">
@@ -192,7 +95,7 @@ export default function LoowayReviewsSection({
               <div className="flex items-center justify-between md:justify-start md:gap-4">
                 <div className="flex items-baseline gap-2">
                   <span className="font-serif text-4xl sm:text-6xl font-extrabold text-[#0A4A2E]">
-                    4.8
+                    {stats.averageLabel}
                   </span>
                   <span className="text-lg sm:text-xl font-semibold text-[#17271E]/50">
                     / 5
@@ -203,19 +106,24 @@ export default function LoowayReviewsSection({
                   {/* 5 Stars */}
                   <div className="flex items-center gap-1 text-[#D99B00] my-1">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-[#D99B00]" />
+                      <Star
+                        key={i}
+                        className={`h-4 w-4 sm:h-5 sm:w-5 ${
+                          i < Math.round(stats.average) ? "fill-[#D99B00]" : "fill-gray-200 text-gray-200"
+                        }`}
+                      />
                     ))}
                   </div>
 
                   <div className="text-[11px] sm:text-xs font-semibold text-[#17271E]/70">
-                    Based on <strong className="text-[#0A4A2E]">108</strong> verified reviews
+                    Based on <strong className="text-[#0A4A2E]">{reviewCountLabel(stats.count)}</strong>
                   </div>
                 </div>
               </div>
 
               <div className="mt-2.5 sm:mt-3 inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-[#0E5C3A]">
                 <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#0E5C3A]" />
-                <span>Every review from a verified purchase</span>
+                <span>Every review is checked before it goes live</span>
               </div>
 
               {/* Write a review button hidden on PDP as requested */}
@@ -235,12 +143,10 @@ export default function LoowayReviewsSection({
 
 
               <div className="space-y-2 text-xs font-semibold">
-                {STAR_BREAKDOWN.map((row) => (
+                {stats.breakdown.map((row) => (
                   <button
                     key={row.stars}
-                    onClick={() =>
-                      setActiveFilter(row.stars === 5 ? "s5" : row.stars === 4 ? "s4" : "all")
-                    }
+                    onClick={() => setActiveFilter(`s${row.stars}`)}
                     className="flex w-full items-center gap-3 group text-left rounded-lg p-1 transition-colors hover:bg-white/60"
                   >
                     <span className="w-6 font-bold text-[#0A4A2E] shrink-0">
@@ -249,7 +155,7 @@ export default function LoowayReviewsSection({
                     <div className="h-3 flex-1 rounded-full bg-[#EAE5D9] overflow-hidden">
                       <div
                         className="h-full rounded-full bg-[#D99B00] transition-all duration-500"
-                        style={{ width: row.pct }}
+                        style={{ width: `${row.percent}%` }}
                       />
                     </div>
                     <span className="w-8 text-right text-[#17271E]/70 font-bold shrink-0">
@@ -352,7 +258,7 @@ export default function LoowayReviewsSection({
                       {rev.stage}
                     </span>
                     <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
-                      <Check className="h-3 w-3 stroke-[3]" /> Verified purchase
+                      <Check className="h-3 w-3 stroke-[3]" /> Checked review
                     </span>
                   </div>
                 </div>
@@ -360,6 +266,9 @@ export default function LoowayReviewsSection({
             ))}
           </div>
         </div>
+
+        </>
+        )}
 
         {/* Customer Reviews from DB */}
         {submittedReviews && submittedReviews.length > 0 && (

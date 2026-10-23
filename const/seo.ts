@@ -78,6 +78,13 @@ const PAGES: Record<string, PageSeo> = {
     path: "/blog",
     updated: "2026-10-23",
   },
+  quiz: {
+    title: "Period Care Quiz: Find What Suits You",
+    description:
+      "Answer four quick questions about your flow, cramps and skin to find the Ovy period care that suits you: pads, a menstrual cup or period panties.",
+    path: "/quiz",
+    updated: "2026-10-24",
+  },
   faq: {
     title: "FAQs: Orders, Delivery, Subscriptions & Products",
     description:

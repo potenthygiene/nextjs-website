@@ -28,6 +28,12 @@ const OLD_ADDRESS_REDIRECTS = [
   // pictures in public/products (e.g. /products/pads.jpg) are never redirected.
   { source: "/products/:handle([^.]+)", destination: "/shop" },
   { source: "/blogs/:path*", destination: "/blog" },
+  // Duplicate product addresses: one canonical page per product.
+  { source: "/menstrual-cup", destination: "/product-detail/ovy-cup" },
+  { source: "/looway-toilet-seat-covers", destination: "/product-detail/looway-toilet-seat-covers" },
+  // Old brand-prefixed product links (/ovy/product-detail/x). The product page
+  // resolves older names and answers 404 for unknown products.
+  { source: "/:brand/product-detail/:product", destination: "/product-detail/:product" },
 ];
 
 const nextConfig: NextConfig = {

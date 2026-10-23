@@ -17,6 +17,8 @@ import { formatMixBoxRecipe } from "@/lib/mixYourBox";
 import { formatYatraKitContents } from "@/lib/yatraKit";
 import { isOvyPadItem, getFreeLinersCount } from "@/lib/cartItemDisplay";
 import { getImageUrl } from "@/lib/imageUrl";
+import { TIER_COUPONS, isCouponLive } from "@/const/coupons";
+import { REFERRAL_FRIEND_LINE, REFERRAL_REFERRER_LINE } from "@/lib/rewardsRules";
 import {
   formatOrderDate,
   formatPrice,
@@ -27,6 +29,10 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function OrderConfirmationPage({ params }: any) {
+  // Stock Up line built from the coupon list, never hand-typed numbers.
+  const stockUpCoupons = TIER_COUPONS.filter(
+    (c) => c.public && isCouponLive(c) && (c.flat || 0) > 0,
+  );
   const { id } = await params;
   let order: any;
 
@@ -102,7 +108,7 @@ export default async function OrderConfirmationPage({ params }: any) {
                 : "Payment Processing"}
           </h1>
 
-          <p className="mt-2 text-sm text-gray-600 max-w-md mx-auto">
+          <p className="mt-2 text-sm text-ink-muted max-w-md mx-auto">
             {isConfirmed
               ? "Thank you for your order! We've received your payment and are getting your package ready."
               : isFailed
@@ -145,8 +151,8 @@ export default async function OrderConfirmationPage({ params }: any) {
                 <span>Gift Mode Active: Prices hidden on parcel &amp; packing slip</span>
               </div>
               {giftNote && (
-                <div className="mt-2 rounded-lg bg-white/80 p-2.5 text-xs text-gray-700 border border-[#9A5B90]/15">
-                  <span className="text-[10px] font-bold text-[#7E4D77] uppercase tracking-wider block">
+                <div className="mt-2 rounded-lg bg-white/80 p-2.5 text-xs text-ink-muted border border-[#9A5B90]/15">
+                  <span className="text-[11px] font-bold text-[#7E4D77] uppercase tracking-wider block">
                     Your Personal Gift Note:
                   </span>
                   <p className="mt-0.5 italic">“{giftNote}”</p>
@@ -195,13 +201,13 @@ export default async function OrderConfirmationPage({ params }: any) {
                         <p className="font-semibold text-gray-950 text-sm sm:text-base">
                           {productName}
                         </p>
-                        <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+                        <div className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
                           {size && (
                             <span className="rounded bg-teal-50 px-2 py-0.5 font-semibold text-[#016271] border border-[#016271]/20">
                               Size: {size}
                             </span>
                           )}
-                          <span className="font-medium text-gray-600">
+                          <span className="font-medium text-ink-muted">
                             Qty: {quantity}
                           </span>
                           {item.productSKU && (
@@ -263,19 +269,19 @@ export default async function OrderConfirmationPage({ params }: any) {
 
               <div className="mt-4 space-y-3 text-sm">
                 <div className="flex justify-between gap-4">
-                  <span className="text-gray-500">Order Date</span>
+                  <span className="text-ink-muted">Order Date</span>
                   <span className="font-semibold text-gray-950">
                     {formatOrderDate(order.createdAt)}
                   </span>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <span className="text-gray-500">Payment ID</span>
+                  <span className="text-ink-muted">Payment ID</span>
                   <span className="max-w-40 truncate font-semibold text-gray-950">
                     {order.payment?.gatewayPaymentId ?? "Not available"}
                   </span>
                 </div>
                 <div className="flex justify-between gap-4">
-                  <span className="text-gray-500">Payment Method</span>
+                  <span className="text-ink-muted">Payment Method</span>
                   <span className="font-semibold text-gray-950">
                     {formatPaymentMethod(order.payment?.modeOfPayment, order.payment?.paymentMeta)}
                   </span>
@@ -283,7 +289,7 @@ export default async function OrderConfirmationPage({ params }: any) {
 
                 {/* Price Breakdown */}
                 <div className="border-t border-gray-100 pt-3 space-y-2">
-                  <div className="flex justify-between text-gray-600">
+                  <div className="flex justify-between text-ink-muted">
                     <span>Subtotal</span>
                     <span className="font-semibold text-gray-950">
                       {formatPrice(order.pricingBreakdown?.subtotal ?? order.totalAmount)}
@@ -307,7 +313,7 @@ export default async function OrderConfirmationPage({ params }: any) {
                       </span>
                     </div>
                   )}
-                  <div className="flex justify-between text-gray-600">
+                  <div className="flex justify-between text-ink-muted">
                     <span>Delivery</span>
                     <span className="font-semibold text-gray-950">
                       {order.pricingBreakdown?.shipping > 0
@@ -332,12 +338,12 @@ export default async function OrderConfirmationPage({ params }: any) {
                 <MapPin className="h-5 w-5 text-[#016271]" />
                 <h2 className="text-lg font-bold text-gray-950">Delivery Address</h2>
               </div>
-              <div className="mt-4 text-sm leading-6 text-gray-600 space-y-1">
+              <div className="mt-4 text-sm leading-6 text-ink-muted space-y-1">
                 {order.customerName && (
                   <p className="font-bold text-gray-950">{order.customerName}</p>
                 )}
                 {order.customerPhone && (
-                  <p className="text-gray-700 font-medium">📞 {order.customerPhone}</p>
+                  <p className="text-ink-muted font-medium">📞 {order.customerPhone}</p>
                 )}
                 <p className="mt-1">
                   {[order.addressLine1, order.addressLine2]
@@ -356,11 +362,23 @@ export default async function OrderConfirmationPage({ params }: any) {
         {/* Next-order offers and referral (const/coupons.ts) */}
         <div className="mb-4 rounded-2xl border border-dashed border-[#dcc0d4] bg-[#FFF7FB] p-4">
           <p className="text-[12px] font-bold uppercase tracking-[0.1em] text-[#7E4D77]">For your next order</p>
-          <p className="mt-1.5 text-sm text-gray-800">
-            Stock up and save: <strong>₹80 off on ₹799+</strong> (STOCKUP80), <strong>₹130 off on ₹1099+</strong> (STOCKUP130), <strong>₹200 off on ₹1499+</strong> (STOCKUP200) and <strong>₹300 off on ₹1999+</strong> (STOCKUP300).
-          </p>
-          <p className="mt-2 text-sm text-gray-800">
-            Share Potent with a friend: they get 15% off their first order, and once it is delivered you get SHARECARE15, which adds on to any coupon.{" "}
+          {stockUpCoupons.length > 0 && (
+            <p className="mt-1.5 text-sm text-ink">
+              Stock up and save:{" "}
+              {stockUpCoupons.map((c, i) => (
+                <span key={c.code}>
+                  {i > 0 && (i === stockUpCoupons.length - 1 ? " and " : ", ")}
+                  <strong>
+                    ₹{c.flat} off on ₹{c.minimumOrderValue}+
+                  </strong>{" "}
+                  ({c.code})
+                </span>
+              ))}
+              .
+            </p>
+          )}
+          <p className="mt-2 text-sm text-ink">
+            Share Potent with a friend. {REFERRAL_FRIEND_LINE} {REFERRAL_REFERRER_LINE}{" "}
             <Link href="/dashboard/referral" className="font-semibold text-[#7E4D77] underline">Get my referral link</Link>
           </p>
         </div>

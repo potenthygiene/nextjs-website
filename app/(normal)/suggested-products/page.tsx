@@ -237,7 +237,7 @@ const SuggestedProducts = () => {
 
   if (answers === undefined || (answers && loading)) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-20 text-center text-sm text-gray-500" style={themeStyle(NEUTRAL_QUIZ_THEME)}>
+      <div className="mx-auto max-w-4xl px-4 py-20 text-center text-sm text-ink-muted" style={themeStyle(NEUTRAL_QUIZ_THEME)}>
         Fetching your personalised picks...
       </div>
     );
@@ -247,7 +247,7 @@ const SuggestedProducts = () => {
     return (
       <div className="mx-auto max-w-xl px-4 py-16 text-center" style={themeStyle(NEUTRAL_QUIZ_THEME)}>
         <h1 className="font-serif text-2xl font-bold text-[var(--quiz-ink)]">Take the quiz first</h1>
-        <p className="mt-2 text-sm text-gray-600">Four quick questions about your flow, comfort and skin, and we&apos;ll match you to the right Ovy products and sizes.</p>
+        <p className="mt-2 text-sm text-ink-muted">Four quick questions about your flow, comfort and skin, and we&apos;ll match you to the right Ovy products and sizes.</p>
         <Link
           href="/quiz"
           className="mx-auto mt-6 inline-flex min-h-[48px] items-center gap-2 rounded-2xl bg-[var(--quiz-accent)] px-6 font-bold text-white hover:bg-[var(--quiz-accent-dark)]"
@@ -267,12 +267,12 @@ const SuggestedProducts = () => {
         <Heart className="h-3.5 w-3.5" /> Your quiz result
       </span>
       <h1 className="mt-2 font-serif text-2xl leading-tight font-bold text-[var(--quiz-ink)] sm:text-4xl">{result.title}</h1>
-      <p className="mt-2 text-sm text-gray-600 sm:text-base">{result.intro}</p>
+      <p className="mt-2 text-sm text-ink-muted sm:text-base">{result.intro}</p>
 
       {/* Your answers */}
       <div className="mt-4 flex flex-wrap items-center gap-2">
         {answerChips.map((c) => (
-          <span key={c.id} className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-gray-700">
+          <span key={c.id} className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-medium text-ink-muted">
             {c.label}
           </span>
         ))}
@@ -290,16 +290,16 @@ const SuggestedProducts = () => {
           <div className="min-w-0">
             <p className="text-xs font-bold tracking-wider text-[var(--quiz-accent-dark)] uppercase">Best match</p>
             <h2 className="mt-1 font-serif text-xl font-bold text-[var(--quiz-ink)] sm:text-2xl">{main.name}</h2>
-            {main.pick.size ? <p className="mt-0.5 text-sm font-semibold text-gray-700">{main.pick.size}</p> : null}
+            {main.pick.size ? <p className="mt-0.5 text-sm font-semibold text-ink-muted">{main.pick.size}</p> : null}
             {main.price ? (
               <p className="mt-1 flex items-baseline gap-2">
                 <span className="font-serif text-xl font-bold text-[var(--quiz-accent-dark)]">{formatInr(main.price)}</span>
                 {main.strike && main.strike > main.price ? <span className="text-sm text-gray-400 line-through">{formatInr(main.strike)}</span> : null}
               </p>
             ) : null}
-            <p className="mt-2 text-sm leading-relaxed text-gray-700">{main.pick.why}</p>
+            <p className="mt-2 text-sm leading-relaxed text-ink-muted">{main.pick.why}</p>
             {main.pick.padPick && isMixPick(main.pick.padPick) ? (
-              <p className="mt-1 text-xs text-gray-500">Your box is priced in the box builder.</p>
+              <p className="mt-1 text-xs text-ink-muted">Your box is priced in the box builder.</p>
             ) : null}
             <div className="mt-4 grid gap-2 sm:max-w-sm">
               {renderAction(main, true)}
@@ -317,7 +317,7 @@ const SuggestedProducts = () => {
           <p className="mb-2 text-xs font-bold tracking-wide text-[var(--quiz-ink)] uppercase">Why these picks</p>
           <ul className="space-y-2">
             {result.reasons.map((r) => (
-              <li key={r} className="flex items-start gap-2 text-sm leading-relaxed text-gray-700">
+              <li key={r} className="flex items-start gap-2 text-sm leading-relaxed text-ink-muted">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 flex-none text-[var(--quiz-accent)]" />
                 <span>{r}</span>
               </li>
@@ -330,7 +330,7 @@ const SuggestedProducts = () => {
           </p>
           <ul className="space-y-2">
             {result.tips.map((t) => (
-              <li key={t} className="text-sm leading-relaxed text-gray-700">
+              <li key={t} className="text-sm leading-relaxed text-ink-muted">
                 {t}
               </li>
             ))}
@@ -356,9 +356,9 @@ const SuggestedProducts = () => {
                   <Image src={r.image} alt={r.name} fill className="object-contain p-2" unoptimized />
                 </Link>
                 <h3 className="mt-3 text-sm font-bold text-[var(--quiz-ink)]">{r.name}</h3>
-                {r.pick.size ? <p className="text-xs font-semibold text-gray-600">{r.pick.size}</p> : null}
+                {r.pick.size ? <p className="text-xs font-semibold text-ink-muted">{r.pick.size}</p> : null}
                 {r.price ? <p className="mt-1 text-sm font-bold text-[var(--quiz-accent-dark)]">{formatInr(r.price)}</p> : null}
-                <p className="mt-1.5 flex-1 text-xs leading-relaxed text-gray-600">{r.pick.why}</p>
+                <p className="mt-1.5 flex-1 text-xs leading-relaxed text-ink-muted">{r.pick.why}</p>
                 <div className="mt-3">{renderAction(r, false)}</div>
               </div>
             ))}
@@ -370,7 +370,7 @@ const SuggestedProducts = () => {
       <div className="mt-8 flex flex-col gap-3 rounded-3xl bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm font-bold text-[var(--quiz-ink)]">Still have a question?</p>
-          <p className="text-xs text-gray-600">Potent Saathi can help with sizes, periods and orders.</p>
+          <p className="text-xs text-ink-muted">Potent Saathi can help with sizes, periods and orders.</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           <button

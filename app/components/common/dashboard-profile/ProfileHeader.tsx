@@ -10,10 +10,10 @@ interface HeaderProps {
 export const ProfileHeader = ({ isEditing, onEdit }: HeaderProps) => (
   <Card className="mb-6 flex flex-row items-center justify-between rounded-[15px] border-none bg-white p-6 shadow-sm">
     <div className="space-y-1">
-      <h2 className="text-[18px] font-semibold text-[#2D3748]">
+      <h2 className="text-[18px] font-semibold text-ink">
         Personal Information
       </h2>
-      <p className="text-[13px] font-medium text-gray-500">
+      <p className="text-[13px] font-medium text-ink-muted">
         Manage your personal details
       </p>
     </div>

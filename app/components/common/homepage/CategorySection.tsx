@@ -42,7 +42,7 @@ const MOMENTS = [
   {
     label: "Travelling light",
     body: "One cup, up to 12 hours, nothing to carry and nothing to throw away.",
-    href: "/menstrual-cup",
+    href: "/product-detail/ovy-cup",
     image: "/product-images/cup.jpg",
   },
 ];
@@ -170,7 +170,6 @@ export function CategoryGrid({
                   >
                     <div className="relative aspect-[4/5] overflow-hidden bg-[#F5EEF0]">
                       <Image
-                        unoptimized
                         src={getImageUrl(
                           category.bannerImage || "/placeholder.jpg",
                         )}

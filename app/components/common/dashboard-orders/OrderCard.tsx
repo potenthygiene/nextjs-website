@@ -215,35 +215,35 @@ export const OrderCard = ({
       <div className="flex items-start justify-between bg-gradient-to-r from-[#FFF1F2] to-[#FFFBEB] p-4 sm:p-6 pb-4">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <h3 className="text-sm sm:text-[16px] font-bold text-[#2D3748] break-all">{order.id}</h3>
+            <h3 className="text-sm sm:text-[16px] font-bold text-ink break-all">{order.id}</h3>
             <Badge
               className={`${getOrderStageBadgeClasses(
                 order.status,
                 isUnpaid,
-              )} border-none px-2.5 py-0.5 text-[11px] font-bold shadow-none`}
+              )} border-none px-2.5 py-0.5 text-[12px] font-bold shadow-none`}
             >
               {formatOrderStage(order.status, isUnpaid)}
             </Badge>
             {isGift && (
-              <Badge className="bg-[#9A5B90] text-white border-none px-2.5 py-0.5 text-[10px] font-bold shadow-none">
+              <Badge className="bg-[#9A5B90] text-white border-none px-2.5 py-0.5 text-[12px] font-bold shadow-none">
                 🎁 Gift Order
               </Badge>
             )}
           </div>
-          <p className="text-[12px] sm:text-[13px] font-medium text-gray-500">
+          <p className="text-[12px] sm:text-[13px] font-medium text-ink-muted">
             Ordered on {formatOrderDate(order.createdAt)}
           </p>
           {isGift && giftNote && (
-            <p className="mt-1 text-[11px] italic text-[#7E4D77]">
+            <p className="mt-1 text-[12px] italic text-[#7E4D77]">
               Gift note: &ldquo;{giftNote}&rdquo;
             </p>
           )}
         </div>
         <div className="text-right shrink-0">
-          <p className="text-[10px] sm:text-[11px] font-bold tracking-tight text-gray-400 uppercase">
+          <p className="text-[11px] sm:text-[11px] font-bold tracking-tight text-gray-400 uppercase">
             Total Amount
           </p>
-          <p className="text-[16px] sm:text-[18px] font-bold text-[#2D3748]">
+          <p className="text-[16px] sm:text-[18px] font-bold text-ink">
             ₹{order.totalAmount}
           </p>
           {isSubscriptionOnly && (
@@ -282,22 +282,22 @@ export const OrderCard = ({
                     </div>
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="text-[13px] sm:text-[14px] font-bold text-[#2D3748]">
+                        <p className="text-[13px] sm:text-[14px] font-bold text-ink">
                           {productName}
                         </p>
                         {size && (
-                          <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold text-gray-700 uppercase">
+                          <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[11px] font-bold text-ink-muted uppercase">
                             {size}
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] sm:text-[12px] font-medium text-gray-400">
+                      <p className="text-[12px] sm:text-[12px] font-medium text-gray-400">
                         Quantity: {item.quantity || 1}
                       </p>
                       {Boolean(item.yatraKit || (item.mixBoxRecipe && item.mixBoxRecipe.type === "yatraKit")) ? (
                         <div className="mt-2 rounded-lg bg-[#EAF6F4] px-3 py-2 text-[12px] font-semibold text-[#116B66] space-y-0.5 border border-[#116B66]/20">
                           <p>{formatYatraKitContents(item.yatraKit || item.mixBoxRecipe)}</p>
-                          <p className="text-[11px] font-bold text-[#15803D]">
+                          <p className="text-[12px] font-bold text-[#15803D]">
                             ✓ Free Intimate Wipes ({(item.yatraKit || item.mixBoxRecipe)?.freeWipesCount || 10} wipes) included
                           </p>
                         </div>
@@ -307,14 +307,14 @@ export const OrderCard = ({
                             <p>{formatMixBoxRecipe(item.mixBoxRecipe)}</p>
                           </div>
                           <div className="flex flex-wrap items-center gap-1.5">
-                            <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-2 py-0.5 text-[11px] font-bold text-[#15803D] border border-[#BFE3CA]">
+                            <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-2 py-0.5 text-[12px] font-bold text-[#15803D] border border-[#BFE3CA]">
                               🎁 +{getFreeLinersCount(item)} Free Liners
                             </span>
                           </div>
                         </div>
                       ) : isOvyPadItem(item) ? (
                         <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                          <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-2 py-0.5 text-[11px] font-bold text-[#15803D] border border-[#BFE3CA]">
+                          <span className="inline-flex items-center gap-1 rounded bg-[#E6F4EA] px-2 py-0.5 text-[12px] font-bold text-[#15803D] border border-[#BFE3CA]">
                             🎁 +{getFreeLinersCount(item)} Free Liners
                           </span>
                         </div>
@@ -322,7 +322,7 @@ export const OrderCard = ({
                     </div>
                   </div>
                   <div className="flex flex-col items-start gap-2 md:items-end">
-                    <p className="text-[14px] font-bold text-[#2D3748]">
+                    <p className="text-[14px] font-bold text-ink">
                       ₹{item.productPrice || details.unitPrice || 0}
                     </p>
                   </div>
@@ -351,7 +351,7 @@ export const OrderCard = ({
                     />
                   </div>
                   <div>
-                    <p className="text-[14px] font-bold text-[#2D3748]">
+                    <p className="text-[14px] font-bold text-ink">
                       {details.productName}
                     </p>
                     <p className="text-[12px] font-medium text-gray-400">
@@ -372,7 +372,7 @@ export const OrderCard = ({
           <p className="text-[11px] font-bold text-gray-400 uppercase">
             {getDeliveryHeader(isDelivered)}
           </p>
-          <p className="text-[13px] sm:text-[14px] break-all text-[#2D3748]">
+          <p className="text-[13px] sm:text-[14px] break-all text-ink">
             {[order.addressLine1, order.addressLine2]
               .filter(Boolean)
               .join(", ") || "Address not available"}
@@ -406,7 +406,7 @@ export const OrderCard = ({
           <Button
             asChild
             variant="outline"
-            className="flex h-9 sm:h-11 shrink-0 items-center gap-1.5 sm:gap-2 rounded-xl border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-gray-700 hover:bg-gray-50 whitespace-nowrap cursor-pointer sm:shrink sm:flex-1"
+            className="flex h-9 sm:h-11 shrink-0 items-center gap-1.5 sm:gap-2 rounded-xl border-gray-200 px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-ink-muted hover:bg-gray-50 whitespace-nowrap cursor-pointer sm:shrink sm:flex-1"
           >
             <Link href={`/dashboard/orders/${order.id}`}>
               <IconEye size={16} stroke={2.5} />
@@ -418,7 +418,7 @@ export const OrderCard = ({
             variant="ghost"
             onClick={handleCancelUnpaid}
             disabled={paying || cancelling}
-            className="flex h-9 sm:h-11 shrink-0 items-center gap-1.5 rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-gray-500 hover:bg-red-50 hover:text-red-600 whitespace-nowrap cursor-pointer"
+            className="flex h-9 sm:h-11 shrink-0 items-center gap-1.5 rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-ink-muted hover:bg-red-50 hover:text-red-600 whitespace-nowrap cursor-pointer"
           >
             <span>{cancelling ? "Cancelling..." : "Cancel Order"}</span>
           </Button>

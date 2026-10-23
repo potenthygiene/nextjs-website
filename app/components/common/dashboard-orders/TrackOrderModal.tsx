@@ -12,6 +12,11 @@ import {
   IconCircleCheckFilled,
 } from "@tabler/icons-react";
 import { formatOrderDate, canTrackOrder } from "@/lib/orderDisplay";
+import {
+  DELIVERY_ETA_TEXT,
+  DELIVERY_WINDOW,
+  DISPATCH_TEXT,
+} from "@/lib/shippingConfig";
 
 export const TrackOrderModal = ({
   order,
@@ -77,8 +82,8 @@ export const TrackOrderModal = ({
       detail: isDelivered
         ? "Package delivered to shipping address"
         : isShipped
-          ? "Estimated delivery in 2–4 business days"
-          : "Estimated delivery in 3–5 business days",
+          ? DELIVERY_ETA_TEXT
+          : `${DISPATCH_TEXT}, then delivery is ${DELIVERY_WINDOW}`,
     },
   ];
 
@@ -111,14 +116,14 @@ export const TrackOrderModal = ({
       </DialogTrigger>
       <DialogContent className="rounded-2xl p-5 sm:max-w-[420px]">
         <DialogHeader>
-          <DialogTitle className="text-[18px] font-bold text-[#2D3748] flex items-center gap-2">
+          <DialogTitle className="text-[18px] font-bold text-ink flex items-center gap-2">
             <IconTruck className="h-5 w-5 text-[#016271]" />
             <span>Track Order</span>
           </DialogTitle>
         </DialogHeader>
 
         <div className="mt-1 mb-2 rounded-xl bg-[#E2F2F5] p-3.5 space-y-1">
-          <p className="text-[13px] font-bold text-[#2D3748]">
+          <p className="text-[13px] font-bold text-ink">
             Order #{order.id}
           </p>
           {orderDate && (
@@ -163,7 +168,7 @@ export const TrackOrderModal = ({
               Dispatched On: <strong>{updatedDate || orderDate}</strong>
             </p>
             <p className="text-gray-600 text-[11px]">
-              Expected Delivery: <strong>Within 2–4 business days</strong>
+              Expected Delivery: <strong>{DELIVERY_ETA_TEXT}</strong>
             </p>
           </div>
         ) : null}

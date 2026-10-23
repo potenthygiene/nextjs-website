@@ -32,7 +32,7 @@ export function OrdersClient({ initialOrders }: { initialOrders: any[] }) {
     return (
       <div className="space-y-6">
         <OrderHistoryHeader />
-        <div className="rounded-2xl bg-white p-8 text-center text-sm font-medium text-gray-500 shadow-sm">
+        <div className="rounded-2xl bg-white p-8 text-center text-sm font-medium text-ink-muted shadow-sm">
           No orders found.
         </div>
       </div>

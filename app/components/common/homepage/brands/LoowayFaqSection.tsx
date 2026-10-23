@@ -84,7 +84,7 @@ export function LoowayFaqSection() {
           <span className="mb-2 block text-[11px] font-bold tracking-widest text-[#006573] uppercase">
             QUESTIONS, ANSWERED
           </span>
-          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-[#1A150F] sm:text-[46px] sm:leading-[49.68px]">
+          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-ink sm:text-[46px] sm:leading-[49.68px]">
             Before you pack.
           </h2>
         </div>

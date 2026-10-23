@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { users } from "@/db/schema";
 import { requireUserWithRefresh } from "@/helper/user/action";
 import { formatRewardDate, syncAndGetUserRewards } from "@/lib/rewards";
+import { REFERRAL_REFERRER_LINE } from "@/lib/rewardsRules";
 import { eq } from "drizzle-orm";
 import { Check, Clock } from "lucide-react";
 
@@ -98,7 +99,7 @@ export async function ReferralHistory() {
             })
           ) : (
             <p className="text-sm text-gray-500">
-              No referrals yet. Share your code above to earn ₹100 when your friend&apos;s first order of ₹399+ is delivered!
+              No referrals yet. Share your code above. {REFERRAL_REFERRER_LINE}
             </p>
           )}
         </CardContent>

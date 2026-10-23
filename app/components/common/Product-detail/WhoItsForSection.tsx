@@ -73,17 +73,17 @@ export default function WhoItsForSection() {
   };
 
   return (
-    <section className="w-full bg-[#F1F7F3] py-8 sm:py-16 lg:py-20 text-[#17271E]">
+    <section className="w-full bg-[#F1F7F3] py-8 sm:py-16 lg:py-20 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl">
-          <span className="text-[10.5px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
+          <span className="text-[11px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
             FOR EVERY BODY
           </span>
-          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0A4A2E]">
+          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-ink">
             Who it&apos;s for
           </h2>
-          <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-[#17271E]/75 font-normal">
+          <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-ink-muted font-normal">
             One product for the whole family. Tap a card to see how it helps.
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function WhoItsForSection() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-serif text-xs sm:text-lg font-bold text-[#0A4A2E] truncate">
+                    <h3 className="font-serif text-xs sm:text-lg font-bold text-ink truncate">
                       {aud.title}
                     </h3>
                   </div>
@@ -133,7 +133,7 @@ export default function WhoItsForSection() {
 
                 {/* Expanded Body Content */}
                 {isOpen && (
-                  <div className="mt-2.5 sm:mt-3.5 border-t border-[#E4DED0]/60 pt-2.5 sm:pt-3.5 text-[11px] sm:text-sm text-[#17271E]/80 leading-relaxed font-normal animate-in fade-in duration-200">
+                  <div className="mt-2.5 sm:mt-3.5 border-t border-[#E4DED0]/60 pt-2.5 sm:pt-3.5 text-[12px] sm:text-sm text-ink-muted leading-relaxed font-normal animate-in fade-in duration-200">
                     {aud.desc}
                   </div>
                 )}

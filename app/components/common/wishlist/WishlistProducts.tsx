@@ -102,7 +102,7 @@ export default function WishlistProducts() {
   };
 
   if (!products.length) {
-    return <div className="py-20 text-center text-gray-500">Your wishlist is empty</div>;
+    return <div className="py-20 text-center text-ink-muted">Your wishlist is empty</div>;
   }
 
   return (
@@ -137,7 +137,7 @@ export default function WishlistProducts() {
 
               <div className="mt-4 space-y-3">
                 <div>
-                  <h3 className="line-clamp-2 font-semibold text-gray-800">{product.name || product.title}</h3>
+                  <h3 className="line-clamp-2 font-semibold text-ink">{product.name || product.title}</h3>
                   <div className="mt-1 flex items-center gap-2">
                     <span className="font-bold text-[#004851]">₹{displayPrice}</span>
                     {selectedVariant.originalPrice && selectedVariant.originalPrice > displayPrice ? (
@@ -146,7 +146,7 @@ export default function WishlistProducts() {
                   </div>
                 </div>
 
-                <label className="block text-xs font-semibold uppercase tracking-wide text-gray-600" htmlFor={`wishlist-variant-${product.productId}`}>
+                <label className="block text-xs font-semibold uppercase tracking-wide text-ink-muted" htmlFor={`wishlist-variant-${product.productId}`}>
                   Choose variant
                 </label>
                 <select

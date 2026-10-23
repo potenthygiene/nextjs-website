@@ -16,7 +16,7 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
     return (
         <div className="w-full ">
             <div className="container mx-auto px-6 py-5">
-                <nav className="flex items-center text-sm text-gray-500">
+                <nav className="flex items-center text-sm text-ink-muted">
                     {items.map((item, index) => {
                         const isLast = index === items.length - 1;
 
@@ -32,8 +32,8 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
                                 ) : (
                                     <span
                                         className={`${isLast
-                                            ? "text-gray-800 font-medium"
-                                            : "text-gray-500"
+                                            ? "text-ink font-medium"
+                                            : "text-ink-muted"
                                             }`}
                                     >
                                         {item.label}

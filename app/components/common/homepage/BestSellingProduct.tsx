@@ -244,7 +244,7 @@ export default function BestsellingProducts({
               type="button"
               onClick={() => setQuickViewProduct(null)}
               aria-label="Close modal"
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md backdrop-blur-md transition-colors hover:bg-gray-100 cursor-pointer"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-ink-muted shadow-md backdrop-blur-md transition-colors hover:bg-gray-100 cursor-pointer"
             >
               <X className="h-4 w-4" />
             </button>
@@ -252,7 +252,6 @@ export default function BestsellingProducts({
             {/* Modal Image */}
             <div className="relative aspect-[16/11] sm:aspect-[4/5] w-full shrink-0 overflow-hidden rounded-2xl bg-[#F5EEF0] sm:col-span-5">
               <Image
-                unoptimized
                 src={getImageUrl(
                   quickViewProduct.image ||
                     quickViewProduct.bannerImage ||
@@ -260,13 +259,14 @@ export default function BestsellingProducts({
                 )}
                 alt={quickViewProduct.name}
                 fill
+                sizes="(max-width: 640px) 90vw, 280px"
                 className="h-full w-full object-cover"
               />
             </div>
 
             {/* Modal Content */}
             <div className="flex flex-col space-y-2.5 sm:space-y-3.5 text-left sm:col-span-7">
-              <span className="w-fit rounded-full bg-[#016271]/10 px-2.5 py-0.5 text-[11px] font-bold text-[#016271] sm:px-3 sm:py-1 sm:text-xs">
+              <span className="w-fit rounded-full bg-[#016271]/10 px-2.5 py-0.5 text-[12px] font-bold text-[#016271] sm:px-3 sm:py-1 sm:text-xs">
                 {quickViewProduct.badge || getDefaultBadge(quickViewProduct)}
               </span>
 
@@ -335,7 +335,7 @@ export default function BestsellingProducts({
                   <button
                     type="button"
                     disabled
-                    className="flex min-h-12 w-full flex-1 cursor-not-allowed items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold bg-gray-200 text-gray-500 shadow-none sm:w-auto"
+                    className="flex min-h-12 w-full flex-1 cursor-not-allowed items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold bg-gray-200 text-ink-muted shadow-none sm:w-auto"
                   >
                     <span>Out of stock</span>
                   </button>

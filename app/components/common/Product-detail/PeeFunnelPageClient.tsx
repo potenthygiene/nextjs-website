@@ -40,6 +40,7 @@ import { toast } from "sonner";
 import { checkPincodeServiceability } from "@/lib/checkPincodeServiceability";
 import { addToCart as addToCartAction } from "@/store/cartActions";
 import { getImageUrl } from "@/lib/imageUrl";
+import { getReviewStats, reviewCountLabel } from "@/lib/reviewStats";
 import { useWishlistStore } from "@/store/WishlistStore";
 import {
   addToWishlist as addToWishlistAction,
@@ -71,6 +72,7 @@ export default function PeeFunnelPageClient({
   reviewWithMedia,
   content,
 }: Props) {
+  const reviewStats = useMemo(() => getReviewStats(reviewWithMedia), [reviewWithMedia]);
   const router = useRouter();
   const [selectedModeId, setSelectedModeId] = useState<string>("once");
   const [quantity, setQuantity] = useState<number>(1);
@@ -364,10 +366,10 @@ export default function PeeFunnelPageClient({
     }
 
     const fallbackUrls = [
-      "/looway-funnel-demo.jpg",
-      "/looway-funnel-demo.jpg",
-      "/looway-funnel-demo.jpg",
-      "/looway-funnel-demo.jpg",
+      "/looway/scen-funnel.jpg",
+      "/looway/scen-funnel.jpg",
+      "/looway/scen-funnel.jpg",
+      "/looway/scen-funnel.jpg",
     ];
 
     const result: { url: string; label: string }[] = [];
@@ -426,7 +428,7 @@ export default function PeeFunnelPageClient({
           "LOOWAY-FUNNEL-01",
         slug: product?.slug || "looway-pee-funnel",
         title: `${product?.title || product?.name || "Looway Reusable Stand-to-Pee Funnel"} (${selectedPack?.name || "Pack"})`,
-        image: mediaList[0] || "/looway-funnel-demo.jpg",
+        image: mediaList[0] || "/looway/scen-funnel.jpg",
         price: unitPrice,
         quantity: quantity,
         isQuantityChangable: true,
@@ -457,7 +459,7 @@ export default function PeeFunnelPageClient({
   };
 
   return (
-    <div className="min-h-screen bg-[#fcf8f3] font-sans text-[#5A0E30] antialiased selection:bg-[#C21E63] selection:text-white">
+    <div className="min-h-screen bg-[#fcf8f3] font-sans text-ink antialiased selection:bg-[#C21E63] selection:text-white">
       {/* Top Checkerboard Pattern Strap */}
       <div
         className="mb-8 h-3 w-full border-b border-[#5A0E30]/10"
@@ -471,7 +473,7 @@ export default function PeeFunnelPageClient({
       <section id="pdp-hero" className="w-full pt-4 pb-12 sm:pt-8 sm:pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
           {/* Breadcrumbs */}
-          <nav className="mb-4 flex items-center gap-2 text-xs font-medium text-[#5A0E30]/60">
+          <nav className="mb-4 flex items-center gap-2 text-xs font-medium text-ink-muted">
             <Link href="/" className="transition-colors hover:text-[#C21E63]">
               Home
             </Link>
@@ -493,11 +495,11 @@ export default function PeeFunnelPageClient({
               <div className="relative aspect-square w-full overflow-hidden rounded-[24px] border-2 border-dashed border-[#C21E63]/20 bg-[#FDEEF4]/40 shadow-xs transition-all">
                 {/* Floating Badges */}
                 <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F4C430] px-3 py-1 text-[11px] font-extrabold text-[#5A0E30] shadow-2xs">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F4C430] px-3 py-1 text-[12px] font-extrabold text-[#5A0E30] shadow-2xs">
                     <Droplets className="h-3.5 w-3.5 fill-[#5A0E30]" />
                     <span>Soft silicone</span>
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#C21E63] px-3 py-1 text-[11px] font-extrabold text-white shadow-2xs">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[#C21E63] px-3 py-1 text-[12px] font-extrabold text-white shadow-2xs">
                     <ShieldCheck className="h-3.5 w-3.5 text-[#F4C430]" />
                     <span>Leak-free seal</span>
                   </span>
@@ -524,7 +526,7 @@ export default function PeeFunnelPageClient({
                 <div className="relative h-full w-full">
                   <Image
                     src={
-                      mediaList[selectedImageIndex] || "/looway-funnel-demo.jpg"
+                      mediaList[selectedImageIndex] || "/looway/scen-funnel.jpg"
                     }
                     alt={product?.title || "Looway Pee Funnel"}
                     fill
@@ -587,8 +589,8 @@ export default function PeeFunnelPageClient({
                         />
                       </div>
                       <span
-                        className={`mt-1.5 text-[10.5px] leading-tight font-bold sm:text-xs ${
-                          isActive ? "text-[#C21E63]" : "text-[#5A0E30]/70"
+                        className={`mt-1.5 text-[12px] leading-tight font-bold sm:text-xs ${
+                          isActive ? "text-[#C21E63]" : "text-ink-muted"
                         }`}
                       >
                         {item.label}
@@ -609,12 +611,12 @@ export default function PeeFunnelPageClient({
               </div>
 
               {/* Product Title */}
-              <h1 className="mt-3 font-serif text-3xl leading-tight font-extrabold tracking-tight text-[#5A0E30] sm:text-4xl lg:text-[46px]">
+              <h1 className="mt-3 font-serif text-3xl leading-tight font-bold tracking-tight text-ink sm:text-4xl lg:text-[46px]">
                 Pee Funnel
               </h1>
 
               {/* Subtitle */}
-              <p className="mt-1 font-sans text-base font-semibold text-[#5A0E30]/75 sm:text-lg">
+              <p className="mt-1 font-sans text-base font-semibold text-ink-muted sm:text-lg">
                 Reusable Stand-to-Pee Funnel for Women
               </p>
 
@@ -631,43 +633,46 @@ export default function PeeFunnelPageClient({
                 </span>
               </div>
 
-              {/* Rating Row (Clickable smooth-scroll to #reviews) */}
+              {/* Rating Row: real reviews only (scrolls to #reviews) */}
+              {reviewStats.count > 0 && (
               <a
                 href="#reviews"
-                className="group mt-3.5 flex w-fit cursor-pointer items-center gap-2 text-xs font-semibold text-[#5A0E30]/80"
+                className="group mt-3.5 flex w-fit cursor-pointer items-center gap-2 text-xs font-semibold text-ink-muted"
               >
                 <div className="flex items-center text-[#F4C430]">
-                  <Star className="h-4 w-4 fill-[#F4C430]" />
-                  <Star className="h-4 w-4 fill-[#F4C430]" />
-                  <Star className="h-4 w-4 fill-[#F4C430]" />
-                  <Star className="h-4 w-4 fill-[#F4C430]" />
-                  <Star className="h-4 w-4 fill-[#F4C430]" />
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`h-4 w-4 ${i < Math.round(reviewStats.average) ? "fill-[#F4C430]" : "fill-gray-200 text-gray-200"}`}
+                    />
+                  ))}
                 </div>
-                <span className="font-extrabold text-[#5A0E30] group-hover:text-[#C21E63]">
-                  4.8 out of 5
+                <span className="font-extrabold text-ink group-hover:text-[#C21E63]">
+                  {reviewStats.averageLabel} out of 5
                 </span>
-                <span className="text-[#5A0E30]/40">•</span>
-              
+                <span className="text-ink-muted/80">•</span>
+                <span>{reviewCountLabel(reviewStats.count)}</span>
               </a>
+              )}
 
               {/* Feature Chips Row 2 */}
               <div className="mt-3.5 flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C21E63]/20 bg-[#FDEEF4]/80 px-3 py-1 text-[11.5px] font-bold text-[#C21E63]">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C21E63]/20 bg-[#FDEEF4]/80 px-3 py-1 text-[12px] font-bold text-[#C21E63]">
                   <Check className="h-3.5 w-3.5 stroke-[3]" />
                   Pee standing up
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C21E63]/20 bg-[#FDEEF4]/80 px-3 py-1 text-[11.5px] font-bold text-[#C21E63]">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C21E63]/20 bg-[#FDEEF4]/80 px-3 py-1 text-[12px] font-bold text-[#C21E63]">
                   <Check className="h-3.5 w-3.5 stroke-[3]" />
                   Leak-free seal
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C21E63]/20 bg-[#FDEEF4]/80 px-3 py-1 text-[11.5px] font-bold text-[#C21E63]">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C21E63]/20 bg-[#FDEEF4]/80 px-3 py-1 text-[12px] font-bold text-[#C21E63]">
                   <ShieldCheck className="h-3.5 w-3.5" />
                   For women &amp; girls
                 </span>
               </div>
 
               {/* Lede Paragraph */}
-              <p className="mt-4 max-w-xl text-xs leading-relaxed font-normal text-[#5A0E30]/75 sm:text-sm">
+              <p className="mt-4 max-w-xl text-xs leading-relaxed font-normal text-ink-muted sm:text-sm">
                 Stand up. Stay clean. Go anywhere. The Looway Pee Funnel lets
                 you pee standing up: no squatting over a filthy public toilet,
                 no undressing on a road trip, no skin ever touching a dirty
@@ -676,7 +681,7 @@ export default function PeeFunnelPageClient({
               </p>
 
               {/* Reassurance Banner Box */}
-              <div className="mt-4 flex items-start gap-2.5 rounded-2xl border border-[#C21E63]/20 bg-[#FDEEF4]/60 p-3.5 text-xs text-[#5A0E30]">
+              <div className="mt-4 flex items-start gap-2.5 rounded-2xl border border-[#C21E63]/20 bg-[#FDEEF4]/60 p-3.5 text-xs text-ink">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#C21E63]" />
                 <span>
                   <strong>One size, shaped to fit most bodies.</strong> Nervous
@@ -689,7 +694,7 @@ export default function PeeFunnelPageClient({
               {/* CHOOSE YOUR PACK SELECTOR */}
               <div className="mt-6">
                 <div className="mb-2 flex items-center justify-between">
-                  <span className="text-xs font-extrabold tracking-wider text-[#5A0E30] uppercase">
+                  <span className="text-xs font-extrabold tracking-wider text-ink uppercase">
                     CHOOSE YOUR PACK
                   </span>
                   {pairSaving > 0 && (
@@ -714,25 +719,25 @@ export default function PeeFunnelPageClient({
                         }`}
                       >
                         {pk.flag && (
-                          <span className="absolute -top-2.5 right-3 rounded-full bg-[#F4C430] px-2.5 py-0.5 text-[9.5px] font-extrabold text-[#5A0E30] uppercase shadow-2xs">
+                          <span className="absolute -top-2.5 right-3 rounded-full bg-[#F4C430] px-2.5 py-0.5 text-[11px] font-extrabold text-[#5A0E30] uppercase shadow-2xs">
                             {pk.flag}
                           </span>
                         )}
 
                         <div>
-                          <div className="font-serif text-base font-bold text-[#5A0E30]">
+                          <div className="font-serif text-base font-bold text-ink">
                             {pk.name}
                           </div>
-                          <div className="mt-0.5 text-[11px] leading-tight text-[#5A0E30]/70">
+                          <div className="mt-0.5 text-[12px] leading-tight text-ink-muted">
                             {pk.sub}
                           </div>
                         </div>
 
                         <div className="mt-3 flex items-baseline justify-between border-t border-[#EAD6DC]/60 pt-2">
-                          <div className="font-serif text-lg font-extrabold text-[#C21E63]">
+                          <div className="font-serif text-lg font-bold text-[#C21E63]">
                             {Number(pk.price) > 0 ? `₹${pk.price}` : ""}
                           </div>
-                          <div className="text-[10px] font-bold text-[#5A0E30]/50">
+                          <div className="text-[12px] font-bold text-ink-muted/80">
                             {Number(pk.price) > 0 ? `₹${perPrice}/funnel` : ""}
                           </div>
                         </div>
@@ -761,11 +766,11 @@ export default function PeeFunnelPageClient({
                 {/* Price Header */}
                 <div className="flex items-baseline justify-between">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-serif text-3xl font-extrabold text-[#5A0E30]">
+                    <span className="font-serif text-3xl font-bold text-ink">
                       {priceMissing ? "Price unavailable" : `₹${totalPrice}`}
                     </span>
                     {!priceMissing && totalMrp > totalPrice && (
-                      <span className="text-sm font-normal text-[#5A0E30]/40 line-through">
+                      <span className="text-sm font-normal text-ink-muted/80 line-through">
                         ₹{totalMrp}
                       </span>
                     )}
@@ -777,7 +782,7 @@ export default function PeeFunnelPageClient({
                   )}
                 </div>
 
-                <div className={`mt-1 text-xs text-[#5A0E30]/60 ${priceMissing ? "hidden" : ""}`}>
+                <div className={`mt-1 text-xs text-ink-muted ${priceMissing ? "hidden" : ""}`}>
                   ≈ ₹
                   {(
                     totalPrice / (selectedPack?.funnels * quantity || 1)
@@ -787,7 +792,7 @@ export default function PeeFunnelPageClient({
 
                 {/* Quantity Stepper & Chips */}
                 <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-3">
-                  <span className="text-xs font-bold text-[#5A0E30] uppercase">
+                  <span className="text-xs font-bold text-ink uppercase">
                     HOW MANY?
                   </span>
 
@@ -816,7 +821,7 @@ export default function PeeFunnelPageClient({
                       >
                         -
                       </button>
-                      <span className="min-w-[32px] text-center text-sm font-extrabold text-[#5A0E30]">
+                      <span className="min-w-[32px] text-center text-sm font-extrabold text-ink">
                         {quantity}
                       </span>
                       <button
@@ -830,7 +835,7 @@ export default function PeeFunnelPageClient({
                 </div>
 
                 {/* 3 Reassurance Row */}
-                <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 border-t border-gray-100 pt-3 text-[11.5px] font-bold text-[#5A0E30]/75">
+                <div className="mt-3.5 flex flex-wrap items-center justify-between gap-2 border-t border-gray-100 pt-3 text-[12px] font-bold text-ink-muted">
                   <span className="inline-flex items-center gap-1">
                     <ShieldCheck className="h-3.5 w-3.5 text-[#C21E63]" />{" "}
                     Leak-free seal
@@ -846,7 +851,7 @@ export default function PeeFunnelPageClient({
                 </div>
 
                 {/* Delivery Expectation Line */}
-                <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-[#5A0E30]/80">
+                <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-ink-muted">
                   <Truck className="h-4 w-4 shrink-0 text-[#C21E63]" />
                   <span>
                     <strong>Ships in 24 to 48 hrs</strong> · usually delivered in{" "}
@@ -891,7 +896,7 @@ export default function PeeFunnelPageClient({
                     }`}
                   >
                     <Heart
-                      className={`h-4 w-4 ${isWishlisted ? "fill-red-500 text-red-500" : "text-[#5A0E30]"}`}
+                      className={`h-4 w-4 ${isWishlisted ? "fill-red-500 text-red-500" : "text-ink"}`}
                     />
                     <span>
                       {isWishlisted ? "Saved to wishlist" : "Save to wishlist"}
@@ -903,7 +908,7 @@ export default function PeeFunnelPageClient({
                 <OffersForYou brand="looway" className="mt-3" />
 
                 {/* Shipping Micro-copy */}
-                <p className="mt-3 text-center text-[11px] leading-relaxed text-[#5A0E30]/60">
+                <p className="mt-3 text-center text-[12px] leading-relaxed text-ink-muted">
                   Free delivery on orders of ₹399 and above · ships in 24 to 48 hrs · secure checkout.
                   Questions? Email{" "}
                   <a
@@ -929,11 +934,11 @@ export default function PeeFunnelPageClient({
 
                 {/* SHOP WITH CONFIDENCE */}
                 <div className="mt-5 border-t border-gray-100 pt-4">
-                  <span className="mb-2.5 block text-[11px] font-extrabold tracking-wider text-[#5A0E30] uppercase">
+                  <span className="mb-2.5 block text-[11px] font-extrabold tracking-wider text-ink uppercase">
                     SHOP WITH CONFIDENCE
                   </span>
 
-                  <div className="space-y-1.5 text-xs font-semibold text-[#5A0E30]/80">
+                  <div className="space-y-1.5 text-xs font-semibold text-ink-muted">
                     <div className="flex items-center gap-2">
                       <ShieldCheck className="h-4 w-4 text-[#C21E63]" />{" "}
                       Body-safe soft silicone
@@ -948,12 +953,12 @@ export default function PeeFunnelPageClient({
                     </div>
                   </div>
 
-                  <div className="mt-3 space-y-1.5 rounded-xl border border-[#EAD6DC] bg-[#fcf8f3] p-3 text-[11.5px] text-[#5A0E30]/75">
-                    <div className="flex items-center gap-2 font-bold text-[#5A0E30]">
+                  <div className="mt-3 space-y-1.5 rounded-xl border border-[#EAD6DC] bg-[#fcf8f3] p-3 text-[12px] text-[#5A0E30]/75">
+                    <div className="flex items-center gap-2 font-bold text-ink">
                       <Truck className="h-4 w-4 text-[#C21E63]" /> Usually
                       delivered in 5 to 7 days · ships in 24 to 48 hrs, tracked
                     </div>
-                    <div className="flex items-start gap-2 text-[11px] leading-snug text-[#5A0E30]/65">
+                    <div className="flex items-start gap-2 text-[12px] leading-snug text-ink-muted">
                       <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#C21E63]" />
                       For hygiene &amp; safety, this personal-care product
                       can&apos;t be returned, exchanged, refunded or replaced
@@ -964,7 +969,7 @@ export default function PeeFunnelPageClient({
 
                 {/* PIN CODE CHECKER */}
                 <div className="mt-5 rounded-xl border border-[#EAD6DC] bg-[#FDEEF4]/40 p-3.5">
-                  <div className="mb-2 flex items-center gap-2 text-xs font-bold text-[#5A0E30]">
+                  <div className="mb-2 flex items-center gap-2 text-xs font-bold text-ink">
                     <MapPin className="h-4 w-4 text-[#C21E63]" />
                     <span>Check delivery time</span>
                   </div>
@@ -992,7 +997,7 @@ export default function PeeFunnelPageClient({
                   </div>
                   {pincodeResult && (
                     <p
-                      className={`mt-2 text-[11px] font-semibold ${
+                      className={`mt-2 text-[12px] font-semibold ${
                         pincodeResult.err ? "text-red-600" : "text-emerald-700"
                       }`}
                     >
@@ -1002,12 +1007,12 @@ export default function PeeFunnelPageClient({
                 </div>
 
                 {/* SECURE CHECKOUT FOOTER */}
-                <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-gray-100 pt-3 text-[11px] text-[#5A0E30]/60">
-                  <span className="flex items-center gap-1 font-semibold text-[#5A0E30]">
+                <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-gray-100 pt-3 text-[12px] text-ink-muted">
+                  <span className="flex items-center gap-1 font-semibold text-ink">
                     <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />{" "}
                     Secure checkout
                   </span>
-                  <div className="flex flex-wrap items-center gap-1 text-[10px] font-bold">
+                  <div className="flex flex-wrap items-center gap-1 text-[12px] font-bold">
                     <span className="rounded bg-gray-100 px-1.5 py-0.5">
                       UPI
                     </span>
@@ -1036,17 +1041,17 @@ export default function PeeFunnelPageClient({
                 className="mt-6 rounded-2xl border border-[#EAD6DC] bg-white p-4"
               >
                 <div className="mb-3 flex items-center justify-between border-b border-gray-100 pb-2.5">
-                  <span className="text-xs font-extrabold tracking-wider text-[#5A0E30] uppercase">
+                  <span className="text-xs font-extrabold tracking-wider text-ink uppercase">
                     WHAT&apos;S IN THE BOX
                   </span>
-                  <span className="text-xs font-medium text-[#5A0E30]/60">
+                  <span className="text-xs font-medium text-ink-muted">
                     1 funnel + cotton pouch
                   </span>
                 </div>
                 <div className="flex items-center justify-between py-1.5 text-xs">
-                  <span className="font-bold text-[#5A0E30]">1 Pee Funnel</span>
+                  <span className="font-bold text-ink">1 Pee Funnel</span>
                   <span className="font-semibold text-[#C21E63]">silicone</span>
-                  <span className="text-[#5A0E30]/70">
+                  <span className="text-ink-muted">
                     Soft, flexible silicone
                   </span>
                 </div>
@@ -1055,7 +1060,7 @@ export default function PeeFunnelPageClient({
               {/* QUICK SPECS GRID */}
               <div className="mt-4 rounded-2xl border border-[#EAD6DC] bg-white p-4">
                 <div className="mb-3 flex items-center justify-between border-b border-gray-100 pb-2.5">
-                  <span className="text-xs font-extrabold tracking-wider text-[#5A0E30] uppercase">
+                  <span className="text-xs font-extrabold tracking-wider text-ink uppercase">
                     QUICK SPECS
                   </span>
                   <a
@@ -1067,50 +1072,50 @@ export default function PeeFunnelPageClient({
                 </div>
                 <div className="grid grid-cols-2 gap-3 text-xs">
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">
-                    <span className="block text-[10.5px] text-[#5A0E30]/60">
+                    <span className="block text-[12px] text-ink-muted">
                       Material
                     </span>
-                    <span className="font-bold text-[#5A0E30]">
+                    <span className="font-bold text-ink">
                       Soft silicone
                     </span>
                   </div>
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">
-                    <span className="block text-[10.5px] text-[#5A0E30]/60">
+                    <span className="block text-[12px] text-ink-muted">
                       Reusable
                     </span>
-                    <span className="font-bold text-[#5A0E30]">
+                    <span className="font-bold text-ink">
                       Yes, lasts years
                     </span>
                   </div>
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">
-                    <span className="block text-[10.5px] text-[#5A0E30]/60">
+                    <span className="block text-[12px] text-ink-muted">
                       Seal
                     </span>
-                    <span className="font-bold text-[#5A0E30]">
+                    <span className="font-bold text-ink">
                       Ergonomic, leak-free
                     </span>
                   </div>
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">
-                    <span className="block text-[10.5px] text-[#5A0E30]/60">
+                    <span className="block text-[12px] text-ink-muted">
                       Pouch
                     </span>
-                    <span className="font-bold text-[#5A0E30]">
+                    <span className="font-bold text-ink">
                       Cotton (included)
                     </span>
                   </div>
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">
-                    <span className="block text-[10.5px] text-[#5A0E30]/60">
+                    <span className="block text-[12px] text-ink-muted">
                       Size
                     </span>
-                    <span className="font-bold text-[#5A0E30]">
+                    <span className="font-bold text-ink">
                       Compact, pocket-size
                     </span>
                   </div>
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">
-                    <span className="block text-[10.5px] text-[#5A0E30]/60">
+                    <span className="block text-[12px] text-ink-muted">
                       Use type
                     </span>
-                    <span className="font-bold text-[#5A0E30]">
+                    <span className="font-bold text-ink">
                       External only
                     </span>
                   </div>
@@ -1131,7 +1136,7 @@ export default function PeeFunnelPageClient({
                 <div className="font-serif text-sm leading-tight font-bold text-white sm:text-lg">
                   Silicone
                 </div>
-                <div className="text-[11px] text-white/85 sm:text-xs">
+                <div className="text-[12px] text-white/85 sm:text-xs">
                   Soft &amp; body-safe
                 </div>
               </div>
@@ -1142,7 +1147,7 @@ export default function PeeFunnelPageClient({
                 <div className="font-serif text-sm leading-tight font-bold text-white sm:text-lg">
                   Leak-free
                 </div>
-                <div className="text-[11px] text-white/85 sm:text-xs">
+                <div className="text-[12px] text-white/85 sm:text-xs">
                   Ergonomic seal
                 </div>
               </div>
@@ -1153,7 +1158,7 @@ export default function PeeFunnelPageClient({
                 <div className="font-serif text-sm leading-tight font-bold text-white sm:text-lg">
                   Reusable
                 </div>
-                <div className="text-[11px] text-white/85 sm:text-xs">
+                <div className="text-[12px] text-white/85 sm:text-xs">
                   Lasts for years
                 </div>
               </div>
@@ -1164,7 +1169,7 @@ export default function PeeFunnelPageClient({
                 <div className="font-serif text-sm leading-tight font-bold text-white sm:text-lg">
                   Compact
                 </div>
-                <div className="text-[11px] text-white/85 sm:text-xs">
+                <div className="text-[12px] text-white/85 sm:text-xs">
                   Slips into any bag
                 </div>
               </div>
@@ -1175,7 +1180,7 @@ export default function PeeFunnelPageClient({
                 <div className="font-serif text-sm leading-tight font-bold text-white sm:text-lg">
                   1 funnel
                 </div>
-                <div className="text-[11px] text-white/85 sm:text-xs">
+                <div className="text-[12px] text-white/85 sm:text-xs">
                   Per pack + pouch
                 </div>
               </div>

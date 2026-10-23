@@ -31,9 +31,11 @@ const caveat = Caveat({
   subsets: ["latin"],
 });
 
+// Headings use 500, 600 and 700 (font-medium, font-semibold, font-bold).
+// Loading the real faces stops browsers faking bold from the 600 face.
 const fredoka = Fredoka({
   variable: "--font-fredoka",
-  weight: "600",
+  weight: ["500", "600", "700"],
   subsets: ["latin"],
 });
 

@@ -370,7 +370,7 @@ export function Navbar() {
                             className="h-7 w-auto object-contain"
                           />
                         </div>
-                        <p className="text-[11px] sm:text-xs text-white/80 font-normal leading-tight">
+                        <p className="text-[12px] sm:text-xs text-white/80 font-normal leading-tight">
                           Period and intimate care
                         </p>
                       </Link>
@@ -390,7 +390,7 @@ export function Navbar() {
                             className="h-7 w-auto object-contain"
                           />
                         </div>
-                        <p className="text-[11px] sm:text-xs text-white/80 font-normal leading-tight">
+                        <p className="text-[12px] sm:text-xs text-white/80 font-normal leading-tight">
                           Travel and everyday hygiene
                         </p>
                       </Link>
@@ -506,7 +506,7 @@ function ProductSearch({ onClose }: { onClose?: () => void }) {
   }, [searchTerm]);
 
   return (
-    <div className="animate-fadeIn w-full rounded-2xl border border-gray-100 bg-white p-3 text-gray-900 shadow-2xl sm:w-80">
+    <div className="animate-fadeIn w-full rounded-2xl border border-gray-100 bg-white p-3 text-ink shadow-2xl sm:w-80">
       <div className="relative flex items-center">
         <Search className="absolute left-3 h-4 w-4 text-gray-400 pointer-events-none" />
         <input
@@ -531,7 +531,7 @@ function ProductSearch({ onClose }: { onClose?: () => void }) {
       {searchTerm.trim() !== "" && (
         <div className="mt-2.5 max-h-64 space-y-1 overflow-y-auto border-t border-gray-100 pt-2">
           {loading ? (
-            <div className="p-3 text-center text-xs text-gray-500">
+            <div className="p-3 text-center text-xs text-ink-muted">
               Searching...
             </div>
           ) : results.length > 0 ? (
@@ -553,13 +553,13 @@ function ProductSearch({ onClose }: { onClose?: () => void }) {
                 ) : (
                   <div className="h-9 w-9 shrink-0 rounded-md bg-gray-100" />
                 )}
-                <span className="line-clamp-2 text-xs font-medium text-gray-800">
+                <span className="line-clamp-2 text-xs font-medium text-ink">
                   {product.name}
                 </span>
               </Link>
             ))
           ) : (
-            <div className="p-3 text-center text-xs text-gray-500">
+            <div className="p-3 text-center text-xs text-ink-muted">
               No products found.
             </div>
           )}

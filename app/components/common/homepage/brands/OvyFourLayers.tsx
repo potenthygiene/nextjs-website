@@ -125,7 +125,7 @@ const CONTENT_BY_TAB: Record<TabType, ContentData> = {
       {
         num: "04",
         title: "Individual paper wrap",
-        desc: "Completely plastic-free disposal wrapper for discreet carrying.",
+        desc: "Completely plastic-free disposal wrapper, easy to carry in any bag.",
       },
     ],
     pills: [
@@ -229,7 +229,7 @@ export function OvyFourLayers() {
                         className="object-cover"
                       />
                     </div>
-                    <p className="text-[10px] sm:text-xs text-[#4A3B47] leading-tight font-medium">
+                    <p className="text-[12px] sm:text-xs text-[#4A3B47] leading-tight font-medium">
                       {content.twistText}
                     </p>
                   </div>
@@ -284,7 +284,7 @@ export function OvyFourLayers() {
             </div>
 
             {/* Bottom Note */}
-            <p className="text-xs text-[#6B5E57] leading-relaxed font-normal">
+            <p className="text-xs text-ink-muted leading-relaxed font-normal">
               {content.footerNote}
             </p>
 

@@ -11,7 +11,7 @@ const AboutBanner = () => {
       <div className="relative max-w-6xl mx-auto px-6 py-20 md:py-28 text-center">
 
         {/* Top Badge */}
-        <div className="inline-flex items-center gap-2 border border-teal-400/30 rounded-full px-4 py-1 mb-10 text-[10px] md:text-xs tracking-[0.25em] text-teal-300 uppercase">
+        <div className="inline-flex items-center gap-2 border border-teal-400/30 rounded-full px-4 py-1 mb-10 text-[11px] md:text-xs tracking-[0.25em] text-teal-300 uppercase">
           
          · Breaking the Silence · For Every Woman in Bharat
         </div>

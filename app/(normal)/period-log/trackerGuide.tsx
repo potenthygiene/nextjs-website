@@ -6,21 +6,21 @@ export default function TrackerGuide() {
   return (
     <section className="w-full bg-[#f5f3f0] pb-10  flex justify-center">
       <Card className="container mx-auto  md:rounded-2xl shadow-sm">
-        <CardContent className="p-6 sm:p-8 md:p-10 space-y-8 text-gray-700 leading-relaxed">
+        <CardContent className="p-6 sm:p-8 md:p-10 space-y-8 text-ink-muted leading-relaxed">
           
           {/* Title */}
           <div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold text-ink">
               Period Calculator - Track Your Menstrual Cycle with Ease
             </h1>
-            <p className="mt-4 text-sm sm:text-base text-gray-600">
+            <p className="mt-4 text-sm sm:text-base text-ink-muted">
               Our Period Calculator is an easy-to-use tool that helps women track and predict their menstrual cycles with precision. Whether you're trying to understand your cycle better, predict your next period, or manage your fertility window, our Period Calculator makes tracking your menstrual health straightforward.
             </p>
           </div>
 
           {/* Why Use */}
           <div>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-ink">
               Why Use a Period Calculator?
             </h2>
 
@@ -34,11 +34,11 @@ export default function TrackerGuide() {
 
           {/* How it Works */}
           <div>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-ink">
               How the Period Calculator Works
             </h2>
 
-            <p className="mt-3 text-sm sm:text-base text-gray-600">
+            <p className="mt-3 text-sm sm:text-base text-ink-muted">
               The calculator uses your last period start date and cycle length to estimate your next cycle and ovulation window.
             </p>
 
@@ -51,7 +51,7 @@ export default function TrackerGuide() {
 
           {/* Ovy Section */}
           <div>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-ink">
               Track Your Period and Stay Prepared with Ovy
             </h2>
 
@@ -64,7 +64,7 @@ export default function TrackerGuide() {
 
           {/* How to Use */}
           <div>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-ink">
               How to Use the Period Calculator
             </h2>
 
@@ -77,11 +77,11 @@ export default function TrackerGuide() {
 
           {/* Final Note */}
           <div>
-            <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+            <h2 className="text-lg sm:text-xl font-semibold text-ink">
               Stay Comfortable with Ovy
             </h2>
 
-            <p className="mt-3 text-sm sm:text-base text-gray-600">
+            <p className="mt-3 text-sm sm:text-base text-ink-muted">
               Stay prepared and comfortable with high-quality sanitary pads designed for maximum protection and comfort throughout your cycle.
             </p>
           </div>

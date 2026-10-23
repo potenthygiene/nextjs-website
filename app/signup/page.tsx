@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { signUp } from "@/helper";
 import { toast } from "sonner";
 import { GoogleButton } from "@/app/components/common/auth/GoogleButton";
+import { REFERRAL_FRIEND_BONUS_RUPEES, SIGNUP_BONUS_RUPEES } from "@/lib/rewardsRules";
 
 const Page = () => {
   const params = useSearchParams();
@@ -205,11 +206,11 @@ const Page = () => {
           <p className="mb-3 rounded-lg bg-[#F3FAFB] px-3 py-2 text-center text-xs text-[#016271]">
             {ref ? (
               <>
-                Joining with a friend&apos;s link? You get <strong>₹150 credit</strong> plus <strong className="font-mono">FIRSTCARE15</strong>: 15% off your first order.
+                Joining with a friend&apos;s link? You get <strong>₹{REFERRAL_FRIEND_BONUS_RUPEES} credit</strong> on top of the ₹{SIGNUP_BONUS_RUPEES} welcome credit, plus <strong className="font-mono">FIRSTCARE15</strong>: 15% off your first order.
               </>
             ) : (
               <>
-                New customers get <strong>₹50 credit</strong> plus <strong className="font-mono">FIRSTCARE15</strong>: 15% off the first order.
+                New customers get <strong>₹{SIGNUP_BONUS_RUPEES} credit</strong> plus <strong className="font-mono">FIRSTCARE15</strong>: 15% off the first order.
               </>
             )}
           </p>
@@ -270,7 +271,7 @@ const Page = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute top-1/2 right-1 -translate-y-1/2 text-gray-500"
+                className="absolute top-1/2 right-1 -translate-y-1/2 text-ink-muted"
               >
                 {showPassword ? (
                   <IconEyeOff size={18} />
@@ -295,7 +296,7 @@ const Page = () => {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute top-1/2 right-1 -translate-y-1/2 text-gray-500"
+                className="absolute top-1/2 right-1 -translate-y-1/2 text-ink-muted"
               >
                 {showConfirmPassword ? (
                   <IconEyeOff size={18} />

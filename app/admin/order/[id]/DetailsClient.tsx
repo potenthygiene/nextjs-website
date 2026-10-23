@@ -10,6 +10,7 @@ import { useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import { updateOrderStatus } from "@/helper/index";
 import Link from "next/link";
+import { DELIVERY_ETA_TEXT } from "@/lib/shippingConfig";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -45,7 +46,7 @@ export default function Details({ id, initialOrderInfo }: { id: string; initialO
   const steps = [
     { label: "Order Confirmed", date: orderDate },
     { label: "Order Shipped", date: isShipped ? updatedDate : "Pending" },
-    { label: "Out for Delivery", date: isShipped ? "Estimated in 2-4 days" : "Pending" },
+    { label: "Out for Delivery", date: isShipped ? DELIVERY_ETA_TEXT : "Pending" },
     { label: "Delivered", date: isDelivered ? updatedDate : "Pending" },
   ];
 

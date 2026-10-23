@@ -56,7 +56,7 @@ export function OvyPadsDetail() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="text-[10px] sm:text-xs text-[#4A3B47] leading-tight font-medium">
+                  <p className="text-[12px] sm:text-xs text-[#4A3B47] leading-tight font-medium">
                     The twist test: a used pad, wrung out. The core keeps what it took in.
                   </p>
                 </div>
@@ -153,7 +153,7 @@ export function OvyPadsDetail() {
             </div>
 
             {/* Footer Note */}
-            <p className="text-xs text-[#6B5E57] leading-relaxed font-normal">
+            <p className="text-xs text-ink-muted leading-relaxed font-normal">
               Every pad comes with its own biodegradable, compostable disposal bag. Roll, seal, bin. Never flush.
             </p>
 

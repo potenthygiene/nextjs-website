@@ -124,7 +124,7 @@ export function LoowayFunnelGuideSection({
             </span>
 
             {/* Headline */}
-            <h2 className="mb-3 font-serif text-[27px] leading-[29.16px] font-semibold text-[#1A150F] sm:text-[46px] sm:leading-[49.68px]">
+            <h2 className="mb-3 font-serif text-[27px] leading-[29.16px] font-semibold text-ink sm:text-[46px] sm:leading-[49.68px]">
               Practise at home, then take it anywhere.
             </h2>
 
@@ -144,7 +144,7 @@ export function LoowayFunnelGuideSection({
                   <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#C02670] text-xs font-bold text-white">
                     {step.num}
                   </div>
-                  <h3 className="text-[11px] leading-snug font-bold text-[#1F1915] sm:text-xs">
+                  <h3 className="text-[12px] leading-snug font-bold text-[#1F1915] sm:text-xs">
                     {step.text}
                   </h3>
                 </div>

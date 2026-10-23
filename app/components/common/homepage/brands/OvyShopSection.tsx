@@ -296,7 +296,7 @@ export function OvyShopSection({
     <section id="products" className="w-full bg-[#FAF5E8] pt-10 pb-0">
       {/* Header */}
       <div className="mx-auto mb-8 max-w-3xl px-4 text-center sm:mb-10">
-        <span className="mb-2 inline-block rounded-full border border-gray-200 bg-white/90 px-4 py-1 text-[10px] font-bold tracking-widest text-[#016271] uppercase shadow-2xs sm:mb-3 sm:text-[11px]">
+        <span className="mb-2 inline-block rounded-full border border-gray-200 bg-white/90 px-4 py-1 text-[11px] font-bold tracking-widest text-[#016271] uppercase shadow-2xs sm:mb-3 sm:text-[11px]">
           SHOP OVY
         </span>
         <h2 className="font-serif text-3xl leading-tight font-bold text-[#1F1915] sm:text-5xl">
@@ -397,7 +397,7 @@ export function OvyShopSection({
 
                   {/* Category Badge Text */}
                   <div
-                    className="mb-2 text-[10px] font-bold tracking-wider uppercase"
+                    className="mb-2 text-[11px] font-bold tracking-wider uppercase"
                     style={{ color: card.borderColor }}
                   >
                     {renderedCard.badge}
@@ -426,13 +426,13 @@ export function OvyShopSection({
                           {renderedCard.title}
                         </h3>
                         <p
-                          className="mt-0.5 font-serif text-[11px] font-semibold italic"
+                          className="mt-0.5 font-serif text-[12px] font-semibold italic"
                           style={{ color: card.borderColor }}
                         >
                           {renderedCard.subtitle}
                         </p>
                       </div>
-                      <p className="mt-1.5 text-[11px] leading-tight font-bold text-[#4A2040]">
+                      <p className="mt-1.5 text-[12px] leading-tight font-bold text-[#4A2040]">
                         {renderedCard.audience}
                       </p>
                     </div>
@@ -454,7 +454,7 @@ export function OvyShopSection({
                               : "border-gray-200 bg-white"
                           }`}
                         >
-                          <div className="text-[10px] leading-none font-semibold text-gray-500">
+                          <div className="text-[12px] leading-none font-semibold text-ink-muted">
                             {v.label}
                           </div>
                           <div className="mt-1 font-serif text-xs font-bold text-[#1F1915]">
@@ -480,7 +480,7 @@ export function OvyShopSection({
                       disabled={isAdding || !canAddToCart || isVariantComingSoon}
                       className={`flex cursor-pointer items-center justify-center gap-1.5 rounded-full px-5 py-2 text-xs font-semibold shadow-sm transition-all ${
                         isVariantComingSoon
-                          ? "bg-gray-200 text-gray-600 cursor-not-allowed"
+                          ? "bg-gray-200 text-ink-muted cursor-not-allowed"
                           : "bg-[#602E55] text-white hover:bg-[#4E2445] disabled:opacity-50"
                       }`}
                     >
@@ -497,7 +497,7 @@ export function OvyShopSection({
                     </button>
                   </div>
 
-                  <p className="mt-2 text-[12px] leading-snug text-gray-500">
+                  <p className="mt-2 text-[12px] leading-snug text-ink-muted">
                     {renderedCard.footerNote}
                   </p>
                 </div>
@@ -532,7 +532,7 @@ export function OvyShopSection({
                       </svg>
 
                       {/* Badge top-left */}
-                      <span className="absolute top-3 left-3 z-20 rounded-full bg-white/95 px-2.5 py-1 text-[9px] font-bold tracking-wider text-[#4A2040] uppercase shadow-2xs">
+                      <span className="absolute top-3 left-3 z-20 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-bold tracking-wider text-[#4A2040] uppercase shadow-2xs">
                         {renderedCard.badge}
                       </span>
 
@@ -545,7 +545,7 @@ export function OvyShopSection({
                           className={`h-4 w-4 ${
                             isLiked
                               ? "fill-pink-600 text-pink-600"
-                              : "text-gray-500"
+                              : "text-ink-muted"
                           }`}
                         />
                       </button>
@@ -600,10 +600,10 @@ export function OvyShopSection({
                           <button
                             key={idx}
                             onClick={() => handleSelectVariant(card.id, idx)}
-                            className={`rounded-xl border px-2.5 py-1.5 text-[11px] font-semibold transition-all ${
+                            className={`rounded-xl border px-2.5 py-1.5 text-[12px] font-semibold transition-all ${
                               isActive
                                 ? "border-[#602E55] bg-purple-50/80 font-bold text-[#602E55] shadow-2xs ring-1 ring-[#602E55]"
-                                : "border-gray-200 bg-white text-gray-700 hover:border-gray-300"
+                                : "border-gray-200 bg-white text-ink-muted hover:border-gray-300"
                             }`}
                           >
                             {v.label}{" "}
@@ -628,7 +628,7 @@ export function OvyShopSection({
                         disabled={isAdding || !canAddToCart || isVariantComingSoon}
                         className={`flex cursor-pointer items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-xs font-semibold shadow-sm transition-all ${
                           isVariantComingSoon
-                            ? "bg-gray-200 text-gray-600 cursor-not-allowed"
+                            ? "bg-gray-200 text-ink-muted cursor-not-allowed"
                             : "bg-[#602E55] text-white hover:scale-105 hover:bg-[#4E2445] disabled:opacity-50"
                         }`}
                       >
@@ -645,7 +645,7 @@ export function OvyShopSection({
                       </button>
                     </div>
 
-                    <p className="mt-3 text-[10px] leading-snug text-gray-500">
+                    <p className="mt-3 text-[12px] leading-snug text-ink-muted">
                       {renderedCard.footerNote}
                     </p>
                   </div>
@@ -691,7 +691,7 @@ export function OvyShopSection({
               <h3 className="font-serif text-base font-bold text-[#1F1915] sm:text-2xl">
                 Or build your own box.
               </h3>
-              <p className="mt-0.5 max-w-xl text-[11px] text-[#5C524D] sm:mt-1 sm:text-sm">
+              <p className="mt-0.5 max-w-xl text-[12px] text-[#5C524D] sm:mt-1 sm:text-sm">
                 Put 21 pads across L, XL and XL+ in any split, with 4 liners.
                 One flat price, whatever the split.
               </p>
@@ -709,7 +709,7 @@ export function OvyShopSection({
           </div>
         </div>
 
-        <p className="mt-3 mb-6 px-2 text-center text-[10px] text-[#7C726D] sm:mt-4 sm:mb-8 sm:text-sm">
+        <p className="mt-3 mb-6 px-2 text-center text-[12px] text-[#7C726D] sm:mt-4 sm:mb-8 sm:text-sm">
           Pads can also come on your cycle: Cycle-Sync delivers about 5 days
           before your period. Pause or cancel in two clicks.
         </p>
@@ -726,7 +726,7 @@ export function OvyShopSection({
               <h4 className="text-xs font-semibold sm:text-sm">
                 Dermatologically tested
               </h4>
-              <p className="mt-0.5 text-[10px] leading-tight text-purple-200/80 sm:text-[11px]">
+              <p className="mt-0.5 text-[12px] leading-tight text-purple-200/80 sm:text-[12px]">
                 On 24 volunteers, to IS 4011:2018
               </p>
             </div>
@@ -740,7 +740,7 @@ export function OvyShopSection({
               <h4 className="text-xs font-semibold sm:text-sm">
                 Organic and toxin-free
               </h4>
-              <p className="mt-0.5 text-[10px] leading-tight text-purple-200/80 sm:text-[11px]">
+              <p className="mt-0.5 text-[12px] leading-tight text-purple-200/80 sm:text-[12px]">
                 No chlorine bleach, parabens or dyes
               </p>
             </div>
@@ -754,7 +754,7 @@ export function OvyShopSection({
               <h4 className="text-xs font-semibold sm:text-sm">
                 pH-balanced, cruelty-free
               </h4>
-              <p className="mt-0.5 text-[10px] leading-tight text-purple-200/80 sm:text-[11px]">
+              <p className="mt-0.5 text-[12px] leading-tight text-purple-200/80 sm:text-[12px]">
                 Both certified, and vegan-friendly
               </p>
             </div>
@@ -768,7 +768,7 @@ export function OvyShopSection({
               <h4 className="text-xs font-semibold sm:text-sm">
                 Ships within 24 to 48 hours
               </h4>
-              <p className="mt-0.5 text-[10px] leading-tight text-purple-200/80 sm:text-[11px]">
+              <p className="mt-0.5 text-[12px] leading-tight text-purple-200/80 sm:text-[12px]">
                 Tracked to your door, free on orders of ₹399 and above
               </p>
             </div>

@@ -39,19 +39,19 @@ export const AccountInfo = ({ user }: Props) => {
 
   return (
     <div className="bg-white rounded-[20px] p-8 shadow-sm border border-gray-100">
-      <h3 className="text-[16px] font-bold text-[#2D3748] mb-6 uppercase tracking-wider">
+      <h3 className="text-[16px] font-bold text-ink mb-6 uppercase tracking-wider">
         Account Information
       </h3>
 
       <div className="space-y-5">
         {/* Account Status */}
         <div className="flex justify-between items-center">
-          <span className="text-[14px] text-gray-500 font-medium">
+          <span className="text-[14px] text-ink-muted font-medium">
             Account Status
           </span>
 
           <span
-            className={`text-[10px] font-bold px-3 py-1 rounded-full uppercase ${
+            className={`text-[11px] font-bold px-3 py-1 rounded-full uppercase ${
               isActive
                 ? "bg-[#DCFCE7] text-[#15824D]"
                 : "bg-red-100 text-red-600"
@@ -63,22 +63,22 @@ export const AccountInfo = ({ user }: Props) => {
 
         {/* Birthday */}
         <div className="flex justify-between items-center">
-          <span className="text-[14px] text-gray-500 font-medium">
+          <span className="text-[14px] text-ink-muted font-medium">
             Birthday
           </span>
 
-          <span className="text-[14px] font-semibold text-[#2D3748]">
+          <span className="text-[14px] font-semibold text-ink">
             {formattedBirthday}
           </span>
         </div>
 
         {/* Member Since */}
         <div className="flex justify-between items-center">
-          <span className="text-[14px] text-gray-500 font-medium">
+          <span className="text-[14px] text-ink-muted font-medium">
             Member Since
           </span>
 
-          <span className="text-[14px] font-semibold text-[#2D3748]">
+          <span className="text-[14px] font-semibold text-ink">
             {formattedDate}
           </span>
         </div>

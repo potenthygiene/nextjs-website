@@ -146,7 +146,7 @@ const HOW_IT_WORKS_DATA: HowItWorksTabData[] = [
       },
     ],
     yellowNote:
-      "Gels liquid in about 60 seconds. Odor-free, leak-proof, and discreet to dispose of in any dustbin.",
+      "Gels liquid in about 60 seconds. Odor-free, leak-proof, and easy to seal and drop in any dustbin.",
     buttonLabel: "Add bags",
     linkText: "Shop bags",
     linkHref: "/product-detail/looway-pee-puke",
@@ -224,7 +224,7 @@ export function LoowayHowItWorks({
           <span className="mb-2 block text-[11px] font-bold tracking-widest text-[#0B6E7D] uppercase">
             HOW IT WORKS
           </span>
-          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-[#1A150F] sm:text-[46px] sm:leading-[49.68px]">
+          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-ink sm:text-[46px] sm:leading-[49.68px]">
             Four steps each. No learning curve on two of them.
           </h2>
         </div>

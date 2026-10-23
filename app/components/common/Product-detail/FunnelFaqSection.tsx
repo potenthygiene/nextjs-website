@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { DELIVERY_TIME_TEXT } from "@/lib/shippingConfig";
 
 type FaqItem = {
   q: string;
@@ -79,7 +80,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
       items: [
         {
           q: "Should I buy the Pack of 1 or the Pack of 2?",
-          a: "The Pack of 1 (₹299) is ideal to test out or keep in your primary handbag. The Pack of 2 (₹499) offers the best value: keep one in your daily bag and leave one permanently in your car, travel backpack, or emergency kit so you are never caught without it.",
+          a: "The Pack of 1 is ideal to test out or keep in your primary handbag. The Pack of 2 offers the best value: keep one in your daily bag and leave one permanently in your car, travel backpack, or emergency kit so you are never caught without it.",
         },
         {
           q: "Do you sell the disposable Pee & Puke bags too, on subscription?",
@@ -87,7 +88,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "Do you deliver across India, and how do I pay?",
-          a: "We deliver across India, usually in about 5 to 7 days (faster to metro cities), with free delivery on orders of ₹399 and above. You can pay by UPI (GPay, PhonePe, Paytm), credit or debit card, or net banking.",
+          a: `We deliver across India. ${DELIVERY_TIME_TEXT} Delivery is free on orders of ₹399 and above. You can pay by UPI (GPay, PhonePe, Paytm), credit or debit card, or net banking.`,
         },
         {
           q: "What is your returns policy?",
@@ -302,7 +303,7 @@ export default function FunnelFaqSection({
 
   const renderGroup = (group: FaqGroup, groupIdx: number, colPrefix: string) => (
     <div key={groupIdx} className="mb-6">
-      <h4 className="text-[11.5px] font-extrabold tracking-widest text-[#b51e60] uppercase mb-3">
+      <h4 className="text-[11.5px] font-bold tracking-widest text-[#b51e60] uppercase mb-3">
         {group.title}
       </h4>
       <div className="space-y-2.5">
@@ -332,7 +333,7 @@ export default function FunnelFaqSection({
               </button>
 
               {isOpen && (
-                <div className="px-4 pb-4.5 sm:px-4.5 sm:pb-5 text-xs sm:text-sm text-[#5A0E30]/80 leading-relaxed border-t border-[#EAD6DC]/60 pt-3 font-normal">
+                <div className="px-4 pb-4.5 sm:px-4.5 sm:pb-5 text-xs sm:text-sm text-ink-muted leading-relaxed border-t border-[#EAD6DC]/60 pt-3 font-normal">
                   {item.a}
                 </div>
               )}
@@ -344,14 +345,14 @@ export default function FunnelFaqSection({
   );
 
   return (
-    <section id="faq" className="w-full bg-[#fdeef4] scroll-mt-32 sm:scroll-mt-36 py-10 sm:py-16 lg:py-20 text-[#5A0E30]">
+    <section id="faq" className="w-full bg-[#fdeef4] scroll-mt-32 sm:scroll-mt-36 py-10 sm:py-16 lg:py-20 text-ink">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mx-auto max-w-2xl mb-8 sm:mb-12">
           <span className="text-[11px] sm:text-xs font-extrabold tracking-widest text-[#b51e60] uppercase block mb-2">
             GOOD TO KNOW
           </span>
-          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[40px] font-extrabold text-[#5A0E30] leading-tight">
+          <h2 className="font-serif text-2xl sm:text-4xl lg:text-[40px] font-bold text-ink leading-tight">
             Frequently asked questions
           </h2>
         </div>
@@ -362,7 +363,7 @@ export default function FunnelFaqSection({
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`rounded-full px-3.5 py-1.5 text-[11px] font-extrabold transition-all whitespace-nowrap ${
+              className={`rounded-full px-3.5 py-1.5 text-[12px] font-extrabold transition-all whitespace-nowrap ${
                 activeCategory === cat.id
                   ? "bg-[#a81a57] text-white shadow-2xs"
                   : "bg-white text-[#5A0E30]/80 border border-[#EAD6DC]"

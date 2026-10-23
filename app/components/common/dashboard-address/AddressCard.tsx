@@ -68,24 +68,24 @@ export const AddressCard = ({ address }: { address: any }) => {
         </div>
 
         <div className="mb-6 space-y-2.5">
-          <h3 className="text-lg font-bold text-[#2D3748] flex items-center gap-2">
+          <h3 className="text-lg font-bold text-ink flex items-center gap-2">
             <User className="h-4 w-4 text-[#016271]" />
             {recipientName}
           </h3>
 
           {recipientPhone && (
-            <p className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <p className="text-sm font-semibold text-ink-muted flex items-center gap-2">
               <Phone className="h-4 w-4 text-gray-400" />
               <span>Courier Contact: +91 {recipientPhone}</span>
             </p>
           )}
 
-          <p className="text-sm text-gray-600 flex items-start gap-2 leading-relaxed">
+          <p className="text-sm text-ink-muted flex items-start gap-2 leading-relaxed">
             <MapPin className="h-4 w-4 text-gray-400 shrink-0 mt-0.5" />
             <span>
               {streetLine}
               {localityLine ? `, ${localityLine}` : ""}, {address.city},{" "}
-              {address.state} - <strong className="font-semibold text-gray-800">{address.pincode}</strong>, India
+              {address.state} - <strong className="font-semibold text-ink">{address.pincode}</strong>, India
             </span>
           </p>
         </div>
@@ -95,7 +95,7 @@ export const AddressCard = ({ address }: { address: any }) => {
         <Button
           variant="outline"
           onClick={() => router.push(`/dashboard/edit-address/${address.id}`)}
-          className="flex-1 rounded-xl border-gray-300 font-semibold text-gray-700 hover:border-[#016271] hover:text-[#016271]"
+          className="flex-1 rounded-xl border-gray-300 font-semibold text-ink-muted hover:border-[#016271] hover:text-[#016271]"
         >
           Edit
         </Button>
@@ -106,7 +106,7 @@ export const AddressCard = ({ address }: { address: any }) => {
               variant="outline"
               onClick={handleDefault}
               disabled={loadingId === address.id}
-              className="rounded-xl border-gray-300 text-xs font-semibold text-gray-600 hover:border-[#016271] hover:text-[#016271]"
+              className="rounded-xl border-gray-300 text-xs font-semibold text-ink-muted hover:border-[#016271] hover:text-[#016271]"
             >
               {loadingId === address.id ? "Setting..." : "Set Default"}
             </Button>

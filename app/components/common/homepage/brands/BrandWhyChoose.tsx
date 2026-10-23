@@ -47,10 +47,10 @@ export function BrandWhyChoose({
       <div className="max-w-full mx-auto px-6 md:px-6">
         {/* HEADER SECTION */}
         <div className="mb-12 md:mb-20 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#333333]">
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-ink">
             {title}
           </h2>
-          <p className="max-w-2xl mx-auto text-base text-gray-500 leading-relaxed font-light">
+          <p className="max-w-2xl mx-auto text-base text-ink-muted leading-relaxed font-light">
             {subtitle}
           </p>
         </div>
@@ -70,7 +70,7 @@ export function BrandWhyChoose({
                   </h3>
                 </div>
 
-                <p className="text-[14px]  text-gray-500 leading-relaxed font-medium opacity-80">
+                <p className="text-[14px]  text-ink-muted leading-relaxed font-medium opacity-80">
                   {feature.description}
                 </p>
               </div>

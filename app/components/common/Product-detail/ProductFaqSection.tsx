@@ -80,17 +80,17 @@ const THEME_STYLES: Record<ProductFaqTheme, ThemeStyles> = {
   },
   ovy: {
     bg: "bg-[#FAF6F8]",
-    sectionText: "text-[#1A150F]",
+    sectionText: "text-ink",
     subtitle: "text-[#7E4D77]",
-    title: "text-[#1A150F]",
+    title: "text-ink",
     cardBorder: "border-[#EAD6DC]",
-    cardText: "text-[#1A150F]",
+    cardText: "text-ink",
     cardTextHover: "hover:text-[#7E4D77]",
     activePill: "bg-[#7E4D77] text-white shadow-2xs",
-    inactivePill: "border border-[#EAD6DC] bg-white text-[#1A150F]/80",
+    inactivePill: "border border-[#EAD6DC] bg-white text-ink/80",
     openChevron: "rotate-180 bg-[#7E4D77] text-white",
     closedChevron: "bg-[#F3E6F0] text-[#7E4D77]",
-    answerText: "text-[#1A150F]/80",
+    answerText: "text-ink/80",
     divider: "border-[#EAD6DC]/60",
   },
 };
@@ -265,7 +265,7 @@ export default function ProductFaqSection({
   ) => (
     <div key={groupIdx} className="mb-6 space-y-2">
       <h4
-        className={`mb-2.5 text-[11px] font-extrabold tracking-widest uppercase ${styles.subtitle}`}
+        className={`mb-2.5 text-[11px] font-bold tracking-widest uppercase ${styles.subtitle}`}
       >
         {group.title}
       </h4>
@@ -316,12 +316,12 @@ export default function ProductFaqSection({
         {/* Header */}
         <div className="mx-auto mb-6 max-w-2xl text-center sm:mb-12">
           <span
-            className={`mb-1.5 block text-[10.5px] font-extrabold tracking-widest uppercase sm:mb-2 sm:text-xs ${styles.subtitle}`}
+            className={`mb-1.5 block text-[11px] font-extrabold tracking-widest uppercase sm:mb-2 sm:text-xs ${styles.subtitle}`}
           >
             GOOD TO KNOW
           </span>
           <h2
-            className={`font-serif text-2xl leading-tight font-extrabold sm:text-4xl lg:text-[40px] ${styles.title}`}
+            className={`font-serif text-2xl leading-tight font-bold sm:text-4xl lg:text-[40px] ${styles.title}`}
           >
             Frequently asked questions
           </h2>
@@ -334,7 +334,7 @@ export default function ProductFaqSection({
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`rounded-full px-3.5 py-1.5 text-[11px] font-extrabold whitespace-nowrap transition-all ${
+                className={`rounded-full px-3.5 py-1.5 text-[12px] font-extrabold whitespace-nowrap transition-all ${
                   activeCategory === cat.id
                     ? styles.activePill
                     : styles.inactivePill

@@ -465,7 +465,7 @@ export default function Footer() {
             {PAYMENT_METHODS.map((method) => (
               <span
                 key={method}
-                className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[11px] font-medium text-white/90 shadow-2xs backdrop-blur-xs sm:text-xs"
+                className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-[12px] font-medium text-white/90 shadow-2xs backdrop-blur-xs sm:text-xs"
               >
                 {method}
               </span>

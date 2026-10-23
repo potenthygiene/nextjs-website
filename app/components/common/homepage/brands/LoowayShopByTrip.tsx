@@ -349,7 +349,7 @@ export function LoowayShopByTrip({
           <span className="mb-2 block text-[11px] font-bold tracking-widest text-[#0B6E7D] uppercase">
             WHERE ARE YOU GOING?
           </span>
-          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-[#1A150F] sm:text-[46px] sm:leading-[49.68px]">
+          <h2 className="font-serif text-[27px] leading-[29.16px] font-semibold text-ink sm:text-[46px] sm:leading-[49.68px]">
             Tell us the trip. We’ll pack the toilets.
           </h2>
           <p className="mt-3 text-xs leading-relaxed font-normal text-[#5C7275] sm:text-sm">
@@ -399,7 +399,7 @@ export function LoowayShopByTrip({
             <div className="flex flex-col justify-between space-y-4 lg:col-span-7">
               {/* Trip Kicker, Title & Desc */}
               <div>
-                <span className="mb-1 block text-[10px] font-bold tracking-widest text-[#0B6E7D] uppercase">
+                <span className="mb-1 block text-[11px] font-bold tracking-widest text-[#0B6E7D] uppercase">
                   {currentTrip.kicker}
                 </span>
                 <h3 className="font-serif text-2xl leading-snug font-bold text-[#1F1915] sm:text-3xl">
@@ -430,7 +430,7 @@ export function LoowayShopByTrip({
                         <h4 className="text-xs leading-tight font-bold text-[#1F1915] sm:text-sm">
                           {item.title}
                         </h4>
-                        <div className="text-[10px] font-medium text-gray-500">
+                        <div className="text-[12px] font-medium text-ink-muted">
                           {item.subtitle}
                         </div>
                       </div>
@@ -455,7 +455,7 @@ export function LoowayShopByTrip({
               {/* Bottom Price, Action Button & Link */}
               <div className="flex flex-col justify-between gap-3 border-t border-gray-100 pt-3 sm:flex-row sm:items-center">
                 <div>
-                  <div className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">
+                  <div className="text-[11px] font-bold tracking-wider text-gray-400 uppercase">
                     SET TOTAL
                   </div>
                   <div className="flex items-baseline gap-2">
@@ -465,7 +465,7 @@ export function LoowayShopByTrip({
                         ? `₹${currentTotal}`
                         : "Price unavailable"}
                     </span>
-                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
+                    <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[12px] font-bold text-emerald-700">
                       Free delivery
                     </span>
                   </div>

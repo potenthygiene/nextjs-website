@@ -6,8 +6,6 @@ export const metadata = pageMetadata("ovy");
 import { InstagramFeed } from "@/app/components/common/homepage/InstaFeed";
 import { Newsletter } from "@/app/components/common/homepage/NewsLetter";
 import { OurStory } from "@/app/components/common/homepage/OurStory";
-import { ProductCategories } from "@/app/components/common/homepage/ProductCategories";
-import { Testimonials } from "@/app/components/common/homepage/Reviews";
 import StoryTruth from "@/app/components/common/homepage/StoryTruth";
 import { OvyHero } from "@/app/components/common/homepage/brands/OvyHero";
 import { OvyShopSection } from "@/app/components/common/homepage/brands/OvyShopSection";
@@ -40,6 +38,7 @@ export default async function OvyPage() {
     "ovy-teen",
     "ovy-cup",
     "ovy-liners",
+    "ovy-panty",
   ];
   const productEntries = await Promise.all(
     productSlugs.map(async (slug) => {
@@ -111,7 +110,7 @@ export default async function OvyPage() {
         accentColor="#602E55"
         buttonBgColor="#602E55"
       />
-      <OvyComingNext />
+      <OvyComingNext product={fetchedProducts["ovy-panty"]} />
       {/* 4. Ovy Period School Section */}
       <OvyPeriodSchool />
       <OvyFAQ />

@@ -40,7 +40,7 @@ import Image from "next/image";
 
 //               {/* Date */}
 //               <div className="space-y-2 flex flex-col items-start ">
-//                 <label className="text-sm text-gray-500">
+//                 <label className="text-sm text-ink-muted">
 //                   Last Period Start
 //                 </label>
 //                 <Input type="date" className="bg-gray-100 " />
@@ -48,7 +48,7 @@ import Image from "next/image";
 
 //               {/* Cycle Length */}
 //               <div className="space-y-2 w-full flex flex-col items-start">
-//                 <label className="text-sm text-gray-500">
+//                 <label className="text-sm text-ink-muted">
 //                   How long is your cycle? (Days)
 //                 </label>
 
@@ -77,7 +77,7 @@ import Image from "next/image";
 //                 </div>
 //               </div>
 //               <div className="space-y-2 w-full flex flex-col items-start">
-//                 <label className="text-sm text-gray-500">
+//                 <label className="text-sm text-ink-muted">
 //                   How long does a period last? (Days)
 //                 </label>
 
@@ -157,7 +157,7 @@ export default function LogEntry() {
 
               {/* Date */}
               <div className="space-y-2 flex flex-col items-start">
-                <label className="text-sm text-gray-500">
+                <label className="text-sm text-ink-muted">
                   Last Period Start
                 </label>
                 <Input
@@ -169,7 +169,7 @@ export default function LogEntry() {
 
               {/* Cycle Length */}
               <div className="space-y-2 w-full flex flex-col items-start">
-                <label className="text-sm text-gray-500">
+                <label className="text-sm text-ink-muted">
                   How long is your cycle? (Days)
                 </label>
 
@@ -200,7 +200,7 @@ export default function LogEntry() {
 
               {/* Period Length */}
               <div className="space-y-2 w-full flex flex-col items-start">
-                <label className="text-sm text-gray-500">
+                <label className="text-sm text-ink-muted">
                   How long does a period last? (Days)
                 </label>
 

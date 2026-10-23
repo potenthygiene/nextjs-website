@@ -1056,15 +1056,15 @@ export default function OvyTeenPageClient({
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F5] pb-20 font-sans text-[#1A150F] antialiased">
+    <div className="min-h-screen bg-[#FAF9F5] pb-20 font-sans text-ink antialiased">
       {/* Sticky Period School Navigation Header */}
-      <nav className="sticky top-0 z-40 border-b border-[#1A150F]/10 bg-[#FAF9F5]/95 shadow-xs backdrop-blur-md">
+      <nav className="sticky top-0 z-40 border-b border-ink/10 bg-[#FAF9F5]/95 shadow-xs backdrop-blur-md">
         <div className="mx-auto flex h-[54px] max-w-[1180px] items-center justify-between gap-4 px-4 md:px-6">
           <div className="flex items-center gap-2">
             <span className="font-serif text-xl font-bold text-[#7E4D77]">
               OVY TEEN
             </span>
-            <span className="hidden rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[10px] font-bold tracking-wider text-[#7E4D77] uppercase sm:inline-block">
+            <span className="hidden rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase sm:inline-block">
               Organic First-Period Care
             </span>
           </div>
@@ -1086,7 +1086,7 @@ export default function OvyTeenPageClient({
 
               {/* Mega Dropdown Menu */}
               {learnDropdownOpen && (
-                <div className="animate-in fade-in slide-in-from-top-2 absolute top-full right-0 z-50 mt-2 w-[320px] rounded-2xl border border-[#1A150F]/10 bg-white p-4 shadow-2xl duration-200 sm:w-[480px]">
+                <div className="animate-in fade-in slide-in-from-top-2 absolute top-full right-0 z-50 mt-2 w-[320px] rounded-2xl border border-ink/10 bg-white p-4 shadow-2xl duration-200 sm:w-[480px]">
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <h4 className="mb-2 text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase">
@@ -1097,12 +1097,12 @@ export default function OvyTeenPageClient({
                           setActiveTopicModal("101");
                           setLearnDropdownOpen(false);
                         }}
-                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-[#1A150F] transition-colors hover:bg-[#F3E6F0]"
+                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-ink transition-colors hover:bg-[#F3E6F0]"
                       >
                         <BookOpen className="h-4 w-4 text-[#9A5B90]" />
                         <div>
                           <b className="block">First-Period 101</b>
-                          <span className="text-[11px] text-[#1A150F]/60">
+                          <span className="text-[12px] text-ink/60">
                             What nobody explains
                           </span>
                         </div>
@@ -1112,12 +1112,12 @@ export default function OvyTeenPageClient({
                           setActiveTopicModal("use");
                           setLearnDropdownOpen(false);
                         }}
-                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-[#1A150F] transition-colors hover:bg-[#F3E6F0]"
+                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-ink transition-colors hover:bg-[#F3E6F0]"
                       >
                         <CheckCircle className="h-4 w-4 text-[#9A5B90]" />
                         <div>
                           <b className="block">How to use a pad</b>
-                          <span className="text-[11px] text-[#1A150F]/60">
+                          <span className="text-[12px] text-ink/60">
                             6 easy steps
                           </span>
                         </div>
@@ -1133,12 +1133,12 @@ export default function OvyTeenPageClient({
                           setActiveTopicModal("tracker");
                           setLearnDropdownOpen(false);
                         }}
-                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-[#1A150F] transition-colors hover:bg-[#F3E6F0]"
+                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-ink transition-colors hover:bg-[#F3E6F0]"
                       >
                         <Calendar className="h-4 w-4 text-[#1A8D91]" />
                         <div>
                           <b className="block">Cycle & Energy Guide</b>
-                          <span className="text-[11px] text-[#1A150F]/60">
+                          <span className="text-[12px] text-ink/60">
                             Week by week changes
                           </span>
                         </div>
@@ -1148,12 +1148,12 @@ export default function OvyTeenPageClient({
                           openTeenQuiz();
                           setLearnDropdownOpen(false);
                         }}
-                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-[#1A150F] transition-colors hover:bg-[#F3E6F0]"
+                        className="flex w-full items-center gap-2 rounded-xl p-2 text-left text-xs font-medium text-ink transition-colors hover:bg-[#F3E6F0]"
                       >
                         <Zap className="h-4 w-4 text-[#9A5B90]" />
                         <div>
                           <b className="block">Find My Fit Quiz</b>
-                          <span className="text-[11px] text-[#1A150F]/60">
+                          <span className="text-[12px] text-ink/60">
                             2-minute recommendation
                           </span>
                         </div>
@@ -1178,7 +1178,7 @@ export default function OvyTeenPageClient({
       <main className="mx-auto max-w-[1180px] px-4 pt-6 md:px-6">
         {/* Kit Selector Toggle (Starter Pack | Pro-Active Pack | First Period Box) */}
         <div className="mb-8 flex justify-center">
-          <div className="inline-flex flex-wrap justify-center gap-1.5 rounded-full border border-[#1A150F]/10 bg-white p-1.5 shadow-xs">
+          <div className="inline-flex flex-wrap justify-center gap-1.5 rounded-full border border-ink/10 bg-white p-1.5 shadow-xs">
             {Object.keys(KITS_DATA).map((key) => {
               const kit = KITS_DATA[key];
               const isSelected = selectedKitKey === key;
@@ -1189,13 +1189,13 @@ export default function OvyTeenPageClient({
                   className={`inline-flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all sm:text-sm ${
                     isSelected
                       ? "bg-[#9A5B90] text-white shadow-sm"
-                      : "text-[#1A150F]/70 hover:bg-[#F3E6F0] hover:text-[#7E4D77]"
+                      : "text-ink/70 hover:bg-[#F3E6F0] hover:text-[#7E4D77]"
                   }`}
                   aria-selected={isSelected}
                 >
                   <span>{kit.label}</span>
                   <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${
+                    className={`rounded-full px-2 py-0.5 text-[11px] font-bold uppercase ${
                       isSelected
                         ? "bg-white/20 text-white"
                         : "bg-[#F3E6F0] text-[#7E4D77]"
@@ -1216,7 +1216,7 @@ export default function OvyTeenPageClient({
             <div
               onTouchStart={handleHeroTouchStart}
               onTouchEnd={(e) => handleHeroTouchEnd(e, mediaList.length)}
-              className="relative flex aspect-4/5 items-center justify-center overflow-hidden rounded-3xl border border-[#1A150F]/10 bg-[#FBF1FB] shadow-sm group"
+              className="relative flex aspect-4/5 items-center justify-center overflow-hidden rounded-3xl border border-ink/10 bg-[#FBF1FB] shadow-sm group"
             >
               {/* Badge */}
               <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-[#7E4D77] shadow-xs backdrop-blur-md">
@@ -1255,7 +1255,7 @@ export default function OvyTeenPageClient({
                   <span className="font-serif text-2xl font-bold text-[#7E4D77]">
                     {activeKit.label}
                   </span>
-                  <span className="mt-1 text-xs text-[#1A150F]/60">
+                  <span className="mt-1 text-xs text-ink/60">
                     {activeKit.flow}
                   </span>
                 </div>
@@ -1270,7 +1270,7 @@ export default function OvyTeenPageClient({
                         prev > 0 ? prev - 1 : mediaList.length - 1,
                       )
                     }
-                    className="absolute top-1/2 left-3 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-[#1A150F] shadow-sm transition-all hover:scale-105 hover:bg-white"
+                    className="absolute top-1/2 left-3 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-sm transition-all hover:scale-105 hover:bg-white"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
@@ -1280,7 +1280,7 @@ export default function OvyTeenPageClient({
                         prev < mediaList.length - 1 ? prev + 1 : 0,
                       )
                     }
-                    className="absolute top-1/2 right-3 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-[#1A150F] shadow-sm transition-all hover:scale-105 hover:bg-white"
+                    className="absolute top-1/2 right-3 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white/90 text-ink shadow-sm transition-all hover:scale-105 hover:bg-white"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
@@ -1298,7 +1298,7 @@ export default function OvyTeenPageClient({
                     className={`relative aspect-square overflow-hidden rounded-xl border-2 bg-white transition-all ${
                       selectedImageIndex === idx
                         ? "border-[#9A5B90] ring-2 ring-[#F3E6F0]"
-                        : "border-[#1A150F]/10 hover:border-[#9A5B90]/40"
+                        : "border-ink/10 hover:border-[#9A5B90]/40"
                     }`}
                   >
                     <Image
@@ -1319,7 +1319,7 @@ export default function OvyTeenPageClient({
               <span className="inline-flex items-center gap-2 rounded-full bg-[#9A5B90] px-3.5 py-1 text-[11px] font-bold tracking-widest text-white uppercase">
                 OVY TEEN ORGANIC PADS
               </span>
-              <h1 className="mt-3 font-serif text-3xl leading-tight font-bold text-[#1A150F] sm:text-4xl">
+              <h1 className="mt-3 font-serif text-3xl leading-tight font-bold text-ink sm:text-4xl">
                 {activeKit.name}
               </h1>
 
@@ -1332,14 +1332,14 @@ export default function OvyTeenPageClient({
                   className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-semibold transition-all sm:text-sm ${
                     isWishlisted
                       ? "border-rose-300 bg-rose-50 text-rose-600 shadow-xs hover:bg-rose-100"
-                      : "border-gray-300/80 bg-white text-gray-700 shadow-xs hover:border-[#9A5B90] hover:text-[#7E4D77]"
+                      : "border-gray-300/80 bg-white text-ink-muted shadow-xs hover:border-[#9A5B90] hover:text-[#7E4D77]"
                   }`}
                 >
                   <Heart
                     className={`h-4 w-4 transition-transform active:scale-125 ${
                       isWishlisted
                         ? "fill-rose-500 text-rose-500"
-                        : "text-gray-600"
+                        : "text-ink-muted"
                     }`}
                   />
                   <span>
@@ -1353,31 +1353,31 @@ export default function OvyTeenPageClient({
                 <span className="rounded-full bg-[#F3E6F0] px-3 py-1 text-[#7E4D77]">
                   {activeKit.pieces}
                 </span>
-                <span className="h-1.5 w-1.5 rounded-full bg-[#1A150F]/20" />
+                <span className="h-1.5 w-1.5 rounded-full bg-ink/20" />
                 <span className="rounded-full bg-[#E4F1F1] px-3 py-1 text-[#1A8D91]">
                   {activeKit.flow}
                 </span>
               </div>
 
               {/* Rating */}
-              <div className="mt-3 flex items-center gap-2 text-xs text-[#1A150F]/70">
+              <div className="mt-3 flex items-center gap-2 text-xs text-ink/70">
                 <div className="flex text-[#9A5B90]">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <span className="font-bold text-[#1A150F]">5.0</span>
+                <span className="font-bold text-ink">5.0</span>
               
               </div>
 
-              <p className="mt-4 text-sm leading-relaxed text-[#1A150F]/80 sm:text-base">
+              <p className="mt-4 text-sm leading-relaxed text-ink/80 sm:text-base">
                 {activeKit.short}
               </p>
 
               {/* Kit Variant Cards Grid */}
               <div className="my-5">
                 <div className="mb-2 flex items-center justify-between">
-                  <span className="text-xs font-bold tracking-wider text-[#1A150F]/70 uppercase">
+                  <span className="text-xs font-bold tracking-wider text-ink/70 uppercase">
                     Select Kit Option
                   </span>
                   <span className="text-xs font-semibold text-[#7E4D77] italic">
@@ -1403,7 +1403,7 @@ export default function OvyTeenPageClient({
                         } ${
                           isSelected
                             ? "border-[#9A5B90] bg-[#F3E6F0] shadow-sm ring-2 ring-[#9A5B90]/20"
-                            : "border-[#1A150F]/15 bg-white hover:border-[#9A5B90]/50 hover:bg-[#F3E6F0]/20"
+                            : "border-ink/15 bg-white hover:border-[#9A5B90]/50 hover:bg-[#F3E6F0]/20"
                         }`}
                         aria-selected={isSelected}
                       >
@@ -1413,16 +1413,16 @@ export default function OvyTeenPageClient({
                           </div>
                         )}
 
-                        <div className="pr-4 font-serif text-xs leading-tight font-bold text-[#1A150F] sm:text-sm">
+                        <div className="pr-4 font-serif text-xs leading-tight font-bold text-ink sm:text-sm">
                           {kit.label}
                         </div>
-                        <div className="mt-0.5 text-[10px] font-medium text-[#1A150F]/60 sm:text-[11px]">
+                        <div className="mt-0.5 text-[12px] font-medium text-ink/60 sm:text-[12px]">
                           {kit.pieces}
                         </div>
-                        <div className="mt-1.5 inline-block rounded bg-[#F3E6F0]/80 px-1.5 py-0.5 text-[9px] font-bold text-[#7E4D77] sm:mt-2 sm:text-[10px]">
+                        <div className="mt-1.5 inline-block rounded bg-[#F3E6F0]/80 px-1.5 py-0.5 text-[12px] font-bold text-[#7E4D77] sm:mt-2 sm:text-[12px]">
                           {key === "FIRST" ? "Coming Soon" : kit.flow}
                         </div>
-                        <div className="mt-1.5 font-serif text-xs font-bold text-[#1A150F] sm:mt-2 sm:text-sm">
+                        <div className="mt-1.5 font-serif text-xs font-bold text-ink sm:mt-2 sm:text-sm">
                           {key === "FIRST"
                             ? "Coming soon"
                             : displayPrice
@@ -1446,7 +1446,7 @@ export default function OvyTeenPageClient({
                   {activeKit.pieces}
                 </span>
               </div>
-              <div className="divide-y divide-[#1A150F]/5">
+              <div className="divide-y divide-ink/5">
                 {activeKit.box.map((row: any, i: number) => (
                   <div
                     key={i}
@@ -1454,15 +1454,15 @@ export default function OvyTeenPageClient({
                   >
                     <div className="flex items-center gap-2.5">
                       <span
-                        className={`rounded-md px-2 py-0.5 text-[11px] font-bold text-white ${row.bg}`}
+                        className={`rounded-md px-2 py-0.5 text-[12px] font-bold text-white ${row.bg}`}
                       >
                         {row.tag}
                       </span>
                       <div>
-                        <b className="block font-semibold text-[#1A150F]">
+                        <b className="block font-semibold text-ink">
                           {row.item}
                         </b>
-                        <span className="text-xs text-[#1A150F]/60">
+                        <span className="text-xs text-ink/60">
                           {row.for}
                         </span>
                       </div>
@@ -1473,7 +1473,7 @@ export default function OvyTeenPageClient({
                   </div>
                 ))}
               </div>
-              <div className="border-t border-[#1A150F]/5 bg-[#F4F1E8] p-3 text-center text-xs font-medium text-[#1A150F]/80">
+              <div className="border-t border-ink/5 bg-[#F4F1E8] p-3 text-center text-xs font-medium text-ink/80">
                 {activeKit.total}
               </div>
             </div>
@@ -1487,10 +1487,10 @@ export default function OvyTeenPageClient({
                 <Zap className="h-5 w-5" />
               </div>
               <div className="flex-1">
-                <b className="block text-sm font-bold text-[#1A150F]">
+                <b className="block text-sm font-bold text-ink">
                   Not sure which kit is right?
                 </b>
-                <span className="text-xs text-[#1A150F]/70">
+                <span className="text-xs text-ink/70">
                   Take our 30-second fit quiz to find her perfect match
                 </span>
               </div>
@@ -1498,23 +1498,23 @@ export default function OvyTeenPageClient({
             </button>
 
             {/* Buying Options Container */}
-            <div className="rounded-3xl border border-[#1A150F]/10 bg-white p-5 shadow-md sm:p-6">
+            <div className="rounded-3xl border border-ink/10 bg-white p-5 shadow-md sm:p-6">
               {activeKit.isComingSoon ? (
                 <div className="space-y-3 rounded-2xl border-2 border-dashed border-[#9A5B90]/40 bg-[#FBF1FB]/60 p-6 text-center sm:p-8">
                   <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#F3E6F0] text-[#9A5B90]">
                     <Clock className="h-6 w-6" />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-[#1A150F] sm:text-2xl">
+                  <h3 className="font-serif text-xl font-bold text-ink sm:text-2xl">
                     First Period Box: Coming Soon
                   </h3>
-                  <p className="mx-auto max-w-sm text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
+                  <p className="mx-auto max-w-sm text-xs leading-relaxed text-ink/70 sm:text-sm">
                     Our 50-piece milestone gift box is currently being prepared
                     and will be launching soon. Nothing is available to buy yet.
                   </p>
                   <div className="pt-2">
                     <button
                       disabled
-                      className="w-full cursor-not-allowed rounded-full bg-gray-200 px-6 py-3.5 text-sm font-bold text-gray-600"
+                      className="w-full cursor-not-allowed rounded-full bg-gray-200 px-6 py-3.5 text-sm font-bold text-ink-muted"
                     >
                       Coming soon, not available to buy yet
                     </button>
@@ -1522,7 +1522,7 @@ export default function OvyTeenPageClient({
                 </div>
               ) : (
                 <>
-                  <span className="mb-3 block text-xs font-bold tracking-wider text-[#1A150F]/60 uppercase">
+                  <span className="mb-3 block text-xs font-bold tracking-wider text-ink/60 uppercase">
                     Select Purchase Mode
                   </span>
 
@@ -1534,32 +1534,32 @@ export default function OvyTeenPageClient({
                       className={`border-1.5 flex w-full cursor-pointer items-center justify-between rounded-2xl p-4 text-left transition-all ${
                         selectedModeId === "once"
                           ? "border-[#9A5B90] bg-[#F3E6F0]/40 shadow-xs"
-                          : "border-[#1A150F]/10 hover:border-[#9A5B90]/40"
+                          : "border-ink/10 hover:border-[#9A5B90]/40"
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <div
-                          className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "once" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-[#1A150F]/30"}`}
+                          className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "once" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-ink/30"}`}
                         >
                           {selectedModeId === "once" && (
                             <div className="h-2 w-2 rounded-full bg-white" />
                           )}
                         </div>
                         <div>
-                          <b className="block text-sm font-bold text-[#1A150F]">
+                          <b className="block text-sm font-bold text-ink">
                             One-Time Order
                           </b>
-                          <span className="text-xs text-[#1A150F]/60">
+                          <span className="text-xs text-ink/60">
                             Standard single delivery
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <b className="font-serif text-lg font-bold text-[#1A150F]">
+                        <b className="font-serif text-lg font-bold text-ink">
                           {priceMissing ? "" : `₹${basePrice}`}
                         </b>
                         {!priceMissing && mrpPrice > basePrice && (
-                          <s className="block text-xs text-[#1A150F]/40">
+                          <s className="block text-xs text-ink/40">
                             ₹{mrpPrice}
                           </s>
                         )}
@@ -1584,7 +1584,7 @@ export default function OvyTeenPageClient({
                       >
                         <div className="flex items-center gap-3">
                           <div
-                            className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "cyclesync" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-[#1A150F]/30"}`}
+                            className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "cyclesync" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-ink/30"}`}
                           >
                             {selectedModeId === "cyclesync" && (
                               <div className="h-2 w-2 rounded-full bg-white" />
@@ -1592,14 +1592,14 @@ export default function OvyTeenPageClient({
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
-                              <b className="text-sm font-bold text-[#1A150F]">
+                              <b className="text-sm font-bold text-ink">
                                 Cycle Sync Delivery
                               </b>
-                              <span className="rounded-full bg-[#9A5B90] px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+                              <span className="rounded-full bg-[#9A5B90] px-2 py-0.5 text-[11px] font-bold text-white uppercase">
                                 Save {cycleSyncDiscountPct}%
                               </span>
                             </div>
-                            <span className="text-xs text-[#1A150F]/70">
+                            <span className="text-xs text-ink/70">
                               Arrives 5 days before her period
                             </span>
                           </div>
@@ -1610,7 +1610,7 @@ export default function OvyTeenPageClient({
                               <b className="font-serif text-lg font-bold text-[#7E4D77]">
                                 ₹{Math.round(basePrice * (1 - cycleSyncDiscountPct / 100))}
                               </b>
-                              <s className="block text-xs text-[#1A150F]/40">
+                              <s className="block text-xs text-ink/40">
                                 ₹{basePrice}
                               </s>
                             </>
@@ -1634,11 +1634,11 @@ export default function OvyTeenPageClient({
                                 className={`w-full rounded-xl border bg-white px-3 py-2 text-xs focus:outline-none ${
                                   cycleSchedule?.fieldErrors?.lastPeriodDate
                                     ? "border-rose-400 focus:border-rose-500"
-                                    : "border-[#1A150F]/20 focus:border-[#9A5B90]"
+                                    : "border-ink/20 focus:border-[#9A5B90]"
                                 }`}
                               />
                               {cycleSchedule?.fieldErrors?.lastPeriodDate && (
-                                <p className="mt-1 text-[11px] font-medium text-rose-600">
+                                <p className="mt-1 text-[12px] font-medium text-rose-600">
                                   {cycleSchedule.fieldErrors.lastPeriodDate}
                                 </p>
                               )}
@@ -1657,11 +1657,11 @@ export default function OvyTeenPageClient({
                                 className={`w-full rounded-xl border bg-white px-3 py-2 text-xs focus:outline-none ${
                                   cycleSchedule?.fieldErrors?.cycleLength
                                     ? "border-rose-400 focus:border-rose-500"
-                                    : "border-[#1A150F]/20 focus:border-[#9A5B90]"
+                                    : "border-ink/20 focus:border-[#9A5B90]"
                                 }`}
                               />
                               {cycleSchedule?.fieldErrors?.cycleLength && (
-                                <p className="mt-1 text-[11px] font-medium text-rose-600">
+                                <p className="mt-1 text-[12px] font-medium text-rose-600">
                                   {cycleSchedule.fieldErrors.cycleLength}
                                 </p>
                               )}
@@ -1680,11 +1680,11 @@ export default function OvyTeenPageClient({
                                 className={`w-full rounded-xl border bg-white px-3 py-2 text-xs focus:outline-none ${
                                   cycleSchedule?.fieldErrors?.periodLength
                                     ? "border-rose-400 focus:border-rose-500"
-                                    : "border-[#1A150F]/20 focus:border-[#9A5B90]"
+                                    : "border-ink/20 focus:border-[#9A5B90]"
                                 }`}
                               />
                               {cycleSchedule?.fieldErrors?.periodLength && (
-                                <p className="mt-1 text-[11px] font-medium text-rose-600">
+                                <p className="mt-1 text-[12px] font-medium text-rose-600">
                                   {cycleSchedule.fieldErrors.periodLength}
                                 </p>
                               )}
@@ -1710,13 +1710,13 @@ export default function OvyTeenPageClient({
                           {/* Next 3 Boxes Schedule (Arrival & Charge Dates) */}
                           {cycleSchedule?.valid && (
                             <div className="space-y-2.5 rounded-xl border border-[#9A5B90]/20 bg-white/90 p-3.5 text-xs">
-                              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#1A150F]/10 pb-2">
+                              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-ink/10 pb-2">
                                 <span className="font-bold tracking-wider text-[#7E4D77] uppercase">
                                   Next 3 Boxes Schedule (Arrival &amp; Charge Dates)
                                 </span>
-                                <span className="font-semibold text-[#1A150F]/70">
+                                <span className="font-semibold text-ink/70">
                                   Next Period:{" "}
-                                  <b className="text-[#1A150F]">
+                                  <b className="text-ink">
                                     {formatCycleDate(cycleSchedule.nextPeriod)}
                                   </b>
                                 </span>
@@ -1732,15 +1732,15 @@ export default function OvyTeenPageClient({
                                       <div className="font-bold text-[#7E4D77]">
                                         Box {box.boxNumber}
                                       </div>
-                                      <div className="mt-1 text-[11px] text-[#1A150F]/70">
+                                      <div className="mt-1 text-[12px] text-ink/70">
                                         Arrival:{" "}
-                                        <b className="text-[#1A150F]">
+                                        <b className="text-ink">
                                           {formatCycleDate(box.deliveryDate)}
                                         </b>
                                       </div>
-                                      <div className="text-[11px] text-[#1A150F]/70">
+                                      <div className="text-[12px] text-ink/70">
                                         Charge:{" "}
-                                        <b className="text-[#1A150F]">
+                                        <b className="text-ink">
                                           {formatCycleDate(box.chargeDate)}
                                         </b>
                                       </div>
@@ -1752,7 +1752,7 @@ export default function OvyTeenPageClient({
 
                           {/* Consent Checkbox */}
                           <div className="pt-1">
-                            <label className="flex cursor-pointer items-start gap-2.5 text-xs text-[#1A150F]">
+                            <label className="flex cursor-pointer items-start gap-2.5 text-xs text-ink">
                               <input
                                 type="checkbox"
                                 checked={cycleConsent}
@@ -1764,7 +1764,7 @@ export default function OvyTeenPageClient({
                               </span>
                             </label>
                             {cycleSchedule?.fieldErrors?.consent && (
-                              <p className="mt-1 pl-6 text-[11px] font-medium text-rose-600">
+                              <p className="mt-1 pl-6 text-[12px] font-medium text-rose-600">
                                 {cycleSchedule.fieldErrors.consent}
                               </p>
                             )}
@@ -1780,12 +1780,12 @@ export default function OvyTeenPageClient({
                       className={`border-1.5 flex w-full cursor-pointer items-center justify-between rounded-2xl p-4 text-left transition-all ${
                         selectedModeId === "sub1"
                           ? "border-[#9A5B90] bg-[#F3E6F0]/40 shadow-xs"
-                          : "border-[#1A150F]/10 hover:border-[#9A5B90]/40"
+                          : "border-ink/10 hover:border-[#9A5B90]/40"
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <div
-                          className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "sub1" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-[#1A150F]/30"}`}
+                          className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "sub1" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-ink/30"}`}
                         >
                           {selectedModeId === "sub1" && (
                             <div className="h-2 w-2 rounded-full bg-white" />
@@ -1793,20 +1793,20 @@ export default function OvyTeenPageClient({
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <b className="text-sm font-bold text-[#1A150F]">
+                            <b className="text-sm font-bold text-ink">
                               Subscribe Monthly
                             </b>
-                            <span className="rounded-full bg-[#15803D] px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+                            <span className="rounded-full bg-[#15803D] px-2 py-0.5 text-[11px] font-bold text-white uppercase">
                               Save {monthlyDiscountPct}%
                             </span>
                           </div>
-                          <span className="text-xs text-[#1A150F]/60">
+                          <span className="text-xs text-ink/60">
                             Auto-restock every 30 days · Cancel anytime
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <b className="font-serif text-lg font-bold text-[#1A150F]">
+                        <b className="font-serif text-lg font-bold text-ink">
                           {priceMissing
                             ? ""
                             : `₹${Math.round(basePrice * (1 - monthlyDiscountPct / 100))}`}
@@ -1820,12 +1820,12 @@ export default function OvyTeenPageClient({
                       className={`border-1.5 flex w-full cursor-pointer items-center justify-between rounded-2xl p-4 text-left transition-all ${
                         selectedModeId === "sub2"
                           ? "border-[#9A5B90] bg-[#F3E6F0]/40 shadow-xs"
-                          : "border-[#1A150F]/10 hover:border-[#9A5B90]/40"
+                          : "border-ink/10 hover:border-[#9A5B90]/40"
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <div
-                          className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "sub2" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-[#1A150F]/30"}`}
+                          className={`grid h-5 w-5 place-items-center rounded-full border-2 ${selectedModeId === "sub2" ? "border-[#9A5B90] bg-[#9A5B90]" : "border-ink/30"}`}
                         >
                           {selectedModeId === "sub2" && (
                             <div className="h-2 w-2 rounded-full bg-white" />
@@ -1833,20 +1833,20 @@ export default function OvyTeenPageClient({
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <b className="text-sm font-bold text-[#1A150F]">
+                            <b className="text-sm font-bold text-ink">
                               Subscribe Every 2 Months
                             </b>
-                            <span className="rounded-full bg-[#15803D] px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+                            <span className="rounded-full bg-[#15803D] px-2 py-0.5 text-[11px] font-bold text-white uppercase">
                               Save {biMonthlyDiscountPct}%
                             </span>
                           </div>
-                          <span className="text-xs text-[#1A150F]/60">
+                          <span className="text-xs text-ink/60">
                             Auto-restock every 60 days · Cancel anytime
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <b className="font-serif text-lg font-bold text-[#1A150F]">
+                        <b className="font-serif text-lg font-bold text-ink">
                           {priceMissing
                             ? ""
                             : `₹${Math.round(basePrice * (1 - biMonthlyDiscountPct / 100))}`}
@@ -1879,9 +1879,9 @@ export default function OvyTeenPageClient({
                             value={giftNote}
                             onChange={(e) => setGiftNote(e.target.value)}
                             placeholder="Write a sweet encouragement message for her first period..."
-                            className="w-full rounded-xl border border-[#1A150F]/20 bg-white p-2.5 text-xs focus:border-[#9A5B90] focus:outline-none"
+                            className="w-full rounded-xl border border-ink/20 bg-white p-2.5 text-xs focus:border-[#9A5B90] focus:outline-none"
                           />
-                          <span className="mt-1 block text-right text-[10px] text-[#1A150F]/50">
+                          <span className="mt-1 block text-right text-[12px] text-ink/50">
                             {giftNote.length}/200 characters
                           </span>
                         </div>
@@ -1890,9 +1890,9 @@ export default function OvyTeenPageClient({
                   )}
 
                   {/* Active Price & Subscriber Savings Summary */}
-                  <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-[#1A150F]/10 bg-[#FAF9F5] px-4 py-3">
+                  <div className="mt-6 flex items-center justify-between gap-3 rounded-2xl border border-ink/10 bg-[#FAF9F5] px-4 py-3">
                     <div>
-                      <span className="block text-[10px] font-bold tracking-wider text-[#1A150F]/60 uppercase">
+                      <span className="block text-[11px] font-bold tracking-wider text-ink/60 uppercase">
                         {selectedModeId === "once"
                           ? "One-Time Price"
                           : selectedModeId === "cyclesync"
@@ -1900,13 +1900,13 @@ export default function OvyTeenPageClient({
                             : "Subscriber Price"}
                       </span>
                       <div className="flex items-baseline gap-2">
-                        <b className="font-serif text-2xl font-bold text-[#1A150F]">
+                        <b className="font-serif text-2xl font-bold text-ink">
                           {priceMissing ? "Price unavailable" : `₹${totalPrice}`}
                         </b>
                         {!priceMissing && (selectedModeId !== "once"
                           ? basePrice * quantity
                           : totalMrp) > totalPrice && (
-                          <s className="text-xs text-[#1A150F]/40">
+                          <s className="text-xs text-ink/40">
                             ₹
                             {selectedModeId !== "once"
                               ? basePrice * quantity
@@ -1924,23 +1924,23 @@ export default function OvyTeenPageClient({
                   </div>
 
                   {/* Quantity Selector & Pricing Total */}
-                  <div className="mt-4 flex items-center justify-between gap-4 border-t border-[#1A150F]/10 pt-4">
+                  <div className="mt-4 flex items-center justify-between gap-4 border-t border-ink/10 pt-4">
                     <div className="flex flex-col">
-                      <span className="text-xs font-bold tracking-wider text-[#1A150F]/60 uppercase">
+                      <span className="text-xs font-bold tracking-wider text-ink/60 uppercase">
                         Quantity
                       </span>
-                      <span className="text-[11px] font-medium text-[#9A5B90]">
+                      <span className="text-[12px] font-medium text-[#9A5B90]">
                         Maximum {maxQuantity} per order
                       </span>
                     </div>
-                    <div className="flex items-center gap-3 rounded-full border border-[#1A150F]/10 bg-[#FAF9F5] px-3 py-1">
+                    <div className="flex items-center gap-3 rounded-full border border-ink/10 bg-[#FAF9F5] px-3 py-1">
                       <button
                         type="button"
                         onClick={() =>
                           setQuantity((prev) => Math.max(1, prev - 1))
                         }
                         disabled={quantity <= 1}
-                        className="grid h-6 w-6 place-items-center rounded-full text-base font-bold text-[#1A150F]/70 hover:text-[#9A5B90] disabled:opacity-30 cursor-pointer"
+                        className="grid h-6 w-6 place-items-center rounded-full text-base font-bold text-ink/70 hover:text-[#9A5B90] disabled:opacity-30 cursor-pointer"
                       >
                         -
                       </button>
@@ -1957,7 +1957,7 @@ export default function OvyTeenPageClient({
                           setQuantity((prev) => prev + 1);
                         }}
                         disabled={quantity >= maxQuantity}
-                        className="grid h-6 w-6 place-items-center rounded-full text-base font-bold text-[#1A150F]/70 hover:text-[#9A5B90] disabled:opacity-30 cursor-pointer"
+                        className="grid h-6 w-6 place-items-center rounded-full text-base font-bold text-ink/70 hover:text-[#9A5B90] disabled:opacity-30 cursor-pointer"
                       >
                         +
                       </button>
@@ -1970,7 +1970,7 @@ export default function OvyTeenPageClient({
                       <button
                         type="button"
                         disabled
-                        className="flex w-full items-center justify-center gap-2 rounded-full bg-gray-200 px-6 py-3.5 text-sm font-bold text-gray-500 shadow-none cursor-not-allowed"
+                        className="flex w-full items-center justify-center gap-2 rounded-full bg-gray-200 px-6 py-3.5 text-sm font-bold text-ink-muted shadow-none cursor-not-allowed"
                       >
                         Out of stock
                       </button>
@@ -2015,7 +2015,7 @@ export default function OvyTeenPageClient({
               <OffersForYou brand="teen" className="mt-4" />
 
               {/* Trust Badges */}
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-4 border-t border-[#1A150F]/5 pt-4 text-[11px] font-medium text-[#1A150F]/70">
+              <div className="mt-5 flex flex-wrap items-center justify-center gap-4 border-t border-ink/5 pt-4 text-[12px] font-medium text-ink/70">
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="h-4 w-4 text-[#9A5B90]" />
                   Rash-Free Organic Top Sheet
@@ -2028,7 +2028,7 @@ export default function OvyTeenPageClient({
             </div>
 
             {/* Pincode Delivery Checker */}
-            <div className="rounded-2xl border border-[#1A150F]/10 bg-white p-4 shadow-xs">
+            <div className="rounded-2xl border border-ink/10 bg-white p-4 shadow-xs">
               <form
                 onSubmit={handleCheckPincode}
                 className="flex items-center gap-2"
@@ -2044,7 +2044,7 @@ export default function OvyTeenPageClient({
                     setPincode(e.target.value.replace(/\D/g, ""))
                   }
                   placeholder="Enter 6-digit delivery PIN code"
-                  className="flex-1 bg-transparent text-xs text-[#1A150F] focus:outline-none sm:text-sm"
+                  className="flex-1 bg-transparent text-xs text-ink focus:outline-none sm:text-sm"
                 />
                 <button
                   type="submit"
@@ -2076,25 +2076,25 @@ export default function OvyTeenPageClient({
             <span className="mb-3 inline-block rounded-full bg-[#F3E6F0] px-3.5 py-1 text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase">
               CYCLE TRACKER
             </span>
-            <h2 className="font-serif text-3xl font-bold text-[#1A150F] sm:text-4xl lg:text-5xl">
+            <h2 className="font-serif text-3xl font-bold text-ink sm:text-4xl lg:text-5xl">
               When is my next period?
             </h2>
-            <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
+            <p className="mt-3 max-w-2xl text-xs leading-relaxed text-ink/70 sm:text-sm">
               Early cycles are often irregular, and that is completely normal.
               Pop in your last period and we will estimate a window (not an
               exact day) so you can stay one step ahead.
             </p>
 
-            <div className="mt-8 rounded-[28px] border border-[#1A150F]/10 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
+            <div className="mt-8 rounded-[28px] border border-ink/10 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
               <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
                 {/* Left Form Column */}
                 <div className="space-y-6 lg:col-span-6">
                   {/* Date Input */}
                   <div>
-                    <label className="mb-2 block text-xs font-bold tracking-wider text-[#1A150F]/70 uppercase">
+                    <label className="mb-2 block text-xs font-bold tracking-wider text-ink/70 uppercase">
                       My last period started
                     </label>
-                    <div className="relative flex items-center rounded-2xl border border-[#1A150F]/15 bg-[#F9F7F4] px-4 py-3.5 transition-all focus-within:border-[#9A5B90] focus-within:ring-2 focus-within:ring-[#9A5B90]/20">
+                    <div className="relative flex items-center rounded-2xl border border-ink/15 bg-[#F9F7F4] px-4 py-3.5 transition-all focus-within:border-[#9A5B90] focus-within:ring-2 focus-within:ring-[#9A5B90]/20">
                       <input
                         type="date"
                         max={todayString}
@@ -2107,7 +2107,7 @@ export default function OvyTeenPageClient({
                           }
                           setTrackerLastDate(val);
                         }}
-                        className="w-full cursor-pointer bg-transparent text-sm font-semibold text-[#1A150F] focus:outline-none sm:text-base"
+                        className="w-full cursor-pointer bg-transparent text-sm font-semibold text-ink focus:outline-none sm:text-base"
                       />
                       <Calendar className="pointer-events-none absolute right-4 h-5 w-5 shrink-0 text-[#9A5B90]" />
                     </div>
@@ -2116,7 +2116,7 @@ export default function OvyTeenPageClient({
                   {/* Cycle Length Slider */}
                   <div>
                     <div className="mb-2 flex items-baseline justify-between">
-                      <label className="text-xs font-bold tracking-wider text-[#1A150F]/70 uppercase">
+                      <label className="text-xs font-bold tracking-wider text-ink/70 uppercase">
                         My cycle is usually
                       </label>
                       <span className="font-serif text-2xl font-bold text-[#7E4D77]">
@@ -2133,7 +2133,7 @@ export default function OvyTeenPageClient({
                       }
                       className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-[#EBE5DF] accent-[#9A5B90]"
                     />
-                    <p className="mt-1.5 text-xs leading-normal text-[#1A150F]/60">
+                    <p className="mt-1.5 text-xs leading-normal text-ink/60">
                       Not sure? Leave it at 28. You can update it as you learn
                       your pattern.
                     </p>
@@ -2142,7 +2142,7 @@ export default function OvyTeenPageClient({
                   {/* Period Duration Slider */}
                   <div>
                     <div className="mb-2 flex items-baseline justify-between">
-                      <label className="text-xs font-bold tracking-wider text-[#1A150F]/70 uppercase">
+                      <label className="text-xs font-bold tracking-wider text-ink/70 uppercase">
                         My period usually lasts
                       </label>
                       <span className="font-serif text-2xl font-bold text-[#7E4D77]">
@@ -2165,8 +2165,8 @@ export default function OvyTeenPageClient({
                 {/* Right Results Column */}
                 <div className="lg:col-span-6">
                   {!calculatedCycleWindows ? (
-                    <div className="flex h-full min-h-[220px] items-center justify-center rounded-2xl border border-dashed border-[#1A150F]/15 bg-[#FAF8F5] p-8 text-center">
-                      <p className="max-w-xs text-xs leading-relaxed font-medium text-[#1A150F]/50 sm:text-sm">
+                    <div className="flex h-full min-h-[220px] items-center justify-center rounded-2xl border border-dashed border-ink/15 bg-[#FAF8F5] p-8 text-center">
+                      <p className="max-w-xs text-xs leading-relaxed font-medium text-ink/50 sm:text-sm">
                         Add your last period date to see your next three
                         estimated windows.
                       </p>
@@ -2180,14 +2180,14 @@ export default function OvyTeenPageClient({
                             <Heart className="h-5 w-5" />
                           </div>
                           <div>
-                            <h4 className="font-serif text-base font-bold text-[#1A150F] sm:text-lg">
+                            <h4 className="font-serif text-base font-bold text-ink sm:text-lg">
                               {calculatedCycleWindows.daysUntilNext > 0
                                 ? `Next period in ~${calculatedCycleWindows.daysUntilNext} days`
                                 : calculatedCycleWindows.daysUntilNext === 0
                                   ? "Period expected today"
                                   : "Cycle window in progress"}
                             </h4>
-                            <p className="text-xs text-[#1A150F]/70">
+                            <p className="text-xs text-ink/70">
                               Estimated Window 1:{" "}
                               {calculatedCycleWindows.windows[0].start.toLocaleDateString(
                                 "en-IN",
@@ -2225,13 +2225,13 @@ export default function OvyTeenPageClient({
                             } ${
                               idx === 0
                                 ? "border-[#9A5B90]/40 bg-[#FAF1F7] shadow-xs"
-                                : "border-[#1A150F]/10 bg-[#F9F7F4]"
+                                : "border-ink/10 bg-[#F9F7F4]"
                             }`}
                           >
-                            <span className="rounded-md bg-white px-2 py-0.5 text-[9px] font-bold tracking-wider text-[#7E4D77] uppercase sm:text-[10px]">
+                            <span className="rounded-md bg-white px-2 py-0.5 text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase sm:text-[11px]">
                               Window {win.windowNumber}
                             </span>
-                            <h5 className="mt-1.5 font-serif text-xs font-bold text-[#1A150F] sm:mt-2 sm:text-sm">
+                            <h5 className="mt-1.5 font-serif text-xs font-bold text-ink sm:mt-2 sm:text-sm">
                               {win.start.toLocaleDateString("en-IN", {
                                 day: "numeric",
                                 month: "short",
@@ -2242,10 +2242,10 @@ export default function OvyTeenPageClient({
                                 month: "short",
                               })}
                             </h5>
-                            <p className="mt-0.5 text-[10px] text-[#1A150F]/60 sm:text-[11px]">
+                            <p className="mt-0.5 text-[12px] text-ink/60 sm:text-[12px]">
                               {win.start.getFullYear()}
                             </p>
-                            <div className="mt-2 border-t border-[#9A5B90]/15 pt-1.5 text-[9px] font-medium text-[#7E4D77] sm:text-[10px]">
+                            <div className="mt-2 border-t border-[#9A5B90]/15 pt-1.5 text-[12px] font-medium text-[#7E4D77] sm:text-[12px]">
                               Fertile:{" "}
                               {win.fertileStart.toLocaleDateString("en-IN", {
                                 day: "numeric",
@@ -2298,7 +2298,7 @@ export default function OvyTeenPageClient({
 
         {/* Impact Section */}
         <section className="mt-16 space-y-6">
-          <div className="grid grid-cols-1 items-center overflow-hidden rounded-3xl border border-[#1A150F]/10 bg-white shadow-sm md:grid-cols-12">
+          <div className="grid grid-cols-1 items-center overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-sm md:grid-cols-12">
             <div className="relative aspect-video bg-[#F3E6F0] md:col-span-5 md:aspect-auto md:h-full">
               <Image
                 src="/ovy/m2-school.jpg"
@@ -2311,10 +2311,10 @@ export default function OvyTeenPageClient({
               <span className="rounded-full bg-[#F3E6F0] px-3 py-1 text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase">
                 OUR PROMISE
               </span>
-              <h3 className="mt-3 font-serif text-2xl font-bold text-[#1A150F]">
+              <h3 className="mt-3 font-serif text-2xl font-bold text-ink">
                 Every box funds organic period care for schoolgirls across India
               </h3>
-              <p className="mt-2 text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
+              <p className="mt-2 text-xs leading-relaxed text-ink/70 sm:text-sm">
                 Period dignity starts early. We partner with school health
                 programs to ensure young girls get access to safe, toxin-free,
                 rash-free organic sanitary pads without shame or discomfort.
@@ -2324,7 +2324,7 @@ export default function OvyTeenPageClient({
                   <b className="font-serif text-2xl font-bold text-[#7E4D77]">
                     100%
                   </b>
-                  <span className="block text-[11px] text-[#1A150F]/60">
+                  <span className="block text-[12px] text-ink/60">
                     Organic Cotton Top
                   </span>
                 </div>
@@ -2332,7 +2332,7 @@ export default function OvyTeenPageClient({
                   <b className="font-serif text-2xl font-bold text-[#7E4D77]">
                     50k+
                   </b>
-                  <span className="block text-[11px] text-[#1A150F]/60">
+                  <span className="block text-[12px] text-ink/60">
                     Teen Girls Supported
                   </span>
                 </div>
@@ -2340,7 +2340,7 @@ export default function OvyTeenPageClient({
                   <b className="font-serif text-2xl font-bold text-[#7E4D77]">
                     0%
                   </b>
-                  <span className="block text-[11px] text-[#1A150F]/60">
+                  <span className="block text-[12px] text-ink/60">
                     Toxins & Harsh Chemicals
                   </span>
                 </div>
@@ -2354,10 +2354,10 @@ export default function OvyTeenPageClient({
           <div className="relative flex flex-col items-center justify-between gap-8 overflow-hidden rounded-[28px] border border-[#9A5B90]/15 bg-gradient-to-r from-[#FAF1F7] via-[#FAF9F5] to-[#EBF6F6] p-6 shadow-xs sm:p-10 md:flex-row">
             {/* Left Content */}
             <div className="z-10 max-w-xl text-left">
-              <h3 className="font-serif text-3xl leading-tight font-bold tracking-tight text-[#1A150F] sm:text-4xl lg:text-5xl">
+              <h3 className="font-serif text-3xl leading-tight font-bold tracking-tight text-ink sm:text-4xl lg:text-5xl">
                 New to all this? You have got this.
               </h3>
-              <p className="mt-3 mb-6 max-w-lg text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
+              <p className="mt-3 mb-6 max-w-lg text-xs leading-relaxed text-ink/70 sm:text-sm">
                 Periods are normal, and figuring them out should not be scary.
                 Here is everything a first-timer actually wants to know, plus a
                 kit that has your back at school, at practice, and everywhere in
@@ -2405,7 +2405,7 @@ export default function OvyTeenPageClient({
               </div>
 
               {/* Badge 4: silent wrapper */}
-              <div className="absolute right-2 bottom-2 -rotate-6 transform rounded-2xl border border-white/20 bg-[#E9C46A] px-4 py-2 text-xs font-bold text-[#1A150F] shadow-lg sm:right-4">
+              <div className="absolute right-2 bottom-2 -rotate-6 transform rounded-2xl border border-white/20 bg-[#E9C46A] px-4 py-2 text-xs font-bold text-ink shadow-lg sm:right-4">
                 silent wrapper
               </div>
             </div>
@@ -2434,7 +2434,7 @@ export default function OvyTeenPageClient({
                 <h4 className="mb-1.5 font-serif text-sm font-bold text-white sm:mb-2 sm:text-base">
                   Start the conversation
                 </h4>
-                <p className="text-[11px] leading-relaxed text-white/75 sm:text-xs">
+                <p className="text-[12px] leading-relaxed text-white/75 sm:text-xs">
                   Keep it normal and matter-of-fact. Tell her it happens to
                   everyone, there is no rush to have it all figured out, and she
                   can always come to you with questions.
@@ -2445,7 +2445,7 @@ export default function OvyTeenPageClient({
                 <h4 className="mb-1.5 font-serif text-sm font-bold text-white sm:mb-2 sm:text-base">
                   What to buy first
                 </h4>
-                <p className="text-[11px] leading-relaxed text-white/75 sm:text-xs">
+                <p className="text-[12px] leading-relaxed text-white/75 sm:text-xs">
                   A mix of sizes beats guessing. The Starter Pack covers light,
                   heavy and overnight in one box, so she is ready whatever her
                   first cycle does.
@@ -2456,7 +2456,7 @@ export default function OvyTeenPageClient({
                 <h4 className="mb-1.5 font-serif text-sm font-bold text-white sm:mb-2 sm:text-base">
                   Reassure her
                 </h4>
-                <p className="text-[11px] leading-relaxed text-white/75 sm:text-xs">
+                <p className="text-[12px] leading-relaxed text-white/75 sm:text-xs">
                   Remind her that irregular early cycles, cramps and changing
                   flow are all normal. Pack a spare in her bag and let her know
                   leaks happen to everyone.
@@ -2485,7 +2485,7 @@ export default function OvyTeenPageClient({
 
         {/* FAQs Section */}
         {/* <section className="mt-16">
-          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A150F] text-center mb-8">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-ink text-center mb-8">
             Frequently Asked Questions
           </h2>
           <div className="max-w-3xl mx-auto space-y-3">
@@ -2507,16 +2507,16 @@ export default function OvyTeenPageClient({
                 a: "Cycle Sync times each delivery to arrive about 5 days before her period, based on the cycle dates you specify. You save 15% off and can pause or cancel anytime.",
               },
             ].map((faq, i) => (
-              <div key={i} className="border border-[#1A150F]/10 rounded-2xl overflow-hidden bg-white">
+              <div key={i} className="border border-ink/10 rounded-2xl overflow-hidden bg-white">
                 <button
                   onClick={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
-                  className="w-full p-4 text-left font-bold text-sm text-[#1A150F] flex items-center justify-between gap-4 cursor-pointer hover:bg-[#F3E6F0]/30 transition-colors"
+                  className="w-full p-4 text-left font-bold text-sm text-ink flex items-center justify-between gap-4 cursor-pointer hover:bg-[#F3E6F0]/30 transition-colors"
                 >
                   <span>{faq.q}</span>
                   <ChevronDown className={`w-4 h-4 text-[#7E4D77] transition-transform ${openFaqIndex === i ? "rotate-180" : ""}`} />
                 </button>
                 {openFaqIndex === i && (
-                  <div className="p-4 pt-0 text-xs sm:text-sm text-[#1A150F]/70 leading-relaxed border-t border-[#1A150F]/5">
+                  <div className="p-4 pt-0 text-xs sm:text-sm text-ink/70 leading-relaxed border-t border-ink/5">
                     {faq.a}
                   </div>
                 )}
@@ -2526,12 +2526,12 @@ export default function OvyTeenPageClient({
         </section> */}
 
         {/* COMPLETE YOUR ROUTINE / YOU MAY ALSO LIKE */}
-        <section className="mt-16 border-t border-[#1A150F]/10 pt-12">
+        <section className="mt-16 border-t border-ink/10 pt-12">
           <div className="mb-8">
             <span className="text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
               COMPLETE YOUR ROUTINE
             </span>
-            <h2 className="mt-1 font-serif text-3xl font-bold text-[#1A150F] sm:text-4xl">
+            <h2 className="mt-1 font-serif text-3xl font-bold text-ink sm:text-4xl">
               You may also like
             </h2>
           </div>
@@ -2579,7 +2579,7 @@ export default function OvyTeenPageClient({
               return (
                 <div
                   key={config.slug}
-                  className="flex flex-col justify-between rounded-2xl border border-[#1A150F]/10 bg-white p-3 shadow-xs transition-all hover:-translate-y-1 hover:shadow-md sm:rounded-3xl sm:p-5"
+                  className="flex flex-col justify-between rounded-2xl border border-ink/10 bg-white p-3 shadow-xs transition-all hover:-translate-y-1 hover:shadow-md sm:rounded-3xl sm:p-5"
                 >
                   <div>
                     <Link
@@ -2598,17 +2598,17 @@ export default function OvyTeenPageClient({
                       </div>
                     </Link>
 
-                    <span className="rounded-full bg-[#F3E6F0] px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-[#7E4D77] uppercase">
+                    <span className="rounded-full bg-[#F3E6F0] px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-[#7E4D77] uppercase">
                       {config.tag}
                     </span>
 
                     <Link href={`/product-detail/${config.slug}`}>
-                      <h3 className="mt-2 font-serif text-base leading-tight font-bold text-[#1A150F] transition-colors hover:text-[#7E4D77]">
+                      <h3 className="mt-2 font-serif text-base leading-tight font-bold text-ink transition-colors hover:text-[#7E4D77]">
                         {title}
                       </h3>
                     </Link>
 
-                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#1A150F]/60">
+                    <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink/60">
                       {desc}
                     </p>
 
@@ -2623,7 +2623,7 @@ export default function OvyTeenPageClient({
                               [config.slug]: Number(e.target.value),
                             }))
                           }
-                          className="w-full cursor-pointer rounded-xl border border-[#1A150F]/15 bg-[#FAF9F5] px-2.5 py-1.5 text-xs font-semibold text-[#1A150F] focus:border-[#9A5B90] focus:outline-none"
+                          className="w-full cursor-pointer rounded-xl border border-ink/15 bg-[#FAF9F5] px-2.5 py-1.5 text-xs font-semibold text-ink focus:border-[#9A5B90] focus:outline-none"
                         >
                           {variants.map((v: any, vIdx: number) => (
                             <option key={v.id || vIdx} value={vIdx}>
@@ -2636,12 +2636,12 @@ export default function OvyTeenPageClient({
                     )}
                   </div>
 
-                  <div className="mt-4 border-t border-[#1A150F]/5 pt-3">
+                  <div className="mt-4 border-t border-ink/5 pt-3">
                     {config.slug?.includes("ovy-panty") || activeVariant?.isInStock === false ? (
                       <button
                         type="button"
                         disabled
-                        className="w-full cursor-not-allowed rounded-full bg-gray-200 py-2.5 text-center text-xs font-bold text-gray-500 shadow-none"
+                        className="w-full cursor-not-allowed rounded-full bg-gray-200 py-2.5 text-center text-xs font-bold text-ink-muted shadow-none"
                       >
                         Out of stock
                       </button>
@@ -2691,10 +2691,10 @@ export default function OvyTeenPageClient({
               <span className="text-[11px] font-extrabold tracking-widest text-[#7E4D77] uppercase">
                 NEVER MISS OUT
               </span>
-              <h3 className="font-serif text-3xl font-bold tracking-tight text-[#1A150F] sm:text-4xl">
+              <h3 className="font-serif text-3xl font-bold tracking-tight text-ink sm:text-4xl">
                 Restock &amp; new-drop alerts
               </h3>
-              <p className="pt-1 text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
+              <p className="pt-1 text-xs leading-relaxed text-ink/70 sm:text-sm">
                 Be first to know when a kit restocks or a new Ovy Teen drop
                 lands. No spam, just the useful stuff.
               </p>
@@ -2713,7 +2713,7 @@ export default function OvyTeenPageClient({
                 type="email"
                 required
                 placeholder="you@example.com"
-                className="w-full rounded-2xl border border-[#1A150F]/15 bg-white px-5 py-3.5 text-xs text-[#1A150F] shadow-2xs placeholder:text-[#1A150F]/40 focus:border-[#9A5B90] focus:outline-none sm:text-sm"
+                className="w-full rounded-2xl border border-ink/15 bg-white px-5 py-3.5 text-xs text-ink shadow-2xs placeholder:text-ink/40 focus:border-[#9A5B90] focus:outline-none sm:text-sm"
               />
               <button
                 type="submit"
@@ -2729,7 +2729,7 @@ export default function OvyTeenPageClient({
         <OvyPromos onOpenQuiz={openTeenQuiz} />
 
         {/* Product Reviews Section */}
-        <section className="mt-16 border-t border-[#1A150F]/10 pt-12">
+        <section className="mt-16 border-t border-ink/10 pt-12">
           <ProductReviews
             reviews={reviewWithMedia || []}
             product={product}
@@ -2821,7 +2821,7 @@ export default function OvyTeenPageClient({
           <div className="relative z-10 w-full max-w-md rounded-3xl bg-white p-6 shadow-2xl">
             <button
               onClick={() => setActiveTopicModal(null)}
-              className="absolute top-4 right-4 grid h-8 w-8 place-items-center rounded-full bg-[#FAF9F5] text-[#1A150F]/60 hover:text-[#1A150F]"
+              className="absolute top-4 right-4 grid h-8 w-8 place-items-center rounded-full bg-[#FAF9F5] text-ink/60 hover:text-ink"
             >
               <X className="h-4 w-4" />
             </button>
@@ -2832,7 +2832,7 @@ export default function OvyTeenPageClient({
                   ? "How to Use a Pad"
                   : "Cycle & Energy Guide"}
             </h3>
-            <p className="text-xs leading-relaxed text-[#1A150F]/80 sm:text-sm">
+            <p className="text-xs leading-relaxed text-ink/80 sm:text-sm">
               {activeTopicModal === "101"
                 ? "First periods usually start between ages 10 and 15. Flow can be light or irregular at first. That is 100% normal. Having a starter pack in your school bag ensures you are always prepared!"
                 : activeTopicModal === "use"
@@ -2846,23 +2846,23 @@ export default function OvyTeenPageClient({
       {/* Mobile Sticky Buy Bar */}
       <div
         id="pdp-sticky-buy-bar"
-        className={`fixed right-0 bottom-[56px] md:bottom-0 left-0 z-40 flex items-center justify-between gap-3 border-t border-[#1A150F]/10 bg-white/95 p-3 shadow-lg backdrop-blur-md transition-transform duration-300 lg:hidden ${
+        className={`fixed right-0 bottom-[56px] md:bottom-0 left-0 z-40 flex items-center justify-between gap-3 border-t border-ink/10 bg-white/95 p-3 shadow-lg backdrop-blur-md transition-transform duration-300 lg:hidden ${
           showStickyBar ? "translate-y-0 pointer-events-auto pdp-sticky-active" : "translate-y-[115%] pointer-events-none"
         }`}
       >
         {activeKit.isComingSoon ? (
           <div className="flex w-full items-center justify-between">
             <div>
-              <span className="block text-[10px] font-bold text-[#7E4D77] uppercase">
+              <span className="block text-[11px] font-bold text-[#7E4D77] uppercase">
                 {activeKit.label}
               </span>
-              <b className="font-serif text-sm font-bold text-[#1A150F]">
+              <b className="font-serif text-sm font-bold text-ink">
                 Coming Soon
               </b>
             </div>
             <button
               disabled
-              className="cursor-not-allowed rounded-full bg-gray-200 px-5 py-2 text-xs font-bold text-gray-600"
+              className="cursor-not-allowed rounded-full bg-gray-200 px-5 py-2 text-xs font-bold text-ink-muted"
             >
               Coming Soon
             </button>
@@ -2870,14 +2870,14 @@ export default function OvyTeenPageClient({
         ) : (
           <>
             <div>
-              <span className="block text-[10px] font-bold text-[#7E4D77] uppercase">
+              <span className="block text-[11px] font-bold text-[#7E4D77] uppercase">
                 {activeKit.label}
               </span>
-              <b className="font-serif text-lg font-bold text-[#1A150F]">
+              <b className="font-serif text-lg font-bold text-ink">
                 {priceMissing ? "" : `₹${totalPrice}`}
               </b>
               {selectedModeId !== "once" && (
-                <span className="block text-[10px] font-semibold text-[#9A5B90]">
+                <span className="block text-[12px] font-semibold text-[#9A5B90]">
                   {selectedModeId === "cyclesync" ? "Cycle Sync Delivery" : "Subscription Plan"}
                 </span>
               )}
@@ -2886,7 +2886,7 @@ export default function OvyTeenPageClient({
               {isOutOfStock ? (
                 <button
                   disabled
-                  className="cursor-not-allowed rounded-full bg-gray-200 px-4 py-2 text-xs font-bold text-gray-500 shadow-none"
+                  className="cursor-not-allowed rounded-full bg-gray-200 px-4 py-2 text-xs font-bold text-ink-muted shadow-none"
                 >
                   Out of stock
                 </button>

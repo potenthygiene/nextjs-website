@@ -41,18 +41,18 @@ const Page = () => {
             <Heart className="h-3.5 w-3.5" /> Find what I need
           </span>
           <h1 className="mt-2 font-serif text-2xl font-bold text-[var(--quiz-ink)] sm:text-3xl">Four questions, one honest match</h1>
-          <p className="mt-1.5 text-sm text-gray-600">
+          <p className="mt-1.5 text-sm text-ink-muted">
             About 30 seconds. We match Ovy products and sizes to your flow, comfort and skin.
           </p>
         </div>
 
         {flow.done ? (
-          <p className="py-10 text-center text-sm font-medium text-gray-600">Working out your picks...</p>
+          <p className="py-10 text-center text-sm font-medium text-ink-muted">Working out your picks...</p>
         ) : (
           <QuizSteps flow={flow} columns={2} />
         )}
 
-        <p className="mt-6 text-center text-xs text-gray-500">
+        <p className="mt-6 text-center text-xs text-ink-muted">
           Your answers stay on this device. We use them only to suggest products.
         </p>
       </div>

@@ -20,7 +20,7 @@ export default function WhileYoureHereSection({
 }: WhileYoureHereProps) {
   const isLooway = brandTheme === "looway";
 
-  const textColor = isLooway ? "text-[#5A0E30]" : "text-[#1A150F]";
+  const textColor = isLooway ? "text-[#5A0E30]" : "text-ink";
   const eyebrowColor = isLooway ? "text-[#b51e60]" : "text-[#7E4D77]";
   const accentColor = isLooway ? "text-[#C21E63]" : "text-[#9A5B90]";
   const iconBg = isLooway ? "bg-[#FDEEF4] text-[#C21E63]" : "bg-[#FBF1FB] text-[#7E4D77]";
@@ -34,7 +34,7 @@ export default function WhileYoureHereSection({
           <span className={`text-[11px] font-extrabold uppercase tracking-widest block mb-2 ${eyebrowColor}`}>
             MORE FROM POTENT HYGIENE
           </span>
-          <h2 className={`font-serif text-3xl sm:text-4xl font-extrabold ${textColor}`}>
+          <h2 className={`font-serif text-3xl sm:text-4xl font-bold ${textColor}`}>
             While you&apos;re here
           </h2>
         </div>
@@ -90,7 +90,7 @@ export default function WhileYoureHereSection({
             className={`group relative flex w-full cursor-pointer items-center justify-between gap-4 rounded-3xl border ${pinkCardBg} p-5 text-left shadow-2xs transition-all duration-200 hover:-translate-y-0.5 hover:border-[#C21E63] hover:shadow-md sm:col-span-2 lg:col-span-1`}
           >
             {/* Free Badge */}
-            <span className="absolute top-4 right-4 rounded-full bg-[#C21E63] px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-white tracking-wider shadow-2xs">
+            <span className="absolute top-4 right-4 rounded-full bg-[#C21E63] px-2.5 py-0.5 text-[11px] font-extrabold uppercase text-white tracking-wider shadow-2xs">
               Free
             </span>
 

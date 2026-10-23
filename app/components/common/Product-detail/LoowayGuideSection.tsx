@@ -457,24 +457,24 @@ export default function LoowayGuideSection() {
   };
 
   return (
-    <section id="watch-dont-read" className="w-full bg-[#FBF8F1] py-8 sm:py-16 lg:py-20 text-[#17271E]">
+    <section id="watch-dont-read" className="w-full bg-[#FBF8F1] py-8 sm:py-16 lg:py-20 text-ink">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
         <div className="max-w-3xl">
-          <span className="text-[10.5px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
+          <span className="text-[11px] sm:text-[11px] font-extrabold tracking-widest text-[#0E5C3A] uppercase">
             WATCH, DON&apos;T READ
           </span>
-          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#0A4A2E]">
+          <h2 className="mt-1.5 sm:mt-2 font-serif text-2xl sm:text-4xl lg:text-5xl font-bold text-ink">
             Step inside the Looway guide
           </h2>
-          <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-[#17271E]/75 font-normal max-w-2xl">
+          <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-ink-muted font-normal max-w-2xl">
             Quick, tappable stories: how to use it, how to bin it, and every kind of journey it saves. Tap a circle to enter, then tap or swipe through.
           </p>
         </div>
 
         {/* Got a Question Box */}
         <div className="mt-4 sm:mt-6 rounded-2xl sm:rounded-3xl border border-[#E4DED0] bg-white/90 p-4 sm:p-5 shadow-2xs">
-          <p className="text-xs sm:text-sm font-semibold text-[#17271E]/80 mb-2.5">
+          <p className="text-xs sm:text-sm font-semibold text-ink-muted mb-2.5">
             Got a question before you buy? Tap a common one, or dive into the full guide below.
           </p>
 
@@ -489,7 +489,7 @@ export default function LoowayGuideSection() {
               <button
                 key={pill.label}
                 onClick={() => handleOpenStory(pill.id)}
-                className="cursor-pointer whitespace-nowrap rounded-full border border-[#E4DED0] bg-[#F6F1E7] px-3.5 py-1 text-[11.5px] sm:text-xs font-bold text-[#0A4A2E] transition-all hover:bg-[#0E5C3A] hover:text-white"
+                className="cursor-pointer whitespace-nowrap rounded-full border border-[#E4DED0] bg-[#F6F1E7] px-3.5 py-1 text-[12px] sm:text-xs font-bold text-[#0A4A2E] transition-all hover:bg-[#0E5C3A] hover:text-white"
               >
                 {pill.label}
               </button>
@@ -547,7 +547,7 @@ export default function LoowayGuideSection() {
                     <Play className="ml-0.5 h-2 w-2 sm:h-2.5 sm:w-2.5 fill-white" />
                   </div>
                 </div>
-                <span className="text-[10.5px] sm:text-[11.5px] font-bold text-[#0A4A2E] text-center leading-tight max-w-[72px] sm:max-w-none">
+                <span className="text-[12px] sm:text-[12px] font-bold text-ink text-center leading-tight max-w-[72px] sm:max-w-none">
                   {st.rail}
                 </span>
               </button>
@@ -560,11 +560,11 @@ export default function LoowayGuideSection() {
           {/* Category 1 */}
           <div>
             <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
-              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[10px] sm:text-[11px] font-extrabold text-white">
+              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[12px] sm:text-[12px] font-extrabold text-white">
                 01
               </span>
-              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-[#0A4A2E] uppercase">
-                START HERE • <span className="text-[#17271E]">Using it</span>
+              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-ink uppercase">
+                START HERE • <span className="text-ink">Using it</span>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4">
@@ -578,10 +578,10 @@ export default function LoowayGuideSection() {
                   className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#E4DED0] bg-white p-3 sm:p-4 shadow-2xs transition-all hover:border-[#0E5C3A] hover:shadow-md"
                 >
                   <div className="min-w-0 pr-1">
-                    <h4 className="text-xs sm:text-sm font-bold text-[#0A4A2E] truncate">
+                    <h4 className="text-xs sm:text-sm font-bold text-ink truncate">
                       {card.label}
                     </h4>
-                    <p className="mt-0.5 text-[10.5px] sm:text-xs text-[#17271E]/60 truncate">
+                    <p className="mt-0.5 text-[12px] sm:text-xs text-ink-muted truncate">
                       {card.sub}
                     </p>
                   </div>
@@ -594,11 +594,11 @@ export default function LoowayGuideSection() {
           {/* Category 2 */}
           <div>
             <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
-              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[10px] sm:text-[11px] font-extrabold text-white">
+              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[12px] sm:text-[12px] font-extrabold text-white">
                 02
               </span>
-              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-[#0A4A2E] uppercase">
-                ON EVERY JOURNEY • <span className="text-[#17271E]">Where it saves the day</span>
+              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-ink uppercase">
+                ON EVERY JOURNEY • <span className="text-ink">Where it saves the day</span>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4">
@@ -612,10 +612,10 @@ export default function LoowayGuideSection() {
                   className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#E4DED0] bg-white p-3 sm:p-4 shadow-2xs transition-all hover:border-[#0E5C3A] hover:shadow-md"
                 >
                   <div className="min-w-0 pr-1">
-                    <h4 className="text-xs sm:text-sm font-bold text-[#0A4A2E] truncate">
+                    <h4 className="text-xs sm:text-sm font-bold text-ink truncate">
                       {card.label}
                     </h4>
-                    <p className="mt-0.5 text-[10.5px] sm:text-xs text-[#17271E]/60 truncate">
+                    <p className="mt-0.5 text-[12px] sm:text-xs text-ink-muted truncate">
                       {card.sub}
                     </p>
                   </div>
@@ -628,11 +628,11 @@ export default function LoowayGuideSection() {
           {/* Category 3 */}
           <div>
             <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
-              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[10px] sm:text-[11px] font-extrabold text-white">
+              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[12px] sm:text-[12px] font-extrabold text-white">
                 03
               </span>
-              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-[#0A4A2E] uppercase">
-                FOR EVERYONE • <span className="text-[#17271E]">Care &amp; confidence</span>
+              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-ink uppercase">
+                FOR EVERYONE • <span className="text-ink">Care &amp; confidence</span>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-4">
@@ -646,10 +646,10 @@ export default function LoowayGuideSection() {
                   className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#E4DED0] bg-white p-3 sm:p-4 shadow-2xs transition-all hover:border-[#0E5C3A] hover:shadow-md"
                 >
                   <div className="min-w-0 pr-1">
-                    <h4 className="text-xs sm:text-sm font-bold text-[#0A4A2E] truncate">
+                    <h4 className="text-xs sm:text-sm font-bold text-ink truncate">
                       {card.label}
                     </h4>
-                    <p className="mt-0.5 text-[10.5px] sm:text-xs text-[#17271E]/60 truncate">
+                    <p className="mt-0.5 text-[12px] sm:text-xs text-ink-muted truncate">
                       {card.sub}
                     </p>
                   </div>
@@ -662,11 +662,11 @@ export default function LoowayGuideSection() {
           {/* Category 4 */}
           <div>
             <div className="flex items-center gap-2 mb-2.5 sm:mb-3">
-              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[10px] sm:text-[11px] font-extrabold text-white">
+              <span className="flex h-5 w-5 sm:h-6 sm:w-6 items-center justify-center rounded-md bg-[#0E5C3A] text-[12px] sm:text-[12px] font-extrabold text-white">
                 04
               </span>
-              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-[#0A4A2E] uppercase">
-                NO ANXIETY • <span className="text-[#17271E]">Travel ready</span>
+              <div className="text-[11px] sm:text-xs font-extrabold tracking-wider text-ink uppercase">
+                NO ANXIETY • <span className="text-ink">Travel ready</span>
               </div>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-2 gap-2.5 sm:gap-4">
@@ -680,10 +680,10 @@ export default function LoowayGuideSection() {
                   className="flex cursor-pointer items-center justify-between rounded-2xl border border-[#E4DED0] bg-white p-3 sm:p-4 shadow-2xs transition-all hover:border-[#0E5C3A] hover:shadow-md"
                 >
                   <div className="min-w-0 pr-1">
-                    <h4 className="text-xs sm:text-sm font-bold text-[#0A4A2E] truncate">
+                    <h4 className="text-xs sm:text-sm font-bold text-ink truncate">
                       {card.label}
                     </h4>
-                    <p className="mt-0.5 text-[10.5px] sm:text-xs text-[#17271E]/60 truncate">
+                    <p className="mt-0.5 text-[12px] sm:text-xs text-ink-muted truncate">
                       {card.sub}
                     </p>
                   </div>
@@ -740,7 +740,7 @@ export default function LoowayGuideSection() {
 
             {/* Slide Content Body */}
             <div className="flex-1 px-6 py-4 flex flex-col justify-center">
-              <h3 className="font-serif text-2xl font-extrabold text-white leading-tight">
+              <h3 className="font-serif text-2xl font-bold text-white leading-tight">
                 {activeStory.slides[activeSlideIndex]?.h}
               </h3>
               <p className="mt-3 text-sm text-white/90 leading-relaxed font-normal">

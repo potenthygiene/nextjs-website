@@ -79,7 +79,6 @@ export function OvyHero() {
                 <div className="-mt-3.5 text-center relative z-30 sm:-mt-5">
                   <div className="inline-block rounded-xl bg-white px-2 py-1 shadow-md border border-gray-100/80 transition-transform group-hover/card:scale-105 sm:rounded-2xl sm:px-5 sm:py-2.5">
                     <div className="text-[9px] font-bold tracking-tight text-[#5C524D] sm:text-xs">Teen kits</div>
-                    <div className="font-serif text-[11px] font-extrabold text-[#8C4F7C] sm:text-base leading-tight mt-0.5">₹378</div>
                   </div>
                 </div>
               </Link>
@@ -126,7 +125,6 @@ export function OvyHero() {
                 <div className="-mt-4 text-center relative z-30 sm:-mt-6">
                   <div className="inline-block rounded-xl bg-white px-2.5 py-1 shadow-lg border border-gray-100/80 transition-transform group-hover/card:scale-105 sm:rounded-2xl sm:px-7 sm:py-3">
                     <div className="text-[9.5px] font-bold tracking-tight text-[#5C524D] sm:text-sm">Pads, 3 sizes</div>
-                    <div className="font-serif text-xs font-extrabold text-[#592751] sm:text-xl leading-tight mt-0.5">from ₹378</div>
                   </div>
                 </div>
               </Link>
@@ -173,7 +171,6 @@ export function OvyHero() {
                 <div className="-mt-3.5 text-center relative z-30 sm:-mt-5">
                   <div className="inline-block rounded-xl bg-white px-2 py-1 shadow-md border border-gray-100/80 transition-transform group-hover/card:scale-105 sm:rounded-2xl sm:px-5 sm:py-2.5">
                     <div className="text-[9px] font-bold tracking-tight text-[#5C524D] sm:text-xs">Menstrual cup</div>
-                    <div className="font-serif text-[11px] font-extrabold text-[#C42B5B] sm:text-base leading-tight mt-0.5">₹459</div>
                   </div>
                 </div>
               </Link>

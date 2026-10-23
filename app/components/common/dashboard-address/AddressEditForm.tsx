@@ -83,10 +83,10 @@ export const AddressEditForm = ({ address }: any) => {
   return (
     <Card className="rounded-[20px] border-gray-200 bg-white p-6 sm:p-8 shadow-sm max-w-3xl mx-auto">
       <div className="mb-8 border-b border-gray-100 pb-4">
-        <h3 className="text-lg font-bold text-[#2D3748]">
+        <h3 className="text-lg font-bold text-ink">
           Edit Address
         </h3>
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="text-xs text-ink-muted mt-1">
           Update your delivery address and recipient contact information
         </p>
       </div>
@@ -94,7 +94,7 @@ export const AddressEditForm = ({ address }: any) => {
       <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
         {/* Full Name */}
         <div className="space-y-2">
-          <Label htmlFor="edit-fullName" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-fullName" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Full Name <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -117,11 +117,11 @@ export const AddressEditForm = ({ address }: any) => {
 
         {/* Phone */}
         <div className="space-y-2">
-          <Label htmlFor="edit-phone" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-phone" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Mobile Phone (10 digits) <span className="text-red-500">*</span>
           </Label>
           <div className="relative">
-            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-500">
+            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-ink-muted">
               +91
             </span>
             <Input
@@ -145,13 +145,13 @@ export const AddressEditForm = ({ address }: any) => {
               {errors.phone}
             </p>
           ) : (
-            <p className="text-[11px] text-gray-400">Courier delivery contact number</p>
+            <p className="text-[12px] text-gray-400">Courier delivery contact number</p>
           )}
         </div>
 
         {/* Address / Street */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="edit-street" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-street" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             House / Flat No. &amp; Street <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -174,7 +174,7 @@ export const AddressEditForm = ({ address }: any) => {
 
         {/* Locality */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="edit-locality" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-locality" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Locality / Area / Landmark <span className="text-gray-400 font-normal lowercase">(optional)</span>
           </Label>
           <Input
@@ -189,7 +189,7 @@ export const AddressEditForm = ({ address }: any) => {
 
         {/* City */}
         <div className="space-y-2">
-          <Label htmlFor="edit-city" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-city" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             City <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -212,7 +212,7 @@ export const AddressEditForm = ({ address }: any) => {
 
         {/* State Dropdown */}
         <div className="space-y-2">
-          <Label htmlFor="edit-state" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-state" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             State <span className="text-red-500">*</span>
           </Label>
           <select
@@ -243,7 +243,7 @@ export const AddressEditForm = ({ address }: any) => {
 
         {/* PIN Code */}
         <div className="space-y-2">
-          <Label htmlFor="edit-pincode" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-pincode" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             PIN Code (6 digits) <span className="text-red-500">*</span>
           </Label>
           <Input
@@ -270,7 +270,7 @@ export const AddressEditForm = ({ address }: any) => {
 
         {/* Country (Fixed to India) */}
         <div className="space-y-2">
-          <Label htmlFor="edit-country" className="text-xs font-bold text-gray-600 uppercase tracking-wider">
+          <Label htmlFor="edit-country" className="text-xs font-bold text-ink-muted uppercase tracking-wider">
             Country
           </Label>
           <Input
@@ -290,7 +290,7 @@ export const AddressEditForm = ({ address }: any) => {
           checked={form.isDefault}
           onCheckedChange={(v) => setForm({ ...form, isDefault: Boolean(v) })}
         />
-        <label htmlFor="edit-isDefault" className="text-sm font-medium text-gray-600 cursor-pointer">
+        <label htmlFor="edit-isDefault" className="text-sm font-medium text-ink-muted cursor-pointer">
           Set as default shipping address
         </label>
       </div>
@@ -309,7 +309,7 @@ export const AddressEditForm = ({ address }: any) => {
           variant="outline"
           onClick={() => router.push("/dashboard/address")}
           disabled={isSaving}
-          className="h-14 flex-1 rounded-xl border-gray-300 text-base font-bold text-gray-700 hover:bg-gray-50"
+          className="h-14 flex-1 rounded-xl border-gray-300 text-base font-bold text-ink-muted hover:bg-gray-50"
         >
           Cancel
         </Button>

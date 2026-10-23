@@ -32,7 +32,7 @@ export default function JournalsSection({
           >
             Journals
           </h2>
-          <p className="text-gray-600 text-base">
+          <p className="text-ink-muted text-base">
             Tips, guides, and insights for your menstrual health journey.
           </p>
         </div>
@@ -60,7 +60,7 @@ export default function JournalsSection({
               </div>
 
               {/* Date */}
-              <div className="flex items-center gap-2 mt-4 text-sm text-gray-500">
+              <div className="flex items-center gap-2 mt-4 text-sm text-ink-muted">
                 <Calendar
                   className="w-4 h-4"
                   style={{ color: themeColor.darkColor || "#0d9488" }}
@@ -69,12 +69,12 @@ export default function JournalsSection({
               </div>
 
               {/* Title */}
-              <h3 className="mt-3 text-lg font-semibold text-gray-900 leading-snug">
+              <h3 className="mt-3 text-lg font-semibold text-ink leading-snug">
                 {item?.title}
               </h3>
 
               {/* Description */}
-              <p className="mt-3 text-gray-600 text-sm leading-relaxed">
+              <p className="mt-3 text-ink-muted text-sm leading-relaxed">
                 {item?.metaDescription}
               </p>
             </div>

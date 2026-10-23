@@ -100,7 +100,7 @@ const storyData = [
   },
   {
     title: "BUILT FROM NOTHING",
-    text: `First-time founder. No rulebook. No prior playbook. Three D2C brands built from scratch, 
+    text: `First-time founder. No rulebook. No prior playbook. Two D2C brands, Ovy and Looway, built from scratch, 
     incubated at two IIMs, funded, and growing across Bharat.`,
   },
   {
@@ -170,7 +170,7 @@ const FounderSection = () => {
                 className="flex items-start gap-4 border-t border-gray-800 pt-4"
               >
                 {/* Number */}
-                <span className="text-gray-500 text-sm w-6">
+                <span className="text-ink-muted text-sm w-6">
                   {item.id}
                 </span>
 

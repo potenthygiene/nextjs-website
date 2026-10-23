@@ -37,25 +37,25 @@ export default function FiltersSidebar() {
     <div className="w-full md:w-64 lg:w-72 shrink-0">
       {/* Mobile Collapsible Header Row (Products label on left, Filter button on right) */}
       <div className="md:hidden flex items-center justify-between gap-2 mb-3">
-        <span className="font-serif text-base font-extrabold text-[#0A4A2E]">
+        <span className="font-serif text-base font-bold text-ink">
           Products
         </span>
 
         <button
           type="button"
           onClick={() => setIsOpenMobile(!isOpenMobile)}
-          className="flex items-center gap-2 rounded-2xl border border-[#E4DED0] bg-white px-3.5 py-2.5 text-xs font-bold text-[#0A4A2E] shadow-2xs cursor-pointer"
+          className="flex items-center gap-2 rounded-2xl border border-[#E4DED0] bg-white px-3.5 py-2.5 text-xs font-bold text-ink shadow-2xs cursor-pointer"
         >
-          <Filter className="h-3.5 w-3.5 text-[#0E5C3A]" />
+          <Filter className="h-3.5 w-3.5 text-teal" />
           <span>Filter by Brand Line</span>
           {hasActiveFilters && (
-            <span className="rounded-full bg-[#0E5C3A] px-2 py-0.5 text-[10px] text-white font-extrabold uppercase">
+            <span className="rounded-full bg-teal px-2 py-0.5 text-[11px] text-white font-extrabold uppercase">
               {currentBrand}
             </span>
           )}
           <ChevronDown
             className={`h-3.5 w-3.5 transition-transform duration-300 ${
-              isOpenMobile ? "rotate-180 text-[#0E5C3A]" : "text-gray-400"
+              isOpenMobile ? "rotate-180 text-teal" : "text-gray-400"
             }`}
           />
         </button>
@@ -69,8 +69,8 @@ export default function FiltersSidebar() {
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-[#E4DED0]/60 pb-3 mb-5">
-          <div className="flex items-center gap-2 font-serif text-base font-extrabold text-[#0A4A2E]">
-            <Filter className="h-4 w-4 text-[#0E5C3A]" />
+          <div className="flex items-center gap-2 font-serif text-base font-bold text-ink">
+            <Filter className="h-4 w-4 text-teal" />
             <span>Filters</span>
           </div>
 
@@ -78,7 +78,7 @@ export default function FiltersSidebar() {
             <button
               type="button"
               onClick={clearAll}
-              className="flex items-center gap-1 text-xs font-bold text-[#0E5C3A] hover:underline cursor-pointer"
+              className="flex items-center gap-1 text-xs font-bold text-teal hover:underline cursor-pointer"
             >
               <RotateCcw className="h-3 w-3" />
               <span>Reset</span>
@@ -88,7 +88,7 @@ export default function FiltersSidebar() {
 
         {/* Brand Line Section */}
         <div className="mb-6">
-          <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0E5C3A] mb-3 flex items-center gap-1.5">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-teal mb-3 flex items-center gap-1.5">
             <Layers className="h-3.5 w-3.5" />
             <span>Brand Line</span>
           </h3>
@@ -125,20 +125,20 @@ export default function FiltersSidebar() {
                   onClick={() => handleBrandSelect(brandOption.id)}
                   className={`flex w-full items-start justify-between rounded-xl border p-3 text-left transition-all cursor-pointer ${
                     isSelected
-                      ? "border-[#0E5C3A] bg-[#F1F7F3] shadow-2xs"
-                      : "border-[#E4DED0]/70 bg-white hover:border-[#0E5C3A]/40 hover:bg-[#FAF8F3]"
+                      ? "border-teal bg-[#E6F4F6] shadow-2xs"
+                      : "border-[#E4DED0]/70 bg-white hover:border-teal/40 hover:bg-[#FAF8F3]"
                   }`}
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-[#0A4A2E]">
+                      <span className="text-xs font-bold text-ink">
                         {brandOption.label}
                       </span>
-                      <span className="rounded-full bg-white px-2 py-0.5 text-[9.5px] font-extrabold text-[#0E5C3A] border border-[#0E5C3A]/15">
+                      <span className="rounded-full bg-white px-2 py-0.5 text-[12px] font-extrabold text-teal border border-teal/15">
                         {brandOption.badge}
                       </span>
                     </div>
-                    <div className="text-[10.5px] text-[#17271E]/65 mt-0.5 leading-tight font-medium">
+                    <div className="text-[12px] text-ink-muted mt-0.5 leading-tight font-medium">
                       {brandOption.desc}
                     </div>
                   </div>
@@ -146,7 +146,7 @@ export default function FiltersSidebar() {
                   <div
                     className={`mt-0.5 h-4 w-4 shrink-0 rounded-full border flex items-center justify-center transition-colors ${
                       isSelected
-                        ? "bg-[#0E5C3A] border-[#0E5C3A] text-white"
+                        ? "bg-teal border-teal text-white"
                         : "border-gray-300 bg-white"
                     }`}
                   >
@@ -159,12 +159,12 @@ export default function FiltersSidebar() {
         </div>
 
         {/* 100% Quality & Leak Guarantee Box (Retained as requested) */}
-        <div className="rounded-2xl bg-[#F1F7F3] p-4 border border-[#0E5C3A]/15 text-center">
-          <ShieldCheck className="h-6 w-6 text-[#0E5C3A] mx-auto mb-1.5" />
-          <div className="text-xs font-extrabold text-[#0A4A2E]">
+        <div className="rounded-2xl bg-[#E6F4F6] p-4 border border-teal/15 text-center">
+          <ShieldCheck className="h-6 w-6 text-teal mx-auto mb-1.5" />
+          <div className="text-xs font-extrabold text-ink">
             100% Quality &amp; Leak Guarantee
           </div>
-          <div className="text-[11px] text-[#17271E]/75 mt-1 font-medium leading-relaxed">
+          <div className="text-[12px] text-ink-muted mt-1 font-medium leading-relaxed">
             Dermatologically tested &amp; travel certified.
           </div>
         </div>

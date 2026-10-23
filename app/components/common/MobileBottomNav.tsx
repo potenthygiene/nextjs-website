@@ -62,7 +62,7 @@ export function MobileBottomNav() {
                     className={`w-5 h-5 transition-all ${
                       isActive
                         ? "text-[#004851] stroke-[2.5]"
-                        : "text-gray-700 stroke-[1.8] group-hover:text-[#004851]"
+                        : "text-ink-muted stroke-[1.8] group-hover:text-[#004851]"
                     }`}
                   />
                 )}
@@ -77,8 +77,8 @@ export function MobileBottomNav() {
 
               {/* LABEL */}
               <span
-                className={`text-[10px] font-medium leading-none mt-1 transition-colors ${
-                  isActive ? "text-[#004851] font-semibold" : "text-gray-700 group-hover:text-[#004851]"
+                className={`text-[12px] font-medium leading-none mt-1 transition-colors ${
+                  isActive ? "text-[#004851] font-semibold" : "text-ink-muted group-hover:text-[#004851]"
                 }`}
               >
                 {item.name}

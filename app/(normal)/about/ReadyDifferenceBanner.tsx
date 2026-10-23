@@ -14,7 +14,7 @@ const ReadyDifferenceBanner = () => {
           </h2>
 
 
-          <p className="text-xl sm:text-sm text-gray-600 max-w-4xl">
+          <p className="text-xl sm:text-sm text-ink-muted max-w-4xl">
             Join thousands of women who trust Potent Hygiene for their daily
             care needs. Discover products that truly understand you.
           </p>

@@ -177,9 +177,9 @@ export const STRINGS_HI: Record<string, string> = {
   "{j} welcome credit + {p}% back": "{j} वेलकम क्रेडिट + {p}% वापस",
   "Join Potent Rewards free. Earn {p}% back on delivered orders, {b} on your birthday and up to {r} for an approved review. Use up to {mp}% of an order, at most {mx}.":
     "Potent Rewards से मुफ़्त जुड़ें। डिलीवर हुए ऑर्डर पर {p}% वापस, जन्मदिन पर {b}, और अप्रूव हुए रिव्यू पर {r} तक पाएँ। एक ऑर्डर के {mp}% तक, ज़्यादा से ज़्यादा {mx}, इस्तेमाल कर सकते हैं।",
-  "Refer a friend: {you} for you, {friend} off for them": "दोस्त को रेफ़र करें: आपको {you}, उन्हें {friend} की छूट",
-  "On their first order of {min} or more. Have a coupon? Apply it in your bag (coupons and credits don't combine).":
-    "उनके {min} या उससे ज़्यादा के पहले ऑर्डर पर। कूपन है? उसे अपने बैग में लगाएँ (कूपन और क्रेडिट साथ नहीं लगते)।",
+  "Refer a friend: {friend} credit for them, {you} credit for you": "दोस्त को रेफ़र करें: उन्हें {friend} क्रेडिट, आपको {you} क्रेडिट",
+  "Your credit lands when their first order of {min} or more is delivered, along with SHARECARE15. Credits work together with coupons.":
+    "उनका {min} या उससे ज़्यादा का पहला ऑर्डर डिलीवर होते ही आपका क्रेडिट और SHARECARE15 मिल जाता है। क्रेडिट कूपन के साथ भी लगते हैं।",
   "See a doctor today": "आज ही डॉक्टर को दिखाएँ",
   "See a doctor soon": "जल्द डॉक्टर को दिखाएँ",
   "Book a check-up": "चेक-अप करवाएँ",

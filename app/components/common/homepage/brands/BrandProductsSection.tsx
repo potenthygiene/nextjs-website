@@ -52,7 +52,7 @@ export function BrandProductsSection({
     >
       <div className="mx-auto max-w-6xl px-4">
         <div className="mb-8 space-y-4 text-center md:mb-12">
-          <h2 className="font-serif text-3xl font-bold text-[#333333] md:text-4xl">
+          <h2 className="font-serif text-3xl font-bold text-ink md:text-4xl">
             {title}
           </h2>
 

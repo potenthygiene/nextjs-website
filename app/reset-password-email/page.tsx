@@ -146,7 +146,7 @@ const Page = () => {
             </button>
           </form>
 
-          <p className="mt-4 text-center text-xs text-gray-600">
+          <p className="mt-4 text-center text-xs text-ink-muted">
             Don't have an account?{" "}
             <Link href="/signup">
               {" "}
