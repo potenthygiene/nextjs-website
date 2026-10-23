@@ -18,7 +18,7 @@ import {
 import { toast } from "sonner";
 import { getProductMaxQuantity, getMaxQuantityMessage } from "@/lib/productQuantityLimits";
 import { updateCartQuantity, removeFromCart } from "@/store/cartActions";
-import { NEXT_PUBLIC_S3_URL } from "@/env";
+const NEXT_PUBLIC_S3_URL = process.env.NEXT_PUBLIC_S3_URL;
 
 export function CartItems() {
   const router = useRouter();

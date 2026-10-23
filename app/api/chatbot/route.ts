@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { Pinecone } from "@pinecone-database/pinecone";
 import { NextRequest, NextResponse } from "next/server";
+import { allowRequest, clientIp, isOwnSite } from "@/lib/requestGuard";
 
 export const runtime = "nodejs";
 
@@ -128,6 +129,17 @@ function getSources(matches: WebsiteVectorMetadata[]): ChatSource[] {
 }
 
 export async function POST(req: NextRequest) {
+  if (!isOwnSite(req)) {
+    return NextResponse.json({ error: "Not allowed." }, { status: 403 });
+  }
+  const ip = clientIp(req);
+  if (!allowRequest(`chat-min:${ip}`, 10, 60_000) || !allowRequest(`chat-hour:${ip}`, 60, 3_600_000)) {
+    return NextResponse.json(
+      { error: "You're sending messages quickly. Please wait a minute and try again." },
+      { status: 429 },
+    );
+  }
+
   try {
     const body = await req.json();
     const question = cleanText(body?.message, 1200);

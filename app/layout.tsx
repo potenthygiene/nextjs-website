@@ -115,7 +115,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} ${fredoka.variable} antialiased`}
       >

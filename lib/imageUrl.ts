@@ -1,6 +1,5 @@
-import { NEXT_PUBLIC_S3_URL } from "@/env";
-
-const imageBaseUrl = NEXT_PUBLIC_S3_URL;
+// Read directly so browser code never pulls in the server settings file.
+const imageBaseUrl = process.env.NEXT_PUBLIC_S3_URL;
 
 export function getImageUrl(src?: string | null) {
   if (!src) return "/placeholder.jpg";

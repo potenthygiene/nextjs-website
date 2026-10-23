@@ -60,9 +60,9 @@ const PAGES: Record<string, PageSeo> = {
     path: "/period-log",
   },
   blog: {
-    title: "Journal: Period Care, Teen & Travel Hygiene Guides",
+    title: "Health & Hygiene Journal: Period, Women's & Travel Guides",
     description:
-      "Simple, honest guides on periods, first periods, choosing pads and cups, and staying hygienic on the go, from the Potent Hygiene team.",
+      "Sourced guides on periods, pad rash, discharge, PMDD, perimenopause, dengue, pollution, handwashing and public toilet hygiene, written for India by Potent Hygiene.",
     path: "/blog",
   },
   faq: {

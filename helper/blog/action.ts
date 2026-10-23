@@ -5,6 +5,7 @@ import { blog } from "@/db/schema";
 import { db } from "@/lib/db";
 import { getImageKey } from "@/lib/imageUrl";
 import { ARTICLES, articleAsPost, formatJournalDate } from "@/const/journal";
+import { normaliseTopic } from "@/const/journal/topics";
 
 import { and, desc, eq, ilike, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -57,7 +58,7 @@ export async function getJournalPosts() {
       id: b.id,
       slug: b.slug as string,
       title: b.title || "",
-      blogCategory: b.blogCategory || "Journal",
+      blogCategory: normaliseTopic(b.blogCategory),
       metaDescription: b.metaDescription || "",
       data: b.data || "",
       image: b.image || "/placeholder.jpg",

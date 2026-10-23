@@ -25,6 +25,7 @@ import {
 } from "@/const/productsContent";
 import { productMetadata } from "@/const/seo";
 import { resolveCanonicalSlug } from "@/lib/productSlugs";
+import { getProductOnce } from "@/lib/productCache";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -54,7 +55,7 @@ export default async function Page({ params }: any) {
       : null;
 
   const [product, reviewWithMedia, similarProducts] = await Promise.all([
-    getFullProductDetails(canonicalSlug),
+    getProductOnce(canonicalSlug),
     getProductReviews(canonicalSlug),
     getProductSimilarProducts(canonicalSlug),
   ]);

@@ -32,8 +32,23 @@ const OLD_ADDRESS_REDIRECTS = [
 
 const nextConfig: NextConfig = {
   compress: true,
+  poweredByHeader: false,
   async redirects() {
     return OLD_ADDRESS_REDIRECTS.map((r) => ({ ...r, permanent: true }));
+  },
+  async headers() {
+    return [
+      {
+        // Standard browser protections for every page.
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "SAMEORIGIN" },
+          { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), browsing-topics=()" },
+        ],
+      },
+    ];
   },
   images: {
     formats: ["image/avif", "image/webp"],

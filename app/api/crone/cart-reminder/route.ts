@@ -2,8 +2,14 @@ import { cart, cartItem, product, users } from "@/db/schema";
 import { getProfile, sendCartAbandonmentEmail } from "@/helper";
 import { db } from "@/lib/db";
 import { and, eq, gt, lt } from "drizzle-orm";
+import { isCronRequest } from "@/lib/requestGuard";
 
-export async function GET() {
+export async function GET(req: Request) {
+  // Only the daily Vercel Cron job may send these emails.
+  if (!isCronRequest(req)) {
+    return Response.json({ error: "Not allowed." }, { status: 401 });
+  }
+
 const now = new Date();
 
 const FIVE_DAYS_AGO = new Date(now);
