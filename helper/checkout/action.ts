@@ -763,6 +763,6 @@ export async function getCouponWindow({ items }: { items: any[] }): Promise<Coup
   }
 
   const rank = { ok: 0, locked: 1, upcoming: 2, ineligible: 3 } as const;
-  list.sort((a, b) => rank[a.state] - rank[b.state] || b.saving - a.saving);
+  list.sort((a, b) => rank[a.state] - rank[b.state] || (a.state === "locked" ? (b.progress || 0) - (a.progress || 0) : b.saving - a.saving));
   return { signedIn: !!userId, subtotal, coupons: list, best };
 }

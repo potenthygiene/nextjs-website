@@ -984,7 +984,6 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           quantity: 1,
           uuid: crypto.randomUUID(),
         });
-        toast.success("Mix Your Box added to bag!");
         setIsQuizOpen(false);
         return;
       }
@@ -1015,7 +1014,6 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
         subscriptionType: null,
       });
       switchToTab("pickSize", variant);
-      toast.success(`${PAD_PICKS[key].label} added to bag!`);
       setIsQuizOpen(false);
     } catch (error) {
       console.error("Quiz add to bag failed:", error);

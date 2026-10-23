@@ -697,7 +697,6 @@ export default function MenstrualCupPageClient({
         quantity: 1,
       });
       handleSelectVariant(idx);
-      toast.success(`${CUP_SIZES[size].name} added to bag!`);
       setIsQuizOpen(false);
     } catch (err) {
       console.error("Cart Add Error:", err);

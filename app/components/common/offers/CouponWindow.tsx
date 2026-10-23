@@ -7,6 +7,7 @@
 // from the server (getCouponWindow), so they match what checkout charges.
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Check, ChevronRight, Clock, Gift, Lock, Sparkle, Tag, Users, X } from "lucide-react";
 import { couponByCode, COMBINED_CAP, parseCodes, stackProblem } from "@/const/coupons";
@@ -152,10 +153,7 @@ export function CouponWindow({ items, applied, onApply, onRemove, busy, tone = "
               )}
             </span>
             <span className="mt-1 block text-[13px] leading-snug text-gray-800">{c.title}</span>
-            <span className="mt-0.5 block text-[11.5px] text-gray-500">
-              {c.conditions}
-              {c.endsOn ? ` · ends ${c.endsOn}` : ""}
-            </span>
+            <span className="mt-0.5 block text-[11.5px] text-gray-500">{c.conditions}</span>
             {c.reason && (
               <span className={`mt-1 block text-[12px] font-semibold ${c.state === "ok" ? "text-gray-600" : "text-amber-700"}`}>{c.reason}</span>
             )}
@@ -228,8 +226,9 @@ export function CouponWindow({ items, applied, onApply, onRemove, busy, tone = "
         )}
       </div>
 
-      {open && (
-        <div className="fixed inset-0 z-[100002] flex items-end justify-center bg-black/40 sm:items-center" onClick={() => setOpen(false)}>
+      {/* Rendered on the page body, so no parent container can clip or cover it. */}
+      {open && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[100002] flex items-end justify-center bg-black/40 sm:items-center sm:p-4" onClick={() => setOpen(false)}>
           <div
             ref={sheetRef}
             tabIndex={-1}
@@ -331,7 +330,8 @@ export function CouponWindow({ items, applied, onApply, onRemove, busy, tone = "
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );
