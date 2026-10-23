@@ -315,4 +315,6 @@ export const STRINGS_HI: Record<string, string> = {
   "Shop all products": "सारे प्रोडक्ट देखें",
   "Questions about {title}? I can help you choose.": "{title} के बारे में सवाल? मैं चुनने में मदद कर सकती हूँ।",
   "Your checklist": "आपकी चेकलिस्ट",
+  " Add ₹{n} more for free delivery.": " ₹{n} का और सामान जोड़ें, डिलीवरी मुफ़्त हो जाएगी।",
+  "\n\nAdd ₹{n} more for free delivery.": "\n\n₹{n} का और सामान जोड़ें, डिलीवरी मुफ़्त हो जाएगी।",
 };

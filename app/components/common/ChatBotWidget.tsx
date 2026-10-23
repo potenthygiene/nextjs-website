@@ -906,8 +906,10 @@ export function ChatBotWidget() {
         ? t("\n\nFor the ₹{sub} in your bag, **{code}** saves you ₹{s} right now.", { sub: Math.round(sub), code: best.coupon.code, s: Math.round(best.saving) })
         : "";
     const nextText = bagItems.length && next ? t("\n\nAdd ₹{n} more to save ₹{s} with **{code}**.", { n: next.needed, s: next.saving, code: next.coupon.code }) : "";
+    const freeFrom = live().offers?.freeDeliveryFrom || 399;
+    const freeText = sub > 0 && sub < freeFrom ? t("\n\nAdd ₹{n} more for free delivery.", { n: Math.ceil(freeFrom - sub) }) : "";
     return {
-      text: t("Here's how to save at Potent{n}.", nv(name)) + nudgeText + nextText,
+      text: t("Here's how to save at Potent{n}.", nv(name)) + nudgeText + freeText + nextText,
       coupons: { highlight: best?.coupon.code },
       offers: true,
       chips: [
@@ -950,7 +952,9 @@ export function ChatBotWidget() {
     const items = useCartStore.getState().items;
     const sub = items.reduce((s, i) => s + Number(i.price || 0) * Number(i.quantity || 1), 0);
     const { best, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : false, referred: ctx?.referred });
+    const freeFrom = live().offers?.freeDeliveryFrom || 399;
     return (
+      (sub > 0 && sub < freeFrom ? t(" Add ₹{n} more for free delivery.", { n: Math.ceil(freeFrom - sub) }) : "") +
       (best ? t(" **{code}** saves you ₹{s} on this bag.", { code: best.coupon.code, s: Math.round(best.saving) }) : "") +
       (next ? t(" Add ₹{n} more to save ₹{s} with {code}.", { n: next.needed, s: next.saving, code: next.coupon.code }) : "")
     );
@@ -1036,7 +1040,6 @@ export function ChatBotWidget() {
     if (!c) {
       return {
         text: t("Sign in and I'll show your orders, help you buy again and find offers made for you."),
-        links: [{ label: "Sign in", href: "/login" }],
         forYou: true,
         chips: [{ label: "Orders & delivery", action: { type: "menu", id: "orders" } }, BACK],
       };
@@ -2147,7 +2150,7 @@ export function ChatBotWidget() {
       <div className={`chatbot-floating-widget fixed right-4 z-50 transition-all duration-300 sm:right-6 md:bottom-6 ${hasStickyBar ? "bottom-[138px]" : "bottom-20"} ${isOpen ? "max-md:hidden" : ""}`}>
         {/* Minimised with a chat going, or a first hello on a product page. */}
         {!isOpen && (messages.length > 0 || nudge) && (
-          <div className="chat-in absolute bottom-[68px] right-0 w-[min(270px,calc(100vw-32px))]">
+          <div className="chat-in absolute bottom-0 right-[66px] w-[min(260px,calc(100vw-100px))]">
             <div className="relative rounded-2xl rounded-br-md bg-white p-3 pr-8 text-[13px] leading-snug text-[#3a2b36] shadow-[0_12px_30px_-10px_rgba(63,39,56,0.45)]">
               <button type="button" onClick={open} className="block w-full text-left">
                 <span className="block text-[11px] font-bold uppercase tracking-[0.08em] text-[#9A5C93]">
