@@ -71,7 +71,7 @@ export const JOURNAL_PRODUCTS: Record<
     brand: "Ovy",
     href: "/product-detail/ovy-panty",
     image: "/ovy/panty-box.jpg",
-    line: "Single-use, leak-resistant period panties for heavy days and nights.",
+    line: "Single-use, leak-proof period panties for heavy days and nights.",
   },
   "ovy-teen": {
     name: "Ovy Teen First Period Kits",

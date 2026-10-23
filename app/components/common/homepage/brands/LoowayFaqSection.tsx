@@ -55,7 +55,7 @@ const TICKER_ITEMS = [
   "Fits in a handbag",
   "Bin it, never flush it",
   "Eleven Yatra Kits",
-  "Ships within 24 hours",
+  "Ships within 24 to 48 hours",
 ];
 
 export function LoowayFaqSection() {

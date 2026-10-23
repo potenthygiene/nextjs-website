@@ -278,7 +278,7 @@ export function OvyFindMyFit({ productsBySlug }: { productsBySlug: Record<string
 
                   <div className="mt-6 flex items-center justify-between border-t border-gray-100 pt-4">
                     <span className="text-xs text-gray-500 font-medium">
-                      Ships within 24 hours
+                      Ships within 24 to 48 hours
                     </span>
 
                     <button

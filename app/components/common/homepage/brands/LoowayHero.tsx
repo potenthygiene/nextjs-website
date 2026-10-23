@@ -158,7 +158,7 @@ export function LoowayHero({
             <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-medium text-[#0B6E7D]">
               <div className="flex items-center gap-1.5">
                 <Check className="h-4 w-4 stroke-[2.5] text-[#0B6E7D]" />
-                <span>Ships within 24 hours</span>
+                <span>Ships within 24 to 48 hours</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Check className="h-4 w-4 stroke-[2.5] text-[#0B6E7D]" />

@@ -1,6 +1,7 @@
 "use client";
 
 import { type CSSProperties, FormEvent, Fragment, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowUpRight,
@@ -17,7 +18,6 @@ import {
   RefreshCw,
   RotateCcw,
   Send,
-  Sparkles,
   Truck,
   X,
 } from "lucide-react";
@@ -87,7 +87,7 @@ function timeGreeting() {
 }
 
 const welcomeText = (name: string | null) =>
-  `Hello${name ? ` ${name}` : ""}! I'm Potent Help. Ask me anything about periods, Ovy and Looway products, travel hygiene, orders or delivery, or tap a topic below. I can also take you to any page.`;
+  `Hello${name ? ` ${name}` : ""}! I'm Saathi, your Potent companion. Ask me anything about periods, Ovy and Looway products, travel hygiene, orders or delivery, or tap a topic below. I can also take you to any page.`;
 
 const welcome: ChatMessage = { id: "welcome", role: "bot", text: welcomeText(null), chips: START_CHIPS };
 
@@ -452,7 +452,7 @@ export function ChatBotWidget() {
 
           <section
             role="dialog"
-            aria-label="Potent help chat"
+            aria-label="Potent Saathi chat"
             style={sheetStyle}
             className="chat-sheet fixed inset-x-0 bottom-0 z-[100001] flex h-[92dvh] flex-col overflow-hidden rounded-t-[28px] bg-[#FFFAFD] shadow-[0_-20px_60px_rgba(42,26,38,0.28)] md:inset-x-auto md:bottom-24 md:right-6 md:h-[min(680px,calc(100dvh-120px))] md:w-[400px] md:rounded-[28px] md:shadow-[0_30px_80px_-20px_rgba(42,26,38,0.45)]"
           >
@@ -464,12 +464,12 @@ export function ChatBotWidget() {
               <div className="relative flex items-center justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-3">
                   <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white/20 ring-1 ring-white/30 backdrop-blur">
-                    <Sparkles className="h-5 w-5" aria-hidden />
+                    <Image src="/brand/potent-white.png" alt="Potent" width={34} height={20} className="h-auto w-[34px]" />
                     <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-[#9A5C93] bg-[#5FE39A]" aria-hidden />
                   </div>
                   <div className="min-w-0">
-                    <h2 className="truncate text-[17px] font-semibold leading-tight">Potent Help</h2>
-                    <p className="truncate text-[12.5px] text-white/85">Instant answers · team on WhatsApp</p>
+                    <h2 className="truncate text-[17px] font-semibold leading-tight">Potent Saathi</h2>
+                    <p className="truncate text-[12.5px] text-white/85">Your Ovy &amp; Looway companion</p>
                   </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
@@ -495,7 +495,7 @@ export function ChatBotWidget() {
                   {name ? `, ${name}` : ""} <span aria-hidden>👋</span>
                 </p>
                 <p className="mt-2 text-[15px] leading-relaxed text-[#6d5767]">
-                  I&apos;m Potent Help. Ask me anything about periods, Ovy and Looway, travel hygiene or your order. I can take you to any page too.
+                  I&apos;m Saathi, your Potent companion. Ask me anything about periods, Ovy and Looway, travel hygiene or your order. I can take you to any page too.
                 </p>
 
                 {conversation.length === 0 && (
@@ -544,7 +544,7 @@ export function ChatBotWidget() {
                     <div className={`flex max-w-[88%] items-end gap-2 ${message.role === "user" ? "flex-row-reverse" : ""}`}>
                       {message.role === "bot" && (
                         <span className="mb-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7E4D77] to-[#C98BBE] text-white" aria-hidden>
-                          <Sparkles className="h-3.5 w-3.5" />
+                          <Image src="/brand/potent-white.png" alt="" width={22} height={13} className="h-auto w-[21px]" />
                         </span>
                       )}
                       <div
@@ -582,7 +582,7 @@ export function ChatBotWidget() {
                 {typing && (
                   <div className="chat-in flex items-end gap-2" aria-label="Typing">
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-[#7E4D77] to-[#C98BBE] text-white" aria-hidden>
-                      <Sparkles className="h-3.5 w-3.5" />
+                      <Image src="/brand/potent-white.png" alt="" width={22} height={13} className="h-auto w-[21px]" />
                     </span>
                     <div className="flex gap-1.5 rounded-[22px] rounded-bl-md bg-white px-4 py-3.5 shadow-[0_2px_12px_-4px_rgba(63,39,56,0.14)]">
                       {[0, 1, 2].map((i) => (
@@ -632,7 +632,7 @@ export function ChatBotWidget() {
           type="button"
           onClick={() => setIsOpen((current) => !current)}
           className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#7E4D77] via-[#9A5C93] to-[#C98BBE] text-white shadow-[0_14px_34px_-8px_rgba(126,77,119,0.65)] transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AF71A7] focus-visible:ring-offset-2 active:scale-95"
-          aria-label={isOpen ? "Close Potent help" : "Open Potent help"}
+          aria-label={isOpen ? "Close Potent Saathi" : "Open Potent Saathi"}
         >
           {!isOpen && <span className="absolute inset-0 animate-ping rounded-full bg-[#C98BBE]/40 [animation-duration:2.6s]" aria-hidden />}
           {isOpen ? <X className="relative h-6 w-6" aria-hidden /> : <MessageCircle className="relative h-[26px] w-[26px]" aria-hidden />}

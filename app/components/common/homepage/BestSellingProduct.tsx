@@ -362,7 +362,7 @@ export default function BestsellingProducts({
     return [
       "Organic top sheet, certified toxin-free",
       "pH-balanced & dermatologically tested",
-      "Ships within 24 hours in plain packaging",
+      "Ships within 24 to 48 hours in bold, proud packaging",
     ];
   };
 

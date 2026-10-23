@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
 import { getImageUrl } from "@/lib/imageUrl";
 import { useCatalogStore } from "@/store/catalogStore";
-import { Star, ArrowRight, Sparkles, Clock, ShieldCheck } from "lucide-react";
+import { Star, ArrowRight, Heart, Clock, ShieldCheck } from "lucide-react";
 
 export default function CategoryProducts({ products, productsCategory }: any) {
   const storeProducts = useCatalogStore((state) => state.products);

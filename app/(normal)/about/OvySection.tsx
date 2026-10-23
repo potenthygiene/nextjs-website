@@ -19,7 +19,7 @@ const OvySection = () => {
       desc: "Leak-proof · Disposable · Replaces 100s of pads",
     },
     {
-      icon: "✨",
+      icon: "🌸",
       title: "Panty Liners",
       desc: "Daily freshness · Breathable · Gentle on skin",
     },

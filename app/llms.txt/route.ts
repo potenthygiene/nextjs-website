@@ -40,7 +40,7 @@ ${products}
 ## Buying and policies
 
 - Current prices are shown on each product page and include GST.
-- Free delivery on orders of ₹399 and above, anywhere in India. Orders are usually delivered in 5 to 7 days.
+- Free delivery on orders of ₹399 and above, anywhere in India. Orders are dispatched within 24 to 48 hours and usually delivered in 5 to 7 days.
 - Subscriptions for pads, liners, seat covers and bags can be paused or cancelled in two clicks. Cycle Sync times period-care deliveries to the customer's cycle.
 - Because these are personal hygiene products, they cannot be returned, refunded or replaced once delivered. Orders can be cancelled until they ship, and a cancelled order is refunded in full.
 - Policies: [Shipping](${SITE_URL}/shipping-policy), [Refund and cancellation](${SITE_URL}/refund-policy), [Privacy](${SITE_URL}/privacy-policy), [Terms](${SITE_URL}/terms-condition), [FAQs](${SITE_URL}/faq).

@@ -14,7 +14,6 @@ import {
   Building2,
   Baby,
   User,
-  Sparkles,
   Shield,
   HelpCircle,
 } from "lucide-react";
@@ -290,7 +289,7 @@ export const LOOWAY_STORIES = [
     t: "Hygiene on the road",
     label: "Hygiene on the road",
     sub: "Clean, even far from a tap",
-    ic: Sparkles,
+    ic: Heart,
     slides: [
       {
         h: "Clean, even far from a tap",
@@ -373,7 +372,7 @@ export const LOOWAY_STORIES = [
     t: "Is the gel safe?",
     label: "Is the gel safe?",
     sub: "Hypoallergenic, diaper-grade polymer",
-    ic: Sparkles,
+    ic: Heart,
     slides: [
       {
         h: "100% skin-safe & non-toxic",

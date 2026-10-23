@@ -19,13 +19,12 @@ import {
   RotateCw,
   Check,
   ShoppingBag,
-  Sparkles,
+  Heart,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
   Clock,
   Truck,
-  Heart,
   HelpCircle,
   ArrowRight,
   MapPin,
@@ -1078,7 +1077,7 @@ export default function OvyTeenPageClient({
                 className="border-1.5 inline-flex cursor-pointer items-center gap-1.5 rounded-full border-[#9A5B90] bg-[#F3E6F0] px-3.5 py-1.5 text-xs font-bold text-[#7E4D77] transition-all hover:bg-[#9A5B90] hover:text-white"
                 aria-expanded={learnDropdownOpen}
               >
-                <Sparkles className="h-3.5 w-3.5" />
+                <Heart className="h-3.5 w-3.5" />
                 <span>Period School</span>
                 <ChevronDown
                   className={`h-3.5 w-3.5 transition-transform ${learnDropdownOpen ? "rotate-180" : ""}`}
@@ -1221,7 +1220,7 @@ export default function OvyTeenPageClient({
             >
               {/* Badge */}
               <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-[#7E4D77] shadow-xs backdrop-blur-md">
-                <Sparkles className="h-3.5 w-3.5 text-[#9A5B90]" />
+                <Heart className="h-3.5 w-3.5 text-[#9A5B90]" />
                 <span>{activeKit.badge}</span>
               </div>
 
@@ -2163,7 +2162,7 @@ export default function OvyTeenPageClient({
                       <div className="flex items-center justify-between gap-3 rounded-2xl border border-[#9A5B90]/20 bg-gradient-to-r from-[#F3E6F0] to-[#E4F1F1] p-4">
                         <div className="flex items-center gap-3">
                           <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-[#7E4D77] shadow-xs">
-                            <Sparkles className="h-5 w-5" />
+                            <Heart className="h-5 w-5" />
                           </div>
                           <div>
                             <h4 className="font-serif text-base font-bold text-[#1A150F] sm:text-lg">
@@ -2812,7 +2811,7 @@ export default function OvyTeenPageClient({
             ) : (
               <div className="py-4 text-center">
                 <span className="mb-3 inline-block rounded-full bg-[#F3E6F0] p-3 text-[#7E4D77]">
-                  <Sparkles className="h-6 w-6" />
+                  <Heart className="h-6 w-6" />
                 </span>
                 <h3 className="font-serif text-2xl font-bold text-[#1A150F]">
                   We recommend:

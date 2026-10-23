@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { Package, ShieldCheck, Sparkles } from "lucide-react";
+import { Package, ShieldCheck, Heart } from "lucide-react";
 
 export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: any }) {
   const packName = activeVariant?.name || "Pack of 60";
@@ -62,7 +62,7 @@ export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: 
             {/* Item 2 */}
             <div className="flex items-start gap-4">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/20 text-[#F4C430] shadow-2xs">
-                <Sparkles className="h-5 w-5 stroke-[2.2]" />
+                <Heart className="h-5 w-5 stroke-[2.2]" />
               </div>
               <div>
                 <h4 className="text-base font-bold text-white">

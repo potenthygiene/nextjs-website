@@ -32,7 +32,7 @@
 
 //           {/* Role */}
 //           <p className="text-teal-400 tracking-widest text-sm uppercase mb-8">
-//             CEO & Co-Founder · Potent Hygiene
+//             Founder & CEO · Potent Hygiene
 //           </p>
 
 //           <hr className="border-gray-700 mb-8" />
@@ -150,7 +150,7 @@ const FounderSection = () => {
 
           {/* Role */}
           <p className="text-teal-400 tracking-widest text-sm uppercase mb-8">
-            CEO & Co-Founder · Potent Hygiene
+            Founder & CEO · Potent Hygiene
           </p>
 
           <hr className="border-gray-700 mb-8" />

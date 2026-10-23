@@ -643,7 +643,7 @@ export const YATRA_KIT_CATALOG = [
     max: 4,
     art: "panty",
     women: true,
-    blurb: "Leak-resistant, disposable.",
+    blurb: "Leak-proof, disposable.",
     variants: [
       { id: "lxl", label: "M-XL", price: 349 },
       { id: "xxl3xl", label: "XXL-XXXL", price: 349 },

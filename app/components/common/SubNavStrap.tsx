@@ -7,7 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   ChevronDown,
-  Sparkles,
+  Heart,
   Flame,
   Calendar,
   ArrowRight,
@@ -190,7 +190,7 @@ export function SubNavStrap() {
               pathname === "/quiz" ? "font-bold text-[#1A8D91]" : ""
             }`}
           >
-            <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+            <Heart className="h-3.5 w-3.5 text-amber-500" />
             <span>Hygiene Quiz</span>
           </Link>
 

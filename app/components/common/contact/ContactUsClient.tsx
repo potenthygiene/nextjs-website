@@ -10,7 +10,7 @@ import {
   Clock,
   MessageSquare,
   Send,
-  Sparkles,
+  Heart,
   CheckCircle2,
   ChevronDown,
   HelpCircle,
@@ -158,7 +158,7 @@ export default function ContactUsClient() {
 
         <div className="relative mx-auto max-w-7xl px-5 text-center sm:px-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-emerald-100 shadow-2xs backdrop-blur-md">
-            <Sparkles className="h-3.5 w-3.5 text-[#F4C430]" />
+            <Heart className="h-3.5 w-3.5 text-[#F4C430]" />
             <span>We&apos;re Here For You</span>
           </div>
 
@@ -399,7 +399,7 @@ export default function ContactUsClient() {
             {/* QUICK ACTIONS & HELPFUL LINKS */}
             <div className="rounded-3xl border border-[#E4DED0] bg-[#FAF8F3] p-6 space-y-4">
               <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#0E5C3A] flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-[#0E5C3A]" />
+                <Heart className="h-4 w-4 text-[#0E5C3A]" />
                 <span>Quick Self-Service Links</span>
               </h3>
 
@@ -410,7 +410,7 @@ export default function ContactUsClient() {
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-50 text-[#075965]">
-                      <Sparkles className="h-4 w-4" />
+                      <Heart className="h-4 w-4" />
                     </div>
                     <div>
                       <div className="text-xs font-bold text-[#0A4A2E]">Find What I Need Quiz</div>

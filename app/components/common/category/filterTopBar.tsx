@@ -2,7 +2,7 @@
 
 import { useCatalogStore } from "@/store/catalogStore";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { Sparkles, PackageCheck, Layers } from "lucide-react";
+import { Heart, PackageCheck, Layers } from "lucide-react";
 
 export default function FilterBar({ total }: any) {
   const productsTotal = useCatalogStore((state) => state.products.length);

@@ -12,13 +12,12 @@ import {
   RotateCw,
   Check,
   ShoppingBag,
-  Sparkles,
+  Heart,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
   Clock,
   Truck,
-  Heart,
   HelpCircle,
   ArrowRight,
   MapPin,
@@ -69,7 +68,7 @@ const StopIconMap: Record<string, React.ComponentType<any>> = {
   loo: ShieldCheck,
   temple: MapPin,
   mountain: MapPin,
-  music: Sparkles,
+  music: Heart,
   cross: Activity,
   baby: Baby,
   preg: Baby,
@@ -629,7 +628,7 @@ export default function SeatCoversPageClient({
                     Paper
                   </span>
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-[#C6E82E] px-3 py-1 text-xs font-bold text-[#083B5C] shadow-sm">
-                    <Sparkles className="h-3.5 w-3.5" /> Best Seller
+                    <Heart className="h-3.5 w-3.5" /> Best Seller
                   </span>
                 </div>
 
@@ -1081,7 +1080,7 @@ export default function SeatCoversPageClient({
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Sparkles className="h-6 w-6 shrink-0 text-[#C6E82E]" />
+              <Heart className="h-6 w-6 shrink-0 text-[#C6E82E]" />
               <div>
                 <p className="font-serif text-lg font-bold">
                   No-Contact Barrier

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Sparkles } from "lucide-react";
+import { Heart } from "lucide-react";
 
 interface LayerInfo {
   id: number;
@@ -168,7 +168,7 @@ export default function WhatsInside() {
 
           <div className="mt-4 text-center">
             <span className="inline-flex items-center gap-1.5 font-caveat text-xl font-semibold text-[#7E4D77]/80">
-              <Sparkles className="h-4 w-4" /> Hover or tap a layer to explore it
+              <Heart className="h-4 w-4" /> Hover or tap a layer to explore it
             </span>
           </div>
         </div>

@@ -11,7 +11,7 @@ interface ComparisonRow {
 const COMPARISON_DATA: ComparisonRow[] = [
   {
     feature: "Coverage",
-    ovy: "360° — front-to-back, leak-resistant back	",
+    ovy: "360° — front-to-back, leak-proof back	",
     conventional: "Covers only where it sits — back leaks at night",
   },
   {

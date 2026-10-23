@@ -19,7 +19,7 @@ import {
 } from "./ovyProductPricing";
 
 const TICKER_ITEMS = [
-  "Ships within 24 hours",
+  "Ships within 24 to 48 hours",
   "Filthy seat? Sit down.",
   "Squat toilet? Stand up.",
   "No toilet? Looway.",

@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { Package, ShieldCheck, Sparkles } from "lucide-react";
+import { Package, ShieldCheck, Heart } from "lucide-react";
 
 export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: any }) {
   const sizeName = activeVariant?.name || "M-XL";
@@ -17,7 +17,7 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
     { k: "Absorbency", v: "Super-absorbent core — holds as much as 5 regular pads" },
     { k: "Wear time", v: "Up to 10–12 hours of protection (change sooner on heavy days)" },
     { k: "Profile", v: "Genuinely super-thin — feels like normal underwear under clothes" },
-    { k: "Coverage", v: "360° front-to-back leak-resistant back + soft elastic leak guards" },
+    { k: "Coverage", v: "360° front-to-back leak-proof back + soft elastic leak guards" },
     { k: "Wear & Removal", v: "Step in like underwear · tear-away perforated side seams to remove" },
     { k: "Wrapper", v: "Soft non-woven — opens from top, doubles as clean disposal wrapper" },
     { k: "Disposal", v: "Tuck into wrapper and bin — single-use only, never flush or wash" },
@@ -72,7 +72,7 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
                   360° All-Round Leak Protection
                 </h4>
                 <p className="mt-0.5 text-xs text-white/85">
-                  Leak-resistant back &amp; soft side leak guards — holds up to 5 pads
+                  Leak-proof back &amp; soft side leak guards — holds up to 5 pads
                 </p>
               </div>
             </div>
@@ -82,7 +82,7 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
             {/* Item 3 */}
             <div className="flex items-start gap-4">
               <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/20 text-[#F4C430] shadow-2xs">
-                <Sparkles className="h-5 w-5 stroke-[2.2]" />
+                <Heart className="h-5 w-5 stroke-[2.2]" />
               </div>
               <div>
                 <h4 className="text-base font-bold text-white">

@@ -11,13 +11,12 @@ import {
   CheckCircle2,
   Check,
   ShoppingBag,
-  Sparkles,
+  Heart,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
   Clock,
   Truck,
-  Heart,
   HelpCircle,
   ArrowRight,
   MapPin,
@@ -80,7 +79,7 @@ const StopIconMap: Record<string, React.ComponentType<any>> = {
   loo: ShieldCheck,
   temple: MapPin,
   mountain: MapPin,
-  music: Sparkles,
+  music: Heart,
   cross: Activity,
   baby: Baby,
   preg: Baby,
@@ -1334,7 +1333,7 @@ export default function PeePukeBagsPageClient({
                 {/* Microcopy & Support Email */}
                 <div className="mt-4 space-y-1 text-center text-xs text-[#17271E]/70">
                   <p>
-                    Free shipping over ₹399 • ships in 24 hrs • secure checkout
+                    Free shipping over ₹399 • ships in 24 to 48 hrs • secure checkout
                   </p>
                   <p>
                     Questions? Email{" "}
@@ -1419,7 +1418,7 @@ export default function PeePukeBagsPageClient({
                       <strong className="font-bold text-[#0A4A2E]">
                         5 to 7 days
                       </strong>{" "}
-                      • ships in 24 hrs, tracked
+                      • ships in 24 to 48 hrs, tracked
                     </span>
                   </div>
                   <div className="flex items-start gap-2.5">

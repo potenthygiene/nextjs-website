@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
-import { Minus, Plus, Sparkles, CheckCircle2 } from "lucide-react";
+import { Minus, Plus, Heart, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import {
   MIX_BOX_DEFAULT_RECIPE,
@@ -257,7 +257,7 @@ export default function SizeSelectorBox({
                 }`}
               >
                 {sc.name === "Recommended" && (
-                  <Sparkles className="mr-1 inline-block h-3 w-3 text-[#9A5B90]" />
+                  <Heart className="mr-1 inline-block h-3 w-3 text-[#9A5B90]" />
                 )}
                 {sc.name}
               </button>

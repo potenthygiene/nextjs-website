@@ -308,7 +308,7 @@ export function OvyShopSection({
           </span>
         </div>
         <p className="mx-auto mt-3 max-w-md text-xs font-normal text-[#5C524D] sm:max-w-none sm:text-base">
-          Choose the pack, see its price, add it. Every box ships within 24
+          Choose the pack, see its price, add it. Every box ships within 24 to 48
           hours.
         </p>
       </div>
@@ -766,7 +766,7 @@ export function OvyShopSection({
             </div>
             <div>
               <h4 className="text-xs font-semibold sm:text-sm">
-                Ships within 24 hours
+                Ships within 24 to 48 hours
               </h4>
               <p className="mt-0.5 text-[10px] leading-tight text-purple-200/80 sm:text-[11px]">
                 Tracked to your door, free over ₹399

@@ -156,7 +156,7 @@ const article: Article = {
         },
         {
           type: "p",
-          text: "While you wait to be seen, practical protection makes daily life easier. On heavy days and nights, a longer pad with a wider back helps. For nights and long train rides, [period panties](/product-detail/ovy-panty) give leak-resistant, front-to-back coverage that cannot shift. Carry a spare in your handbag, since a perimenopause period can turn up without warning.",
+          text: "While you wait to be seen, practical protection makes daily life easier. On heavy days and nights, a longer pad with a wider back helps. For nights and long train rides, [period panties](/product-detail/ovy-panty) give leak-proof, front-to-back coverage that cannot shift. Carry a spare in your handbag, since a perimenopause period can turn up without warning.",
         },
         {
           type: "product",

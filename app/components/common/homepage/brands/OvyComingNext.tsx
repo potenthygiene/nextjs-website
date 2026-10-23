@@ -56,7 +56,7 @@ export function OvyComingNext() {
                 </h2>
               </Link>
               <p className="mt-3 text-xs sm:text-sm text-[#5C524D] leading-relaxed font-normal max-w-2xl">
-                Worn like underwear, so nothing shifts. 360° coverage with a leak-resistant back for 10 to 12 hours, and super-thin under leggings, jeans or a saree. Two sizes, M-XL and XXL-XXXL, both the same price.
+                Worn like underwear, so nothing shifts. 360° coverage with a leak-proof back for 10 to 12 hours, and super-thin under leggings, jeans or a saree. Two sizes, M-XL and XXL-XXXL, both the same price.
               </p>
             </div>
 

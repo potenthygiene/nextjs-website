@@ -235,7 +235,7 @@ export function OvyHero() {
             {/* Trust Badges */}
             <div className="mt-6 flex flex-wrap items-center gap-4 text-xs font-semibold text-[#5C524D]">
               <span className="flex items-center gap-1.5">
-                <Check className="h-3.5 w-3.5 text-[#016271] stroke-[2.5]" /> Ships within 24 hours
+                <Check className="h-3.5 w-3.5 text-[#016271] stroke-[2.5]" /> Ships within 24 to 48 hours
               </span>
               <span className="flex items-center gap-1.5">
                 <Check className="h-3.5 w-3.5 text-[#016271] stroke-[2.5]" /> Free delivery over ₹399

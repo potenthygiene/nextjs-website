@@ -20,7 +20,6 @@ import {
   RotateCcw,
   ShieldCheck,
   ShoppingBag,
-  Sparkles,
   Star,
   Truck,
   X,
@@ -998,7 +997,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   : "text-[#1A150F]/70 hover:text-[#1A150F]"
               }`}
             >
-              <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <Heart className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               Pick a Size
             </button>
             <button
@@ -1060,7 +1059,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
               ) : (
                 <div className="grid h-full place-items-center p-6 text-center text-gray-500 sm:p-8">
                   <div>
-                    <Sparkles className="mx-auto mb-2 h-7 w-7 text-[#9A5B90] sm:h-8 sm:w-8" />
+                    <Heart className="mx-auto mb-2 h-7 w-7 text-[#9A5B90] sm:h-8 sm:w-8" />
                     <p className="font-semibold text-gray-900">
                       Ovy Organic Pad
                     </p>
@@ -1485,7 +1484,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
               className="flex w-full cursor-pointer items-center gap-3 rounded-2xl border-2 border-[#9A5B90] bg-gradient-to-r from-[#F3E6F0] to-[#E4F1F1] p-3.5 text-left shadow-xs transition-all hover:-translate-y-0.5 hover:shadow-md sm:gap-4 sm:rounded-3xl sm:p-5"
             >
               <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-white text-[#7E4D77] shadow-xs sm:h-11 sm:w-11 sm:rounded-2xl">
-                <Sparkles className="h-4.5 w-4.5 sm:h-5.5 sm:w-5.5" />
+                <Heart className="h-4.5 w-4.5 sm:h-5.5 sm:w-5.5" />
               </div>
               <div className="min-w-0 flex-1">
                 <b className="block text-xs font-bold tracking-tight text-[#1A150F] sm:text-base">
@@ -1768,7 +1767,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
 
               {totalDiscount > 0 && (
                 <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold whitespace-nowrap text-emerald-800">
-                  <Sparkles className="h-3.5 w-3.5" />
+                  <Heart className="h-3.5 w-3.5" />
                   Save {totalDiscount}%
                 </div>
               )}
@@ -1841,7 +1840,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
             <div className="space-y-4 pt-3">
               {/* Shipping Sub-header */}
               <div className="text-center text-xs font-medium text-gray-500 sm:text-sm">
-                Free shipping over ₹399 · ships in 24 hrs · secure checkout
+                Free shipping over ₹399 · ships in 24 to 48 hrs · secure checkout
               </div>
 
               {/* Satisfaction Guarantee */}
@@ -2111,7 +2110,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                       }}
                     >
                       <div className="flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-[#F4F1E8] text-[#7E4D77]">
-                        <Sparkles className="h-4.5 w-4.5" />
+                        <Heart className="h-4.5 w-4.5" />
                       </div>
                       <div className="flex-1">
                         <b className="block text-sm font-semibold text-[#1A150F]">

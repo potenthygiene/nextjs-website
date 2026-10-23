@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import { ArrowRight, ArrowUpRight, CalendarHeart, CalendarDays, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpen, CalendarHeart, CalendarDays, ShieldCheck } from "lucide-react";
 import BlogListClient from "./BlogListClient";
 import { getJournalPosts } from "@/helper/blog/action";
 import { pageMetadata, SITE_URL } from "@/const/seo";
@@ -91,7 +91,7 @@ export default async function BlogPage() {
             Clear, sourced guides for Indian bodies, Indian toilets and Indian journeys. No euphemisms, no scare stories, just what you need to know.
           </p>
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-[13.5px] font-medium text-[#075965]">
-            <li className="inline-flex items-center gap-2"><Sparkles className="h-4 w-4" />{posts.length} guides</li>
+            <li className="inline-flex items-center gap-2"><BookOpen className="h-4 w-4" />{posts.length} guides</li>
             <li className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4" />Sourced from WHO, NHS, ICMR and more</li>
             {lead && <li className="inline-flex items-center gap-2"><CalendarDays className="h-4 w-4" />Updated {lead.date}</li>}
           </ul>

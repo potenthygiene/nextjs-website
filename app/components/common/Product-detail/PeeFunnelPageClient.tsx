@@ -11,12 +11,11 @@ import {
   CheckCircle2,
   Check,
   ShoppingBag,
-  Sparkles,
+  Heart,
   ChevronLeft,
   ChevronRight,
   Clock,
   Truck,
-  Heart,
   HelpCircle,
   ArrowRight,
   MapPin,
@@ -837,7 +836,7 @@ export default function PeeFunnelPageClient({
                 <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-[#5A0E30]/80">
                   <Truck className="h-4 w-4 shrink-0 text-[#C21E63]" />
                   <span>
-                    <strong>Ships in 24 hrs</strong> · usually delivered in{" "}
+                    <strong>Ships in 24 to 48 hrs</strong> · usually delivered in{" "}
                     <strong>5 to 7 days</strong>
                   </span>
                 </div>
@@ -885,7 +884,7 @@ export default function PeeFunnelPageClient({
 
                 {/* Shipping Micro-copy */}
                 <p className="mt-3 text-center text-[11px] leading-relaxed text-[#5A0E30]/60">
-                  Free shipping over ₹399 · ships in 24 hrs · secure checkout.
+                  Free shipping over ₹399 · ships in 24 to 48 hrs · secure checkout.
                   Questions? Email{" "}
                   <a
                     href="mailto:care@potenthygiene.com"
@@ -932,7 +931,7 @@ export default function PeeFunnelPageClient({
                   <div className="mt-3 space-y-1.5 rounded-xl border border-[#EAD6DC] bg-[#fcf8f3] p-3 text-[11.5px] text-[#5A0E30]/75">
                     <div className="flex items-center gap-2 font-bold text-[#5A0E30]">
                       <Truck className="h-4 w-4 text-[#C21E63]" /> Usually
-                      delivered in 5 to 7 days · ships in 24 hrs, tracked
+                      delivered in 5 to 7 days · ships in 24 to 48 hrs, tracked
                     </div>
                     <div className="flex items-start gap-2 text-[11px] leading-snug text-[#5A0E30]/65">
                       <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#C21E63]" />

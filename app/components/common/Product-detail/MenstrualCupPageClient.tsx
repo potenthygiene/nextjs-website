@@ -10,11 +10,10 @@ import {
   ShieldCheck,
   Check,
   ShoppingBag,
-  Sparkles,
+  Heart,
   ChevronDown,
   Clock,
   Truck,
-  Heart,
   HelpCircle,
   ArrowDown,
   ArrowUp,
@@ -729,7 +728,7 @@ export default function MenstrualCupPageClient({
             >
               {/* Badge */}
               <div className="absolute top-4 left-4 z-10 inline-flex items-center gap-2 rounded-full bg-white/90 px-3.5 py-1.5 text-xs font-semibold text-[#7E4D77] shadow-2xs backdrop-blur-xs">
-                <Sparkles className="h-3.5 w-3.5 text-[#7E4D77]" />
+                <Heart className="h-3.5 w-3.5 text-[#7E4D77]" />
                 100% Medical-Grade Silicone
               </div>
 
@@ -1134,7 +1133,7 @@ export default function MenstrualCupPageClient({
               <div className="mb-6 space-y-4">
                 <div className="space-y-1 text-xs text-gray-600">
                   <p className="font-semibold text-gray-500">
-                    Ships in 24 hrs · secure checkout
+                    Ships in 24 to 48 hrs · secure checkout
                   </p>
                   <p>
                     Not sure which size? Use the size finder above. Questions?{" "}
@@ -1146,7 +1145,7 @@ export default function MenstrualCupPageClient({
                     </a>
                   </p>
                   <p className="flex items-center gap-1.5 pt-1 font-semibold text-teal-700">
-                    <Truck className="h-4 w-4" /> Ships in 24 hrs, tracked
+                    <Truck className="h-4 w-4" /> Ships in 24 to 48 hrs, tracked
                   </p>
                 </div>
 
@@ -1174,7 +1173,7 @@ export default function MenstrualCupPageClient({
                   <div className="space-y-1.5 rounded-xl border border-gray-100 bg-gray-50/80 p-3 text-xs text-gray-600">
                     <p className="flex items-center gap-1.5 font-bold text-gray-800">
                       <Truck className="h-4 w-4 text-teal-600" /> Usually
-                      delivered in 5 to 7 days · ships in 24 hrs, tracked
+                      delivered in 5 to 7 days · ships in 24 to 48 hrs, tracked
                     </p>
                     <p className="text-[11px] leading-relaxed">
                       ✓ A cup is a personal hygiene product, so it can't be
@@ -2004,7 +2003,7 @@ export default function MenstrualCupPageClient({
               className="scroll-mt-24 rounded-3xl border border-gray-200/80 bg-white p-6 shadow-2xs"
             >
               <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl bg-pink-50 text-[#7E4D77]">
-                <Sparkles className="h-4 w-4" />
+                <Heart className="h-4 w-4" />
               </div>
               <p className="mb-1 font-serif text-xs text-[#7E4D77] italic">
                 “Will it hurt to insert or wear?”
@@ -2695,7 +2694,7 @@ export default function MenstrualCupPageClient({
             {quizStep === 4 && quizResult && (
               <div className="py-2 text-center">
                 <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-[#F3E6F0] text-[#7E4D77]">
-                  <Sparkles className="h-8 w-8" />
+                  <Heart className="h-8 w-8" />
                 </div>
                 <span className="text-xs font-bold tracking-widest text-emerald-600 uppercase">
                   PERFECT MATCH FOUND

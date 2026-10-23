@@ -432,7 +432,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["dispatch", "ship", "processing", "packed", "weekend", "sunday"],
     answer:
-      "We pack and dispatch orders within 1 to 2 working days of payment. Orders placed on a Saturday or Sunday are processed on the next working day. You get an email with your tracking link as soon as it ships.",
+      "We pack and dispatch every order within **24 to 48 hours** of payment. Delivery then usually takes 5 to 7 days. You get an email with your tracking link as soon as it ships.",
     links: [{ label: "My orders", href: "/dashboard/orders" }],
     related: ["ord-delivery-time", "ord-track-order", "ord-cancel-order"],
   },

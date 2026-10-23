@@ -62,8 +62,8 @@ const Page = () => {
 
               <ul className="list-disc pl-5 mt-3 space-y-1">
                 <li>
-                  Standard Processing: 1–2 business days for order verification
-                  and packing.
+                  Dispatch: orders are packed and dispatched within 24 to 48
+                  hours.
                 </li>
                 <li>Pre-orders: Processing depends on product release date.</li>
                 <li>

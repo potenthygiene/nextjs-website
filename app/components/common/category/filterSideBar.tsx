@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Filter, RotateCcw, ChevronDown, Check, ShieldCheck, Sparkles, Layers } from "lucide-react";
+import { Filter, RotateCcw, ChevronDown, Check, ShieldCheck, Heart, Layers } from "lucide-react";
 
 export default function FiltersSidebar() {
   const router = useRouter();

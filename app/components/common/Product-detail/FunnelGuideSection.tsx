@@ -13,7 +13,6 @@ import {
   Mountain,
   UserCheck,
   ShieldCheck,
-  Sparkles,
   HelpCircle,
   ArrowUp,
   ArrowRight,

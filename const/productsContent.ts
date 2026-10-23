@@ -4074,7 +4074,7 @@ export const loowayYatraKit: Record<string, any> = {
         ],
         [
           "Do you deliver across India, and how do I pay?",
-          "Yes, across India — orders ship in about 24 hours and usually arrive in 5 to 7 days. Pay by UPI, card or net banking. Free shipping over ₹399.",
+          "Yes, across India — orders ship within 24 to 48 hours and usually arrive in 5 to 7 days. Pay by UPI, card or net banking. Free shipping over ₹399.",
         ],
         [
           "Do you do bulk or corporate kits?",
@@ -4330,7 +4330,7 @@ export const ovyCup: Record<string, any> = {
         ],
         [
           "What payment and delivery options are there?",
-          "You can pay by UPI, RuPay, Visa, Mastercard and other major methods at our secure checkout. Orders ship within 24 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
+          "You can pay by UPI, RuPay, Visa, Mastercard and other major methods at our secure checkout. Orders ship within 24 to 48 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
         ],
       ],
     ],
@@ -4908,7 +4908,7 @@ export const ovyLiners: Record<string, any> = {
       [
         [
           "How long does delivery take, and what does shipping cost?",
-          "Orders ship within 24 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
+          "Orders ship within 24 to 48 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
         ],
         [
           "What payment methods can I use?",
@@ -5417,7 +5417,7 @@ export const ovyPads: Record<string, any> = {
         ],
         [
           "What does shipping cost?",
-          "Orders ship within 24 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
+          "Orders ship within 24 to 48 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
         ],
       ],
     ],
@@ -6291,12 +6291,12 @@ export const ovyPanty: Record<string, any> = {
       tags: ["Fits most"],
       name: "Ovy Super Slim Period Panties",
       short:
-        "A pad, reimagined as underwear you simply step into — single-use and disposable, never washed. Each panty is super-absorbent, holding as much as 5 regular pads and staying put for up to 10–12 hours, so one panty replaces 2–3 pad changes and saves you a mid-day change in a public washroom. Yet it stays genuinely super-thin — far slimmer than the bulky disposable panties most brands sell — with a leak-resistant back and full front-to-back coverage for heavy days, nights, work, travel, sport and the weeks after delivery. 8 to a pack, size M-XL (waist ~28–44 in).",
+        "A pad, reimagined as underwear you simply step into — single-use and disposable, never washed. Each panty is super-absorbent, holding as much as 5 regular pads and staying put for up to 10–12 hours, so one panty replaces 2–3 pad changes and saves you a mid-day change in a public washroom. Yet it stays genuinely super-thin — far slimmer than the bulky disposable panties most brands sell — with a leak-proof back and full front-to-back coverage for heavy days, nights, work, travel, sport and the weeks after delivery. 8 to a pack, size M-XL (waist ~28–44 in).",
       bullets: [
         "Super-absorbent — holds as much as 5 regular pads, for up to 10–12 hours",
         "One panty = 2–3 pad changes — no mid-day swaps in public washrooms",
         "Genuinely super-thin — feels like normal underwear, not a bulky diaper",
-        "Full 360° coverage — leak-resistant back and soft leak-guard sides",
+        "Full 360° coverage — leak-proof back and soft leak-guard sides",
         "Worn like underwear — no pad to place, no wings, no adhesive",
         "Each panty individually sealed in its own soft non-woven wrapper",
         "Tear-away sides to remove, then dispose it in the same wrapper — clean & discreet",
@@ -6308,7 +6308,7 @@ export const ovyPanty: Record<string, any> = {
         ["Absorbency", "Super-absorbent — holds as much as 5 pads"],
         ["Wear time", "Up to 10–12 hrs · change sooner on heavy days"],
         ["Thickness", "Super-thin — no bulk, invisible under clothes"],
-        ["Coverage", "360° — leak-resistant back + leak-guard sides"],
+        ["Coverage", "360° — leak-proof back + leak-guard sides"],
         ["On & off", "Step in like underwear · tear the sides to remove"],
         ["Wrapper", "Soft non-woven — opens from the top, reused to dispose"],
         ["Best for", "Heavy days, nights, work, travel, sports, postpartum"],
@@ -6323,13 +6323,13 @@ export const ovyPanty: Record<string, any> = {
       tags: ["Fuller fit"],
       name: "Ovy Super Slim Period Panties",
       short:
-        "A pad, reimagined as underwear you simply step into — single-use and disposable, never washed — in a fuller, true-to-size fit up to XXXL, so nothing digs in or rolls down. Each panty is super-absorbent, holding as much as 5 regular pads and staying put for up to 10–12 hours, so one panty replaces 2–3 pad changes and saves you a mid-day change. It still stays genuinely super-thin, with a leak-resistant back and full front-to-back coverage for heavy days, nights, work, travel, sport and the weeks after delivery. 8 to a pack, size XXL-XXXL (waist ~44–56 in).",
+        "A pad, reimagined as underwear you simply step into — single-use and disposable, never washed — in a fuller, true-to-size fit up to XXXL, so nothing digs in or rolls down. Each panty is super-absorbent, holding as much as 5 regular pads and staying put for up to 10–12 hours, so one panty replaces 2–3 pad changes and saves you a mid-day change. It still stays genuinely super-thin, with a leak-proof back and full front-to-back coverage for heavy days, nights, work, travel, sport and the weeks after delivery. 8 to a pack, size XXL-XXXL (waist ~44–56 in).",
       bullets: [
         "True-to-size fit up to XXXL — no digging in, no rolling down",
         "Super-absorbent — holds as much as 5 regular pads, for up to 10–12 hours",
         "One panty = 2–3 pad changes — no mid-day swaps in public washrooms",
         "Genuinely super-thin — no bulk, feels like normal underwear",
-        "Full 360° coverage — leak-resistant back and soft leak-guard sides",
+        "Full 360° coverage — leak-proof back and soft leak-guard sides",
         "Each panty individually sealed in its own soft non-woven wrapper",
         "Tear-away sides to remove, then dispose it in the same wrapper — clean & discreet",
         "Skin-friendly, breathable, dermatologically tested · Pack of 8 · size XXL-XXXL",
@@ -6340,7 +6340,7 @@ export const ovyPanty: Record<string, any> = {
         ["Absorbency", "Super-absorbent — holds as much as 5 pads"],
         ["Wear time", "Up to 10–12 hrs · change sooner on heavy days"],
         ["Thickness", "Super-thin — no bulk, invisible under clothes"],
-        ["Coverage", "360° — leak-resistant back + leak-guard sides"],
+        ["Coverage", "360° — leak-proof back + leak-guard sides"],
         ["On & off", "Step in like underwear · tear the sides to remove"],
         ["Wrapper", "Soft non-woven — opens from the top, reused to dispose"],
         [
@@ -6368,7 +6368,7 @@ export const ovyPanty: Record<string, any> = {
     "Using a period panty is simpler than a pad — there’s nothing to peel or position. Tear open the individual wrapper from the top and take the panty out; keep the wrapper, it doubles as your disposal bag. Step into it just like normal underwear and pull it up so the absorbent gusset sits snugly against you — wear it on its own, no pad needed. Because its core is super-absorbent — as much as 5 pads — you can wear one for up to 10–12 hours without a mid-day change, which is ideal for long work days, commutes and nights. Change sooner only on your heaviest days, or if it ever feels full or damp. Don’t wear a single panty for more than about 12 hours. To take it off, tear along the perforated side seams — so you never have to slide a soiled panty down your legs — then roll it inward, tuck it back into its wrapper and bin it. Never flush it, and there’s no washing or soaking: each panty is single-use.",
   _PANTY_BENEFITS: [
     "Genuinely super-thin — feels like normal underwear, not the bulky disposable panties most brands sell",
-    "360° coverage — a leak-resistant back and soft leak-guard sides protect you front to back, in every position",
+    "360° coverage — a leak-proof back and soft leak-guard sides protect you front to back, in every position",
     "Worn like underwear — no pad to place, no wings, no adhesive, nothing to shift or peel",
     "Dry-feel top layer — pulls moisture away so your skin stays comfortable, not damp",
     "Made for the hard moments — heavy nights, long journeys, postpartum recovery and first periods",
@@ -6379,7 +6379,7 @@ export const ovyPanty: Record<string, any> = {
     "Top layer — a soft, breathable non-woven sheet that pulls moisture away from the skin",
     "Absorbent core — a super-absorbent core that locks flow in and keeps the surface dry",
     "Leak-guard sides — soft elasticated cuffs that guard against side leaks",
-    "Back layer — a thin, breathable leak-resistant film that keeps flow off your clothes",
+    "Back layer — a thin, breathable leak-proof film that keeps flow off your clothes",
     "Waistband & seams — a comfortable stretch waistband with tear-away side seams for easy removal",
     "Wrapper — each panty is individually sealed in a soft non-woven wrapper (opens from the top; reuse it to dispose)",
     "Free from chlorine bleach, parabens, added fragrances and dyes",
@@ -6394,12 +6394,12 @@ export const ovyPanty: Record<string, any> = {
   TAB_COPY: {
     LXL: {
       description:
-        "It fits and feels like your own underwear — because it is underwear, with the protection built in. And unlike the thick, bulky disposable panties most brands sell, an Ovy panty is genuinely super-thin, so there’s no crackle and no line under leggings, jeans or a saree. The whole gusset absorbs, wrapped in soft leak-guard sides and a thin leak-resistant back, so you’re covered from front to back in every position — the quiet favourite for a heavy night, a long journey, the tender first weeks after delivery, or a teenager’s first period. Each panty comes sealed in its own soft wrapper: open it from the top, wear the panty like normal underwear, and when you’re done, tear the side seams, tuck the used panty back into the same wrapper and bin it — no washing, nothing to flush. A dry-feel top layer keeps your skin comfortable, not damp, for up to 10–12 hours — change sooner on your heaviest days. This pack has 8 panties in size M-XL.",
+        "It fits and feels like your own underwear — because it is underwear, with the protection built in. And unlike the thick, bulky disposable panties most brands sell, an Ovy panty is genuinely super-thin, so there’s no crackle and no line under leggings, jeans or a saree. The whole gusset absorbs, wrapped in soft leak-guard sides and a thin leak-proof back, so you’re covered from front to back in every position — the quiet favourite for a heavy night, a long journey, the tender first weeks after delivery, or a teenager’s first period. Each panty comes sealed in its own soft wrapper: open it from the top, wear the panty like normal underwear, and when you’re done, tear the side seams, tuck the used panty back into the same wrapper and bin it — no washing, nothing to flush. A dry-feel top layer keeps your skin comfortable, not damp, for up to 10–12 hours — change sooner on your heaviest days. This pack has 8 panties in size M-XL.",
       usage:
         "Using a period panty is simpler than a pad — there’s nothing to peel or position. Tear open the individual wrapper from the top and take the panty out; keep the wrapper, it doubles as your disposal bag. Step into it just like normal underwear and pull it up so the absorbent gusset sits snugly against you — wear it on its own, no pad needed. Because its core is super-absorbent — as much as 5 pads — you can wear one for up to 10–12 hours without a mid-day change, which is ideal for long work days, commutes and nights. Change sooner only on your heaviest days, or if it ever feels full or damp. Don’t wear a single panty for more than about 12 hours. To take it off, tear along the perforated side seams — so you never have to slide a soiled panty down your legs — then roll it inward, tuck it back into its wrapper and bin it. Never flush it, and there’s no washing or soaking: each panty is single-use.",
       benefits: [
         "Genuinely super-thin — feels like normal underwear, not the bulky disposable panties most brands sell",
-        "360° coverage — a leak-resistant back and soft leak-guard sides protect you front to back, in every position",
+        "360° coverage — a leak-proof back and soft leak-guard sides protect you front to back, in every position",
         "Worn like underwear — no pad to place, no wings, no adhesive, nothing to shift or peel",
         "Dry-feel top layer — pulls moisture away so your skin stays comfortable, not damp",
         "Made for the hard moments — heavy nights, long journeys, postpartum recovery and first periods",
@@ -6410,7 +6410,7 @@ export const ovyPanty: Record<string, any> = {
         "Top layer — a soft, breathable non-woven sheet that pulls moisture away from the skin",
         "Absorbent core — a super-absorbent core that locks flow in and keeps the surface dry",
         "Leak-guard sides — soft elasticated cuffs that guard against side leaks",
-        "Back layer — a thin, breathable leak-resistant film that keeps flow off your clothes",
+        "Back layer — a thin, breathable leak-proof film that keeps flow off your clothes",
         "Waistband & seams — a comfortable stretch waistband with tear-away side seams for easy removal",
         "Wrapper — each panty is individually sealed in a soft non-woven wrapper (opens from the top; reuse it to dispose)",
         "Free from chlorine bleach, parabens, added fragrances and dyes",
@@ -6425,12 +6425,12 @@ export const ovyPanty: Record<string, any> = {
     },
     XXL: {
       description:
-        "The same super-thin, leak-resistant period panty, made in a fuller, true-to-size fit up to XXXL — so nothing digs in at the waist or rolls down, and nothing leaks. It’s far slimmer than the bulky disposable panties most brands sell, so it feels like your own underwear, not a diaper. The whole gusset absorbs, wrapped in soft leak-guard sides and a thin leak-resistant back, so you’re covered front to back for a heavy night, a long journey, postpartum recovery or very heavy days. Each panty comes sealed in its own soft wrapper: open it from the top, wear it like normal underwear, and when you’re done, tear the side seams, tuck the used panty back into the same wrapper and bin it — no washing, nothing to flush. A dry-feel top layer keeps you comfortable, not damp, for up to 10–12 hours — change sooner on your heaviest days. This pack has 8 panties in size XXL-XXXL.",
+        "The same super-thin, leak-proof period panty, made in a fuller, true-to-size fit up to XXXL — so nothing digs in at the waist or rolls down, and nothing leaks. It’s far slimmer than the bulky disposable panties most brands sell, so it feels like your own underwear, not a diaper. The whole gusset absorbs, wrapped in soft leak-guard sides and a thin leak-proof back, so you’re covered front to back for a heavy night, a long journey, postpartum recovery or very heavy days. Each panty comes sealed in its own soft wrapper: open it from the top, wear it like normal underwear, and when you’re done, tear the side seams, tuck the used panty back into the same wrapper and bin it — no washing, nothing to flush. A dry-feel top layer keeps you comfortable, not damp, for up to 10–12 hours — change sooner on your heaviest days. This pack has 8 panties in size XXL-XXXL.",
       usage:
         "Using a period panty is simpler than a pad — there’s nothing to peel or position. Tear open the individual wrapper from the top and take the panty out; keep the wrapper, it doubles as your disposal bag. Step into it just like normal underwear and pull it up so the absorbent gusset sits snugly against you — wear it on its own, no pad needed. Because its core is super-absorbent — as much as 5 pads — you can wear one for up to 10–12 hours without a mid-day change, which is ideal for long work days, commutes and nights. Change sooner only on your heaviest days, or if it ever feels full or damp. Don’t wear a single panty for more than about 12 hours. To take it off, tear along the perforated side seams — so you never have to slide a soiled panty down your legs — then roll it inward, tuck it back into its wrapper and bin it. Never flush it, and there’s no washing or soaking: each panty is single-use.",
       benefits: [
         "Genuinely super-thin — feels like normal underwear, not the bulky disposable panties most brands sell",
-        "360° coverage — a leak-resistant back and soft leak-guard sides protect you front to back, in every position",
+        "360° coverage — a leak-proof back and soft leak-guard sides protect you front to back, in every position",
         "Worn like underwear — no pad to place, no wings, no adhesive, nothing to shift or peel",
         "Dry-feel top layer — pulls moisture away so your skin stays comfortable, not damp",
         "Made for the hard moments — heavy nights, long journeys, postpartum recovery and first periods",
@@ -6441,7 +6441,7 @@ export const ovyPanty: Record<string, any> = {
         "Top layer — a soft, breathable non-woven sheet that pulls moisture away from the skin",
         "Absorbent core — a super-absorbent core that locks flow in and keeps the surface dry",
         "Leak-guard sides — soft elasticated cuffs that guard against side leaks",
-        "Back layer — a thin, breathable leak-resistant film that keeps flow off your clothes",
+        "Back layer — a thin, breathable leak-proof film that keeps flow off your clothes",
         "Waistband & seams — a comfortable stretch waistband with tear-away side seams for easy removal",
         "Wrapper — each panty is individually sealed in a soft non-woven wrapper (opens from the top; reuse it to dispose)",
         "Free from chlorine bleach, parabens, added fragrances and dyes",
@@ -6474,7 +6474,7 @@ export const ovyPanty: Record<string, any> = {
       [
         [
           "How is a period panty different from a pad?",
-          "You wear it like normal underwear — no adhesive, no wings, nothing to shift out of place. The whole gusset is absorbent, with soft leak-guard sides and a leak-resistant back, so it protects front-to-back. That makes it ideal for sleeping, long journeys, postpartum and heavy days when a pad can move or leak. Each pack has 8 super-thin, disposable panties.",
+          "You wear it like normal underwear — no adhesive, no wings, nothing to shift out of place. The whole gusset is absorbent, with soft leak-guard sides and a leak-proof back, so it protects front-to-back. That makes it ideal for sleeping, long journeys, postpartum and heavy days when a pad can move or leak. Each pack has 8 super-thin, disposable panties.",
         ],
         [
           "Aren’t disposable period panties thick and bulky?",
@@ -6540,7 +6540,7 @@ export const ovyPanty: Record<string, any> = {
         ],
         [
           "What are they made of?",
-          "A soft, breathable non-woven top layer that pulls moisture away, a super-absorbent core that locks in flow, soft leak-guard sides, and a thin leak-resistant back layer, on a comfortable stretch waistband with tear-away sides. Each panty is individually sealed in a soft non-woven wrapper. Free from chlorine bleach, parabens, added fragrances and dyes.",
+          "A soft, breathable non-woven top layer that pulls moisture away, a super-absorbent core that locks in flow, soft leak-guard sides, and a thin leak-proof back layer, on a comfortable stretch waistband with tear-away sides. Each panty is individually sealed in a soft non-woven wrapper. Free from chlorine bleach, parabens, added fragrances and dyes.",
         ],
       ],
     ],
@@ -6553,7 +6553,7 @@ export const ovyPanty: Record<string, any> = {
         ],
         [
           "How long does delivery take, and what does shipping cost?",
-          "Orders ship within 24 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
+          "Orders ship within 24 to 48 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
         ],
         [
           "What payment methods can I use?",
@@ -6994,7 +6994,7 @@ export const ovyPanty: Record<string, any> = {
       text: "A slim, low-profile build that sits close to the body — no bulk and no line under your clothes.",
     },
     {
-      label: "Leak-resistant back",
+      label: "Leak-proof back",
       svg: '<path d="M12 3s6 6.5 6 11a6 6 0 01-12 0c0-4.5 6-11 6-11z" stroke-linejoin="round"/><path d="M4 15.5h16" stroke-linecap="round"/>',
       text: "A thin, breathable back layer keeps flow off your clothes and bedding, protecting front to back.",
     },
@@ -7008,7 +7008,7 @@ export const ovyPanty: Record<string, any> = {
   GAL_VIEWS: [
     "on the body",
     "super-slim profile",
-    "leak-resistant layers",
+    "leak-proof layers",
     "pack of 8",
   ],
   openCert: null,
@@ -7509,7 +7509,7 @@ export const ovyTeen: Record<string, any> = {
         ],
         [
           "How long does delivery take, and where do you ship?",
-          "Orders ship within 24 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
+          "Orders ship within 24 to 48 hours and usually arrive in about 5 to 7 days — faster to metro cities, so pop your PIN code into the checker above for an exact window, all tracked end to end. Shipping is free on every order over ₹399; below that a small delivery charge shows at checkout.",
         ],
         [
           "Is my cycle data private?",

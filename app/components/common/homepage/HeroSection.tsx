@@ -39,7 +39,7 @@ const HERO_SLIDES: HeroSlide[] = [
     image: "/product-images/pads.jpg",
     image2: "/product-images/funnel.jpg",
     alt: "Ovy organic sanitary pads with the Looway pee funnel",
-    stickers: ["from ₹378", "Ships in 24 hrs"],
+    stickers: ["from ₹378", "Ships in 24 to 48 hrs"],
     tint: "mauve",
   },
   {
@@ -104,7 +104,7 @@ const TRUST_ITEMS = [
   "Dermatologically tested",
   "pH-balanced and non-irritant",
   "Cruelty-free",
-  "Ships within 24 hours",
+  "Ships within 24 to 48 hours",
   "Made in Jaipur, India",
 ];
 
@@ -115,7 +115,7 @@ const TICKER_ITEMS = [
   "Made in Jaipur",
   "A pad bought is a pad shared",
   "Free delivery over ₹399",
-  "Ships within 24 hours",
+  "Ships within 24 to 48 hours",
 ];
 
 export function Hero() {

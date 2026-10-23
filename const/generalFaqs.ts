@@ -18,7 +18,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         id: "delivery-time",
         q: "How long does delivery take?",
-        a: "Orders ship within 24 hours and usually arrive in about 5 to 7 days, faster to metro cities. Every order is tracked end to end.",
+        a: "Orders ship within 24 to 48 hours and usually arrive in about 5 to 7 days, faster to metro cities. Every order is tracked end to end.",
       },
       {
         id: "delivery-cost",

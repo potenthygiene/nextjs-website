@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useWishlistStore } from "@/store/WishlistStore";
-import { Search, Heart, User, X, ChevronRight, ArrowRight, Sparkles, Flame, Calendar } from "lucide-react";
+import { Search, Heart, User, X, ChevronRight, ArrowRight, Flame, Calendar } from "lucide-react";
 import {
   Sheet,
   SheetContent,

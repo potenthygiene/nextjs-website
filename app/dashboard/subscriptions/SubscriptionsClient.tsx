@@ -11,7 +11,7 @@ import {
   Info,
   PauseCircle,
   PlayCircle,
-  Sparkles,
+  Heart,
   Truck,
   XCircle,
 } from "lucide-react";
@@ -424,7 +424,7 @@ export function SubscriptionsClient({
                       {/* Plan Rhythm Line */}
                       <div className="flex items-center gap-2 text-sm font-medium text-[#016271]">
                         {subscription.subscriptionType === "cycle_sync" ? (
-                          <Sparkles className="h-4 w-4 shrink-0 text-[#016271]" />
+                          <Heart className="h-4 w-4 shrink-0 text-[#016271]" />
                         ) : (
                           <CalendarClock className="h-4 w-4 shrink-0 text-[#016271]" />
                         )}
