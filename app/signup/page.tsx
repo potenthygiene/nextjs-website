@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signUp } from "@/helper";
 import { toast } from "sonner";
+import { GoogleButton } from "@/app/components/common/auth/GoogleButton";
 
 const Page = () => {
   const params = useSearchParams();
@@ -213,6 +214,7 @@ const Page = () => {
             )}
           </p>
 
+          <GoogleButton redirect={params.get("redirect")} refCode={ref} error={params.get("error")} />
           <form onSubmit={handleSubmit} className="space-y-2">
             <div>
               <input

@@ -19,7 +19,7 @@ const stats = [
   },
   {
     value: "2",
-    label: "IIM Incubations — NSRCEL & IIMV FIELD",
+    label: "IIM Incubations: NSRCEL & IIMV FIELD",
   },
   {
     value: "Top 13",
@@ -41,7 +41,7 @@ const highlights = [
   {
     icon: "✈️",
     title: "Travel Hygiene for All",
-    desc: "Looway removes barriers that make public hygiene a gamble — for everyone.",
+    desc: "Looway removes barriers that make public hygiene a gamble, for everyone.",
   },
 ];
 

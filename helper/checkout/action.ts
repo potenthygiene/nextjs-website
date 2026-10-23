@@ -11,6 +11,8 @@ import {
   productVariant,
   referralCoinHistory,
 } from "@/db/schema";
+import { getUserOccasions, indiaMonth, indiaYear, monthOf, MONTH_NAMES } from "@/lib/occasions";
+import { COMING_SOON_MESSAGE, isComingSoonItem } from "@/const/comingSoon";
 import {
   COMBINED_CAP,
   couponConditions,
@@ -161,6 +163,26 @@ async function getValidCoupon({
         : [];
       if (!joined.length) {
         return { couponInfo: null, error: `${normalizedCode} is for friends who joined with a referral link` };
+      }
+    }
+    // Birthday and anniversary: all through that month, once a year.
+    if (rules.occasion) {
+      if (!userId) return { couponInfo: null, error: `Sign in to use ${normalizedCode}` };
+      const dates = await getUserOccasions(userId);
+      const month = monthOf(rules.occasion === "birthday" ? dates.birthday : dates.anniversary);
+      if (!month) {
+        return { couponInfo: null, error: `Add your ${rules.occasion} in My profile to use ${normalizedCode}` };
+      }
+      if (month !== indiaMonth()) {
+        return { couponInfo: null, error: `${normalizedCode} works all through your ${rules.occasion} month (${MONTH_NAMES[month - 1]})` };
+      }
+      const yearStart = new Date(`${indiaYear()}-01-01T00:00:00+05:30`);
+      const [usedThisYear] = await db
+        .select({ n: sql<number>`count(*)` })
+        .from(couponTransaction)
+        .where(and(eq(couponTransaction.userId, userId), eq(couponTransaction.code, normalizedCode), sql`${couponTransaction.createdAt} >= ${yearStart}`));
+      if (Number(usedThisYear?.n || 0) > 0) {
+        return { couponInfo: null, error: `${normalizedCode} has already been used this year` };
       }
     }
     // Once for every referred friend whose first order has been delivered.
@@ -381,6 +403,21 @@ export async function calculateCheckoutPricingForUser({
       if (pVariants.length > 0 && pVariants.every((pv) => pv.isInStock === false)) {
         itemOutOfStock = true;
       }
+    }
+    // Coming soon (the First Period Box) can't be ordered, even if it reached the bag earlier.
+    if (isComingSoonItem(item)) {
+      return {
+        success: false,
+        message: `${COMING_SOON_MESSAGE} Please remove it from your bag to check out.`,
+        items,
+        subtotal: 0,
+        discount: 0,
+        discountedSubtotal: 0,
+        gst: 0,
+        shipping: 0,
+        final: 0,
+        coupon: null,
+      };
     }
     if (itemOutOfStock) {
       return {
@@ -674,7 +711,10 @@ export async function getCouponWindow({ items }: { items: any[] }): Promise<Coup
 
   let firstOrder = true;
   let referrerCredits = 0;
+  let occasionMonths: Record<string, number | null> = {};
   if (userId) {
+    const dates = await getUserOccasions(userId);
+    occasionMonths = { birthday: monthOf(dates.birthday), anniversary: monthOf(dates.anniversary) };
     const previous = await db
       .select({ id: order.id })
       .from(order)
@@ -725,6 +765,15 @@ export async function getCouponWindow({ items }: { items: any[] }): Promise<Coup
     if (start !== undefined && start > now) {
       item.state = "upcoming";
       item.reason = `Starts ${dayLabel(c.startsAt!)}`;
+    } else if (c.occasion && !userId) {
+      item.state = "ineligible";
+      item.reason = `Sign in and add your ${c.occasion} in My profile to use this in that month`;
+    } else if (c.occasion && !occasionMonths[c.occasion]) {
+      item.state = "ineligible";
+      item.reason = `Add your ${c.occasion} in My profile to use this in that month`;
+    } else if (c.occasion && occasionMonths[c.occasion] !== indiaMonth()) {
+      item.state = "ineligible";
+      item.reason = `Works all through your ${c.occasion} month (${MONTH_NAMES[(occasionMonths[c.occasion] || 1) - 1]})`;
     } else if (c.firstOrderOnly && userId && !firstOrder) {
       item.state = "ineligible";
       item.reason = "For first orders only";

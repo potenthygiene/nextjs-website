@@ -211,7 +211,7 @@ export const FLOWS: SymptomFlow[] = [
           "Skip bubble bath and scented soaps",
         ],
         seeDoctor:
-          "Book a visit in the next few days, and sooner if there is blood, a bad smell, pain or a fever.",
+          "Book a visit in the next few days, and sooner if there is blood, a bad smell, pain or a fever. If you notice any injury, or are ever worried that someone may have hurt the child, tell the doctor. You can also call Childline on 1098, free and confidential, at any time.",
       },
       {
         id: "discharge-young",
@@ -232,7 +232,7 @@ export const FLOWS: SymptomFlow[] = [
           "A parent or trusted adult can go with her to the doctor",
         ],
         seeDoctor:
-          "Book a visit in the next few days, and sooner if there is pain, blood or a fever.",
+          "Book a visit in the next few days, and sooner if there is pain, blood or a fever. If you notice any injury, or are ever worried that someone may have hurt the child, tell the doctor. You can also call Childline on 1098, free and confidential, at any time.",
       },
       {
         id: "discharge-teen",
@@ -535,7 +535,7 @@ export const FLOWS: SymptomFlow[] = [
           "Loose cotton underwear, and keep the area clean and dry",
         ],
         seeDoctor:
-          "Today: it's usually something treatable, but not something to sit on.",
+          "Today: it's usually something treatable, but not something to sit on. If you notice any injury, or are ever worried that someone may have hurt the child, tell the doctor. You can also call Childline on 1098, free and confidential, at any time.",
       },
       {
         id: "itching-red",
@@ -618,7 +618,7 @@ export const FLOWS: SymptomFlow[] = [
           "If threadworms are possible, a doctor or pharmacist can advise on treatment for the whole family",
         ],
         seeDoctor:
-          "A doctor's check is always worthwhile in a young child: book one if it hasn't settled in 2 or 3 days or keeps coming back, and sooner for discharge, bleeding, sores or white patches.",
+          "A doctor's check is always worthwhile in a young child: book one if it hasn't settled in 2 or 3 days or keeps coming back, and sooner for discharge, bleeding, sores or white patches. If you notice any injury, or are ever worried that someone may have hurt the child, tell the doctor. You can also call Childline on 1098, free and confidential, at any time.",
       },
       {
         id: "itching-discharge",

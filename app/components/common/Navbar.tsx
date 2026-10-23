@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
@@ -6,29 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useWishlistStore } from "@/store/WishlistStore";
-import { Search, Heart, User, X, ChevronRight, ArrowRight, Flame, Calendar } from "lucide-react";
+import { Search, Heart, User, X, ChevronRight } from "lucide-react";
 import {
   Sheet,
   SheetContent,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  IconBuildingStore,
-  IconHome,
-  IconInfoCircle,
-  IconMenu2,
-  IconNews,
-  IconPhone,
-  IconShoppingBag,
-  IconSquareRoundedX,
-  IconUser,
-  IconLayoutDashboard,
-  IconHistory,
-  IconStar,
-  IconShieldLock,
-  IconAddressBook,
-} from "@tabler/icons-react";
+import { IconMenu2, IconShoppingBag } from "@tabler/icons-react";
 import { useCartStore } from "@/store/cartStore";
 import { isUserLoggedIn } from "@/helper/auth/action";
 import { getImageUrl } from "@/lib/imageUrl";
@@ -36,58 +20,57 @@ import { syncWishlistFromDB } from "@/store/WishlistActions";
 import { syncCartFromDB } from "@/store/cartActions";
 import { OfferStrip } from "@/app/components/common/offers/Offers";
 
-const navLinks = [
-  { name: "Home", href: "/", icon: <IconHome size={20} /> },
-  { name: "Shop all", href: "/shop", icon: <IconBuildingStore size={20} /> },
-  { name: "Ovy", href: "/ovy", icon: <IconInfoCircle size={20} /> },
-  { name: "Looway", href: "/looway", icon: <IconInfoCircle size={20} /> },
+type MenuSection = {
+  title: string;
+  links: { name: string; href: string }[];
+};
+
+// The phone side menu, grouped so the important pages are easy to find.
+const MENU_SECTIONS: MenuSection[] = [
   {
-    name: "Teens",
-    href: "/product-detail/ovy-teen",
-    icon: <IconInfoCircle size={20} />,
+    title: "Shop",
+    links: [
+      { name: "Shop all products", href: "/shop" },
+      { name: "Ovy period care", href: "/ovy" },
+      { name: "Looway travel hygiene", href: "/looway" },
+      { name: "Teens", href: "/product-detail/ovy-teen" },
+      { name: "Build a Yatra Kit", href: "/looway-yatra-kit" },
+    ],
   },
   {
-    name: "Yatra Kit",
-    href: "/looway-yatra-kit",
-    icon: <IconInfoCircle size={20} />,
+    title: "Learn",
+    links: [
+      { name: "Journal", href: "/blog" },
+      { name: "Period Tracker", href: "/period-log" },
+      { name: "Find what I need", href: "/quiz" },
+      { name: "FAQs", href: "/faq" },
+    ],
   },
-  { name: "Period Tracker", href: "/period-log", icon: <IconNews size={20} /> },
-  { name: "Journal", href: "/blog", icon: <IconPhone size={20} /> },
-  { name: "For Business", href: "/business", icon: <IconBuildingStore size={20} /> },
+  {
+    title: "Help",
+    links: [
+      { name: "My orders", href: "/dashboard/orders" },
+      { name: "Track an order", href: "/faq#track-order" },
+      { name: "Contact us", href: "/contact" },
+      { name: "Shipping policy", href: "/shipping-policy" },
+      { name: "Refund policy", href: "/refund-policy" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { name: "About us", href: "/about" },
+      { name: "Bulk and corporate orders", href: "/business" },
+      { name: "Rewards and referral", href: "/dashboard/referral" },
+    ],
+  },
 ];
 
-const dashboardLinks = [
-  {
-    name: "Dashboard",
-    href: "/dashboard",
-    icon: <IconLayoutDashboard size={20} />,
-  },
-  {
-    name: "Profile Info",
-    href: "/dashboard/profile",
-    icon: <IconUser size={20} />,
-  },
-  {
-    name: "Address Book",
-    href: "/dashboard/address",
-    icon: <IconAddressBook size={20} />,
-  },
-  {
-    name: "Order History",
-    href: "/dashboard/orders",
-    icon: <IconHistory size={20} />,
-  },
-  {
-    name: "Review & Ratings",
-    href: "/dashboard/reviews",
-    icon: <IconStar size={20} />,
-  },
-  {
-    name: "Rewards & Security",
-    href: "/dashboard/security",
-    icon: <IconShieldLock size={20} />,
-  },
-];
+function isActiveLink(pathname: string, href: string) {
+  if (href.includes("#")) return false;
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function Navbar() {
   const totalItems = useCartStore((state) => state.totalItems());
@@ -338,7 +321,11 @@ export function Navbar() {
             <div className="lg:hidden">
               <Sheet open={open} onOpenChange={setOpen}>
                 <SheetTrigger asChild>
-                  <button className="cursor-pointer p-1.5 text-white transition-colors hover:text-white/80">
+                  <button
+                    type="button"
+                    aria-label="Open menu"
+                    className="cursor-pointer p-1.5 text-white transition-colors hover:text-white/80"
+                  >
                     <IconMenu2 size={24} />
                   </button>
                 </SheetTrigger>
@@ -409,72 +396,41 @@ export function Navbar() {
                       </Link>
                     </div>
 
-                    {/* NAV LINKS LIST WITH SUBTLE DIVIDER LINES */}
-                    <div className="flex flex-col space-y-0 text-left pt-1">
-                      <Link
-                        href="/shop"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
+                    {/* GROUPED LINKS: SHOP, LEARN, HELP, COMPANY */}
+                    {MENU_SECTIONS.map((section) => (
+                      <nav
+                        key={section.title}
+                        aria-label={section.title}
+                        className="text-left"
                       >
-                        Shop all
-                      </Link>
-
-                      <Link
-                        href="/ovy"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
-                      >
-                        Ovy
-                      </Link>
-
-                      <Link
-                        href="/looway"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
-                      >
-                        Looway
-                      </Link>
-
-                      <Link
-                        href="/product-detail/ovy-teen"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
-                      >
-                        Teens
-                      </Link>
-
-                      <Link
-                        href="/looway-yatra-kit"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
-                      >
-                        Yatra Kit
-                      </Link>
-
-                      <Link
-                        href="/period-log"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
-                      >
-                        Period Tracker
-                      </Link>
-
-                      <Link
-                        href="/blog"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
-                      >
-                        Journal
-                      </Link>
-
-                      <Link
-                        href="/business"
-                        onClick={() => setOpen(false)}
-                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
-                      >
-                        For Business
-                      </Link>
-                    </div>
+                        <h3 className="pb-1 text-[11px] font-bold tracking-[0.14em] text-white/60 uppercase">
+                          {section.title}
+                        </h3>
+                        <ul className="flex flex-col">
+                          {section.links.map((link) => {
+                            const active = isActiveLink(pathname, link.href);
+                            return (
+                              <li key={link.href}>
+                                <Link
+                                  href={link.href}
+                                  onClick={() => setOpen(false)}
+                                  aria-current={active ? "page" : undefined}
+                                  className={`flex min-h-12 items-center justify-between gap-3 border-b border-white/10 py-2.5 text-[15px] font-semibold transition-colors hover:text-white/80 ${
+                                    active ? "text-[#9FE3EC]" : "text-white"
+                                  }`}
+                                >
+                                  <span>{link.name}</span>
+                                  <ChevronRight
+                                    className="h-4 w-4 shrink-0 text-white/45"
+                                    aria-hidden
+                                  />
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </nav>
+                    ))}
 
                   </div>
 

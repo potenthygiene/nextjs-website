@@ -39,16 +39,16 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "2 · Position by the high side",
-        b: "The soft white foam rim is cut on a slant, so one edge sits higher — the high side. Men & boys hold it UP. Women & girls hold it DOWN, pressed close to the body.",
+        b: "The soft white foam rim is cut on a slant, so one edge sits higher: the high side. Men & boys hold it UP. Women & girls hold it DOWN, pressed close to the body.",
       },
       {
         h: "3 · Let it go",
-        b: "Aim straight in. The super-absorbent strip at the base turns up to 700 ml of liquid into firm gel within seconds — no sloshing, no spills.",
+        b: "Aim straight in. The super-absorbent strip at the base turns up to 700 ml of liquid into firm gel within seconds. No sloshing, no spills.",
       },
       {
         h: "4 · Seal & bin",
-        b: "Press the sealable closure firmly until it locks — leak-proof and odour-locked — then drop it in any bin.",
-        tip: "Keep two per traveller within easy reach — a bag you can't grab in five seconds won't help in a hurry.",
+        b: "Press the sealable closure firmly until it locks (leak-proof and odour-locked), then drop it in any bin.",
+        tip: "Keep two per traveller within easy reach. A bag you can't grab in five seconds won't help in a hurry.",
       },
     ],
   },
@@ -72,7 +72,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "It holds it all",
-        b: "The bag takes up to 700 ml, and the super-absorbent strip gels vomit just like liquid — no splashback, and the smell stays locked in.",
+        b: "The bag takes up to 700 ml, and the super-absorbent strip gels vomit just like liquid. No splashback, and the smell stays locked in.",
       },
       {
         h: "Seal & carry on",
@@ -96,7 +96,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "Any bin works",
-        b: "No special disposal needed. Drop the sealed bag into any dustbin — roadside, train, hospital or home.",
+        b: "No special disposal needed. Drop the sealed bag into any dustbin: roadside, train, hospital or home.",
       },
       {
         h: "Discreet by design",
@@ -121,7 +121,7 @@ export const LOOWAY_STORIES = [
     slides: [
       {
         h: "The 2-minute pack check",
-        b: "Before any trip: water, a power bank, basic meds, wet wipes — and two Looway bags per traveller. The small stuff saves the day.",
+        b: "Before any trip: water, a power bank, basic meds, wet wipes, and two Looway bags per traveller. The small stuff saves the day.",
       },
       {
         h: "Keep them where you'll reach",
@@ -133,7 +133,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "Build a little kit",
-        b: "Pair Looway with seat covers for dodgy public loos and a reusable pee funnel for women & girls — a complete travel-hygiene kit.",
+        b: "Pair Looway with seat covers for dodgy public loos and a reusable pee funnel for women & girls, for a complete travel-hygiene kit.",
       },
     ],
   },
@@ -149,7 +149,7 @@ export const LOOWAY_STORIES = [
     slides: [
       {
         h: "The yatra of a lifetime",
-        b: "Char Dham, Vaishno Devi, Sabarimala, the Kumbh, Tirupati, Amarnath — sacred journeys, but rarely a clean toilet anywhere along the way.",
+        b: "Char Dham, Vaishno Devi, Sabarimala, the Kumbh, Tirupati, Amarnath: sacred journeys, but rarely a clean toilet anywhere along the way.",
       },
       {
         h: "Hours in the queue",
@@ -157,7 +157,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "Don't let elders miss it",
-        b: "So many parents quietly give up their dream yatra for fear of no clean toilet. Looway gives them a private, dignified option — so age and a weak bladder never stand between them and their darshan.",
+        b: "So many parents quietly give up their dream yatra for fear of no clean toilet. Looway gives them a private, dignified option, so age and a weak bladder never stand between them and their darshan.",
       },
       {
         h: "Overnight buses & sleeper trains",
@@ -165,7 +165,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "Light enough for the jhola",
-        b: "Flat, unisex and odour-locked — a few tuck in beside the prasad, the water bottle and the gamcha. Enough for the whole parivaar, the whole route.",
+        b: "Flat, unisex and odour-locked, a few tuck in beside the prasad, the water bottle and the gamcha. Enough for the whole parivaar, the whole route.",
       },
     ],
   },
@@ -180,7 +180,7 @@ export const LOOWAY_STORIES = [
     ic: Baby,
     slides: [
       {
-        h: "'I need to go — NOW'",
+        h: "'I need to go, NOW'",
         b: "Toddlers give zero warning. Stuck in traffic or mid-highway, a Looway bag turns a meltdown into a non-event.",
       },
       {
@@ -221,7 +221,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "Kind to carers too",
-        b: "Less laundry, less scrubbing, less strain — more time for what actually matters.",
+        b: "Less laundry, less scrubbing, less strain, more time for what actually matters.",
       },
     ],
   },
@@ -237,7 +237,7 @@ export const LOOWAY_STORIES = [
     slides: [
       {
         h: "Dirty public toilets? Skip them",
-        b: "Highway dhabas, festival grounds, trekking trails — when the loo is unusable, you have a clean private alternative.",
+        b: "Highway dhabas, festival grounds, trekking trails: when the loo is unusable, you have a clean private alternative.",
       },
       {
         h: "Hold the high side down",
@@ -269,7 +269,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "The strip is the difference",
-        b: "Looway's super-absorbent strip locks up to 700 ml into firm gel in seconds — so there's nothing left to spill.",
+        b: "Looway's super-absorbent strip locks up to 700 ml into firm gel in seconds, so there's nothing left to spill.",
       },
       {
         h: "Sealed, opaque, odour-locked",
@@ -297,7 +297,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "Seal, then sanitise",
-        b: "Press the closure shut first, set the bag down, then clean your hands. Order matters — seal before you touch anything else.",
+        b: "Press the closure shut first, set the bag down, then clean your hands. Order matters: seal before you touch anything else.",
         tip: "Keep a small sanitiser bottle and a few wet wipes in the same pouch as your bags.",
       },
       {
@@ -306,7 +306,7 @@ export const LOOWAY_STORIES = [
       },
       {
         h: "One pouch, sorted",
-        b: "A small zip pouch — bags, wipes, sanitiser — turns 'ugh, now what?' into a ten-second, hygienic fix.",
+        b: "A small zip pouch (bags, wipes, sanitiser) turns 'ugh, now what?' into a ten-second, hygienic fix.",
       },
     ],
   },
@@ -322,7 +322,7 @@ export const LOOWAY_STORIES = [
     slides: [
       {
         h: "It's easier than it looks",
-        b: "Most people get it right on the very first go. Open wide, aim, go, seal — that's genuinely all there is to it.",
+        b: "Most people get it right on the very first go. Open wide, aim, go, seal. That's genuinely all there is to it.",
       },
       {
         h: "Practise the open once",
@@ -351,7 +351,7 @@ export const LOOWAY_STORIES = [
     slides: [
       {
         h: "Never leaks or spills",
-        b: "The internal super-absorbent polymer strip solidifies up to 700 ml of liquid in about 60 seconds — leaving zero free liquid to splash, spill or leak.",
+        b: "The internal super-absorbent polymer strip solidifies up to 700 ml of liquid in about 60 seconds, leaving zero free liquid to splash, spill or leak.",
       },
       {
         h: "Double leak protection",
@@ -376,7 +376,7 @@ export const LOOWAY_STORIES = [
     slides: [
       {
         h: "100% skin-safe & non-toxic",
-        b: "Yes — completely safe for external use. The super-absorbent polymer strip inside Looway bags uses the exact same medical-grade absorbent material found inside infant diapers and sanitary pads.",
+        b: "Yes, completely safe for external use. The super-absorbent polymer strip inside Looway bags uses the exact same medical-grade absorbent material found inside infant diapers and sanitary pads.",
       },
       {
         h: "Locks odour & moisture naturally",
@@ -468,14 +468,14 @@ export default function LoowayGuideSection() {
             Step inside the Looway guide
           </h2>
           <p className="mt-2 sm:mt-3 text-xs sm:text-base leading-relaxed text-[#17271E]/75 font-normal max-w-2xl">
-            Quick, tappable stories — how to use it, how to bin it, and every kind of journey it saves. Tap a circle to enter, then tap or swipe through.
+            Quick, tappable stories: how to use it, how to bin it, and every kind of journey it saves. Tap a circle to enter, then tap or swipe through.
           </p>
         </div>
 
         {/* Got a Question Box */}
         <div className="mt-4 sm:mt-6 rounded-2xl sm:rounded-3xl border border-[#E4DED0] bg-white/90 p-4 sm:p-5 shadow-2xs">
           <p className="text-xs sm:text-sm font-semibold text-[#17271E]/80 mb-2.5">
-            Got a question before you buy? Tap a common one — or dive into the full guide below.
+            Got a question before you buy? Tap a common one, or dive into the full guide below.
           </p>
 
           <div className="flex overflow-x-auto pb-1 gap-1.5 mb-2.5 no-scrollbar [::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
@@ -502,7 +502,7 @@ export default function LoowayGuideSection() {
             }
             className="flex cursor-pointer items-center gap-1.5 text-xs font-bold text-[#0E5C3A] hover:underline"
           >
-            ↑ I&apos;m all set — take me to the packs
+            ↑ I&apos;m all set, take me to the packs
           </button>
         </div>
 
@@ -520,7 +520,7 @@ export default function LoowayGuideSection() {
                 Enter the Looway guide
               </h3>
               <p className="text-xs text-white/80">
-                Tap to step in — 14 quick stories, swipe through in a minute
+                Tap to step in: 14 quick stories, swipe through in a minute
               </p>
             </div>
           </div>

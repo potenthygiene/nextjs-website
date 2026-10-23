@@ -16,6 +16,7 @@ import type { MixBoxRecipe, PurchaseType, SubscriptionType } from "@/lib/mixYour
 import type { YatraKitCartItem } from "@/lib/yatraKit";
 import { getProductMaxQuantity, getMaxQuantityMessage } from "@/lib/productQuantityLimits";
 import { bagNudge, differentProductCount } from "@/const/coupons";
+import { COMING_SOON_MESSAGE, isComingSoonItem } from "@/const/comingSoon";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/shippingConfig";
 
 // "Added to bag", with a nudge towards free delivery or the next coupon.
@@ -61,6 +62,11 @@ type CartItem = {
 
 // Add to cart
 export const addToCart = async (item: CartItem) => {
+  // Announced but not on sale yet (the First Period Box): never into the bag.
+  if (isComingSoonItem(item)) {
+    toast.info(COMING_SOON_MESSAGE);
+    return false;
+  }
   // Subscriptions never go into the bag — route directly to subscription checkout
   const isSubscriptionItem =
     item.purchaseType === "subscription" ||

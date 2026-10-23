@@ -24,7 +24,7 @@ const STOPS_DATA = [
     id: "car",
     icon: Car,
     title: "Cars & road trips",
-    desc: "Highways can run for hours with no clean toilet in sight. Keep the drive moving — discreet relief right from your seat, with no anxious hunt for the next dhaba loo and no ruined road-trip mood.",
+    desc: "Highways can run for hours with no clean toilet in sight. Keep the drive moving with discreet relief right from your seat, with no anxious hunt for the next dhaba loo and no ruined road-trip mood.",
     keepIn: "the glovebox",
   },
   {
@@ -38,14 +38,14 @@ const STOPS_DATA = [
     id: "plane",
     icon: Plane,
     title: "Flights & airports",
-    desc: "Turbulence, long taxi delays, or a queue for the lavatory — a dry, compact bag is easy hand luggage and always ready when the seatbelt sign is on.",
+    desc: "Turbulence, long taxi delays, or a queue for the lavatory? A dry, compact bag is easy hand luggage and always ready when the seatbelt sign is on.",
     keepIn: "your carry-on",
   },
   {
     id: "boat",
     icon: Ship,
     title: "Boats, ferries & cruises",
-    desc: "Backwater ferries, a river cruise or a choppy island crossing — seasickness can hit fast and there is nowhere to run. Keep a bag within reach to be sick or to relieve yourself cleanly, seal it away, and enjoy the water instead of dreading it.",
+    desc: "Backwater ferries, a river cruise or a choppy island crossing: seasickness can hit fast and there is nowhere to run. Keep a bag within reach to be sick or to relieve yourself cleanly, seal it away, and enjoy the water instead of dreading it.",
     keepIn: "your day bag",
   },
   {
@@ -59,7 +59,7 @@ const STOPS_DATA = [
     id: "mountain",
     icon: Mountain,
     title: "Camping & trekking",
-    desc: "No facilities on the trail and nowhere private to go. Use a bag, seal it and pack it out — the clean, leave-no-trace way to answer nature's call in the wild.",
+    desc: "No facilities on the trail and nowhere private to go. Use a bag, seal it and pack it out, the clean, leave-no-trace way to answer nature's call in the wild.",
     keepIn: "your daypack",
   },
   {
@@ -80,7 +80,7 @@ const STOPS_DATA = [
     id: "baby",
     icon: Baby,
     title: "Travelling with a toddler",
-    desc: "Potty-training a little one on a highway means accidents and a roadside stop every hour. Open a bag, let them go, seal it — no ruined car seats and no frantic search for a clean loo.",
+    desc: "Potty-training a little one on a highway means accidents and a roadside stop every hour. Open a bag, let them go, seal it. No ruined car seats and no frantic search for a clean loo.",
     keepIn: "the nappy bag",
   },
   {
@@ -94,7 +94,7 @@ const STOPS_DATA = [
     id: "heart",
     icon: Heart,
     title: "Hospice & elder care",
-    desc: "For a loved one in hospice or home care, night-time and travel toilet trips can be painful and undignified. A bag at the bedside means relief on their terms — gently, cleanly, whenever they need it.",
+    desc: "For a loved one in hospice or home care, night-time and travel toilet trips can be painful and undignified. A bag at the bedside means relief on their terms: gently, cleanly, whenever they need it.",
     keepIn: "the bedside drawer",
   },
   {
@@ -108,7 +108,7 @@ const STOPS_DATA = [
     id: "bed",
     icon: ShieldCheck,
     title: "Bedside at home",
-    desc: "For anyone who cannot reach the bathroom quickly at night — immediate, dignified relief without the struggle or the fall risk.",
+    desc: "For anyone who cannot reach the bathroom quickly at night: immediate, dignified relief without the struggle or the fall risk.",
     keepIn: "the bedside drawer",
   },
 ];

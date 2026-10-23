@@ -54,6 +54,7 @@ const ICON: Record<StoreCoupon["kind"], typeof Tag> = {
   referrer: Users,
   combo: ShoppingBag,
   tier: TrendingUp,
+  occasion: Gift,
 };
 
 const HREF: Record<StoreCoupon["kind"], string> = {
@@ -63,6 +64,7 @@ const HREF: Record<StoreCoupon["kind"], string> = {
   referrer: "/dashboard/referral",
   combo: "/shop",
   tier: "/shop",
+  occasion: "/dashboard/profile",
 };
 
 /** The top strip: festive offer first, then the other offers in turn. */
@@ -74,6 +76,7 @@ export function OfferStrip() {
   const lines: { text: string; href: string }[] = [
     ...(festive ? [{ text: festive.pitch, href: "/shop" }] : []),
     ...live.filter((c) => c.kind === "welcome").map((c) => ({ text: c.pitch, href: "/signup" })),
+    ...live.filter((c) => c.occasion === "birthday").map((c) => ({ text: c.pitch, href: "/dashboard/profile" })),
     ...(ladder.length
       ? [{ text: `Spend more, save more: ${ladder.map((c) => `₹${c.flat} off on ₹${c.minimumOrderValue}+`).join(" · ")}`, href: "/shop" }]
       : []),
@@ -174,8 +177,8 @@ export function OffersBand({ title = "Offers running now", className = "" }: { t
   return (
     <section className={`mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 ${className}`} aria-label="Offers">
       <div className="mb-3 flex items-end justify-between gap-3">
-        <h2 className="text-[20px] font-bold text-[#2b1c27] sm:text-[24px]">{title}</h2>
-        <span className="text-[12px] text-[#8a7484]">Tap a code to copy · one store coupon per order</span>
+        <h2 className="font-serif text-[24px] font-bold leading-[1.15] text-[#1F1915] sm:text-3xl">{title}</h2>
+        <span className="text-[12.5px] text-[#5C524D]">Tap a code to copy · one store coupon per order</span>
       </div>
       <div className="no-scrollbar -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
         {live.map((c) => {

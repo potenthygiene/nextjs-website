@@ -1,7 +1,6 @@
-"use client";
-
-import React from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { BTN_SHAPE, EYEBROW, SECTION_Y } from "./homeStyles";
 
 interface PadSharedImpactProps {
   bgColor?: string;
@@ -15,30 +14,30 @@ export function PadSharedImpact({
   buttonTextColor = "#016271",
 }: PadSharedImpactProps) {
   return (
-    <section className="py-16 sm:py-20 md:py-24 text-white" style={{ backgroundColor: bgColor }}>
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-4xl text-center flex flex-col items-center">
+    <section className={`${SECTION_Y} text-white`} style={{ backgroundColor: bgColor }}>
+      <div className="mx-auto flex w-full max-w-4xl flex-col items-center px-4 text-center sm:px-6">
         {/* BADGE */}
         <span
-          className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-3 block"
+          className={`${EYEBROW} mb-3`}
           style={{ color: badgeColor }}
         >
-          EVERY ORDER GIVES BACK
+          Every order gives back
         </span>
 
         {/* TITLE */}
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-white leading-tight mb-4">
+        <h2 className="mb-4 font-serif text-[26px] leading-[1.15] font-bold text-white sm:text-4xl lg:text-[44px]">
           A pad bought is a pad shared.
         </h2>
 
         {/* SUBTITLE */}
-        <p className="text-sm sm:text-base md:text-lg text-white/85 max-w-2xl mx-auto leading-relaxed mb-6 font-normal">
+        <p className="mx-auto mb-6 max-w-2xl text-[15px] leading-relaxed text-white/90 sm:text-base">
           A portion of every Ovy order goes to Roshni Manav Utthaan Sansthaan,
           which puts safe, organic period products into the hands of girls and
           women who cannot afford them.
         </p>
 
         {/* ITALIC SCRIPT QUOTE */}
-        <p className="font-serif italic text-xl sm:text-2xl md:text-3xl text-white/95 my-2 font-normal">
+        <p className="my-2 font-serif text-xl font-normal text-white italic sm:text-2xl md:text-3xl">
           So she can have her period with dignity.
         </p>
 
@@ -46,7 +45,7 @@ export function PadSharedImpact({
         <div className="w-full max-w-lg border-t border-white/20 my-6" />
 
         {/* PARTNERSHIP FOOTER */}
-        <p className="text-xs sm:text-sm text-white/70 font-normal mb-8">
+        <p className="mb-8 text-[13px] text-white/80 sm:text-sm">
           In partnership with{" "}
           <span className="font-semibold text-white">
             Roshni Manav Utthaan Sansthaan
@@ -55,13 +54,13 @@ export function PadSharedImpact({
         </p>
 
         {/* BUTTON */}
-        <a
+        <Link
           href="/ovy"
-          className="bg-white hover:bg-white/90 px-8 py-3.5 rounded-full font-semibold text-sm sm:text-base transition-all shadow-md inline-flex items-center gap-2 cursor-pointer"
+          className={`${BTN_SHAPE} w-full bg-white px-6 text-[15px] shadow-md hover:bg-white/90 sm:w-auto sm:px-8 sm:text-base`}
           style={{ color: buttonTextColor }}
         >
-          Shop Ovy pads <ArrowRight className="w-4 h-4" />
-        </a>
+          Shop Ovy pads <ArrowRight className="h-4 w-4" aria-hidden />
+        </Link>
       </div>
     </section>
   );

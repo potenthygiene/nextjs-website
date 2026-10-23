@@ -11,18 +11,18 @@ interface ComparisonRow {
 const COMPARISON_DATA: ComparisonRow[] = [
   {
     feature: "Coverage",
-    ovy: "360° — front-to-back, leak-proof back	",
-    conventional: "Covers only where it sits — back leaks at night",
+    ovy: "360°: front-to-back, leak-proof back	",
+    conventional: "Covers only where it sits, so back leaks at night",
   },
   {
     feature: "Staying put",
-    ovy: "Worn like underwear — nothing to shift",
+    ovy: "Worn like underwear, nothing to shift",
     conventional: "Can bunch, fold or slip out of place",
   },
   {
     feature: "On the body",
-    ovy: "Super-thin, dry-feel — no bulk, no line",
-    conventional: "Bulkier — you feel it",
+    ovy: "Super-thin, dry-feel, no bulk, no line",
+    conventional: "Bulkier, you feel it",
   },
   {
     feature: "Disposal",

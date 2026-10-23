@@ -73,7 +73,7 @@ const achievements = [
   {
     id: "03",
     icon: "🏆",
-    title: "TiE Women Rajasthan — Top 13",
+    title: "TiE Women Rajasthan: Top 13",
     desc: "Startup Recognition · 2025",
   },
   {
@@ -100,17 +100,17 @@ const storyData = [
   },
   {
     title: "BUILT FROM NOTHING",
-    text: `First-time founder. No rulebook. No prior playbook. Three D2C brands built from scratch — 
+    text: `First-time founder. No rulebook. No prior playbook. Three D2C brands built from scratch, 
     incubated at two IIMs, funded, and growing across Bharat.`,
   },
   {
     title: "THE PLANET PROBLEM",
     text: `India disposes 12.3 billion pads every year. Most take 800 years to decompose. 
-    Divita saw an environmental crisis hiding in plain sight — and built the answer into every product.`,
+    Divita saw an environmental crisis hiding in plain sight, and built the answer into every product.`,
   },
   {
     title: "BEYOND COMMERCE",
-    text: `As VP of Roshni NGO, Divita carries menstrual hygiene education into spaces most brands never reach — 
+    text: `As VP of Roshni NGO, Divita carries menstrual hygiene education into spaces most brands never reach: 
     rural schools, health centres, and underserved communities across Bharat.`,
   },
 ];
@@ -158,8 +158,8 @@ const FounderSection = () => {
           {/* Quote */}
           <p className="text-lg md:text-xl italic text-gray-300 leading-relaxed font-serif mb-10">
             "I did not start Potent Hygiene to build a company. I started it
-            because I was tired of watching women accept discomfort — chemicals,
-            rashes, shame, silence — as if that were destiny. It is not."
+            because I was tired of watching women accept discomfort (chemicals,
+            rashes, shame, silence) as if that were destiny. It is not."
           </p>
 
           {/* ✅ NEW TIMELINE SECTION */}

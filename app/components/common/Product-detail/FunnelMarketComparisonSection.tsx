@@ -72,7 +72,7 @@ export default function FunnelMarketComparisonSection() {
             Better than the market alternatives
           </h2>
           <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
-            Everything a clean, dignified pee needs — standing up, fully dressed. Here&apos;s how the Looway funnel compares to the usual options at a glance.
+            Everything a clean, dignified pee needs, standing up and fully dressed. Here&apos;s how the Looway funnel compares to the usual options at a glance.
           </p>
         </div>
 
@@ -154,7 +154,7 @@ export default function FunnelMarketComparisonSection() {
         <div className="mt-8 text-center text-xs sm:text-sm font-bold text-[#a81a57]">
           <span className="inline-flex items-center justify-center gap-1.5">
             <Check className="h-4 w-4 stroke-[3] text-[#15803D] shrink-0" />
-            Looway is the only option that does all six — clean, dry, dressed and dignified, every single time.
+            Looway is the only option that does all six: clean, dry, dressed and dignified, every single time.
           </span>
         </div>
       </div>

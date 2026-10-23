@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getImageUrl } from "@/lib/imageUrl";
+import { CONTAINER, EYEBROW_TEAL, H2, LEAD, SECTION_Y } from "./homeStyles";
 import { useCatalogStore } from "@/store/catalogStore";
 
 const MOMENTS = [
@@ -46,17 +47,6 @@ const MOMENTS = [
   },
 ];
 
-const LOOWAY_TICKERS = [
-  "Squat toilet? Stand up.",
-  "Filthy seat? Sit down.",
-  "No toilet? Looway.",
-  "Motion sickness? Bag it.",
-  "Safe through every trimester",
-  "Seat covers and bags: unisex",
-  "Fits in a handbag",
-  "Eleven Yatra Kits",
-];
-
 type Props = {
   title?: string;
   description?: string;
@@ -71,35 +61,35 @@ export function CategoryGrid({
 
   return (
     <section
-      className="w-full border-b border-gray-100 bg-white pt-14 pb-0 sm:pt-20"
+      className={`w-full scroll-mt-24 border-b border-gray-100 bg-white ${SECTION_Y}`}
       id="shop-by"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16">
+      <div className={CONTAINER}>
         {/* Section Header */}
-        <div className="mb-8 space-y-3 text-center md:mb-12">
-          <span className="text-[11px] font-bold tracking-widest text-[#016271] uppercase sm:text-xs">
-            FIND YOURS
-          </span>
-          <h2 className="font-serif text-3xl leading-tight font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-            {title}
-          </h2>
-          <p className="mx-auto max-w-xl text-sm leading-relaxed font-normal text-gray-600 sm:text-base md:text-lg">
+        <div className="mb-6 space-y-2 text-center sm:mb-10 sm:space-y-3">
+          <span className={EYEBROW_TEAL}>Find yours</span>
+          <h2 className={H2}>{title}</h2>
+          <p className={`${LEAD} mx-auto max-w-xl`}>
             {description}
           </p>
         </div>
 
         {/* Tab Toggle Bar */}
-        <div className="mb-10 flex justify-center">
-          <div className="inline-flex items-center gap-1.5 rounded-full border border-gray-200/80 bg-[#FAF7F2] p-1.5 shadow-2xs">
+        <div className="mb-6 flex justify-center sm:mb-10">
+          <div
+            role="tablist"
+            aria-label="Browse by"
+            className="inline-flex items-center gap-1 rounded-full border border-gray-200/80 bg-[#FAF7F2] p-1 shadow-2xs"
+          >
             <button
               type="button"
               role="tab"
               aria-selected={activeTab === "moment"}
               onClick={() => setActiveTab("moment")}
-              className={`cursor-pointer rounded-full px-5 py-2.5 text-xs font-semibold transition-all duration-300 sm:text-sm ${
+              className={`min-h-11 cursor-pointer rounded-full px-5 text-sm font-semibold transition-colors duration-300 ${
                 activeTab === "moment"
                   ? "bg-[#016271] text-white shadow-xs"
-                  : "text-gray-600 hover:text-gray-900"
+                  : "text-[#5C524D] hover:text-[#1F1915]"
               }`}
             >
               Shop by moment
@@ -109,10 +99,10 @@ export function CategoryGrid({
               role="tab"
               aria-selected={activeTab === "category"}
               onClick={() => setActiveTab("category")}
-              className={`cursor-pointer rounded-full px-5 py-2.5 text-xs font-semibold transition-all duration-300 sm:text-sm ${
+              className={`min-h-11 cursor-pointer rounded-full px-5 text-sm font-semibold transition-colors duration-300 ${
                 activeTab === "category"
                   ? "bg-[#016271] text-white shadow-xs"
-                  : "text-gray-600 hover:text-gray-900"
+                  : "text-[#5C524D] hover:text-[#1F1915]"
               }`}
             >
               Shop by category
@@ -122,7 +112,7 @@ export function CategoryGrid({
 
         {/* Tab Panel 1: Shop by Moment */}
         {activeTab === "moment" && (
-          <div className="animate-fadeIn grid grid-cols-3 gap-2.5 sm:grid-cols-1 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+          <div className="animate-fadeIn grid grid-cols-3 gap-2.5 sm:grid-cols-2 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
             {MOMENTS.map((m) => (
               <Link
                 key={m.label}
@@ -132,17 +122,17 @@ export function CategoryGrid({
                 <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-xl border border-gray-100 bg-[#E6F4F6] sm:aspect-none sm:h-24 sm:w-20 lg:h-26 lg:w-22">
                   <Image
                     src={m.image}
-                    alt={m.label}
+                    alt=""
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 640px) 33vw, 100px"
                   />
                 </div>
                 <div className="mt-2 flex w-full min-w-0 flex-col justify-center text-center sm:mt-0 sm:pr-1 sm:text-left">
-                  <h3 className="font-serif text-xs font-bold leading-tight text-gray-900 transition-colors group-hover:text-[#016271] sm:mb-1 sm:text-base md:text-lg">
+                  <h3 className="font-serif text-[13px] font-bold leading-tight text-[#1F1915] transition-colors group-hover:text-[#016271] sm:mb-1 sm:text-base md:text-lg">
                     {m.label}
                   </h3>
-                  <p className="hidden text-xs leading-snug text-gray-600 sm:line-clamp-3 sm:block sm:text-sm">
+                  <p className="hidden text-sm leading-snug text-[#5C524D] sm:line-clamp-3">
                     {m.body}
                   </p>
                 </div>
@@ -192,7 +182,7 @@ export function CategoryGrid({
                     </div>
 
                     <div className="flex items-center justify-between border-t border-gray-50 p-2 sm:p-3.5 md:p-4">
-                      <h3 className="truncate pr-1 text-[10px] font-semibold leading-tight text-gray-900 capitalize transition-colors group-hover:text-[#016271] sm:text-sm md:text-base">
+                      <h3 className="truncate pr-1 text-[13px] font-semibold leading-tight text-[#1F1915] capitalize transition-colors group-hover:text-[#016271] sm:text-sm md:text-base">
                         {displayName}
                       </h3>
                       <ArrowRight className="h-3 w-3 shrink-0 transform text-[#016271] transition-transform group-hover:translate-x-1 sm:h-4 sm:w-4" />
@@ -204,19 +194,6 @@ export function CategoryGrid({
         )}
       </div>
 
-      {/* Mauve / Pink Ticker Strip */}
-      <div className="mt-14 w-full overflow-hidden bg-[#965A7C] py-3 text-white shadow-inner sm:mt-18">
-        <div className="animate-marquee flex items-center space-x-8 font-serif text-sm tracking-wide whitespace-nowrap sm:text-base">
-          {LOOWAY_TICKERS.concat(LOOWAY_TICKERS, LOOWAY_TICKERS).map(
-            (item, idx) => (
-              <div key={idx} className="flex shrink-0 items-center space-x-3">
-                <span className="font-semibold">{item}</span>
-                <span className="text-pink-200">✦</span>
-              </div>
-            ),
-          )}
-        </div>
-      </div>
     </section>
   );
 }

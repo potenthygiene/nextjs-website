@@ -67,7 +67,7 @@ const Page = () => {
                 </li>
                 <li>Pre-orders: Processing depends on product release date.</li>
                 <li>
-                  Custom/Bulk Orders: 3–5 business days depending on size.
+                  Custom/Bulk Orders: 3 to 5 business days depending on size.
                 </li>
                 <li>
                   Weekend Orders: Orders placed on Saturday/Sunday are processed
@@ -124,7 +124,7 @@ const Page = () => {
                   </p>
 
                   <p className="font-semibold text-red-500">
-                    3–5 Business Days
+                    3 to 5 Business Days
                   </p>
                 </div>
 
@@ -144,7 +144,7 @@ const Page = () => {
                   </p>
 
                   <p className="font-semibold text-yellow-600">
-                    5–7 Business Days
+                    5 to 7 Business Days
                   </p>
                 </div>
 
@@ -163,7 +163,7 @@ const Page = () => {
                   </p>
 
                   <p className="font-semibold text-green-600">
-                    7–10 Business Days
+                    7 to 10 Business Days
                   </p>
                 </div>
 
@@ -180,7 +180,7 @@ const Page = () => {
                   </p>
 
                   <p className="font-semibold text-teal-600">
-                    10–14 Business Days
+                    10 to 14 Business Days
                   </p>
                 </div>
               </div>

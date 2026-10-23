@@ -30,7 +30,7 @@ export default function FunnelUseItSafelySection() {
                   <strong className="font-bold text-[#5A0E30]">
                     For external use only.
                   </strong>{" "}
-                  The funnel is never inserted — it sits gently against the outside of your body to direct the flow away.
+                  The funnel is never inserted: it sits gently against the outside of your body to direct the flow away.
                 </div>
               </div>
 
@@ -38,7 +38,7 @@ export default function FunnelUseItSafelySection() {
               <div className="flex items-start gap-2.5 sm:gap-3">
                 <Check className="h-4 w-4 shrink-0 text-[#b51e60] stroke-[2.5] mt-0.5" />
                 <div>
-                  Don&apos;t use it if you have any skin irritation, cut or infection in the area of contact — wait until it has fully healed.
+                  Don&apos;t use it if you have any skin irritation, cut or infection in the area of contact. Wait until it has fully healed.
                 </div>
               </div>
 
@@ -76,7 +76,7 @@ export default function FunnelUseItSafelySection() {
                   <strong className="font-bold text-[#5A0E30]">
                     Pregnant women:
                   </strong>{" "}
-                  safe for external use and especially helpful — check with your doctor if you have any concerns.{" "}
+                  safe for external use and especially helpful. Check with your doctor if you have any concerns.{" "}
                   <strong className="font-bold text-[#5A0E30]">
                     Teen girls:
                   </strong>{" "}

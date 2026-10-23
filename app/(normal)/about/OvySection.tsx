@@ -40,7 +40,7 @@ const OvySection = () => {
           </h1>
 
           <p className="text-sm italic text-rose-300 mb-6">
-            ✦ Derived from Ovaries — honouring the source
+            ✦ Derived from Ovaries, honouring the source
           </p>
 
           <h2 className="text-xl md:text-2xl font-serif text-gray-900 mb-4">
@@ -86,7 +86,7 @@ const OvySection = () => {
           </h3>
 
           <p className="text-gray-600 mb-6 leading-relaxed">
-            Ovy products are formulated with organic, skin-safe materials — free from chlorine, dioxins, synthetic fragrances, and harsh chemicals.
+            Ovy products are formulated with organic, skin-safe materials, free from chlorine, dioxins, synthetic fragrances, and harsh chemicals.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">

@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { addToCart as addToCartAction } from "@/store/cartActions";
+import { isComingSoonItem, COMING_SOON_MESSAGE } from "@/const/comingSoon";
 import { useWishlistStore } from "@/store/WishlistStore";
 import {
   addToWishlist as addToWishlistAction,
@@ -134,9 +135,9 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
   ];
 
   const DEFAULT_PAD_ITEMS = [
-    { name: "Ovy Soft Sanitary Pads - L (240mm)", size: "L (240mm)", price: 349 },
-    { name: "Ovy Soft Sanitary Pads - XL (280mm)", size: "XL (280mm)", price: 349 },
-    { name: "Ovy Soft Sanitary Pads - XL+ (320mm)", size: "XL+ (320mm)", price: 349 },
+    { name: "Ovy Soft Sanitary Pads - L (240mm)", size: "L (240mm)", price: 0 },
+    { name: "Ovy Soft Sanitary Pads - XL (280mm)", size: "XL (280mm)", price: 0 },
+    { name: "Ovy Soft Sanitary Pads - XL+ (320mm)", size: "XL+ (320mm)", price: 0 },
   ];
 
   const getInitialMixBoxItems = (variants?: any[]) => {
@@ -173,7 +174,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
         name: item.name || `Ovy Soft Sanitary Pads - ${padSize || "XL"}`,
         size: item.size || item.name || padSize,
         quantity: qty,
-        price: Number(item.price || 349),
+        price: Number(item.price || 0),
       };
     });
   };
@@ -308,7 +309,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
       ? getStaticBullets(staticVariantInfo)
       : activeVariant?.highlights ||
         productInfo?.highlights || [
-          "100% Organic Top Sheet — Soft, breathable & rash-free",
+          "100% Organic Top Sheet: Soft, breathable & rash-free",
           "Super Absorbent SAP Gel Core for maximum leak protection",
           "Includes 100% Biodegradable Disposal Bags with every pad",
           "Extra-wide stay-in-place wings for all-day confidence",
@@ -474,7 +475,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
   const mixBoxPricing = isMixBoxCheckout
     ? calculateMixBoxPricing({
         recipe: mixBoxRecipe,
-        setPrice: activeVariant?.price || 349,
+        setPrice: Number(activeVariant?.price) || 0,
         purchaseType: "one_time",
         subscriptionType: null,
       })
@@ -487,8 +488,12 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
     ? 0
     : getVolumeDiscount(staticContent, quantity);
   const baseVariantPrice = Number(
-    activeVariant?.price || productInfo?.price || 349,
+    activeVariant?.price || productInfo?.price || 0,
   );
+  // No live price: show no price and block adding, never a made-up number.
+  const priceMissing = isMixBoxCheckout
+    ? !(Number(activeVariant?.price) > 0)
+    : !(baseVariantPrice > 0);
   const discountedVariantPrice = applyDiscounts(
     baseVariantPrice,
     subscriptionDiscount,
@@ -509,11 +514,12 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
     : applyDiscounts(baseVariantPrice, volumeDiscount) * quantity;
 
   const totalAmount = useMemo(() => {
+    if (priceMissing) return "NA";
     if (isMixBoxCheckout) {
       return mixBoxPricing?.valid ? currentOrderValue : "NA";
     }
     return currentOrderValue;
-  }, [currentOrderValue, isMixBoxCheckout, mixBoxPricing]);
+  }, [currentOrderValue, isMixBoxCheckout, mixBoxPricing, priceMissing]);
 
   const totalDiscount = Math.round(
     (subscriptionDiscount + volumeDiscount) * 100,
@@ -639,6 +645,14 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
   }, [canCustomizeBox, selectedPlanType, productInfo?.prodcutVarientBoxRes]);
 
   const addToCart = async () => {
+    if (isComingSoonItem(activeVariant)) {
+      toast.info(COMING_SOON_MESSAGE);
+      return false;
+    }
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return false;
+    }
     if (isOutOfStock) {
       toast.error("This variant is currently out of stock.");
       return false;
@@ -669,7 +683,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
       sku: activeVariant?.sku || `${selectedSize}-${selectedFlow}`,
       slug: productInfo?.slug || "",
       title: activeVariant?.name || productInfo?.name,
-      price: typeof effectiveUnitPrice === "number" ? effectiveUnitPrice : 349,
+      price: effectiveUnitPrice,
       selectedPlan: selectedPlan,
       isSubscribed: effectivePurchaseType === "subscription",
       image:
@@ -712,6 +726,14 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
   };
 
   const handleBuyNow = async () => {
+    if (isComingSoonItem(activeVariant)) {
+      toast.info(COMING_SOON_MESSAGE);
+      return;
+    }
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This variant is currently out of stock.");
       return;
@@ -1282,8 +1304,8 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                 <span className="h-1 w-1 rounded-full bg-gray-400" />
                 <span className="rounded-full bg-[#F3E6F0] px-2 py-0.5 text-[11px] font-semibold text-[#7E4D77] sm:text-xs">
                   {activeVariant?.name?.includes("XXL")
-                    ? "Waist ~44–56 in"
-                    : "Waist ~28–44 in"}
+                    ? "Waist ~44 to 56 in"
+                    : "Waist ~28 to 44 in"}
                 </span>
               </>
             ) : (
@@ -1376,6 +1398,9 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     selectedSize === variant.name;
                   const isVariantOutOfStock =
                     variant.isInStock === false || variant.is_in_stock === false;
+                  const isVariantComingSoon = isComingSoonItem(variant);
+                  const variantPriceText =
+                    Number(variant.price) > 0 ? ` • ₹${variant.price}` : "";
 
                   let sizeName =
                     variant.size?.split(" ")[0] || variant.name || `Option ${idx + 1}`;
@@ -1395,7 +1420,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                       : variant.name?.includes("80")
                         ? 80
                         : 60;
-                    subText = `190mm • ₹${variant.price || (packCount === 40 ? 269 : packCount === 60 ? 404 : 538)}`;
+                    subText = `190mm${variantPriceText}`;
                     flowDesc =
                       packCount === 40
                         ? "Starter / Occasional"
@@ -1407,7 +1432,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                       variant.name || (idx === 0 ? "M-XL" : "XXL-XXXL");
                     const isXxl =
                       sizeName.includes("XXL") || variant.name?.includes("XXL");
-                    subText = `${isXxl ? "Waist 44–56 in" : "Waist 28–44 in"} • ₹${variant.price || 349}`;
+                    subText = `${isXxl ? "Waist 44 to 56 in" : "Waist 28 to 44 in"}${variantPriceText}`;
                     flowDesc = isXxl ? "Fuller, relaxed fit" : "Fits most body types";
                   } else {
                     sizeName =
@@ -1417,7 +1442,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                     const mmText =
                       variant.size?.match(/\((.*?)\)/)?.[1] ||
                       (idx === 0 ? "240mm" : idx === 1 ? "280mm" : "320mm");
-                    subText = `${mmText} • ₹${variant.price || 349}`;
+                    subText = `${mmText}${variantPriceText}`;
                     flowDesc =
                       variant.flowType ||
                       (idx === 0
@@ -1443,7 +1468,11 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                         <div className="font-serif text-base font-semibold text-[#1A150F] sm:text-xl">
                           {sizeName}
                         </div>
-                        {isVariantOutOfStock && (
+                        {isVariantComingSoon ? (
+                          <span className="rounded-full bg-[#F3E6F0] px-1.5 py-0.5 text-[9px] font-bold text-[#7E4D77] sm:text-[10px]">
+                            Coming soon
+                          </span>
+                        ) : isVariantOutOfStock && (
                           <span className="rounded-full bg-red-100 px-1.5 py-0.5 text-[9px] font-bold text-red-600 sm:text-[10px]">
                             Out of Stock
                           </span>
@@ -1640,9 +1669,9 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
 
                     <div className="flex-none text-right whitespace-nowrap">
                       <b className="font-serif text-lg font-semibold text-[#1A150F]">
-                        ₹{Math.round(discountedPrice)}
+                        {priceMissing ? "" : `₹${Math.round(discountedPrice)}`}
                       </b>
-                      {discountPercentage > 0 && (
+                      {!priceMissing && discountPercentage > 0 && (
                         <s className="mt-0.5 block text-xs text-gray-400">
                           ₹{Math.round(baseOrderValueForPlan)}
                         </s>
@@ -1807,9 +1836,11 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   <span className="font-serif text-3xl font-bold tracking-tight text-[#1A150F] sm:text-4xl">
                     {typeof totalAmount === "number"
                       ? `₹${totalAmount}`
-                      : "Incomplete Box"}
+                      : priceMissing
+                        ? "Price unavailable"
+                        : "Incomplete Box"}
                   </span>
-                  {activeVariant?.strikethroughPrice && (
+                  {!priceMissing && activeVariant?.strikethroughPrice && (
                     <span className="text-base text-gray-400 line-through">
                       ₹{activeVariant.strikethroughPrice * quantity}
                     </span>
@@ -1887,8 +1918,8 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                       className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl border-none bg-[#9A5B90] p-4 text-base font-semibold text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-[#7E4D77] disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <ShoppingBag className="h-5 w-5" />
-                      Add to Cart • ₹
-                      {typeof totalAmount === "number" ? totalAmount : ""}
+                      Add to Cart
+                      {typeof totalAmount === "number" ? ` • ₹${totalAmount}` : ""}
                     </button>
                   )}
 
@@ -1913,7 +1944,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
             <div className="space-y-4 pt-3">
               {/* Shipping Sub-header */}
               <div className="text-center text-xs font-medium text-gray-500 sm:text-sm">
-                Free shipping over ₹399 · ships in 24 to 48 hrs · secure checkout
+                Free delivery on orders of ₹399 and above · ships in 24 to 48 hrs · secure checkout
               </div>
 
               {/* Satisfaction Guarantee */}
@@ -1944,7 +1975,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
                   </div>
                   <div className="flex items-center gap-2">
                     <Truck className="h-4.5 w-4.5 shrink-0 text-[#9A5B90]" />
-                    <span>Free shipping over ₹399</span>
+                    <span>Free delivery on orders of ₹399 and above</span>
                   </div>
                 </div>
               </div>
@@ -2081,7 +2112,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle2 className="h-4 w-4 flex-none text-[#1A8D91]" />
-            <span>Free shipping over ₹399</span>
+            <span>Free delivery on orders of ₹399 and above</span>
           </div>
         </div>
       </div>
@@ -2192,7 +2223,7 @@ export default function ProductDetailPage({ productInfo, themeColor }: any) {
       >
         <div className="min-w-0">
           <div className="font-serif text-lg sm:text-xl font-bold text-[#1A150F]">
-            ₹{typeof totalAmount === "number" ? totalAmount : 349}
+            {typeof totalAmount === "number" ? `₹${totalAmount}` : ""}
           </div>
           <div className="text-xs text-gray-500 truncate">
             {isOutOfStock

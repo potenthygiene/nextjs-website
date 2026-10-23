@@ -137,7 +137,7 @@ function formatDate(date?: string | Date | null) {
 
 function formatAmountInRupees(amount?: number | null) {
   if (amount === null || amount === undefined || Number.isNaN(Number(amount))) {
-    return "—";
+    return "Not available";
   }
   const num = Number(amount);
   return Number.isInteger(num)

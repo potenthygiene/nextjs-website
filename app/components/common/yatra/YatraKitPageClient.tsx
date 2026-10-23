@@ -582,6 +582,11 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
       return;
     }
 
+    if (!(activeTotal > 0)) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
+
     setAdding(true);
     try {
       const primaryProduct = activeContents[0]?.product;
@@ -654,7 +659,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
               </h1>
 
               <p className="mt-3 text-base leading-snug font-bold text-[#145C58] sm:text-lg md:text-xl">
-                One kit for every toilet you'll face on a trip — and everything
+                One kit for every toilet you'll face on a trip, and everything
                 for the mess in between.
               </p>
 
@@ -662,7 +667,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
               {/* Description Paragraph */}
               <p className="mt-4 text-xs leading-relaxed text-gray-700 sm:text-sm">
                 Dirty Western seats, squat toilets you can't use, or no toilet
-                at all — one kit handles every situation, and Ovy period care is
+                at all: one kit handles every situation, and Ovy period care is
                 there when you need it. Pick one of 11 ready-made kits, open it,
                 and change exactly what's inside.{" "}
                 <strong className="font-bold text-gray-900">
@@ -699,7 +704,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                   ?
                 </div>
                 <span>
-                  Three toilets, one kit —{" "}
+                  Three toilets, one kit:{" "}
                   <button
                     onClick={() =>
                       document
@@ -810,7 +815,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                       d="M5 13l4 4L19 7"
                     />
                   </svg>
-                  Free shipping over ₹399
+                  Free delivery on orders of ₹399 and above
                 </span>
               </div>
             </div>
@@ -945,7 +950,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                           {activeKit.name}
                         </h3>
                         <p className="mt-1 text-xs text-gray-600">
-                          {activeKit.tag} — Modify quantities below to fit your
+                          {activeKit.tag}: modify quantities below to fit your
                           exact journey.
                         </p>
                       </div>
@@ -954,7 +959,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                           Kit total
                         </p>
                         <p className="text-2xl font-extrabold text-[#0A3B39] sm:text-3xl">
-                          ₹{activeTotal}
+                          {activeTotal > 0 ? `₹${activeTotal}` : "Price unavailable"}
                         </p>
                       </div>
                     </div>
@@ -964,7 +969,9 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                       <div className="mb-1.5 flex items-center justify-between text-xs font-bold text-[#0A3B39]">
                         <span>Free shipping progress</span>
                         <span>
-                          {activeTotal >= 399
+                          {!(activeTotal > 0)
+                            ? "Free delivery on orders of ₹399 and above"
+                            : activeTotal >= 399
                             ? "Unlocked! 🎉"
                             : `₹${Math.max(0, 399 - activeTotal)} away from free delivery`}
                         </span>
@@ -1015,7 +1022,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                                 </div>
                                 <p className="text-xs text-gray-500">
                                   {product
-                                    ? `${product.variantName} · ₹${product.price} each`
+                                    ? `${product.variantName}${Number(product.price) > 0 ? ` · ₹${product.price} each` : ""}`
                                     : "Standard travel pack"}
                                 </p>
 
@@ -1052,7 +1059,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
 
                               <div className="flex items-center justify-between gap-4 sm:justify-end">
                                 <span className="text-sm font-extrabold text-[#0A3B39] sm:text-base">
-                                  ₹{Number(product?.price || 0) * qty}
+                                  {Number(product?.price) > 0 ? `₹${Number(product?.price) * qty}` : ""}
                                 </span>
                                 <div className="flex items-center overflow-hidden rounded-lg border border-[#116B66]/30 bg-[#F4FAF9]">
                                   <button
@@ -1194,10 +1201,10 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
               <span className="text-[#116B66]">One kit for all of them.</span>
             </h2>
             <p className="mt-4 max-w-3xl text-sm leading-relaxed text-gray-600 sm:text-base">
-              Travel throws three kinds of toilet at you — and most people are
+              Travel throws three kinds of toilet at you, and most people are
               only ready for one. A filthy Western seat you don't want to touch.
-              A squat pan you can't or won't use. And the long stretches —
-              highways, traffic, treks — with no toilet at all. The Yatra Kit
+              A squat pan you can't or won't use. And the long stretches
+              (highways, traffic, treks) with no toilet at all. The Yatra Kit
               packs a fix for each, plus intimate wipes to freshen up in
               between.
             </p>
@@ -1219,7 +1226,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                   <strong className="font-bold text-[#0A3B39]">
                     disposable cover
                   </strong>{" "}
-                  and sit — your skin never touches a wet, shared seat. No
+                  and sit: your skin never touches a wet, shared seat. No
                   hovering, no dread.
                 </p>
               </div>
@@ -1239,7 +1246,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                   <strong className="font-bold text-[#0A3B39]">
                     stand-to-pee funnel
                   </strong>{" "}
-                  lets you go standing, without touching anything — a lifesaver
+                  lets you go standing, without touching anything, a lifesaver
                   where there's no seat at all.
                 </p>
               </div>
@@ -1275,7 +1282,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                 </h3>
                 <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
                   <strong className="font-bold text-[#0A3B39]">
-                    Intimate wipes — free with every kit.
+                    Intimate wipes, free with every kit.
                   </strong>{" "}
                   Ten individually-wrapped, pH-balanced wipes to freshen up
                   between stops.
@@ -1299,7 +1306,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
                   <strong className="font-bold text-[#0A3B39]">
                     Ovy pads, liners or a menstrual cup
                   </strong>{" "}
-                  — so a period on the road is never a crisis.
+                  , so a period on the road is never a crisis.
                 </p>
               </div>
             </div>
@@ -1492,7 +1499,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
             </p>
             <div className="flex items-baseline gap-1.5">
               <span className="text-lg font-extrabold text-[#0A3B39]">
-                ₹{activeTotal}
+                {activeTotal > 0 ? `₹${activeTotal}` : ""}
               </span>
               <span className="text-[11px] text-gray-500">
                 · {totalItemsInKit} {totalItemsInKit === 1 ? "item" : "items"}

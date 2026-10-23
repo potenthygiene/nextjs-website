@@ -135,7 +135,7 @@ export default function Details({ id, initialOrderInfo }: { id: string; initialO
               <div className="mt-3 rounded-lg border border-[#9A5B90]/30 bg-purple-50 p-3 text-xs text-purple-900">
                 <div className="font-bold flex items-center gap-1.5 text-[#7E4D77]">
                   <Gift className="h-3.5 w-3.5" />
-                  <span>Gift Order — DO NOT print price on parcel or slip!</span>
+                  <span>Gift Order: DO NOT print price on parcel or slip!</span>
                 </div>
                 {giftNote && (
                   <div className="mt-2 rounded bg-white p-2 border border-purple-200">

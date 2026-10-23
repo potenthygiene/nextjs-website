@@ -106,7 +106,7 @@ const REVIEWS_DATA: Review[] = [
     stage: "Motion-sick traveller",
     stars: 1,
     quote:
-      "With bad motion sickness I couldn't manage a bag in a lurching bus. Support replied fast with tips and a partial credit — great customer service.",
+      "With bad motion sickness I couldn't manage a bag in a lurching bus. Support replied fast with tips and a partial credit. Great customer service.",
   },
 ];
 

@@ -8,7 +8,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Check, CheckCircle2, Lightbulb, RotateCcw, ShieldAlert, Sparkles, X } from "lucide-react";
+import { ArrowLeft, Check, CheckCircle2, Lightbulb, RotateCcw, ShieldAlert, Heart, X } from "lucide-react";
 import type { QuizAnswers, QuizStepDef } from "@/const/quizRules";
 
 export type QuizTheme = {
@@ -268,7 +268,7 @@ export function QuizResult(props: QuizResultProps) {
     <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
       <QuizProgress step={1} total={1} done />
       <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--quiz-accent)] px-3 py-1 text-[11px] font-extrabold tracking-wider text-white uppercase">
-        <Sparkles className="h-3.5 w-3.5" /> {eyebrow}
+        <Heart className="h-3.5 w-3.5" /> {eyebrow}
       </span>
       <h3 className="mt-2 font-serif text-2xl leading-tight font-bold text-[var(--quiz-ink)]">{title}</h3>
 

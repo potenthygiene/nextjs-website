@@ -41,7 +41,7 @@ export const LoowaySection = () => {
           </h3>
 
           <p className="text-gray-600 mb-6 leading-relaxed">
-            Compact, reliable, and built for real Indian travel — from solo women trekkers to families on road trips.
+            Compact, reliable, and built for real Indian travel, from solo women trekkers to families on road trips.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">
@@ -67,7 +67,7 @@ export const LoowaySection = () => {
           </h1>
 
           <p className="text-sm italic text-teal-400 mb-6">
-            ✦ Your road, your rules — hygiene on the move
+            ✦ Your road, your rules: hygiene on the move
           </p>
 
           <h2 className="text-xl md:text-2xl font-serif text-gray-900 mb-4">
@@ -75,7 +75,7 @@ export const LoowaySection = () => {
           </h2>
 
           <p className="text-gray-600 mb-6 leading-relaxed max-w-xl">
-            <strong>Looway is travel hygiene done right.</strong> Whether trekking the Himalayas or stuck in traffic — you’ve always got it handled.
+            <strong>Looway is travel hygiene done right.</strong> Whether trekking the Himalayas or stuck in traffic, you’ve always got it handled.
           </p>
 
           {/* Product List */}

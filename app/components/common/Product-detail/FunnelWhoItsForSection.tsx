@@ -21,25 +21,25 @@ const AUDIENCES_DATA = [
     id: "travellers",
     icon: Navigation,
     title: "Travellers & road-trippers",
-    desc: "Highway drives, train journeys and long commutes with filthy public loos. Stand over the seat with zero contact — no hovering, no touching grimy bowls.",
+    desc: "Highway drives, train journeys and long commutes with filthy public loos. Stand over the seat with zero contact: no hovering, no touching grimy bowls.",
   },
   {
     id: "girls",
     icon: Baby,
     title: "Young girls & their mums",
-    desc: "Potty-training or school trips — no balancing little girls over filthy squat toilets. Clean, quick, and stress-free.",
+    desc: "Potty-training or school trips? No balancing little girls over filthy squat toilets. Clean, quick, and stress-free.",
   },
   {
     id: "pilgrims",
     icon: Building2,
     title: "Pilgrims & yatris",
-    desc: "Char Dham, Vaishno Devi or Tirupati queue lines — hours on foot with no clean toilet anywhere. Stand and go with dignity on tired knees.",
+    desc: "Char Dham, Vaishno Devi or Tirupati queue lines mean hours on foot with no clean toilet anywhere. Stand and go with dignity on tired knees.",
   },
   {
     id: "pregnant",
     icon: Heart,
     title: "Pregnant women",
-    desc: "Pregnancy brings frequent urgency and painful joint stiffness when squatting on low toilets. Standing to pee eliminates crouching completely — keeping your knees, back and baby comfortable.",
+    desc: "Pregnancy brings frequent urgency and painful joint stiffness when squatting on low toilets. Standing to pee eliminates crouching completely, keeping your knees, back and baby comfortable.",
   },
   {
     id: "seniors",
@@ -51,7 +51,7 @@ const AUDIENCES_DATA = [
     id: "trekkers",
     icon: Mountain,
     title: "Trekkers, campers & adventurers",
-    desc: "Trekking, camping with schoolmates, friends or family, or any adventure weekend — no toilet for miles and nowhere private to squat. Stand discreetly and go, the clean leave-no-trace way.",
+    desc: "Trekking, camping with schoolmates, friends or family, or any adventure weekend, with no toilet for miles and nowhere private to squat. Stand discreetly and go, the clean leave-no-trace way.",
   },
   {
     id: "festivals",
@@ -69,7 +69,7 @@ const AUDIENCES_DATA = [
     id: "surgery",
     icon: Activity,
     title: "Post-surgery & recovery",
-    desc: "Post-surgery recovery or limited movement — pee standing up without painful bending or struggling to sit.",
+    desc: "Post-surgery recovery or limited movement? Pee standing up without painful bending or struggling to sit.",
   },
 ];
 
@@ -93,7 +93,7 @@ export default function FunnelWhoItsForSection() {
             Who it&apos;s for
           </h2>
           <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
-            For women and girls on the move — travellers, mums-to-be, and anyone who struggles with squatting or dirty public toilets. Tap a card to see how it helps.
+            For women and girls on the move: travellers, mums-to-be, and anyone who struggles with squatting or dirty public toilets. Tap a card to see how it helps.
           </p>
         </div>
 

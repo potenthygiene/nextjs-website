@@ -8,6 +8,7 @@ import { signIn } from "@/helper";
 import { toast } from "sonner";
 import { syncCartFromDB } from "@/store/cartActions";
 import { syncWishlistFromDB } from "@/store/WishlistActions";
+import { GoogleButton } from "@/app/components/common/auth/GoogleButton";
 
 const Page = () => {
   const router = useRouter();
@@ -169,6 +170,7 @@ const Page = () => {
             Enter your details below
           </p>
 
+          <GoogleButton redirect={searchParams.get("redirect")} error={searchParams.get("error")} />
           <form onSubmit={handleSubmit} className="space-y-2">
             <div>
               <input

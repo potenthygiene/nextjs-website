@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Image from "next/image";
@@ -79,7 +78,7 @@ export function InstagramFeed({
 
   return (
     <section
-      className={`w-full py-14 sm:py-16 overflow-hidden ${
+      className={`w-full overflow-hidden py-12 sm:py-16 lg:py-20 ${
         sectionBg.startsWith("#") ? "" : sectionBg
       }`}
       style={sectionBg.startsWith("#") ? { backgroundColor: sectionBg } : undefined}
@@ -88,13 +87,13 @@ export function InstagramFeed({
         {/* HEADER */}
         <div className="mb-8 sm:mb-10 space-y-2">
           <span
-            className={`text-[11px] sm:text-xs font-bold uppercase tracking-widest block ${kickerCls}`}
+            className={`block text-[11px] font-bold tracking-[0.14em] uppercase sm:text-xs ${kickerCls}`}
           >
             {username}
           </span>
 
           <h2
-            className={`text-3xl sm:text-4xl lg:text-5xl font-serif font-bold leading-tight ${headingCls}`}
+            className={`px-4 font-serif text-[26px] leading-[1.15] font-bold sm:text-4xl lg:text-[44px] ${headingCls}`}
           >
             {title}
           </h2>
@@ -103,7 +102,7 @@ export function InstagramFeed({
         {/* INFINITE MARQUEE CAROUSEL */}
         <div className="w-full overflow-hidden py-3">
           <div
-            className="flex items-center gap-5 sm:gap-6 animate-marquee hover:[animation-play-state:paused] w-max"
+            className="flex w-max items-center gap-4 animate-marquee hover:[animation-play-state:paused] motion-reduce:animate-none sm:gap-6"
             style={{ animationDuration: "50s" }}
           >
             {CAROUSEL_ITEMS.map((img, idx) => (
@@ -112,13 +111,14 @@ export function InstagramFeed({
                 href="https://www.instagram.com/potenthygiene/"
                 target="_blank"
                 rel="noreferrer"
-                className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs border border-white/70 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 aspect-square w-52 sm:w-60 md:w-64 shrink-0 group block cursor-pointer"
+                className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs border border-white/70 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 aspect-square w-44 sm:w-60 md:w-64 shrink-0 group block cursor-pointer"
               >
                 <Image
                   unoptimized
                   src={img.src}
                   alt={img.alt}
                   fill
+                  sizes="256px"
                   className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                 />
               </a>
@@ -131,7 +131,8 @@ export function InstagramFeed({
           <Link
             href="https://www.instagram.com/potenthygiene/"
             target="_blank"
-            className={`inline-flex items-center gap-2 rounded-full border ${btnBorderCls} ${btnTextCls} ${btnBgCls} ${btnHoverBgCls} ${btnHoverTextCls} px-6 py-2.5 sm:px-7 sm:py-3 text-xs sm:text-sm font-semibold transition-all duration-300 shadow-2xs hover:scale-105 cursor-pointer`}
+            rel="noreferrer"
+            className={`inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-full border-2 ${btnBorderCls} ${btnTextCls} ${btnBgCls} ${btnHoverBgCls} ${btnHoverTextCls} px-6 text-[15px] font-semibold shadow-2xs transition-colors duration-300`}
           >
             <span>Follow {username.toLowerCase()}</span>
             <ArrowRight className="w-4 h-4" />

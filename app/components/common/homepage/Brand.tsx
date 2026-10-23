@@ -1,135 +1,125 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CalendarHeart } from "lucide-react";
+import { CONTAINER, EYEBROW_TEAL, H2, LEAD } from "./homeStyles";
 
+// Shop by brand: the two ranges side by side, short enough on a phone that
+// the bestsellers start on the next screen. The third tile is the free
+// Period Tracker, which is live, for the visitor who came to learn.
 export function BrandAccordion() {
   return (
-    <section className="w-full border-b border-gray-100 bg-[#f4f1ec] py-10 sm:py-16 md:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16">
-        {/* Section Header */}
-        <div className="mb-6 space-y-2 text-center sm:mb-12 sm:space-y-3 md:mb-16">
-          <span className="text-[11px] font-bold tracking-widest text-[#016271] uppercase sm:text-xs">
-            ONE HOUSE, TWO RANGES
-          </span>
-          <h2 className="font-serif text-2xl leading-tight font-bold text-gray-900 sm:text-4xl lg:text-5xl">
+    <section className="w-full border-b border-gray-100 bg-[#f4f1ec] py-10 sm:py-16 lg:py-20">
+      <div className={CONTAINER}>
+        <div className="mb-6 space-y-2 text-center sm:mb-10 sm:space-y-3">
+          <span className={EYEBROW_TEAL}>One house, two ranges</span>
+          <h2 className={H2}>
             Periods, handled.<br className="sm:hidden" /> Journeys, handled.
           </h2>
-          <p className="mx-auto hidden max-w-2xl text-sm leading-relaxed font-normal text-gray-600 sm:block sm:text-base md:text-lg">
+          <p className={`${LEAD} mx-auto hidden max-w-2xl sm:block`}>
             Two ranges with one promise between them: nothing about your body
             should ever make you pause your life.
           </p>
         </div>
 
-        {/* 3-Card Grid */}
-        <div className="grid grid-cols-2 items-stretch gap-3 sm:grid-cols-1 md:grid-cols-3 sm:gap-6 lg:gap-8">
-          {/* Card 1: Ovy */}
+        <div className="grid grid-cols-2 items-stretch gap-3 md:grid-cols-3 sm:gap-6 lg:gap-8">
+          {/* Ovy */}
           <Link
             href="/ovy#products"
-            className="group relative flex min-h-[200px] flex-col justify-between rounded-2xl border border-purple-100/50 bg-[#f5e7eb] p-4 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:min-h-[380px] sm:rounded-[28px] sm:p-8 lg:p-10"
+            className="group relative flex flex-col justify-between rounded-2xl border border-purple-100/50 bg-[#f5e7eb] p-4 transition-shadow duration-300 hover:shadow-xl sm:min-h-[340px] sm:rounded-[28px] sm:p-8 lg:p-10"
           >
-            <div className="space-y-3 sm:space-y-6">
-              {/* Mark / Logo */}
-              <div className="flex h-10 items-center sm:h-16">
+            <div className="space-y-2 sm:space-y-5">
+              <div className="flex h-9 items-center sm:h-14">
                 <Image
                   src="/brand/ovy-mark.png"
                   alt="Ovy"
                   width={140}
                   height={80}
-                  className="h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-14"
+                  className="h-8 w-auto object-contain sm:h-12"
                 />
               </div>
-
-              <div className="space-y-1 sm:space-y-2">
-                <h3 className="font-serif text-xs font-bold leading-tight text-gray-900 sm:text-xl md:text-2xl">
-                  Period and intimate care
-                </h3>
-                <p className="hidden text-sm leading-relaxed font-normal text-gray-600 sm:block sm:text-base">
+              <h3 className="font-serif text-[15px] leading-snug font-bold text-[#1F1915] sm:text-2xl">
+                Period and intimate care
+              </h3>
+              <p className="text-[13px] leading-snug text-[#5C524D] sm:text-base sm:leading-relaxed">
+                <span className="sm:hidden">Pads, teen kits, cup and liners.</span>
+                <span className="hidden sm:inline">
                   Organic pads sized to your real flow, first-period kits, a
                   reusable cup and daily liners.
-                </p>
-              </div>
+                </span>
+              </p>
             </div>
 
-            {/* CTA */}
-            <div className="pt-3 text-center sm:pt-8 sm:text-left">
-              <span className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-semibold text-[#016271] shadow-xs transition-all duration-300 group-hover:bg-[#016271] group-hover:text-white sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm">
-                Shop Ovy
-                <ArrowRight className="hidden h-4 w-4 sm:inline-block" />
-              </span>
-            </div>
+            <span className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#7E4D77] px-3 text-sm font-semibold text-white transition-colors group-hover:bg-[#602E55] sm:mt-8 sm:w-fit sm:px-6 sm:text-[15px]">
+              Shop Ovy
+              <ArrowRight className="hidden h-4 w-4 sm:block" aria-hidden />
+            </span>
           </Link>
 
-          {/* Card 2: Looway (with top patterned strip) */}
+          {/* Looway */}
           <Link
             href="/looway"
-            className="group relative flex min-h-[200px] flex-col justify-between overflow-hidden rounded-2xl border border-teal-100/50 bg-[#E6F4F6] p-4 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:min-h-[380px] sm:rounded-[28px] sm:p-8 lg:p-10"
+            className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-teal-100/50 bg-[#E6F4F6] p-4 pt-5 transition-shadow duration-300 hover:shadow-xl sm:min-h-[340px] sm:rounded-[28px] sm:p-8 lg:p-10"
           >
-            {/* Top Checkerboard Accent Pattern */}
-            <div className="absolute top-0 right-0 left-0 h-2 bg-[repeating-linear-gradient(45deg,#016271,#016271_10px,#E5C158_10px,#E5C158_20px)] opacity-90 sm:h-3 sm:bg-[repeating-linear-gradient(45deg,#016271,#016271_12px,#E5C158_12px,#E5C158_24px)]" />
+            {/* Looway checkerboard */}
+            <div className="absolute top-0 right-0 left-0 h-2 bg-[repeating-linear-gradient(45deg,#016271,#016271_10px,#E5C158_10px,#E5C158_20px)] opacity-90 sm:h-3" />
 
-            <div className="space-y-3 pt-1 sm:space-y-6 sm:pt-2">
-              {/* Mark / Logo */}
-              <div className="flex h-10 items-center sm:h-16">
+            <div className="space-y-2 sm:space-y-5">
+              <div className="flex h-9 items-center sm:h-14">
                 <Image
                   src="/brand/looway-mark.png"
                   alt="Looway"
                   width={160}
                   height={70}
-                  className="h-8 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-14"
+                  className="h-8 w-auto object-contain sm:h-12"
                 />
               </div>
-
-              <div className="space-y-1 sm:space-y-2">
-                <h3 className="font-serif text-xs font-bold leading-tight text-gray-900 sm:text-xl md:text-2xl">
-                  Travel and everyday hygiene
-                </h3>
-                <p className="hidden text-sm leading-relaxed font-normal text-gray-600 sm:block sm:text-base">
+              <h3 className="font-serif text-[15px] leading-snug font-bold text-[#1F1915] sm:text-2xl">
+                Travel and everyday hygiene
+              </h3>
+              <p className="text-[13px] leading-snug text-[#5C524D] sm:text-base sm:leading-relaxed">
+                <span className="sm:hidden">Pee funnel, seat covers, pee and puke bags.</span>
+                <span className="hidden sm:inline">
                   A stand-to-pee funnel, seat covers, pee and puke bags for
                   motion sickness and morning sickness, and a build-your-own
                   Yatra Kit. Bags and seat covers for all genders and all ages.
-                </p>
-              </div>
+                </span>
+              </p>
             </div>
 
-            {/* CTA */}
-            <div className="pt-3 text-center sm:pt-8 sm:text-left">
-              <span className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-semibold text-[#016271] shadow-xs transition-all duration-300 group-hover:bg-[#016271] group-hover:text-white sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm">
-                Shop Looway
-                <ArrowRight className="hidden h-4 w-4 sm:inline-block" />
-              </span>
-            </div>
+            <span className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#016271] px-3 text-sm font-semibold text-white transition-colors group-hover:bg-[#004851] sm:mt-8 sm:w-fit sm:px-6 sm:text-[15px]">
+              Shop Looway
+              <ArrowRight className="hidden h-4 w-4 sm:block" aria-hidden />
+            </span>
           </Link>
 
-          {/* Card 3: Wellness Hub (Coming soon) */}
-          <div className="col-span-2 relative flex flex-row items-center justify-between rounded-2xl border border-amber-100/60 bg-[#f4eee2] p-4 shadow-2xs sm:col-span-1 sm:flex-col sm:justify-between sm:min-h-[380px] sm:rounded-[28px] sm:p-8 lg:p-10">
-            <div className="space-y-0.5 sm:space-y-6">
-              {/* Wordmark */}
-              <div className="flex items-center sm:h-16">
-                <span className="font-serif text-base font-bold tracking-tight text-gray-800 sm:text-2xl md:text-3xl">
-                  Wellness Hub
-                </span>
-              </div>
-
-              <div className="space-y-0.5 sm:space-y-2">
-                <p className="text-xs font-normal text-gray-600 sm:font-serif sm:text-xl sm:font-bold sm:text-gray-900 md:text-2xl">
-                  Free tools, not products
-                </p>
-                <p className="hidden text-sm leading-relaxed font-normal text-gray-600 sm:block sm:text-base">
-                  Hormonal Health Decoder, Cycle Tracker, Build-Your-Kit and
-                  Travel Architect. Our tools guide you. They do not diagnose.
-                </p>
-              </div>
-            </div>
-
-            {/* Coming Soon Pill */}
-            <div className="shrink-0 sm:pt-8">
-              <span className="inline-block rounded-full bg-[#EAE4D9] px-3.5 py-1.5 text-xs font-bold tracking-wide text-gray-600 sm:px-4 sm:py-2">
-                Coming soon
+          {/* Free Period Tracker (live), with the Wellness Hub still to come */}
+          <Link
+            href="/period-log"
+            className="group col-span-2 flex flex-row items-center justify-between gap-4 rounded-2xl border border-amber-100/60 bg-[#f4eee2] p-4 transition-shadow duration-300 hover:shadow-xl md:col-span-1 md:min-h-[340px] md:flex-col md:items-start md:rounded-[28px] md:p-8 lg:p-10"
+          >
+            <div className="flex items-start gap-3 md:block md:space-y-5">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-[#016271] md:h-14 md:w-14">
+                <CalendarHeart className="h-5 w-5 md:h-7 md:w-7" aria-hidden />
               </span>
+              <div className="space-y-1 md:space-y-2">
+                <h3 className="font-serif text-[15px] leading-snug font-bold text-[#1F1915] sm:text-2xl">
+                  Free Period Tracker
+                </h3>
+                <p className="text-[13px] leading-snug text-[#5C524D] sm:text-base sm:leading-relaxed">
+                  See your next periods in seconds.
+                  <span className="hidden md:inline">
+                    {" "}More free tools are coming in the Wellness Hub. Our
+                    tools guide you. They do not diagnose.
+                  </span>
+                </p>
+              </div>
             </div>
-          </div>
+
+            <span className="inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 rounded-full border-2 border-[#016271] bg-white px-4 text-sm font-semibold text-[#016271] transition-colors group-hover:bg-[#E6F4F6] md:w-fit md:px-6 md:text-[15px]">
+              Try it
+              <ArrowRight className="h-4 w-4" aria-hidden />
+            </span>
+          </Link>
         </div>
       </div>
     </section>

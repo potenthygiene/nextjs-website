@@ -60,6 +60,7 @@ import {
   type TeenKit,
 } from "@/const/quizRules";
 import { addToCart as addToCartAction } from "@/store/cartActions";
+import { isComingSoonItem, COMING_SOON_MESSAGE } from "@/const/comingSoon";
 import { getProductMaxQuantity, getMaxQuantityMessage } from "@/lib/productQuantityLimits";
 import { useWishlistStore } from "@/store/WishlistStore";
 import {
@@ -101,11 +102,11 @@ const KITS_DATA: Record<string, any> = {
     label: "Starter Pack",
     pieces: "25-piece kit",
     flow: "First-period kit",
-    name: "Ovy Organic Teen Pads — Starter Pack",
+    name: "Ovy Organic Teen Pads: Starter Pack",
     badge: "25-piece kit · 10 L + 11 XL + 4 Liners",
     image: "/product-images/teen.jpg",
     short:
-      "Big changes need a gentle start. The Ovy Teen Starter Pack is your first-period kit — 25 essentials curated for unpredictable early cycles, with feather-soft organic pads that will not rash, will not show under a school uniform, and will not make the first time any harder than it needs to be.",
+      "Big changes need a gentle start. The Ovy Teen Starter Pack is your first-period kit: 25 essentials curated for unpredictable early cycles, with feather-soft organic pads that will not rash, will not show under a school uniform, and will not make the first time any harder than it needs to be.",
     box: [
       {
         item: "10 Large (L) Pads",
@@ -136,18 +137,18 @@ const KITS_DATA: Record<string, any> = {
         bg: "bg-[#E4F1F1]",
       },
     ],
-    total: "25 pieces — a complete monthly supply for one full cycle",
+    total: "25 pieces: a complete monthly supply for one full cycle",
   },
   PRO: {
     key: "PRO",
     label: "Pro-Active Pack",
     pieces: "25-piece kit",
     flow: "Sports & travel kit",
-    name: "Ovy Organic Teen Pads — Pro-Active Sports Pack",
+    name: "Ovy Organic Teen Pads: Pro-Active Sports Pack",
     badge: "25-piece kit · 7 L + 7 XL + 7 XL+ + 4 Liners",
     image: "/product-images/teen-pro.jpg",
     short:
-      "Don’t let your period bench you. Bleed. Conquer. Slay. The Ovy Teen Pro-Active Pack is engineered for the girl who refuses to hit pause — sprinting on the field, dancing on stage, travelling for tournaments. Three pad sizes. Maximum movement. Zero leaks.",
+      "Don’t let your period bench you. Bleed. Conquer. Slay. The Ovy Teen Pro-Active Pack is engineered for the girl who refuses to hit pause: sprinting on the field, dancing on stage, travelling for tournaments. Three pad sizes. Maximum movement. Zero leaks.",
     box: [
       {
         item: "7 Large (L) Pads",
@@ -185,19 +186,19 @@ const KITS_DATA: Record<string, any> = {
         bg: "bg-[#E4F1F1]",
       },
     ],
-    total: "25 pieces — a complete active sports cycle kit",
+    total: "25 pieces: a complete active sports cycle kit",
   },
   FIRST: {
     key: "FIRST",
     label: "First Period Box",
     pieces: "50-piece milestone kit",
     flow: "Complete First Period Gift Box",
-    name: "Ovy Organic Teen Pads — First Period Box",
+    name: "Ovy Organic Teen Pads: First Period Box",
     isComingSoon: true,
     badge: "Coming Soon · 50-piece milestone kit",
     image: "/product-images/teen_model.jpg",
     short:
-      "The ultimate first-period milestone gift box. Packed with 50 premium organic pads across three sizes, panty liners, period panty, toilet seat covers, wipes, pain relief patches, and a friendly step-by-step guidebook.",
+      "The ultimate first-period milestone gift box. Packed with 50 premium organic pads across three sizes, panty liners, period panty, toilet seat covers, wipes and a friendly step-by-step guidebook. Coming soon: it can't be ordered yet.",
     box: [
       {
         item: "14 Large (L) Pads",
@@ -237,7 +238,7 @@ const KITS_DATA: Record<string, any> = {
       {
         item: "1 Period Panty & Extras",
         mm: "Complete Kit",
-        for: "Seat covers, wipes, pain patches & guide",
+        for: "Seat covers, wipes & guidebook",
         tag: "GIFT",
         bg: "bg-[#FBF1DA]",
       },
@@ -249,7 +250,6 @@ const KITS_DATA: Record<string, any> = {
 export default function OvyTeenPageClient({
   product,
   reviewWithMedia,
-  similarProducts = [],
   ovyProductsMap = {},
   content,
 }: Props) {
@@ -374,7 +374,6 @@ export default function OvyTeenPageClient({
       slug: "ovy-cup",
       fallbackTitle: "Ovy Menstrual Cup",
       fallbackDesc: "Organic & rash-free menstrual hygiene care.",
-      fallbackPrice: 459,
       fallbackImg: "/product-images/cup-rbw.jpg",
       bg: "bg-[#F3E6F0]",
       tag: "OVY",
@@ -383,7 +382,6 @@ export default function OvyTeenPageClient({
       slug: "ovy-pads",
       fallbackTitle: "Ovy Organic Sanitary Pads",
       fallbackDesc: "Organic & rash-free menstrual hygiene care.",
-      fallbackPrice: 378,
       fallbackImg: "/product-images/pads-l.jpg",
       bg: "bg-[#E4F1F1]",
       tag: "OVY",
@@ -392,7 +390,6 @@ export default function OvyTeenPageClient({
       slug: "ovy-liners",
       fallbackTitle: "Ovy Daily Liners",
       fallbackDesc: "Organic & rash-free menstrual hygiene care.",
-      fallbackPrice: 269,
       fallbackImg: "/product-images/liners.jpg",
       bg: "bg-[#FBF1FB]",
       tag: "OVY",
@@ -401,91 +398,12 @@ export default function OvyTeenPageClient({
       slug: "looway-toilet-seat-covers",
       fallbackTitle: "Looway Toilet Seat Covers",
       fallbackDesc: "Wet-proof disposable covers for school and public toilets.",
-      fallbackPrice: 549,
       fallbackImg: "/product-images/seatcovers.jpg",
       bg: "bg-[#F4F1E8]",
       tag: "LOOWAY",
     },
   ];
 
-  // Dynamic Routine Products from DB / Fallback
-  const routineProducts = useMemo(() => {
-    if (Array.isArray(similarProducts) && similarProducts.length > 0) {
-      const bgTints = [
-        "bg-[#F3E6F0]",
-        "bg-[#E4F1F1]",
-        "bg-[#FBF1FB]",
-        "bg-[#F4F1E8]",
-      ];
-      return similarProducts.slice(0, 4).map((prod: any, idx: number) => {
-        const price = prod.basePrice
-          ? Number(prod.basePrice)
-          : prod.startingPrice
-            ? Number(prod.startingPrice)
-            : 199;
-        const banner = prod.bannerImage ? getImageUrl(prod.bannerImage) : null;
-
-        return {
-          id: prod.id || prod.slug,
-          name: prod.name,
-          desc:
-            prod.description || "Organic & rash-free menstrual hygiene care.",
-          price,
-          tag: prod.brand
-            ? prod.brand === "loway"
-              ? "LOOWAY"
-              : String(prod.brand).toUpperCase()
-            : "ORGANIC",
-          bg: bgTints[idx % bgTints.length],
-          image: banner,
-          slug: prod.slug ? `/product-detail/${prod.slug}` : "#",
-        };
-      });
-    }
-
-    return [
-      {
-        id: "liners",
-        name: "Ovy Organic Panty Liners",
-        desc: "Everyday freshness & light spotting care.",
-        price: 149,
-        tag: "ORGANIC",
-        bg: "bg-[#F3E6F0]",
-        image: null,
-        slug: "/product-detail/ovy-liners",
-      },
-      {
-        id: "cup",
-        name: "Ovy Menstrual Cup — XS",
-        desc: "XS size for teens, up to 12h protection.",
-        price: 399,
-        tag: "REUSABLE",
-        bg: "bg-[#E4F1F1]",
-        image: null,
-        slug: "/product-detail/ovy-cup",
-      },
-      {
-        id: "panty",
-        name: "Disposable Period Panty",
-        desc: "360° leak protection for heavy nights.",
-        price: 249,
-        tag: "HEAVY FLOW",
-        bg: "bg-[#FBF1FB]",
-        image: null,
-        slug: "/product-detail/ovy-panty",
-      },
-      {
-        id: "seat",
-        name: "Looway Toilet Seat Covers",
-        desc: "Hygienic protection in school washrooms.",
-        price: 199,
-        tag: "HYGIENE",
-        bg: "bg-[#F4F1E8]",
-        image: null,
-        slug: "/product-detail/looway-toilet-seat-covers",
-      },
-    ];
-  }, [similarProducts]);
 
   // Cycle Sync States
   const [lastPeriodDate, setLastPeriodDate] = useState<string>("");
@@ -505,6 +423,10 @@ export default function OvyTeenPageClient({
     const targetId = product?.id || "ovy-teen";
     const targetSlug = product?.slug || "ovy-teen";
     if (isWishlistUpdating) return;
+    if (activeKit.isComingSoon && !isWishlisted) {
+      toast.info("The First Period Box is coming soon and can't be saved or ordered yet.");
+      return;
+    }
     setIsWishlistUpdating(true);
     try {
       if (isWishlisted) {
@@ -516,7 +438,7 @@ export default function OvyTeenPageClient({
           productId: targetId,
           name: product?.name || activeKit.name,
           selectedVariant: currentVariant,
-          price: basePrice,
+          price: priceMissing ? undefined : basePrice,
           image: mediaList[0] || "/product.png",
           hasVarientBox: true,
           slug: targetSlug,
@@ -707,7 +629,8 @@ export default function OvyTeenPageClient({
       ) {
         return Number(product.price);
       }
-      return 378;
+      // No live price: show none rather than a made-up number.
+      return null;
     },
     [getVariantForKitKey, product],
   );
@@ -734,8 +657,7 @@ export default function OvyTeenPageClient({
       ) {
         return Number(product.mrp);
       }
-      const price = getDbPriceForKitKey(key);
-      return Math.round(price * 1.18);
+      return null;
     },
     [getVariantForKitKey, getDbPriceForKitKey, product],
   );
@@ -748,13 +670,16 @@ export default function OvyTeenPageClient({
   // Current active Kit configuration
   const activeKit = KITS_DATA[selectedKitKey] || KITS_DATA.STARTER;
 
-  // Base and discounted prices strictly from DB
-  const basePrice = useMemo(() => {
+  // Base and discounted prices strictly from DB. With no live price, nothing
+  // is shown and the kit can't be added (no fallback number).
+  const livePrice = useMemo(() => {
     return getDbPriceForKitKey(selectedKitKey);
   }, [getDbPriceForKitKey, selectedKitKey]);
+  const priceMissing = livePrice === null;
+  const basePrice = livePrice ?? 0;
 
   const mrpPrice = useMemo(() => {
-    return getDbMrpForKitKey(selectedKitKey);
+    return getDbMrpForKitKey(selectedKitKey) ?? 0;
   }, [getDbMrpForKitKey, selectedKitKey]);
 
   const cycleSyncDiscountPct = useMemo(
@@ -883,6 +808,14 @@ export default function OvyTeenPageClient({
 
   // Add To Cart logic preserving exact backend signature
   const handleAddToCart = async (): Promise<boolean> => {
+    if (activeKit.isComingSoon || isComingSoonItem(currentVariant)) {
+      toast.info(COMING_SOON_MESSAGE);
+      return false;
+    }
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return false;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return false;
@@ -914,7 +847,7 @@ export default function OvyTeenPageClient({
         productVariantId: variantId,
         sku: variantSku,
         slug: product?.slug || "ovy-teen",
-        title: `${product?.name || "Ovy Organic Soft Sanitary Pads — Teen"} (${activeKit.label})`,
+        title: `${product?.name || "Ovy Organic Soft Sanitary Pads: Teen"} (${activeKit.label})`,
         variantName: activeKit.label,
         image: mediaList[0] || "/product-images/teen.jpg",
         price: unitPrice,
@@ -940,6 +873,14 @@ export default function OvyTeenPageClient({
 
   // Direct Buy Now
   const handleBuyNow = async () => {
+    if (activeKit.isComingSoon || isComingSoonItem(currentVariant)) {
+      toast.info(COMING_SOON_MESSAGE);
+      return;
+    }
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -967,7 +908,7 @@ export default function OvyTeenPageClient({
         productVariantId: variantId,
         sku: variantSku,
         slug: product?.slug || "ovy-teen",
-        title: `${product?.name || "Ovy Organic Soft Sanitary Pads — Teen"} (${activeKit.label})`,
+        title: `${product?.name || "Ovy Organic Soft Sanitary Pads: Teen"} (${activeKit.label})`,
         variantName: activeKit.label,
         image: mediaList[0] || "/product-images/teen.jpg",
         price: unitPrice,
@@ -1070,6 +1011,10 @@ export default function OvyTeenPageClient({
   };
 
   const addQuizKitToCart = async (key: TeenKit) => {
+    if (KITS_DATA[key]?.isComingSoon) {
+      showKitOnPage(key);
+      return;
+    }
     const variant = findKitVariantStrict(key);
     const price = kitLivePrice(key);
     if (!variant || !price) {
@@ -1478,7 +1423,11 @@ export default function OvyTeenPageClient({
                           {key === "FIRST" ? "Coming Soon" : kit.flow}
                         </div>
                         <div className="mt-1.5 font-serif text-xs font-bold text-[#1A150F] sm:mt-2 sm:text-sm">
-                          {key === "FIRST" ? "Coming soon" : `₹${displayPrice}`}
+                          {key === "FIRST"
+                            ? "Coming soon"
+                            : displayPrice
+                              ? `₹${displayPrice}`
+                              : ""}
                         </div>
                       </button>
                     );
@@ -1556,7 +1505,7 @@ export default function OvyTeenPageClient({
                     <Clock className="h-6 w-6" />
                   </div>
                   <h3 className="font-serif text-xl font-bold text-[#1A150F] sm:text-2xl">
-                    First Period Box — Coming Soon
+                    First Period Box: Coming Soon
                   </h3>
                   <p className="mx-auto max-w-sm text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
                     Our 50-piece milestone gift box is currently being prepared
@@ -1567,7 +1516,7 @@ export default function OvyTeenPageClient({
                       disabled
                       className="w-full cursor-not-allowed rounded-full bg-gray-200 px-6 py-3.5 text-sm font-bold text-gray-600"
                     >
-                      Coming Soon — Not available to buy yet
+                      Coming soon, not available to buy yet
                     </button>
                   </div>
                 </div>
@@ -1607,9 +1556,9 @@ export default function OvyTeenPageClient({
                       </div>
                       <div className="text-right">
                         <b className="font-serif text-lg font-bold text-[#1A150F]">
-                          ₹{basePrice}
+                          {priceMissing ? "" : `₹${basePrice}`}
                         </b>
-                        {mrpPrice > basePrice && (
+                        {!priceMissing && mrpPrice > basePrice && (
                           <s className="block text-xs text-[#1A150F]/40">
                             ₹{mrpPrice}
                           </s>
@@ -1656,12 +1605,16 @@ export default function OvyTeenPageClient({
                           </div>
                         </div>
                         <div className="text-right">
-                          <b className="font-serif text-lg font-bold text-[#7E4D77]">
-                            ₹{Math.round(basePrice * (1 - cycleSyncDiscountPct / 100))}
-                          </b>
-                          <s className="block text-xs text-[#1A150F]/40">
-                            ₹{basePrice}
-                          </s>
+                          {!priceMissing && (
+                            <>
+                              <b className="font-serif text-lg font-bold text-[#7E4D77]">
+                                ₹{Math.round(basePrice * (1 - cycleSyncDiscountPct / 100))}
+                              </b>
+                              <s className="block text-xs text-[#1A150F]/40">
+                                ₹{basePrice}
+                              </s>
+                            </>
+                          )}
                         </div>
                       </button>
 
@@ -1854,7 +1807,9 @@ export default function OvyTeenPageClient({
                       </div>
                       <div className="text-right">
                         <b className="font-serif text-lg font-bold text-[#1A150F]">
-                          ₹{Math.round(basePrice * (1 - monthlyDiscountPct / 100))}
+                          {priceMissing
+                            ? ""
+                            : `₹${Math.round(basePrice * (1 - monthlyDiscountPct / 100))}`}
                         </b>
                       </div>
                     </button>
@@ -1892,7 +1847,9 @@ export default function OvyTeenPageClient({
                       </div>
                       <div className="text-right">
                         <b className="font-serif text-lg font-bold text-[#1A150F]">
-                          ₹{Math.round(basePrice * (1 - biMonthlyDiscountPct / 100))}
+                          {priceMissing
+                            ? ""
+                            : `₹${Math.round(basePrice * (1 - biMonthlyDiscountPct / 100))}`}
                         </b>
                       </div>
                     </button>
@@ -1944,9 +1901,9 @@ export default function OvyTeenPageClient({
                       </span>
                       <div className="flex items-baseline gap-2">
                         <b className="font-serif text-2xl font-bold text-[#1A150F]">
-                          ₹{totalPrice}
+                          {priceMissing ? "Price unavailable" : `₹${totalPrice}`}
                         </b>
-                        {(selectedModeId !== "once"
+                        {!priceMissing && (selectedModeId !== "once"
                           ? basePrice * quantity
                           : totalMrp) > totalPrice && (
                           <s className="text-xs text-[#1A150F]/40">
@@ -1958,7 +1915,7 @@ export default function OvyTeenPageClient({
                         )}
                       </div>
                     </div>
-                    {selectedModeId !== "once" && (
+                    {selectedModeId !== "once" && !priceMissing && (
                       <span className="rounded-full bg-[#E6F4EA] px-3 py-1 text-xs font-bold text-[#15803D]">
                         Save {Math.round(modeDiscountPercentage * 100)}% (₹
                         {basePrice * quantity - totalPrice})
@@ -2065,7 +2022,7 @@ export default function OvyTeenPageClient({
                 </span>
                 <span className="flex items-center gap-1.5">
                   <Truck className="h-4 w-4 text-[#1A8D91]" />
-                  Free Shipping over ₹399
+                  Free delivery on orders of ₹399 and above
                 </span>
               </div>
             </div>
@@ -2124,8 +2081,8 @@ export default function OvyTeenPageClient({
             </h2>
             <p className="mt-3 max-w-2xl text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
               Early cycles are often irregular, and that is completely normal.
-              Pop in your last period and we will estimate a window — not an
-              exact day — so you can stay one step ahead.
+              Pop in your last period and we will estimate a window (not an
+              exact day) so you can stay one step ahead.
             </p>
 
             <div className="mt-8 rounded-[28px] border border-[#1A150F]/10 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
@@ -2239,7 +2196,7 @@ export default function OvyTeenPageClient({
                                   month: "short",
                                 },
                               )}{" "}
-                              –{" "}
+                              to{" "}
                               {calculatedCycleWindows.windows[0].end.toLocaleDateString(
                                 "en-IN",
                                 {
@@ -2279,7 +2236,7 @@ export default function OvyTeenPageClient({
                                 day: "numeric",
                                 month: "short",
                               })}{" "}
-                              –{" "}
+                              to{" "}
                               {win.end.toLocaleDateString("en-IN", {
                                 day: "numeric",
                                 month: "short",
@@ -2294,7 +2251,7 @@ export default function OvyTeenPageClient({
                                 day: "numeric",
                                 month: "short",
                               })}{" "}
-                              –{" "}
+                              to{" "}
                               {win.fertileEnd.toLocaleDateString("en-IN", {
                                 day: "numeric",
                                 month: "short",
@@ -2402,7 +2359,7 @@ export default function OvyTeenPageClient({
               </h3>
               <p className="mt-3 mb-6 max-w-lg text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
                 Periods are normal, and figuring them out should not be scary.
-                Here is everything a first-timer actually wants to know — plus a
+                Here is everything a first-timer actually wants to know, plus a
                 kit that has your back at school, at practice, and everywhere in
                 between.
               </p>
@@ -2467,7 +2424,7 @@ export default function OvyTeenPageClient({
             </h3>
 
             <p className="mb-8 max-w-2xl text-xs leading-relaxed text-white/80 sm:text-sm">
-              You do not need the perfect words — just an open, calm one. Here
+              You do not need the perfect words, just an open, calm one. Here
               is a simple way in, and what makes a good first kit.
             </p>
 
@@ -2597,11 +2554,12 @@ export default function OvyTeenPageClient({
                 Math.max(variants.length - 1, 0),
               );
               const activeVariant = variants[selectedIdx] || variants[0];
+              // Live price only; with none, the card links to the product page.
               const price = activeVariant?.price
                 ? Number(activeVariant.price)
                 : fullProd?.startingPrice
                   ? Number(fullProd.startingPrice)
-                  : config.fallbackPrice;
+                  : null;
               const title = fullProd?.name || config.fallbackTitle;
               const rawDesc = fullProd?.description
                 ? String(fullProd.description)
@@ -2669,7 +2627,8 @@ export default function OvyTeenPageClient({
                         >
                           {variants.map((v: any, vIdx: number) => (
                             <option key={v.id || vIdx} value={vIdx}>
-                              {v.name || `Variant ${vIdx + 1}`} — ₹{v.price}
+                              {v.name || `Variant ${vIdx + 1}`}
+                              {Number(v.price) > 0 ? ` · ₹${v.price}` : ""}
                             </option>
                           ))}
                         </select>
@@ -2686,6 +2645,13 @@ export default function OvyTeenPageClient({
                       >
                         Out of stock
                       </button>
+                    ) : !price ? (
+                      <Link
+                        href={`/product-detail/${config.slug}`}
+                        className="block w-full rounded-full border border-[#9A5B90] py-2.5 text-center text-xs font-bold text-[#7E4D77] transition-all hover:bg-[#F3E6F0]"
+                      >
+                        See price
+                      </Link>
                     ) : (
                       <button
                         onClick={async () => {
@@ -2730,7 +2696,7 @@ export default function OvyTeenPageClient({
               </h3>
               <p className="pt-1 text-xs leading-relaxed text-[#1A150F]/70 sm:text-sm">
                 Be first to know when a kit restocks or a new Ovy Teen drop
-                lands. No spam — just the useful stuff.
+                lands. No spam, just the useful stuff.
               </p>
             </div>
 
@@ -2868,7 +2834,7 @@ export default function OvyTeenPageClient({
             </h3>
             <p className="text-xs leading-relaxed text-[#1A150F]/80 sm:text-sm">
               {activeTopicModal === "101"
-                ? "First periods usually start between ages 10 and 15. Flow can be light or irregular at first — that is 100% normal. Having a starter pack in your school bag ensures you are always prepared!"
+                ? "First periods usually start between ages 10 and 15. Flow can be light or irregular at first. That is 100% normal. Having a starter pack in your school bag ensures you are always prepared!"
                 : activeTopicModal === "use"
                   ? "1. Peel off the paper back. 2. Press pad firmly onto panty center. 3. Wrap wings around panty edges. 4. Change every 4-6 hours. 5. Roll used pad in disposal bag and trash."
                   : "Your cycle has 4 main phases. Energy fluctuates week by week. Eating iron-rich foods, staying hydrated, and keeping gentle stretches active helps relieve cramps."}
@@ -2908,7 +2874,7 @@ export default function OvyTeenPageClient({
                 {activeKit.label}
               </span>
               <b className="font-serif text-lg font-bold text-[#1A150F]">
-                ₹{totalPrice}
+                {priceMissing ? "" : `₹${totalPrice}`}
               </b>
               {selectedModeId !== "once" && (
                 <span className="block text-[10px] font-semibold text-[#9A5B90]">

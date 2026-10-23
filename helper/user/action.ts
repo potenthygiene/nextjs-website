@@ -46,6 +46,7 @@ export async function getCurrentUser() {
 
 import { revalidatePath } from "next/cache";
 import { getUserBirthday, setUserBirthday } from "@/lib/rewards";
+import { getUserOccasions, setUserAnniversary } from "@/lib/occasions";
 
 export async function getProfile() {
   const { email }: any = await requireUserWithRefresh();
@@ -62,13 +63,16 @@ export async function getProfile() {
 
   const user = result[0];
   const birthday = await getUserBirthday(user.id);
+  const { anniversary } = await getUserOccasions(user.id);
 
   return {
     userId: user.id,
     fullName: user.name,
     email: user.email,
-    phone: user.phone,
+    // Accounts made without a phone number carry a placeholder; show it as empty.
+    phone: user.phone === "0000000000" ? "" : user.phone,
     birthday: birthday ?? "",
+    anniversary: anniversary ?? "",
     emailVerified: user.isEmailVerified,
     createdAt: user.createdAt,
   };
@@ -78,6 +82,7 @@ export async function updateProfile(data: {
   fullName: string;
   phone: string;
   birthday?: string | null;
+  anniversary?: string | null;
 }) {
   const { email }: any = await requireUserWithRefresh();
 
@@ -105,6 +110,7 @@ export async function updateProfile(data: {
   if (data.birthday !== undefined) {
     birthdayResult = await setUserBirthday(user.id, data.birthday);
   }
+  const anniversaryResult = data.anniversary !== undefined ? await setUserAnniversary(user.id, data.anniversary) : null;
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/profile");
@@ -115,6 +121,7 @@ export async function updateProfile(data: {
     email: user.email,
     phone: user.phone,
     birthday: birthdayResult?.birthday ?? (await getUserBirthday(user.id)) ?? "",
+    anniversary: anniversaryResult?.anniversary ?? (await getUserOccasions(user.id)).anniversary ?? "",
     bonusAdded: birthdayResult?.bonusAdded ?? false,
     balance: birthdayResult?.balance,
   };

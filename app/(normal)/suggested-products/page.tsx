@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, CheckCircle2, Lightbulb, MessageCircle, RotateCcw, ShieldAlert, ShoppingBag, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Lightbulb, MessageCircle, RotateCcw, ShieldAlert, ShoppingBag, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { getFullProductDetails } from "@/helper/product/action";
 import { getImageUrl } from "@/lib/imageUrl";
@@ -264,7 +264,7 @@ const SuggestedProducts = () => {
     <div className="mx-auto mb-10 max-w-5xl px-4 pt-4 sm:pt-8" style={themeStyle(NEUTRAL_QUIZ_THEME)}>
       {/* Heading */}
       <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--quiz-soft)] px-3 py-1 text-[11px] font-bold tracking-wider text-[var(--quiz-accent-dark)] uppercase">
-        <Sparkles className="h-3.5 w-3.5" /> Your quiz result
+        <Heart className="h-3.5 w-3.5" /> Your quiz result
       </span>
       <h1 className="mt-2 font-serif text-2xl leading-tight font-bold text-[var(--quiz-ink)] sm:text-4xl">{result.title}</h1>
       <p className="mt-2 text-sm text-gray-600 sm:text-base">{result.intro}</p>

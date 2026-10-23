@@ -8,19 +8,19 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
   const sizeName = activeVariant?.name || "M-XL";
   const isXXL = sizeName.includes("XXL");
   const waistDesc = isXXL
-    ? "Waist ~44–56 in (112–142 cm) · Fuller fit"
-    : "Waist ~28–44 in (71–112 cm) · Fits most";
+    ? "Waist ~44 to 56 in (112 to 142 cm) · Fuller fit"
+    : "Waist ~28 to 44 in (71 to 112 cm) · Fits most";
 
   const specs = [
     { k: "Pack count", v: "8 individually-wrapped period panties" },
     { k: "Selected size", v: `${sizeName} (${waistDesc})` },
-    { k: "Absorbency", v: "Super-absorbent core — holds as much as 5 regular pads" },
-    { k: "Wear time", v: "Up to 10–12 hours of protection (change sooner on heavy days)" },
-    { k: "Profile", v: "Genuinely super-thin — feels like normal underwear under clothes" },
+    { k: "Absorbency", v: "Super-absorbent core: holds as much as 5 regular pads" },
+    { k: "Wear time", v: "Up to 10 to 12 hours of protection (change sooner on heavy days)" },
+    { k: "Profile", v: "Genuinely super-thin; feels like normal underwear under clothes" },
     { k: "Coverage", v: "360° front-to-back leak-proof back + soft elastic leak guards" },
     { k: "Wear & Removal", v: "Step in like underwear · tear-away perforated side seams to remove" },
-    { k: "Wrapper", v: "Soft non-woven — opens from top, doubles as clean disposal wrapper" },
-    { k: "Disposal", v: "Tuck into wrapper and bin — single-use only, never flush or wash" },
+    { k: "Wrapper", v: "Soft non-woven; opens from top, doubles as clean disposal wrapper" },
+    { k: "Disposal", v: "Tuck into wrapper and bin; single-use only, never flush or wash" },
     { k: "Free from", v: "Chlorine bleach, parabens, added fragrances and synthetic dyes" },
   ];
 
@@ -72,7 +72,7 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
                   360° All-Round Leak Protection
                 </h4>
                 <p className="mt-0.5 text-xs text-white/85">
-                  Leak-proof back &amp; soft side leak guards — holds up to 5 pads
+                  Leak-proof back &amp; soft side leak guards; holds up to 5 pads
                 </p>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
             </div>
 
             <div className="flex items-center gap-1.5">
-              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">Up to 10–12h</strong>
+              <strong className="font-serif text-base sm:text-lg font-bold text-[#1A150F]">Up to 10 to 12h</strong>
               <span className="text-gray-700">leak-free wear</span>
             </div>
 
@@ -155,7 +155,7 @@ export default function PantyPackAndSpecs({ activeVariant }: { activeVariant?: a
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
           <span className="w-28 flex-none font-bold text-[#1A150F]">Care</span>
           <span className="leading-relaxed text-gray-700">
-            Single-use only — tear the perforated sides to remove it, tuck it back into its wrapper and bin it. Never flush, and never wash and re-wear a used panty.
+            Single-use only: tear the perforated sides to remove it, tuck it back into its wrapper and bin it. Never flush, and never wash and re-wear a used panty.
           </span>
         </div>
       </div>

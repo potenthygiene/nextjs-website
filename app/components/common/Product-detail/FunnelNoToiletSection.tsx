@@ -9,7 +9,7 @@ export default function FunnelNoToiletSection() {
     {
       icon: ShieldAlert,
       title: "Filthy public toilets",
-      desc: "Stand over the seat and go — your skin never touches it. No hovering, no squatting, no dread.",
+      desc: "Stand over the seat and go. Your skin never touches it. No hovering, no squatting, no dread.",
     },
     {
       icon: Car,
@@ -19,12 +19,12 @@ export default function FunnelNoToiletSection() {
     {
       icon: Mountain,
       title: "Treks, camps & festivals",
-      desc: "Camping with friends, family or schoolmates, or a festival queue thirty deep — stand discreetly, go, and get back to it.",
+      desc: "Camping with friends, family or schoolmates, or a festival queue thirty deep? Stand discreetly, go, and get back to it.",
     },
     {
       icon: MapPin,
       title: "Pregnancy & sore knees",
-      desc: "No painful squatting and no lowering onto a dirty seat — gentle relief when your body needs it most.",
+      desc: "No painful squatting and no lowering onto a dirty seat. Gentle relief when your body needs it most.",
     },
   ];
 
@@ -44,7 +44,7 @@ export default function FunnelNoToiletSection() {
 
         {/* Sub-paragraph */}
         <p className="mt-4 sm:mt-6 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal max-w-3xl">
-          The road from Jaipur to Jodhpur can run 300 km without a single clean toilet. A trek with nowhere private to squat. A festival with a queue thirty women deep. A young girl at a school camp with no clean toilet in sight. The Looway Pee Funnel is built for all of it — stand up, stay covered, and never let your skin, or your daughter&apos;s, touch a dirty seat again.
+          The road from Jaipur to Jodhpur can run 300 km without a single clean toilet. A trek with nowhere private to squat. A festival with a queue thirty women deep. A young girl at a school camp with no clean toilet in sight. The Looway Pee Funnel is built for all of it: stand up, stay covered, and never let your skin, or your daughter&apos;s, touch a dirty seat again.
         </p>
 
         {/* 4 Cards Grid */}

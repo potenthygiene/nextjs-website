@@ -36,7 +36,7 @@ const REVIEWS_DATA: Review[] = [
     stage: "Trekker",
     stars: 4,
     quote:
-      "Took it on a four-day trek — no more wandering off looking for a private bush. Takes a couple of goes to trust the seal, so definitely practise at home first, but then it's brilliant.",
+      "Took it on a four-day trek. No more wandering off looking for a private bush. Takes a couple of goes to trust the seal, so definitely practise at home first, but then it's brilliant.",
   },
   {
     id: 3,
@@ -56,7 +56,7 @@ const REVIEWS_DATA: Review[] = [
     stage: "Arthritis",
     stars: 5,
     quote:
-      "My knees won't let me squat any more and I refuse to sit on public toilets. This has genuinely given me my freedom back — I stand, I go, and I've stopped planning my whole day around finding a clean bathroom.",
+      "My knees won't let me squat any more and I refuse to sit on public toilets. This has genuinely given me my freedom back. I stand, I go, and I've stopped planning my whole day around finding a clean bathroom.",
   },
   {
     id: 5,
@@ -76,7 +76,7 @@ const REVIEWS_DATA: Review[] = [
     stage: "Festival-goer",
     stars: 4,
     quote:
-      "Sunburn festival, thirty women in the loo queue, and I just walked past all of them. Total game-changer. Took me one practice run at home to get the angle right — worth it.",
+      "Sunburn festival, thirty women in the loo queue, and I just walked past all of them. Total game-changer. Took me one practice run at home to get the angle right, worth it.",
   },
   {
     id: 7,
@@ -86,7 +86,7 @@ const REVIEWS_DATA: Review[] = [
     stage: "Caring for mum",
     stars: 5,
     quote:
-      "I bought it for my mother who can't lower onto low toilets any more. It's given her independence on outings again — she calls it her little freedom. Reusable and easy to wash.",
+      "I bought it for my mother who can't lower onto low toilets any more. It's given her independence on outings again; she calls it her little freedom. Reusable and easy to wash.",
   },
   {
     id: 8,
@@ -106,7 +106,7 @@ const REVIEWS_DATA: Review[] = [
     stage: "Still practising",
     stars: 3,
     quote:
-      "Honest review: it took me four or five goes at home before I stopped leaking a little, so there's a real learning curve — practise before you rely on it. Once the angle clicks it does work, but three stars because it isn't foolproof on day one.",
+      "Honest review: it took me four or five goes at home before I stopped leaking a little, so there's a real learning curve, so practise before you rely on it. Once the angle clicks it does work, but three stars because it isn't foolproof on day one.",
   },
 ];
 

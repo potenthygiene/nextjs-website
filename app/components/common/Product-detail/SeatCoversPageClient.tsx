@@ -150,7 +150,7 @@ export default function SeatCoversPageClient({
             v.price &&
             Number(v.price) > Number(v.discountPrice)
             ? v.price
-            : v.mrp || Math.round(price * 1.25),
+            : Number(v.mrp) || 0,
         );
         const covers =
           name.includes("100") || name.toLowerCase().includes("4") ? 100 : 50;
@@ -187,8 +187,6 @@ export default function SeatCoversPageClient({
           name: "2-Pack",
           covers: 50,
           boxes: 2,
-          mrp: 499,
-          price: 399,
           sub: "2 boxes · 50 covers",
         },
         p4: {
@@ -196,8 +194,6 @@ export default function SeatCoversPageClient({
           name: "4-Pack",
           covers: 100,
           boxes: 4,
-          mrp: 899,
-          price: 699,
           sub: "4 boxes · 100 covers",
           flag: "Best value",
         },
@@ -252,7 +248,7 @@ export default function SeatCoversPageClient({
   }, [packs, selectedPackId, packKeys]);
 
   const selectedPack = packs[selectedPackId] ||
-    Object.values(packs)[0] || { price: 399, mrp: 499, name: "2-Pack" };
+    Object.values(packs)[0] || { name: "2-Pack" };
 
   const monthlyDiscountPct = getPdpSubscriptionDiscount("monthly", product);
   const biMonthlyDiscountPct = getPdpSubscriptionDiscount(
@@ -266,9 +262,10 @@ export default function SeatCoversPageClient({
         ? biMonthlyDiscountPct / 100
         : 0;
 
-  const basePrice = selectedPack.price || Number(product?.price) || 399;
-  const mrpPrice =
-    selectedPack.mrp || Number(product?.mrp) || Math.round(basePrice * 1.25);
+  // Live prices only: with none, no price is shown and nothing can be added.
+  const basePrice = Number(selectedPack.price) || Number(product?.price) || 0;
+  const priceMissing = !(basePrice > 0);
+  const mrpPrice = Number(selectedPack.mrp) || Number(product?.mrp) || 0;
   const unitPrice = Math.round(basePrice * (1 - modeDiscount));
   const totalPrice = unitPrice * quantity;
   const totalMrp = mrpPrice * quantity;
@@ -435,6 +432,10 @@ export default function SeatCoversPageClient({
 
   // Cart action integration with dynamic DB variant resolution
   const handleAddToCart = async () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -486,6 +487,10 @@ export default function SeatCoversPageClient({
   };
 
   const handlePrimaryAction = async () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -532,6 +537,10 @@ export default function SeatCoversPageClient({
   };
 
   const handleBuyNow = async () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -754,7 +763,7 @@ export default function SeatCoversPageClient({
                 <div className="flex items-center justify-between text-xs font-bold tracking-wider text-[#083B5C] uppercase">
                   <span>1. Select Pack Size</span>
                   <span className="font-semibold text-[#0F6DA6] normal-case">
-                    Free shipping over ₹399
+                    Free delivery on orders of ₹399 and above
                   </span>
                 </div>
 
@@ -790,11 +799,13 @@ export default function SeatCoversPageClient({
                         </div>
                         <div className="mt-3 flex items-baseline justify-between border-t border-[#D3E4EF]/60 pt-2">
                           <span className="text-base font-extrabold text-[#0F6DA6]">
-                            ₹{pack.price}
+                            {Number(pack.price) > 0 ? `₹${pack.price}` : ""}
                           </span>
-                          <span className="text-xs text-gray-400 line-through">
-                            ₹{pack.mrp}
-                          </span>
+                          {Number(pack.mrp) > Number(pack.price) && Number(pack.price) > 0 && (
+                            <span className="text-xs text-gray-400 line-through">
+                              ₹{pack.mrp}
+                            </span>
+                          )}
                         </div>
                       </button>
                     );
@@ -875,14 +886,16 @@ export default function SeatCoversPageClient({
                 <div className="flex items-baseline justify-between">
                   <div>
                     <span className="font-serif text-3xl font-extrabold text-[#083B5C]">
-                      ₹{totalPrice}
+                      {priceMissing ? "Price unavailable" : `₹${totalPrice}`}
                     </span>
-                    <span className="ml-2 text-sm text-gray-400 line-through">
-                      ₹{totalMrp}
-                    </span>
+                    {!priceMissing && totalMrp > totalPrice && (
+                      <span className="ml-2 text-sm text-gray-400 line-through">
+                        ₹{totalMrp}
+                      </span>
+                    )}
                   </div>
 
-                  {totalSavings > 0 && (
+                  {!priceMissing && totalSavings > 0 && (
                     <span className="rounded-full border border-[#BFE3CA] bg-[#E6F4EA] px-3 py-1 text-xs font-bold text-[#15803D]">
                       Save ₹{totalSavings}
                     </span>
@@ -1024,7 +1037,7 @@ export default function SeatCoversPageClient({
                     </div>
                     <div className="flex items-center gap-2 sm:col-span-2">
                       <Check className="h-4.5 w-4.5 shrink-0 stroke-[2.25] text-[#0F6DA6]" />
-                      <span>Free shipping over ₹399</span>
+                      <span>Free delivery on orders of ₹399 and above</span>
                     </div>
                   </div>
                 </div>
@@ -1131,7 +1144,7 @@ export default function SeatCoversPageClient({
               restroom at the highway food court. The waiting room at the
               railway station. Every one comes with the same silent negotiation:
               hover painfully, lay bits of tissue haphazardly, or just sit and
-              hope. Looway Disposable Toilet Seat Covers end that negotiation —
+              hope. Looway Disposable Toilet Seat Covers end that negotiation:
               one unfolds in seconds, covers the seat completely, and you sit
               down properly. No bare skin, no hovering, no dread.
             </p>
@@ -1147,7 +1160,7 @@ export default function SeatCoversPageClient({
                   Dirty public seats
                 </h3>
                 <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                  Unfold a cover and sit — your skin never touches the seat. No
+                  Unfold a cover and sit: your skin never touches the seat. No
                   hovering, no crouching, no dread.
                 </p>
               </div>
@@ -1162,7 +1175,7 @@ export default function SeatCoversPageClient({
                   School & period days
                 </h3>
                 <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                  School and college toilets are often the grimmest of all — and
+                  School and college toilets are often the grimmest of all, and
                   worst on a period day. Your daughter lays a cover and sits,
                   clean and confident.
                 </p>
@@ -1194,7 +1207,7 @@ export default function SeatCoversPageClient({
                   Travel, highways & offices
                 </h3>
                 <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                  Airports, trains, the dhaba loo, the office at peak hours — a
+                  Airports, trains, the dhaba loo, the office at peak hours: a
                   slim box in your bag means every Western seat is sorted.
                 </p>
               </div>
@@ -1220,7 +1233,7 @@ export default function SeatCoversPageClient({
               It couldn't be simpler. Unfold the cover, push out the centre
               panel, lay it flat over the seat, and sit. The water-resistant
               paper covers every inch your skin would touch and keeps the seat's
-              moisture where it belongs — on the seat, not on you.
+              moisture where it belongs: on the seat, not on you.
             </p>
           </div>
 
@@ -1261,7 +1274,7 @@ export default function SeatCoversPageClient({
                   Lay it edge to edge
                 </h3>
                 <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                  Spread the cover over the seat so it lies flat —{" "}
+                  Spread the cover over the seat so it lies flat:{" "}
                   <strong className="font-bold text-[#083B5C]">
                     front, sides and back all covered
                   </strong>
@@ -1285,7 +1298,7 @@ export default function SeatCoversPageClient({
                 </h3>
                 <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
                   Sit down normally on a clean, dry surface. When you're done,
-                  lift the cover, fold it and drop it in the bin —{" "}
+                  lift the cover, fold it and drop it in the bin.{" "}
                   <strong className="font-bold text-[#083B5C]">
                     never flush it
                   </strong>
@@ -1300,7 +1313,7 @@ export default function SeatCoversPageClient({
             <strong className="font-bold text-[#083B5C]">
               No technique, no learning curve.
             </strong>{" "}
-            If you can unfold a tissue, you can use a Looway cover — most people
+            If you can unfold a tissue, you can use a Looway cover. Most people
             get it right on the very first try. See the full step-by-step below.
           </div>
         </div>
@@ -1320,7 +1333,7 @@ export default function SeatCoversPageClient({
               Step inside the Looway guide
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
-              Quick, tappable stories — how to open and place a cover, why we
+              Quick, tappable stories: how to open and place a cover, why we
               say bin it (never flush), the honest truth about germs and seats,
               and every place one saves your day. Tap a circle to enter, then
               tap or swipe through.
@@ -1330,7 +1343,7 @@ export default function SeatCoversPageClient({
           {/* Got a question box */}
           <div className="mb-5 rounded-3xl border border-[#D3E4EF] bg-white/90 p-5 shadow-xs">
             <p className="mb-3 text-xs font-semibold text-gray-600 sm:text-sm">
-              Got a question before you buy? Tap a common one — or dive into the
+              Got a question before you buy? Tap a common one, or dive into the
               full guide below.
             </p>
             <div className="mb-3 flex flex-wrap gap-2">
@@ -1365,7 +1378,7 @@ export default function SeatCoversPageClient({
               }
               className="flex cursor-pointer items-center gap-1 text-xs font-bold text-[#0F6DA6] hover:underline"
             >
-              ↑ I'm all set — take me to the packs
+              ↑ I'm all set, take me to the packs
             </button>
           </div>
 
@@ -1386,7 +1399,7 @@ export default function SeatCoversPageClient({
                   Enter the Looway guide
                 </h3>
                 <p className="text-xs text-white/80">
-                  Tap to step in — quick stories, swipe through in a minute
+                  Tap to step in: quick stories, swipe through in a minute
                 </p>
               </div>
             </div>
@@ -1722,24 +1735,24 @@ export default function SeatCoversPageClient({
                   ["Pack options", "2-Pack (50 covers) or 4-Pack (100 covers)"],
                   [
                     "Material",
-                    "Biodegradable, water-resistant paper — zero plastic",
+                    "Biodegradable, water-resistant paper, zero plastic",
                   ],
                   [
                     "Water-resistant",
-                    "Yes — moisture from the seat doesn't pass through",
+                    "Yes, moisture from the seat doesn't pass through",
                   ],
-                  ["Reusable", "No — single use, one cover per sitting"],
+                  ["Reusable", "No, single use: one cover per sitting"],
                   ["Toilet type", "Western (sit-down) seats only"],
                   ["Fit", "Fits all standard Western toilet seats"],
                   ["Packaging", "Slim, resealable box"],
-                  ["Disposal", "Fold and bin — never flush"],
+                  ["Disposal", "Fold and bin, never flush"],
                   [
                     "Best for",
                     "Airports, railways, highways, malls, offices, hotels, hospitals, pilgrimages & events",
                   ],
                   [
                     "Suitable for",
-                    "Everyone — women, men, children, pregnant women, seniors, frequent travellers",
+                    "Everyone: women, men, children, pregnant women, seniors, frequent travellers",
                   ],
                   ["Made", "For India"],
                 ].map(([key, val]) => (
@@ -1783,14 +1796,14 @@ export default function SeatCoversPageClient({
                     <strong className="font-bold text-[#083B5C]">
                       Single use only.
                     </strong>{" "}
-                    One cover per sitting — don't reuse a cover once you've sat
+                    One cover per sitting. Don't reuse a cover once you've sat
                     on it. Take a fresh one each time.
                   </p>
                 </div>
                 <div className="flex items-start gap-2.5">
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-[#0F6DA6]" />
                   <p>
-                    For Western (sit-down) toilet seats only — not for squat or
+                    For Western (sit-down) toilet seats only, not for squat or
                     floor-level pans. For squat toilets, the Looway Pee Funnel
                     is the right hygiene tool.
                   </p>
@@ -1812,7 +1825,7 @@ export default function SeatCoversPageClient({
                       Do not flush.
                     </strong>{" "}
                     Always fold the used cover and drop it in a waste bin.
-                    Biodegradable does not mean drain-safe — flushing can block
+                    Biodegradable does not mean drain-safe: flushing can block
                     pipes and septic tanks.
                   </p>
                 </div>
@@ -1834,7 +1847,7 @@ export default function SeatCoversPageClient({
                     <strong className="font-bold text-[#083B5C]">
                       Elderly & limited-mobility users:
                     </strong>{" "}
-                    sit directly with full confidence — no need to hover or
+                    sit directly with full confidence, no need to hover or
                     brace.
                   </p>
                 </div>
@@ -1990,7 +2003,7 @@ export default function SeatCoversPageClient({
             {[
               {
                 title: "Students & College Girls",
-                desc: "School and college toilets are often the dirtiest a girl uses all day — especially on period days. A slim box in her bag gives her a clean, dry sit every time.",
+                desc: "School and college toilets are often the dirtiest a girl uses all day, especially on period days. A slim box in her bag gives her a clean, dry sit every time.",
                 icon: Heart,
               },
               {
@@ -2069,10 +2082,10 @@ export default function SeatCoversPageClient({
                     100% No-contact skin barrier
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
-                    ✓ Yes — complete coverage
+                    ✓ Yes, complete coverage
                   </td>
                   <td className="p-4 text-gray-500">
-                    ✕ No — one slip means contact
+                    ✕ No, one slip means contact
                   </td>
                   <td className="p-4 text-gray-500">
                     ✕ Paper shifts & soaks through
@@ -2086,7 +2099,7 @@ export default function SeatCoversPageClient({
                     No knee, back or squat strain
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
-                    ✓ Yes — sit comfortably
+                    ✓ Yes, sit comfortably
                   </td>
                   <td className="p-4 text-gray-500">
                     ✕ Painful on knees & back
@@ -2103,7 +2116,7 @@ export default function SeatCoversPageClient({
                     Stays in place while sitting
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
-                    ✓ Yes — bowl flap anchors it
+                    ✓ Yes, bowl flap anchors it
                   </td>
                   <td className="p-4 text-gray-500">N/A</td>
                   <td className="p-4 text-gray-500">✕ Slides around easily</td>
@@ -2114,7 +2127,7 @@ export default function SeatCoversPageClient({
                     Plastic-free & eco-disposal
                   </td>
                   <td className="bg-[#EAF6FD] p-4 font-extrabold text-[#15803D]">
-                    ✓ Plain paper — fold & bin
+                    ✓ Plain paper: fold & bin
                   </td>
                   <td className="p-4 text-gray-500">N/A</td>
                   <td className="p-4 text-gray-500">
@@ -2396,7 +2409,7 @@ export default function SeatCoversPageClient({
             <div className="space-y-4 text-xs leading-relaxed text-gray-700 sm:text-sm">
               <div className="space-y-1 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-900">
                 <strong className="flex items-center gap-1.5 font-bold">
-                  <Trash2 className="h-4 w-4 text-amber-700" /> Bin Only — Never
+                  <Trash2 className="h-4 w-4 text-amber-700" /> Bin Only, Never
                   Flush
                 </strong>
                 <p>

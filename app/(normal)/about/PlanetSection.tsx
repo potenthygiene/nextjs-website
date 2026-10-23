@@ -5,7 +5,7 @@ const PlanetSection = () => {
     {
       icon: "🌿",
       title: "Organic & Skin-Safe Materials",
-      desc: "Plant-based fibres free from chlorine, dioxins, and harmful synthetics — safe for skin and soil.",
+      desc: "Plant-based fibres free from chlorine, dioxins, and harmful synthetics, safe for skin and soil.",
     },
     {
       icon: "📦",
@@ -20,7 +20,7 @@ const PlanetSection = () => {
     {
       icon: "🔥",
       title: "Safe Disposal Infrastructure",
-      desc: "Sanitary incinerators installed — enabling safe, dignified disposal.",
+      desc: "Sanitary incinerators installed, enabling safe, dignified disposal.",
     },
     {
       icon: "💧",
@@ -65,7 +65,7 @@ const PlanetSection = () => {
           </h3>
 
           <p className="text-sm text-gray-300 mb-6 leading-relaxed">
-            Most sanitary pads are 90% plastic. They take 500–800 years to decompose,
+            Most sanitary pads are 90% plastic. They take 500 to 800 years to decompose,
             generating billions of units of waste every year.
           </p>
 

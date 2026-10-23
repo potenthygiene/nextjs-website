@@ -16,7 +16,7 @@ const RoshniSection = () => {
     {
       icon: "🌍",
       title: "Community Outreach Across Bharat",
-      desc: "Sessions in schools, hospitals, and communities — normalising menstrual health conversations.",
+      desc: "Sessions in schools, hospitals, and communities, normalising menstrual health conversations.",
     },
   ];
 
@@ -83,7 +83,7 @@ const RoshniSection = () => {
         <div>
           <p className="text-gray-700 leading-relaxed mb-4">
             <strong>Roshni Manav Utthaan Sansthaan</strong> is a registered NGO delivering
-            menstrual hygiene education and awareness into India’s most underserved communities —
+            menstrual hygiene education and awareness into India’s most underserved communities,
             without judgment, without agenda, and without expectation.
           </p>
 

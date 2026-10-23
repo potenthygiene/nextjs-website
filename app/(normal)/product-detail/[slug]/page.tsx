@@ -81,7 +81,7 @@ export default async function Page({ params }: any) {
         product={
           product || {
             slug: "looway-pee-puke",
-            name: "Looway Pee & Puke Bags — Disposable Urine & Vomit Bags",
+            name: "Looway Pee & Puke Bags: Disposable Urine & Vomit Bags",
           }
         }
         reviewWithMedia={reviewWithMedia}
@@ -116,7 +116,7 @@ export default async function Page({ params }: any) {
 
     return (
       <OvyTeenPageClient
-        product={product || { slug: "ovy-teen", name: "Ovy Organic Soft Sanitary Pads — Teen" }}
+        product={product || { slug: "ovy-teen", name: "Ovy Organic Soft Sanitary Pads: Teen" }}
         reviewWithMedia={reviewWithMedia}
         similarProducts={similarProducts || []}
         ovyProductsMap={ovyProductsMap}

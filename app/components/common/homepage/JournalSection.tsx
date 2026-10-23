@@ -1,9 +1,17 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CalendarHeart, ListChecks } from "lucide-react";
 import Link from "next/link";
 import { getJournalPosts } from "@/helper/blog/action";
+import {
+  BTN_SECONDARY,
+  CONTAINER,
+  EYEBROW_TEAL,
+  H2,
+  LEAD,
+  SECTION_Y,
+} from "./homeStyles";
 
 const FALLBACK_ARTICLES = [
   {
@@ -17,7 +25,6 @@ const FALLBACK_ARTICLES = [
     title: "Protection and women's hygiene",
     date: "19 Aug 2026",
     link: "/blog/protection-and-womens-hygiene",
-    highlighted: true,
   },
   {
     category: "SKIN",
@@ -27,13 +34,32 @@ const FALLBACK_ARTICLES = [
   },
   {
     category: "AT WORK",
-    title:
-      "Periods, power, productivity: managing menstrual health at work",
+    title: "Periods, power, productivity: managing menstrual health at work",
     date: "2026",
     link: "/blog/periods-power-productivity-how-managing-menstrual-health-can-skyrocket-your-efficiency",
   },
 ];
 
+// Free tools for the visitor who came to learn rather than to buy.
+const TOOLS = [
+  {
+    title: "Free Period Tracker",
+    body: "Enter your last period and cycle length to see your next dates.",
+    href: "/period-log",
+    cta: "Open the tracker",
+    Icon: CalendarHeart,
+  },
+  {
+    title: "Find what I need",
+    body: "Four questions, about 30 seconds, matched to your flow and skin.",
+    href: "/quiz",
+    cta: "Take the quiz",
+    Icon: ListChecks,
+  },
+];
+
+// Learn: the Journal plus the free tools. Shown on phones too, since that is
+// where nearly every visitor reads.
 export function JournalSection() {
   const [articles, setArticles] = useState(FALLBACK_ARTICLES);
 
@@ -42,18 +68,17 @@ export function JournalSection() {
       try {
         const blogs = await getJournalPosts();
         if (blogs && blogs.length > 0) {
-          const mapped = blogs.slice(0, 4).map((b: any, idx: number) => ({
+          const mapped = blogs.slice(0, 4).map((b) => ({
             category: (b.blogCategory || "JOURNAL").toUpperCase(),
             title: b.title,
             date: b.date || "Recent",
             link: `/blog/${b.slug}`,
-            highlighted: idx === 1,
           }));
-          if (mapped.length < 4) {
-            setArticles([...mapped, ...FALLBACK_ARTICLES.slice(mapped.length)]);
-          } else {
-            setArticles(mapped);
-          }
+          setArticles(
+            mapped.length < 4
+              ? [...mapped, ...FALLBACK_ARTICLES.slice(mapped.length)]
+              : mapped,
+          );
         }
       } catch (err) {
         console.error("Failed loading journal section blogs:", err);
@@ -63,61 +88,79 @@ export function JournalSection() {
   }, []);
 
   return (
-    <section className="hidden sm:block py-12 sm:py-16 md:py-20 bg-[#F8F6F1]">
-      <div className="container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl">
-        {/* HEADER ROW */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12">
-          <div>
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] text-[#016271] uppercase mb-2 block">
-              JOURNAL
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#1C2424] leading-tight mb-2">
-              The stuff nobody explains properly.
-            </h2>
-            <p className="text-sm sm:text-base text-[#5C7275] max-w-xl font-normal">
+    <section className={`overflow-hidden bg-white ${SECTION_Y}`} id="learn">
+      <div className={CONTAINER}>
+        <div className="mb-6 flex flex-col justify-between gap-3 sm:mb-10 sm:flex-row sm:items-end sm:gap-4">
+          <div className="space-y-2 sm:space-y-3">
+            <span className={EYEBROW_TEAL}>Learn</span>
+            <h2 className={H2}>The stuff nobody explains properly.</h2>
+            <p className={`${LEAD} max-w-xl`}>
               Straight answers on periods, the body and travel hygiene, with no
-              euphemisms.
+              euphemisms. Our tools guide you. They do not diagnose.
             </p>
           </div>
-
-          <Link
-            href="/blog"
-            className="border border-[#016271] text-[#016271] hover:bg-[#016271] hover:text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all whitespace-nowrap self-start sm:self-auto cursor-pointer inline-flex items-center gap-2 shrink-0"
-          >
-            Read the journal <ArrowRight className="w-4 h-4" />
-          </Link>
+          <span className="hidden shrink-0 sm:block">
+            <Link href="/blog" className={BTN_SECONDARY}>
+              Read the journal <ArrowRight className="h-4 w-4" aria-hidden />
+            </Link>
+          </span>
         </div>
 
-        {/* 4 CARDS GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
-          {articles.map((item, idx) => (
+        {/* Free tools */}
+        <div className="mb-6 grid grid-cols-1 gap-3 sm:mb-8 sm:grid-cols-2 sm:gap-5">
+          {TOOLS.map(({ title, body, href, cta, Icon }) => (
             <Link
-              key={idx}
-              href={item.link}
-              className={`bg-white rounded-2xl p-6 shadow-xs transition-all flex flex-col justify-between group ${
-                item.highlighted
-                  ? "ring-1 ring-[#016271]/20 shadow-md"
-                  : "border border-gray-100/80 hover:shadow-md"
-              }`}
+              key={href}
+              href={href}
+              className="group flex items-center gap-4 rounded-2xl border border-[#BDE3EA] bg-[#E6F4F6] p-4 transition-shadow hover:shadow-md sm:p-5"
             >
-              <div>
-                {/* CATEGORY TAG */}
-                <span className="bg-[#E2F4F7] text-[#016271] text-[11px] font-semibold tracking-wider uppercase px-3 py-1 rounded-full w-fit block mb-4">
-                  {item.category}
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#016271]">
+                <Icon className="h-5 w-5" aria-hidden />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block font-serif text-base font-bold text-[#1F1915] sm:text-lg">
+                  {title}
                 </span>
-
-                {/* TITLE */}
-                <h3 className="text-base sm:text-lg font-serif font-bold text-[#1C2424] leading-snug mb-4 group-hover:text-[#016271] transition-colors">
-                  {item.title}
-                </h3>
-              </div>
-
-              {/* DATE */}
-              <span className="text-xs text-gray-400 font-medium mt-auto">
-                {item.date}
+                <span className="block text-[13px] leading-snug text-[#5C524D] sm:text-sm">
+                  {body}
+                </span>
+                <span className="mt-1.5 inline-flex items-center gap-1 text-sm font-semibold text-[#016271]">
+                  {cta}
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />
+                </span>
               </span>
             </Link>
           ))}
+        </div>
+
+        {/* Articles: a swipe row on phones, a grid from tablet up */}
+        <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 lg:grid-cols-4 md:gap-6">
+          {articles.map((item) => (
+            <li key={item.link} className="w-[78%] shrink-0 snap-start sm:w-auto">
+              <Link
+                href={item.link}
+                className="group flex h-full flex-col justify-between rounded-2xl border border-gray-100/80 bg-white p-5 shadow-xs transition-shadow hover:shadow-md sm:p-6"
+              >
+                <div>
+                  <span className="mb-3 block w-fit rounded-full bg-[#E2F4F7] px-3 py-1 text-[11px] font-semibold tracking-wider text-[#016271] uppercase">
+                    {item.category}
+                  </span>
+                  <h3 className="mb-4 font-serif text-base leading-snug font-bold text-[#1F1915] transition-colors group-hover:text-[#016271] sm:text-lg">
+                    {item.title}
+                  </h3>
+                </div>
+                <span className="mt-auto text-[13px] font-medium text-[#5C524D]">
+                  {item.date}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-5 sm:hidden">
+          <Link href="/blog" className={`${BTN_SECONDARY} w-full`}>
+            Read the journal <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
       </div>
     </section>

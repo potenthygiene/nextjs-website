@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
@@ -77,7 +76,7 @@ export function Newsletter({
 
       toast.success(res.message);
       setEmail("");
-    } catch (err: any) {
+    } catch {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
@@ -122,7 +121,7 @@ export function Newsletter({
               {/* BADGE */}
               <div>
                 <span
-                  className="text-xs font-semibold tracking-[0.2em] uppercase sm:text-sm"
+                  className="block text-[11px] font-bold tracking-[0.14em] uppercase sm:text-xs"
                   style={{ color: badgeColor || "#76D2DC" }}
                 >
                   {badgeText}
@@ -130,24 +129,24 @@ export function Newsletter({
               </div>
 
               {/* TITLE */}
-              <h2 className="font-serif text-3xl leading-[1.15] font-bold tracking-tight text-white sm:text-3xl lg:text-4xl">
+              <h2 className="font-serif text-[26px] leading-[1.15] font-bold text-white sm:text-4xl lg:text-[40px]">
                 {title}
               </h2>
 
               {/* SUBTITLE */}
-              <p className="max-w-xl text-sm leading-relaxed font-normal text-white/80 sm:text-base">
+              <p className="max-w-xl text-[15px] leading-relaxed font-normal text-white/90 sm:text-base">
                 {subtitle}
               </p>
 
               {/* FEATURES LIST */}
               {features && features.length > 0 && (
-                <ul className="space-y-2 pt-2">
+                <ul className="hidden space-y-2 pt-2 sm:block">
                   {features.map((item, idx) => (
                     <li key={idx} className="flex items-center gap-3">
                       <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-white">
                         <Check className="h-4 w-4 stroke-[2.5]" />
                       </div>
-                      <span className="text-sm font-medium text-white/90 sm:text-base">
+                      <span className="text-[15px] font-medium text-white/90 sm:text-base">
                         {item}
                       </span>
                     </li>
@@ -186,7 +185,7 @@ export function Newsletter({
                 </div>
 
                 {/* CHECKBOX */}
-                <label className="group flex cursor-pointer items-start gap-3 pt-1 sm:items-center">
+                <label className="group flex min-h-11 cursor-pointer items-start gap-3 pt-1 sm:items-center">
                   <input
                     type="checkbox"
                     checked={agreed}
@@ -194,7 +193,7 @@ export function Newsletter({
                     className="sr-only"
                   />
                   <div
-                    className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-xs transition-all sm:mt-0 ${
+                    className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-xs transition-all sm:mt-0 ${
                       agreed
                         ? "bg-white text-[#075965]"
                         : "border border-white/40 bg-white/20 group-hover:border-white"
@@ -202,14 +201,14 @@ export function Newsletter({
                   >
                     {agreed && <Check className="h-3.5 w-3.5 stroke-[3]" />}
                   </div>
-                  <span className="text-xs leading-snug text-white/85 sm:text-sm">
+                  <span className="text-[13px] leading-snug text-white/90 sm:text-sm">
                     {checkboxLabel}
                   </span>
                 </label>
               </form>
 
               {/* DISCLAIMER */}
-              <p className="pt-1 text-xs font-normal text-white/70 sm:text-sm">
+              <p className="pt-1 text-[13px] font-normal text-white/80 sm:text-sm">
                 {disclaimerText}
               </p>
             </div>

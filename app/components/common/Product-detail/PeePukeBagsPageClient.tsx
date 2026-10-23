@@ -258,15 +258,15 @@ export default function PeePukeBagsPageClient({
             v.price &&
             Number(v.price) > Number(v.discountPrice)
             ? v.price
-            : v.mrp || Math.round(price * 1.25),
+            : Number(v.mrp) || 0,
         );
         const bags = name.includes("20") ? 20 : 10;
         const flag =
           name.includes("20") || index === 1 ? "Best value" : undefined;
         const sub =
           bags === 20
-            ? "20 bags — save ₹99 vs two 10-packs"
-            : "10 bags — one complete travel supply";
+            ? "20 bags: two travel supplies in one pack"
+            : "10 bags: one complete travel supply";
 
         map[id] = {
           id,
@@ -292,17 +292,13 @@ export default function PeePukeBagsPageClient({
           id: "p10",
           name: "Pack of 10",
           bags: 10,
-          mrp: 399,
-          price: 499,
-          sub: "10 bags — one complete travel supply",
+          sub: "10 bags: one complete travel supply",
         },
         p20: {
           id: "p20",
           name: "Pack of 20",
           bags: 20,
-          mrp: 1198,
-          price: 899,
-          sub: "20 bags — save ₹99 vs two 10-packs",
+          sub: "20 bags: two travel supplies in one pack",
           flag: "Best value",
         },
       }
@@ -325,16 +321,14 @@ export default function PeePukeBagsPageClient({
       id: "p10",
       name: "Pack of 10",
       bags: 10,
-      mrp: 399,
-      price: 499,
-      sub: "10 bags — one complete travel supply",
+      sub: "10 bags: one complete travel supply",
     };
 
-  const packBasePrice = selectedPack?.price || Number(product?.price) || 499;
-  const mrpPrice =
-    selectedPack?.mrp ||
-    Number(product?.mrp) ||
-    Math.round(packBasePrice * 1.25);
+  // Live prices only: with none, no price is shown and nothing can be added.
+  const packBasePrice =
+    Number(selectedPack?.price) || Number(product?.price) || 0;
+  const priceMissing = !(packBasePrice > 0);
+  const mrpPrice = Number(selectedPack?.mrp) || Number(product?.mrp) || 0;
   const monthlyDiscountPct = getPdpSubscriptionDiscount("monthly", product);
   const biMonthlyDiscountPct = getPdpSubscriptionDiscount(
     "every_2_months",
@@ -371,6 +365,10 @@ export default function PeePukeBagsPageClient({
   };
 
   const handleSubscribeNow = () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -648,6 +646,10 @@ export default function PeePukeBagsPageClient({
 
   // Cart action integration
   const handleAddToCart = async () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -707,6 +709,10 @@ export default function PeePukeBagsPageClient({
   };
 
   const handleBuyNow = () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -770,7 +776,7 @@ export default function PeePukeBagsPageClient({
     stops[0] || [
       "car",
       "Cars & road trips",
-      "Highways can run for hours with no clean toilet in sight. Keep the drive moving — discreet relief right from your seat.",
+      "Highways can run for hours with no clean toilet in sight. Keep the drive moving, with quick relief right from your seat.",
       "the glovebox",
     ];
 
@@ -1012,7 +1018,7 @@ export default function PeePukeBagsPageClient({
               <p className="mt-4 max-w-xl text-xs leading-relaxed font-normal text-[#17271E]/75 sm:text-sm">
                 The mess stops here. Compact, sealable urine & vomit bags for
                 every moment a clean toilet isn&apos;t an option. Pop one open,
-                use it, seal it — the super-absorbent strip solidifies liquid in
+                use it, seal it: the super-absorbent strip solidifies liquid in
                 seconds. No spills, no smell, no stress.
               </p>
 
@@ -1075,10 +1081,10 @@ export default function PeePukeBagsPageClient({
 
                         <div className="mt-3 flex items-baseline justify-between border-t border-[#E4DED0]/60 pt-2">
                           <div className="font-serif text-lg font-extrabold text-[#0E5C3A]">
-                            ₹{pk.price}
+                            {Number(pk.price) > 0 ? `₹${pk.price}` : ""}
                           </div>
                           <div className="text-[10px] font-bold text-[#17271E]/50">
-                            ₹{perPrice}/bag
+                            {Number(pk.price) > 0 ? `₹${perPrice}/bag` : ""}
                           </div>
                         </div>
                       </button>
@@ -1163,8 +1169,8 @@ export default function PeePukeBagsPageClient({
                               )}
                             </div>
                             <p className="mt-1 text-sm font-extrabold text-[#0E5C3A]">
-                              ₹{modeUnitPrice}
-                              <span className="ml-1 text-[10px] font-normal text-gray-500">
+                              {priceMissing ? "" : `₹${modeUnitPrice}`}
+                              <span className={`ml-1 text-[10px] font-normal text-gray-500 ${priceMissing ? "hidden" : ""}`}>
                                 / pack
                               </span>
                             </p>
@@ -1182,15 +1188,15 @@ export default function PeePukeBagsPageClient({
                 <div className="flex items-baseline justify-between">
                   <div className="flex items-baseline gap-2">
                     <span className="font-serif text-3xl font-extrabold text-[#0A4A2E]">
-                      ₹{totalPrice}
+                      {priceMissing ? "Price unavailable" : `₹${totalPrice}`}
                     </span>
-                    {totalMrp > totalPrice && (
+                    {!priceMissing && totalMrp > totalPrice && (
                       <span className="text-sm font-normal text-[#17271E]/40 line-through">
                         ₹{totalMrp}
                       </span>
                     )}
                   </div>
-                  {totalSavings > 0 && (
+                  {!priceMissing && totalSavings > 0 && (
                     <span className="rounded-full bg-[#E6F4EA] px-3 py-1 text-xs font-bold text-[#15803D]">
                       {selectedModeId !== "once"
                         ? `Subscriber Price · Save ${subDiscountPct}% (₹${totalSavings})`
@@ -1199,7 +1205,7 @@ export default function PeePukeBagsPageClient({
                   )}
                 </div>
 
-                <div className="mt-1 text-xs text-[#17271E]/60">
+                <div className={`mt-1 text-xs text-[#17271E]/60 ${priceMissing ? "hidden" : ""}`}>
                   Total price for {quantity}x {selectedPack?.name || "Pack"} (₹
                   {perBagPrice} per bag)
                 </div>
@@ -1283,7 +1289,11 @@ export default function PeePukeBagsPageClient({
                       >
                         <ShoppingBag className="h-4 w-4" />
                         <span>
-                          {adding ? "Adding..." : `Add to Bag — ₹${totalPrice}`}
+                          {adding
+                            ? "Adding..."
+                            : priceMissing
+                              ? "Add to Bag"
+                              : `Add to Bag · ₹${totalPrice}`}
                         </span>
                       </button>
 
@@ -1337,7 +1347,7 @@ export default function PeePukeBagsPageClient({
                 {/* Microcopy & Support Email */}
                 <div className="mt-4 space-y-1 text-center text-xs text-[#17271E]/70">
                   <p>
-                    Free shipping over ₹399 • ships in 24 to 48 hrs • secure checkout
+                    Free delivery on orders of ₹399 and above • ships in 24 to 48 hrs • secure checkout
                   </p>
                   <p>
                     Questions? Email{" "}
@@ -1353,7 +1363,9 @@ export default function PeePukeBagsPageClient({
                 {/* Dynamic Free Shipping Indicator */}
                 <div className="mt-3 flex items-center justify-center gap-1.5 text-xs font-semibold text-[#17271E]/80">
                   <Truck className="h-4 w-4 text-[#0E5C3A]" />
-                  {totalPrice >= 399 ? (
+                  {priceMissing ? (
+                    <span>{"Free delivery on orders of ₹399 and above"}</span>
+                  ) : totalPrice >= 399 ? (
                     <span className="font-bold text-emerald-700">
                       🎉 Free shipping unlocked!
                     </span>
@@ -1386,7 +1398,7 @@ export default function PeePukeBagsPageClient({
                       >
                         Join free
                       </Link>{" "}
-                      — earn across Ovy & Looway.
+                      and earn across Ovy & Looway.
                     </div>
                   </div>
                   <ArrowRight className="h-4 w-4 shrink-0 text-[#0E5C3A]" />
@@ -1408,7 +1420,7 @@ export default function PeePukeBagsPageClient({
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Check className="h-4 w-4 stroke-[3] text-[#0E5C3A]" />
-                      Free shipping over ₹399
+                      Free delivery on orders of ₹399 and above
                     </span>
                   </div>
                 </div>
@@ -1579,7 +1591,7 @@ export default function PeePukeBagsPageClient({
                         Uses per bag
                       </div>
                       <div className="mt-1 font-serif text-sm font-extrabold text-[#0A4A2E] sm:text-base">
-                        2–3 until full
+                        2 to 3 until full
                       </div>
                     </div>
                   </div>

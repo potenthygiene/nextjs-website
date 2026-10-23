@@ -4,8 +4,13 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Play, Pause, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import {
+  BTN_SHAPE,
+  BTN_TEAL,
+  BTN_TEAL_OUTLINE,
+  EYEBROW_TEAL,
+} from "./homeStyles";
 
 export interface HeroSlide {
   hook: string;
@@ -19,18 +24,10 @@ export interface HeroSlide {
   tint: "teal" | "mauve" | "cream";
 }
 
+// The first slide introduces the whole house (both ranges), because a first
+// visitor does not know Ovy or Looway yet. No prices here: product cards show
+// live prices from the catalogue.
 const HERO_SLIDES: HeroSlide[] = [
-  {
-    hook: "Car sick? Morning sick? Nowhere to go?",
-    sub: "Sealable pee and puke bags for the traffic jam, motion sickness on a hill road, pregnancy nausea on a flight, the elder on a long journey. Odour locked in about 60 seconds.",
-    cta: { label: "Shop the bags", href: "/product-detail/looway-pee-puke" },
-    cta2: { label: "See all Looway", href: "/looway" },
-    image: "/looway/scen-bags-sick.jpg",
-    image2: "/product-images/pukebags.jpg",
-    alt: "A teenager in a car using a Looway bag for motion sickness",
-    stickers: ["from ₹549", "Pee and vomit"],
-    tint: "teal",
-  },
   {
     hook: "Periods don’t pause for bad toilets.",
     sub: "Organic pads and a stand-to-pee funnel from the same house, because the problem was never only the period.",
@@ -39,8 +36,19 @@ const HERO_SLIDES: HeroSlide[] = [
     image: "/product-images/pads.jpg",
     image2: "/product-images/funnel.jpg",
     alt: "Ovy organic sanitary pads with the Looway pee funnel",
-    stickers: ["from ₹378", "Ships in 24 to 48 hrs"],
+    stickers: ["Ovy and Looway", "Ships in 24 to 48 hrs"],
     tint: "mauve",
+  },
+  {
+    hook: "Car sick? Morning sick? Nowhere to go?",
+    sub: "Sealable pee and puke bags for the traffic jam, motion sickness on a hill road, pregnancy nausea on a flight, the elder on a long journey. Odour locked in about 60 seconds.",
+    cta: { label: "Shop the bags", href: "/product-detail/looway-pee-puke" },
+    cta2: { label: "See all Looway", href: "/looway" },
+    image: "/looway/scen-bags-sick.jpg",
+    image2: "/product-images/pukebags.jpg",
+    alt: "A teenager in a car using a Looway bag for motion sickness",
+    stickers: ["Gels in 60 seconds", "Pee and vomit"],
+    tint: "teal",
   },
   {
     hook: "Squat toilet? Stand up.",
@@ -50,14 +58,14 @@ const HERO_SLIDES: HeroSlide[] = [
     image: "/looway/scen-funnel.jpg",
     image2: "/product-images/funnel.jpg",
     alt: "A pregnant woman holding the Looway pee funnel beside a clean toilet",
-    stickers: ["from ₹299", "Reusable"],
+    stickers: ["Stand to pee", "Reusable"],
     tint: "teal",
   },
   {
     hook: "Her first period, handled with love.",
     sub: "Two pad sizes so she learns her own flow, a guidebook written for her, and a wrapper that stays silent at school.",
     cta: { label: "Shop teen kits", href: "/product-detail/ovy-teen" },
-    cta2: { label: "See the First Period Box", href: "/product-detail/ovy-teen" },
+    cta2: { label: "See both kits", href: "/product-detail/ovy-teen" },
     image: "/product-images/teen.jpg",
     image2: "/product-images/teen-pro.jpg",
     alt: "Ovy Teen Starter Pack",
@@ -83,7 +91,7 @@ const HERO_SLIDES: HeroSlide[] = [
     image: "/product-images/cup-rbw.jpg",
     image2: "/product-images/cup.jpg",
     alt: "Ovy reusable menstrual cup with its carry pouch",
-    stickers: ["from ₹459", "Reusable for years"],
+    stickers: ["Up to 12 hours", "Reusable for years"],
     tint: "teal",
   },
   {
@@ -99,31 +107,28 @@ const HERO_SLIDES: HeroSlide[] = [
   },
 ];
 
+// Proof right under the first buttons, shown on phones too.
 const TRUST_ITEMS = [
-  "Certified toxin-free",
+  "BIS certified pads",
   "Dermatologically tested",
-  "pH-balanced and non-irritant",
+  "Toxin-free and rash-free",
   "Cruelty-free",
-  "Ships within 24 to 48 hours",
-  "Made in Jaipur, India",
+  "Ships in 24 to 48 hours",
+  "Free delivery on ₹399 and above",
 ];
 
-const TICKER_ITEMS = [
-  "Certified toxin-free",
-  "Cycle-Sync delivery",
-  "Pee standing up",
-  "Made in Jaipur",
-  "A pad bought is a pad shared",
-  "Free delivery over ₹399",
-  "Ships within 24 to 48 hours",
-];
+const SLIDE_INTERVAL_MS = 7000;
+
+const TINT_BG: Record<HeroSlide["tint"], string> = {
+  mauve: "bg-[#F7EFF2]",
+  cream: "bg-[#FAF6EE]",
+  teal: "bg-[#E6F4F6]",
+};
 
 export function Hero() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-
-  const slideIntervalMs = 5500;
 
   const goToSlide = useCallback((n: number) => {
     setActiveIdx(
@@ -131,20 +136,17 @@ export function Hero() {
     );
   }, []);
 
-  const nextSlide = useCallback(() => {
-    setActiveIdx((prev) => (prev + 1) % HERO_SLIDES.length);
-  }, []);
-
-  // Autoplay timer
+  // Autoplay. The timer restarts after every change, so a swipe or a dot tap
+  // always gets the full interval. Off for people who ask for less motion.
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(() => {
-      nextSlide();
-    }, slideIntervalMs);
-    return () => clearInterval(timer);
-  }, [isPaused, nextSlide]);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = setTimeout(() => {
+      setActiveIdx((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, SLIDE_INTERVAL_MS);
+    return () => clearTimeout(timer);
+  }, [isPaused, activeIdx]);
 
-  // Touch Swipe Handlers for Mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     const t = e.touches[0];
     touchStartRef.current = { x: t.clientX, y: t.clientY };
@@ -157,135 +159,108 @@ export function Hero() {
     const dy = t.clientY - touchStartRef.current.y;
     touchStartRef.current = null;
     if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.2) {
-      if (dx < 0) {
-        goToSlide(activeIdx + 1);
-      } else {
-        goToSlide(activeIdx - 1);
-      }
+      goToSlide(dx < 0 ? activeIdx + 1 : activeIdx - 1);
     }
   };
 
   const slide = HERO_SLIDES[activeIdx];
 
-  // Background tint class generator matching reference project
-  const getBgColorClass = (tint: HeroSlide["tint"]) => {
-    switch (tint) {
-      case "mauve":
-        return "bg-[#F7EFF2]";
-      case "cream":
-        return "bg-[#FAF6EE]";
-      case "teal":
-      default:
-        return "bg-[#E6F4F6]";
-    }
-  };
+  const controls = (
+    <div className="flex items-center gap-1 rounded-full border border-gray-100 bg-white/95 px-2 shadow-md backdrop-blur-md">
+      <div className="flex items-center" role="group" aria-label="Choose slide">
+        {HERO_SLIDES.map((_, idx) => (
+          <button
+            key={idx}
+            type="button"
+            aria-label={`Go to slide ${idx + 1}`}
+            aria-current={idx === activeIdx ? "true" : undefined}
+            onClick={() => goToSlide(idx)}
+            className="flex h-9 min-w-6 cursor-pointer items-center justify-center px-1"
+          >
+            <span
+              className={`block h-2 rounded-full transition-all duration-300 ${
+                idx === activeIdx ? "w-6 bg-[#016271]" : "w-2 bg-gray-300"
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => setIsPaused((prev) => !prev)}
+        aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
+        className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#016271]"
+      >
+        {isPaused ? (
+          <Play className="h-3.5 w-3.5 fill-current" />
+        ) : (
+          <Pause className="h-3.5 w-3.5 fill-current" />
+        )}
+      </button>
+    </div>
+  );
 
   return (
-    <section className="relative w-full overflow-hidden transition-colors duration-700">
-      {/* Main Hero Container */}
+    <section className="relative w-full overflow-hidden" aria-roledescription="carousel" aria-label="Featured">
       <div
-        className={`w-full px-4 py-7 transition-colors duration-700 sm:px-8 sm:py-12 md:py-16 lg:px-16 ${getBgColorClass(
-          slide.tint,
-        )}`}
+        className={`w-full px-4 pt-5 pb-6 transition-colors duration-700 sm:px-8 sm:py-12 md:py-16 lg:px-16 ${TINT_BG[slide.tint]}`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* ================= MOBILE HERO VIEW (< lg) ================= */}
-        <div className="block lg:hidden w-full max-w-xl mx-auto">
-          <div className="grid grid-cols-12 items-center gap-3 sm:gap-6">
-            {/* Left Column: Title & Primary CTA Pill */}
-            <div className="col-span-6 flex flex-col items-start justify-center space-y-3">
-              <h1 className="font-serif text-2xl sm:text-2xl font-bold tracking-tight text-gray-900 leading-[1.25]">
+        {/* ================= PHONE AND TABLET (< lg) ================= */}
+        <div className="mx-auto block w-full max-w-xl lg:hidden">
+          <span className={`${EYEBROW_TEAL} mb-3`}>
+            India’s first scenario-based hygiene brand
+          </span>
+
+          <div className="grid grid-cols-12 items-center gap-4">
+            <div className="col-span-7">
+              <h1 className="font-serif text-[26px] leading-[1.15] font-bold text-[#1F1915] sm:text-[32px]">
                 {slide.hook}
               </h1>
-
-              <Link href={slide.cta.href} className="inline-block">
-                <Button className="flex items-center gap-1.5 rounded-full bg-[#016271] px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-md transition-all hover:bg-[#014d59] cursor-pointer">
-                  <span>{slide.cta.label}</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Button>
-              </Link>
             </div>
 
-            {/* Right Column: Image Card with Floating Badges */}
-            <div className="col-span-6 relative flex justify-end">
-              <div className="relative aspect-[4/5] w-full max-w-[165px] sm:max-w-[220px] overflow-hidden rounded-[24px] border-2 border-white bg-white shadow-lg">
+            <div className="relative col-span-5 flex justify-end">
+              <div className="relative aspect-[4/5] w-full max-w-[200px] overflow-hidden rounded-3xl border-2 border-white bg-white shadow-lg">
                 <Image
                   src={slide.image}
                   alt={slide.alt}
                   fill
                   priority
                   className="object-cover"
-                  sizes="(max-width: 640px) 170px, 240px"
+                  sizes="(max-width: 640px) 40vw, 200px"
                 />
-
-                {/* Top-Right Badge (White Pill) */}
                 {slide.stickers[0] && (
-                  <div className="absolute top-2 right-2 z-20 rounded-full border border-gray-100 bg-white/95 px-2.5 py-1 text-[10px] sm:text-xs font-extrabold text-[#016271] shadow-md backdrop-blur-xs">
+                  <span className="absolute top-2 right-2 z-20 max-w-[calc(100%-16px)] rounded-full bg-white/95 px-2.5 py-1 text-[11px] leading-tight font-bold text-[#016271] shadow-md">
                     {slide.stickers[0]}
-                  </div>
-                )}
-
-                {/* Bottom-Left Badge (Dark Teal Pill) */}
-                {slide.stickers[1] && (
-                  <div className="absolute bottom-2 left-2 z-20 rounded-full bg-[#016271] px-2.5 py-1 text-[10px] sm:text-xs font-semibold text-white shadow-md">
-                    {slide.stickers[1]}
-                  </div>
+                  </span>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Bottom Carousel Pagination Dots & Pause Control Pill */}
-          <div className="mt-4 flex justify-end">
-            <div className="flex items-center gap-3 rounded-full border border-gray-100 bg-white/95 px-9 py-1.5 shadow-md backdrop-blur-md">
-              <div
-                className="flex items-center gap-2.5"
-                role="group"
-                aria-label="Choose slide"
-              >
-                {HERO_SLIDES.map((_, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    aria-label={`Go to slide ${idx + 1}`}
-                    onClick={() => goToSlide(idx)}
-                    className={`relative h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                      idx === activeIdx
-                        ? "w-6 bg-[#016271]"
-                        : "w-2 bg-gray-300 hover:bg-gray-400"
-                    }`}
-                  >
-                    {idx === activeIdx && !isPaused && (
-                      <span className="absolute inset-0 animate-pulse rounded-full bg-[#016271]" />
-                    )}
-                  </button>
-                ))}
-              </div>
+          <p className="mt-3 line-clamp-3 min-h-[4.5em] text-[15px] leading-normal text-[#5C524D]">
+            {slide.sub}
+          </p>
 
-              <button
-                type="button"
-                onClick={() => setIsPaused((prev) => !prev)}
-                aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
-                className="ml-1 rounded-full p-0.5 text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#016271] cursor-pointer"
-              >
-                {isPaused ? (
-                  <Play className="h-3 w-3 fill-current" />
-                ) : (
-                  <Pause className="h-3 w-3 fill-current" />
-                )}
-              </button>
-            </div>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            <Link href={slide.cta.href} className={`${BTN_SHAPE} ${BTN_TEAL} px-4 text-center text-[15px] leading-tight`}>
+              {slide.cta.label}
+            </Link>
+            <Link href={slide.cta2.href} className={`${BTN_SHAPE} ${BTN_TEAL_OUTLINE} px-4 text-center text-[15px] leading-tight`}>
+              {slide.cta2.label}
+            </Link>
           </div>
+
+          <div className="mt-4 flex justify-center">{controls}</div>
         </div>
 
-        {/* ================= DESKTOP HERO VIEW (lg:) ================= */}
-        <div className="hidden lg:grid mx-auto max-w-7xl grid-cols-12 items-center gap-12">
-          {/* Right Stage (Dual Image Cards & Carousel Controls) */}
+        {/* ================= DESKTOP (lg:) ================= */}
+        <div className="mx-auto hidden max-w-7xl grid-cols-12 items-center gap-12 lg:grid">
+          {/* Image stage. Lazy: on a phone this block is hidden and never loads. */}
           <div className="relative order-2 col-span-5 flex w-full items-center justify-center">
             <div className="relative aspect-[1/1.02] w-full max-w-[420px]">
-              {/* Secondary Layered Image Card (Tucked Behind Bottom-Left) */}
-              <div className="absolute bottom-[6%] left-0 z-10 aspect-[4/5] w-[40%] -rotate-6 transform overflow-hidden rounded-[22px] border-4 border-white/90 bg-white shadow-lg transition-all duration-500">
+              <div className="absolute bottom-[6%] left-0 z-10 aspect-[4/5] w-[40%] -rotate-6 transform overflow-hidden rounded-[22px] border-4 border-white/90 bg-white shadow-lg">
                 <Image
                   src={slide.image2}
                   alt=""
@@ -295,137 +270,74 @@ export function Hero() {
                 />
               </div>
 
-              {/* Primary Main Image Card (Right Aligned Top) */}
-              <div className="absolute top-0 right-0 z-20 aspect-[4/5] w-[78%] overflow-hidden rounded-[28px] border-4 border-white bg-white shadow-2xl transition-all duration-500">
+              <div className="absolute top-0 right-0 z-20 aspect-[4/5] w-[78%] overflow-hidden rounded-[28px] border-4 border-white bg-white shadow-2xl">
                 <Image
                   src={slide.image}
                   alt={slide.alt}
                   fill
-                  priority
-                  className="object-cover transition-all duration-700 hover:scale-105"
-                  sizes="480px"
+                  className="object-cover"
+                  sizes="340px"
                 />
               </div>
 
-              {/* Sticker 1 (Top Right - Pinned Label, rotated) */}
               {slide.stickers[0] && (
                 <div className="absolute top-[6%] right-[-6px] z-30 rotate-6 transform rounded-full border border-gray-100 bg-white px-4 py-2 text-sm font-extrabold whitespace-nowrap text-[#016271] shadow-md">
                   {slide.stickers[0]}
                 </div>
               )}
 
-              {/* Sticker 2 (Bottom Right - Dark Label, rotated) */}
               {slide.stickers[1] && (
                 <div className="absolute right-[6%] bottom-[22%] z-30 -rotate-3 transform rounded-full bg-[#016271] px-4 py-2 text-sm font-semibold whitespace-nowrap text-white shadow-lg">
                   {slide.stickers[1]}
                 </div>
               )}
 
-              {/* Carousel Controls Bar (Dots & Play/Pause Button) */}
-              <div className="absolute right-[0%] bottom-0 z-40 flex items-center gap-2 rounded-full border border-gray-100 bg-white/95 px-3 py-1.5 shadow-md backdrop-blur-md">
-                <div
-                  className="flex items-center gap-1.5"
-                  role="group"
-                  aria-label="Choose slide"
-                >
-                  {HERO_SLIDES.map((_, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      aria-label={`Go to slide ${idx + 1}`}
-                      onClick={() => goToSlide(idx)}
-                      className={`relative h-2.5 rounded-full transition-all duration-300 ${
-                        idx === activeIdx
-                          ? "w-9 bg-[#016271]"
-                          : "w-2.5 bg-gray-300 hover:bg-gray-400"
-                      }`}
-                    >
-                      {idx === activeIdx && !isPaused && (
-                        <span className="absolute inset-0 animate-pulse rounded-full bg-[#016271]" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setIsPaused((prev) => !prev)}
-                  aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
-                  className="ml-1 rounded-full p-1 text-gray-600 transition-colors hover:bg-gray-100 hover:text-[#016271]"
-                >
-                  {isPaused ? (
-                    <Play className="h-3.5 w-3.5 fill-current" />
-                  ) : (
-                    <Pause className="h-3.5 w-3.5 fill-current" />
-                  )}
-                </button>
-              </div>
+              <div className="absolute right-0 bottom-0 z-40">{controls}</div>
             </div>
           </div>
 
-          {/* Left Text Column */}
+          {/* Text column */}
           <div className="order-1 col-span-7 flex flex-col items-start space-y-5 text-left">
-            <Badge className="rounded-full border-none bg-white/95 px-3.5 py-1.5 text-xs font-bold tracking-wider text-[#1A8D91] uppercase shadow-xs backdrop-blur-xs">
-              INDIA’S FIRST SCENARIO-BASED HYGIENE BRAND
+            <Badge className="rounded-full border-none bg-white/95 px-3.5 py-1.5 text-xs font-bold tracking-wider text-[#016271] uppercase shadow-xs">
+              India’s first scenario-based hygiene brand
             </Badge>
 
-            <div className="flex min-h-[160px] flex-col justify-center space-y-3">
-              <h1 className="font-serif text-[60px] leading-[1.14] font-bold tracking-tight text-gray-900 transition-all duration-500">
+            <div className="flex min-h-[230px] flex-col justify-center space-y-3">
+              <h1 className="font-serif text-[56px] leading-[1.1] font-bold tracking-tight text-[#1F1915]">
                 {slide.hook}
               </h1>
-
-              <p className="max-w-2xl text-lg leading-relaxed font-normal text-gray-600">
+              <p className="max-w-2xl text-lg leading-relaxed text-[#5C524D]">
                 {slide.sub}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Link href={slide.cta.href}>
-                <Button className="flex min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#016271] px-7 py-6 text-base font-semibold text-white shadow-md transition-all hover:scale-[1.02] hover:bg-[#137688]">
-                  {slide.cta.label}
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
+              <Link href={slide.cta.href} className={`${BTN_SHAPE} ${BTN_TEAL} px-7 text-base`}>
+                {slide.cta.label}
+                <ArrowRight className="h-5 w-5" aria-hidden />
               </Link>
-
-              <Link href={slide.cta2.href}>
-                <Button
-                  variant="outline"
-                  className="flex min-h-[48px] items-center justify-center rounded-full border-[#016271] px-7 py-6 text-base font-semibold text-[#016271] transition-all hover:bg-[#016271]/10"
-                >
-                  {slide.cta2.label}
-                </Button>
+              <Link href={slide.cta2.href} className={`${BTN_SHAPE} ${BTN_TEAL_OUTLINE} px-7 text-base`}>
+                {slide.cta2.label}
               </Link>
             </div>
 
-            <p className="pt-1 text-sm font-medium text-gray-500">
+            <p className="pt-1 text-sm font-medium text-[#5C524D]">
               Woman-founded. Made in Jaipur. Live on Amazon.in.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Infinite Scrolling Marquee Ticker Strip */}
-      <div className="w-full overflow-hidden bg-[#016271] py-3 text-white shadow-inner">
-        <div className="animate-marquee flex items-center space-x-8 text-sm font-medium tracking-wide whitespace-nowrap sm:text-base">
-          {TICKER_ITEMS.concat(TICKER_ITEMS, TICKER_ITEMS).map((item, idx) => (
-            <div key={idx} className="flex shrink-0 items-center space-x-3">
-              <span className="font-semibold">{item}</span>
-              <span className="text-teal-200">✦</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Trust Items Strip */}
-      <div className="hidden sm:block w-full border-b border-gray-100 bg-white px-4 py-3.5">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-medium text-gray-600 sm:text-sm">
-          {TRUST_ITEMS.map((item, idx) => (
-            <div key={idx} className="flex items-center space-x-1.5">
-              <Check className="h-4 w-4 shrink-0 text-[#016271]" />
+      {/* Trust row: static, so nothing moves under the first buttons */}
+      <div className="w-full border-b border-gray-100 bg-white px-4 py-3.5">
+        <ul className="mx-auto grid max-w-7xl grid-cols-2 gap-x-3 gap-y-2 text-[13px] font-medium text-[#1F1915] sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-6 sm:text-sm">
+          {TRUST_ITEMS.map((item) => (
+            <li key={item} className="flex items-start gap-1.5 sm:items-center">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#016271] sm:mt-0" aria-hidden />
               <span>{item}</span>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

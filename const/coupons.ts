@@ -16,9 +16,11 @@
 //   SHARECARE15 (for referring a friend) adds on to any one store coupon.
 // - Every percentage is worked out on the bag total, and all coupons together
 //   take at most 30% off the bag.
+// - Birthday and anniversary coupons stand alone: they can't be combined with
+//   any other coupon. Each works once a year, all through that month.
 // - Rewards credits still apply on top (up to 20% of what is left, at most ₹150).
 
-export type CouponKind = "welcome" | "friend" | "referrer" | "festival" | "combo" | "tier";
+export type CouponKind = "welcome" | "friend" | "referrer" | "festival" | "combo" | "tier" | "occasion";
 export type CouponGroup = "store" | "personal";
 
 export type StoreCoupon = {
@@ -42,6 +44,8 @@ export type StoreCoupon = {
   referredOnly?: boolean;
   /** Once for every referred friend whose first order has been delivered. */
   referrerOnly?: boolean;
+  /** Occasion coupons: works in the month of this date from the customer's profile, once a year. */
+  occasion?: "birthday" | "anniversary";
   /** Personal coupons only: the store coupon kinds it can be added to. */
   stacksWith?: CouponKind[];
   /** Shown on the site and by the chat. */
@@ -84,6 +88,38 @@ export const STORE_COUPONS: StoreCoupon[] = [
     public: true,
     pitch: "Refer a friend: they get 15% off their first order, and you get SHARECARE15 to add to any coupon",
     pitchHi: "दोस्त को रेफ़र करें: उन्हें पहले ऑर्डर पर 15% छूट, और आपको SHARECARE15 जो किसी भी कूपन के साथ लगे",
+  },
+
+  // ---- The customer's own occasions (dates from My profile)
+  {
+    code: "BIRTHDAY15",
+    kind: "occasion",
+    name: "Birthday Month 15%",
+    description: "15% off in your birthday month, once a year, on orders of ₹399 and above",
+    descriptionHi: "जन्मदिन के महीने में 15% की छूट, साल में एक बार, ₹399 और उससे ऊपर के ऑर्डर पर",
+    percent: 15,
+    minimumOrderValue: 399,
+    maximumDiscountAmount: 200,
+    useOnce: false,
+    occasion: "birthday",
+    public: true,
+    pitch: "Birthday month? 15% off with BIRTHDAY15. Add your birthday in My profile",
+    pitchHi: "जन्मदिन का महीना? BIRTHDAY15 से 15% की छूट। My profile में अपना जन्मदिन जोड़ें",
+  },
+  {
+    code: "ANNIVERSARY15",
+    kind: "occasion",
+    name: "Anniversary 15%",
+    description: "15% off in your anniversary month, once a year, on orders of ₹399 and above",
+    descriptionHi: "सालगिरह के महीने में 15% की छूट, साल में एक बार, ₹399 और उससे ऊपर के ऑर्डर पर",
+    percent: 15,
+    minimumOrderValue: 399,
+    maximumDiscountAmount: 200,
+    useOnce: false,
+    occasion: "anniversary",
+    public: true,
+    pitch: "Anniversary month? 15% off with ANNIVERSARY15. Add the date in My profile",
+    pitchHi: "सालगिरह का महीना? ANNIVERSARY15 से 15% की छूट। My profile में तारीख जोड़ें",
   },
 
   // ---- Festivals
@@ -266,7 +302,7 @@ export function isCouponLive(c: StoreCoupon, now = Date.now()) {
 
 /** Public coupons a customer can use today, festive first. */
 export function liveCoupons(now = Date.now()) {
-  const order: CouponKind[] = ["festival", "welcome", "tier", "combo", "friend", "referrer"];
+  const order: CouponKind[] = ["festival", "welcome", "occasion", "tier", "combo", "friend", "referrer"];
   return STORE_COUPONS.filter((c) => c.public && isCouponLive(c, now)).sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind));
 }
 
@@ -301,6 +337,8 @@ export const joinCodes = (codes: string[]) => codes.join("+");
 /** Why two coupons can't be used together, or null when they can. */
 export function stackProblem(a: StoreCoupon, b: StoreCoupon): string | null {
   if (a.code === b.code) return "That coupon is already applied";
+  const solo = a.kind === "occasion" ? a : b.kind === "occasion" ? b : null;
+  if (solo) return `${solo.code} can't be combined with other coupons`;
   const ga = groupOf(a);
   const gb = groupOf(b);
   if (ga === "store" && gb === "store") return `Only one store coupon per order: choose ${a.code} or ${b.code}`;
@@ -315,6 +353,7 @@ export function stackProblem(a: StoreCoupon, b: StoreCoupon): string | null {
 
 /** One line on what a coupon can be combined with, for coupon lists. */
 export function stackNote(c: StoreCoupon) {
+  if (c.kind === "occasion") return "Can't be combined with other coupons";
   if (c.kind === "welcome") return "Can be added to a Stock Up coupon";
   if (c.kind === "referrer") return "Can be added to any one store coupon";
   if (c.kind === "tier") return "Can be combined with FIRSTCARE15 or SHARECARE15";
@@ -331,9 +370,10 @@ export type BagOffer = { coupon: StoreCoupon; saving: number };
 export function bagOffers(
   subtotal: number,
   differentProducts: number,
-  opts: { firstOrder?: boolean; referred?: boolean; referrerCredits?: number; now?: number } = {},
+  opts: { firstOrder?: boolean; referred?: boolean; referrerCredits?: number; occasionCodes?: string[]; now?: number } = {},
 ) {
   const usable = liveCoupons(opts.now).filter((c) => {
+    if (c.kind === "occasion" && !opts.occasionCodes?.includes(c.code)) return false;
     if (c.kind === "referrer" && !opts.referrerCredits) return false;
     if (c.kind === "friend") return false;
     if (c.firstOrderOnly && !opts.firstOrder) return false;
@@ -369,6 +409,7 @@ export function couponConditions(c: StoreCoupon) {
   const parts: string[] = [];
   if (c.referredOnly) parts.push("for friends who joined with a referral link");
   if (c.referrerOnly) parts.push("once per friend whose first order is delivered");
+  if (c.occasion) parts.push(`in your ${c.occasion} month, once a year`);
   if (c.minDifferentProducts) parts.push(`${c.minDifferentProducts} or more different products`);
   if (c.firstOrderOnly) parts.push("first order only");
   if (c.minimumOrderValue) parts.push(`orders of ₹${c.minimumOrderValue}+`);
@@ -384,6 +425,7 @@ export function couponConditionsHi(c: StoreCoupon) {
   const parts: string[] = [];
   if (c.referredOnly) parts.push("रेफ़रल लिंक से जुड़े दोस्तों के लिए");
   if (c.referrerOnly) parts.push("हर दोस्त का पहला ऑर्डर डिलीवर होने पर एक बार");
+  if (c.occasion) parts.push(c.occasion === "birthday" ? "जन्मदिन के महीने में, साल में एक बार" : "सालगिरह के महीने में, साल में एक बार");
   if (c.minDifferentProducts) parts.push(`${c.minDifferentProducts} या ज़्यादा अलग-अलग प्रोडक्ट`);
   if (c.firstOrderOnly) parts.push("सिर्फ़ पहला ऑर्डर");
   if (c.minimumOrderValue) parts.push(`₹${c.minimumOrderValue}+ के ऑर्डर`);

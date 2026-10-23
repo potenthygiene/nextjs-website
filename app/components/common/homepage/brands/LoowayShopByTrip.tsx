@@ -29,7 +29,6 @@ interface ProductDetails {
 interface TripIncludedItem {
   title: string;
   subtitle: string;
-  price: number;
   image: string;
   bgClass: string;
 }
@@ -42,7 +41,6 @@ interface TripTabContent {
   desc: string;
   image: string;
   items: TripIncludedItem[];
-  totalPrice: number;
   kitId: string;
   builderLinkText: string;
 }
@@ -59,26 +57,22 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Disposable Toilet Seat Covers",
         subtitle: "2-pack, 50 covers",
-        price: 549,
         image: "/product-images/seatcovers.jpg",
         bgClass: "bg-[#E8F5FD]",
       },
       {
         title: "Pee Funnel",
         subtitle: "Pack of 1",
-        price: 299,
         image: "/product-images/funnel.jpg",
         bgClass: "bg-[#FDEBF3]",
       },
       {
         title: "Pee and Puke Bags",
         subtitle: "Pack of 10",
-        price: 549,
         image: "/product-images/pukebags.jpg",
         bgClass: "bg-[#EAF3EE]",
       },
     ],
-    totalPrice: 1397,
     kitId: "teerth",
     builderLinkText: "Or start from the Teerth Yatra kit in the builder →",
   },
@@ -93,19 +87,16 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Disposable Toilet Seat Covers",
         subtitle: "2-pack, 50 covers",
-        price: 549,
         image: "/product-images/seatcovers.jpg",
         bgClass: "bg-[#E8F5FD]",
       },
       {
         title: "Pee Funnel",
         subtitle: "Pack of 1",
-        price: 299,
         image: "/product-images/funnel.jpg",
         bgClass: "bg-[#FDEBF3]",
       },
     ],
-    totalPrice: 848,
     kitId: "weekender",
     builderLinkText: "Or start from the Weekender kit in the builder →",
   },
@@ -120,26 +111,22 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Disposable Toilet Seat Covers",
         subtitle: "2-pack, 50 covers",
-        price: 549,
         image: "/product-images/seatcovers.jpg",
         bgClass: "bg-[#E8F5FD]",
       },
       {
         title: "Pee Funnel",
         subtitle: "Pack of 1",
-        price: 299,
         image: "/product-images/funnel.jpg",
         bgClass: "bg-[#FDEBF3]",
       },
       {
         title: "Pee and Puke Bags",
         subtitle: "Pack of 10",
-        price: 549,
         image: "/product-images/pukebags.jpg",
         bgClass: "bg-[#EAF3EE]",
       },
     ],
-    totalPrice: 1397,
     kitId: "complete",
     builderLinkText: "Or start from the Complete kit in the builder →",
   },
@@ -154,19 +141,16 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Pee Funnel",
         subtitle: "Pack of 1",
-        price: 299,
         image: "/product-images/funnel.jpg",
         bgClass: "bg-[#FDEBF3]",
       },
       {
         title: "Pee and Puke Bags",
         subtitle: "Pack of 10",
-        price: 549,
         image: "/product-images/pukebags.jpg",
         bgClass: "bg-[#EAF3EE]",
       },
     ],
-    totalPrice: 848,
     kitId: "sports",
     builderLinkText: "Or start from the Sports & Adventure kit in the builder →",
   },
@@ -181,26 +165,22 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Disposable Toilet Seat Covers",
         subtitle: "2-pack, 50 covers",
-        price: 549,
         image: "/product-images/seatcovers.jpg",
         bgClass: "bg-[#E8F5FD]",
       },
       {
         title: "Pee Funnel",
         subtitle: "Pack of 1",
-        price: 299,
         image: "/product-images/funnel.jpg",
         bgClass: "bg-[#FDEBF3]",
       },
       {
         title: "Pee and Puke Bags",
         subtitle: "Pack of 10",
-        price: 549,
         image: "/product-images/pukebags.jpg",
         bgClass: "bg-[#EAF3EE]",
       },
     ],
-    totalPrice: 1397,
     kitId: "preg",
     builderLinkText: "Or start from the Pregnancy Travel kit in the builder →",
   },
@@ -215,19 +195,16 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Disposable Toilet Seat Covers",
         subtitle: "2-pack, 50 covers",
-        price: 549,
         image: "/product-images/seatcovers.jpg",
         bgClass: "bg-[#E8F5FD]",
       },
       {
         title: "Pee and Puke Bags",
         subtitle: "Pack of 10",
-        price: 549,
         image: "/product-images/pukebags.jpg",
         bgClass: "bg-[#EAF3EE]",
       },
     ],
-    totalPrice: 1098,
     kitId: "toddler",
     builderLinkText: "Or start from the Toddler Travel kit in the builder →",
   },
@@ -242,26 +219,22 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Disposable Toilet Seat Covers",
         subtitle: "2-pack, 50 covers",
-        price: 549,
         image: "/product-images/seatcovers.jpg",
         bgClass: "bg-[#E8F5FD]",
       },
       {
         title: "Pee Funnel",
         subtitle: "Pack of 1",
-        price: 299,
         image: "/product-images/funnel.jpg",
         bgClass: "bg-[#FDEBF3]",
       },
       {
         title: "Pee and Puke Bags",
         subtitle: "Pack of 10",
-        price: 549,
         image: "/product-images/pukebags.jpg",
         bgClass: "bg-[#EAF3EE]",
       },
     ],
-    totalPrice: 1397,
     kitId: "family",
     builderLinkText: "Or start from the Family kit in the builder →",
   },
@@ -276,12 +249,10 @@ const TRIP_DATA: TripTabContent[] = [
       {
         title: "Disposable Toilet Seat Covers",
         subtitle: "2-pack, 50 covers",
-        price: 549,
         image: "/product-images/seatcovers.jpg",
         bgClass: "bg-[#E8F5FD]",
       },
     ],
-    totalPrice: 549,
     kitId: "working",
     builderLinkText: "Or start from the Working Woman kit in the builder →",
   },
@@ -466,7 +437,16 @@ export function LoowayShopByTrip({
                     </div>
 
                     <div className="shrink-0 pl-2 text-xs font-bold text-[#1F1915] sm:text-sm">
-                      {item.price > 0 ? `₹${item.price}` : "Unavailable"}
+                      {item.price > 0 ? (
+                        `₹${item.price}`
+                      ) : (
+                        <Link
+                          href={`/product-detail/${item.slug}`}
+                          className="font-semibold text-[#0B6E7D] underline"
+                        >
+                          See price
+                        </Link>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -480,7 +460,10 @@ export function LoowayShopByTrip({
                   </div>
                   <div className="flex items-baseline gap-2">
                     <span className="font-serif text-2xl font-bold text-[#1F1915]">
-                      {currentTotal > 0 ? `₹${currentTotal}` : "Unavailable"}
+                      {currentTotal > 0 &&
+                      currentItems.every((item) => item.price > 0)
+                        ? `₹${currentTotal}`
+                        : "Price unavailable"}
                     </span>
                     <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">
                       Free delivery

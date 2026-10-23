@@ -8,12 +8,20 @@ import { ArrowRight, X, Plus, Check } from "lucide-react";
 import BestsellingCard, {
   formatProductPrice,
   getDefaultBadge,
-  getProductNumericPrice,
 } from "./BestSellingCard";
 import { useCatalogStore } from "@/store/catalogStore";
 import { addToCart } from "@/store/cartActions";
 import { getImageUrl } from "@/lib/imageUrl";
-import { Button } from "@/components/ui/button";
+import {
+  BTN_BASE,
+  BTN_PRIMARY,
+  CONTAINER,
+  EYEBROW_TEAL,
+  H2,
+  LEAD,
+  LINK_ARROW,
+  SECTION_Y,
+} from "./homeStyles";
 
 type Props = {
   title?: string;
@@ -21,142 +29,6 @@ type Props = {
   buttonColor?: string;
   description?: string;
 };
-
-const OVY_PRESET_METADATA: Record<
-  string,
-  {
-    badge: string;
-    infoText: string;
-    shortDesc?: string;
-    overrideName?: string;
-    overrideImage?: string;
-  }
-> = {
-  "ovy-organic-sanitary-pads": {
-    badge: "Bestseller",
-    overrideName: "Ovy Organic Sanitary Pads",
-    shortDesc: "Rash-free, organic, sized to your actual flow",
-    infoText: "L, XL and XL+. 21 pads and 4 liners. · 3 sizes",
-    overrideImage: "/product-images/pads.jpg",
-  },
-  "ovy-teen-starter-pack": {
-    badge: "For first periods",
-    overrideName: "Ovy Teen Kits",
-    shortDesc: "Makes a first period calm instead of frightening",
-    infoText: "Starter and Pro-Active packs · 2 kits",
-    overrideImage: "/product-images/teen.jpg",
-  },
-  "menstrual-cup": {
-    badge: "Reusable",
-    overrideName: "Ovy Reusable Menstrual Cup",
-    shortDesc: "One cup, years of periods, up to 12 hours at a time",
-    infoText: "Teen XS, Medium and Large · 3 sizes, 4 options",
-    overrideImage: "/product-images/cup.jpg",
-  },
-  "ovy-daily-panty-liners": {
-    badge: "Daily Care",
-    overrideName: "Ovy Daily Liners",
-    shortDesc: "Keeps you fresh between periods. Not for period flow.",
-    infoText: "Packs of 40, 60 and 80 · 3 packs",
-    overrideImage: "/product-images/liners.jpg",
-  },
-};
-
-const DEFAULT_OVY_PRODUCTS = [
-  {
-    id: "ovy-pads-def",
-    name: "Ovy Organic Sanitary Pads",
-    slug: "ovy-organic-sanitary-pads",
-    description: "Rash-free, organic, sized to your actual flow",
-    infoText: "L, XL and XL+. 21 pads and 4 liners. · 3 sizes",
-    startingPrice: 378,
-    badge: "Bestseller",
-    image: "/product-images/pads.jpg",
-    brand: "ovy",
-  },
-  {
-    id: "ovy-teen-def",
-    name: "Ovy Teen Kits",
-    slug: "ovy-teen-starter-pack",
-    description: "Makes a first period calm instead of frightening",
-    infoText: "Starter and Pro-Active packs · 2 kits",
-    startingPrice: 378,
-    badge: "For first periods",
-    image: "/product-images/teen.jpg",
-    brand: "ovy",
-  },
-  {
-    id: "ovy-cup-def",
-    name: "Ovy Reusable Menstrual Cup",
-    slug: "menstrual-cup",
-    description: "One cup, years of periods, up to 12 hours at a time",
-    infoText: "Teen XS, Medium and Large · 3 sizes, 4 options",
-    startingPrice: 459,
-    badge: "Reusable",
-    image: "/product-images/cup.jpg",
-    brand: "ovy",
-  },
-  {
-    id: "ovy-liners-def",
-    name: "Ovy Daily Liners",
-    slug: "ovy-daily-panty-liners",
-    description: "Keeps you fresh between periods. Not for period flow.",
-    infoText: "Packs of 40, 60 and 80 · 3 packs",
-    startingPrice: 269,
-    badge: "Daily Care",
-    image: "/product-images/liners.jpg",
-    brand: "ovy",
-  },
-];
-
-function ComingSoonCard() {
-  return (
-    <Link
-      href="/product-detail/ovy-panty"
-      className="group border-gray-150 relative flex h-full w-full flex-col justify-between overflow-hidden rounded-2xl border bg-white shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
-    >
-      {/* Top Media Container (Lavender diagonal stripe background with Coming soon text) */}
-      <div
-        className="relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden bg-[#F5EEF6]"
-        style={{
-          backgroundImage: `repeating-linear-gradient(45deg, rgba(255,255,255,0.5) 0px, rgba(255,255,255,0.5) 10px, transparent 10px, transparent 20px)`,
-        }}
-      >
-        <span className="font-caveat -rotate-6 transform text-2xl tracking-wide text-[#905D89] sm:text-4xl">
-          Out of stock
-        </span>
-      </div>
-
-      {/* Details & Info Section */}
-      <div className="flex grow flex-col justify-between space-y-2 bg-white p-2.5 sm:space-y-3 sm:p-4">
-        <div className="space-y-1 sm:space-y-1.5">
-          <h3 className="line-clamp-2 font-serif text-xs leading-snug font-bold text-gray-900 sm:text-base md:text-lg">
-            Ovy Super Slim Period Panties
-          </h3>
-
-          <p className="line-clamp-2 text-[10px] leading-snug font-normal text-gray-600 sm:text-xs md:text-sm">
-            360° protection for 10 to 12 hours, worn like underwear
-          </p>
-
-          <p className="pt-0.5 text-[10px] font-normal text-gray-500 sm:text-xs">
-            M-XL and XXL-XXXL. Disposable.
-          </p>
-        </div>
-
-        {/* Footer Action / Status Row */}
-        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-2">
-          <span className="text-[10px] font-normal text-gray-500 sm:text-xs">
-            View details
-          </span>
-
-          <span className="rounded-full bg-gray-100 border border-gray-200 px-2.5 py-1 text-[10px] font-semibold text-gray-600 shadow-2xs sm:px-4 sm:py-1.5 sm:text-xs">
-            Out of stock
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
 
 export default function BestsellingProducts({
   title = "The ones everyone comes back for.",
@@ -175,56 +47,10 @@ export default function BestsellingProducts({
     state.categories ? state.products : [],
   );
 
-  const isOvySection =
-    brand === "ovy" || title === "Your whole cycle, covered.";
-
-  // Section details
-  const sectionBadge = isOvySection ? "OVY" : "START HERE";
-  const sectionTitle = isOvySection ? "Your whole cycle, covered." : title;
-  const sectionDesc = isOvySection
-    ? "Organic, certified toxin-free, and sized to a real cycle rather than an average one."
-    : description;
-  const buttonText = isOvySection ? "All Ovy products" : "Shop all";
-  const buttonHref = isOvySection ? "/ovy#products" : "/shop";
-
-  // Prepare products array
-  let displayProducts: any[] = [];
-
-  if (isOvySection) {
-    const ovyCatalog = rawProducts.filter((p) => p.brand === "ovy");
-    const mergedMap = new Map<string, any>();
-
-    ovyCatalog.forEach((p) => {
-      const slugKey = String(p.slug || "").toLowerCase();
-      const meta = OVY_PRESET_METADATA[slugKey];
-      mergedMap.set(slugKey, {
-        ...p,
-        name: meta?.overrideName || p.name,
-        description: meta?.shortDesc || p.description,
-        badge: meta?.badge || (p as any).badge || "Ovy Care",
-        infoText: meta?.infoText,
-        image:
-          meta?.overrideImage ||
-          p.image ||
-          p.bannerImage ||
-          "/product-images/pads.jpg",
-      });
-    });
-
-    // Fill from fallback if any items missing
-    DEFAULT_OVY_PRODUCTS.forEach((def) => {
-      const slugKey = def.slug.toLowerCase();
-      if (!mergedMap.has(slugKey)) {
-        mergedMap.set(slugKey, def);
-      }
-    });
-
-    displayProducts = Array.from(mergedMap.values()).slice(0, 4);
-  } else if (brand) {
-    displayProducts = rawProducts.filter((p) => p.brand === brand).slice(0, 5);
-  } else {
-    displayProducts = rawProducts.slice(0, 5);
-  }
+  // Live catalogue only: never a hardcoded product or price.
+  const displayProducts: any[] = (
+    brand ? rawProducts.filter((p) => p.brand === brand) : rawProducts
+  ).slice(0, 5);
 
   const getProductDetails = async (product: any) => {
     if (product.productVariants?.length || product.variants?.length) {
@@ -333,90 +159,58 @@ export default function BestsellingProducts({
     const s = String(prod?.slug || "").toLowerCase();
     if (s.includes("funnel")) {
       return [
-        "Stand, go, touch nothing — clothes just moved aside",
+        "Stand, go, touch nothing, clothes just moved aside",
         "Reusable with its own cotton carry pouch",
         "Safe through pregnancy: no squatting, no dirty seat",
       ];
     }
     if (s.includes("cup")) {
       return [
-        "100% medical-grade silicone, latex & BPA free",
+        "100% medical-grade silicone, latex-free and BPA-free",
         "Up to 12 hours protection between changes",
-        "Reusable for years replacing thousands of disposables",
+        "Reusable for years, replacing thousands of disposables",
       ];
     }
     if (s.includes("puke") || s.includes("bag")) {
       return [
         "Turns urine or vomit to gel in 60 seconds",
         "Holds up to 700ml, odour locked and leak-proof",
-        "For motion sickness, pregnancy nausea & travel",
+        "For motion sickness, pregnancy nausea and travel",
       ];
     }
     if (s.includes("seat")) {
       return [
         "Biodegradable paper seat covers for Western loos",
-        "Ideal for school, office, train, airport & travel",
+        "For school, office, trains, airports and travel",
         "Slips easily into any handbag or pocket",
       ];
     }
     return [
       "Organic top sheet, certified toxin-free",
-      "pH-balanced & dermatologically tested",
+      "pH-balanced and dermatologically tested",
       "Ships within 24 to 48 hours in bold, proud packaging",
     ];
   };
 
   return (
-    <section className="w-full border-b border-gray-100 bg-[#FAF8F5] py-14 sm:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-16">
-        {/* Section Header - Mobile View (< sm) */}
-        <div className="mb-6 flex flex-col space-y-1.5 text-left sm:hidden">
-          <span className="text-[11px] font-bold tracking-widest text-[#016271] uppercase">
-            {isOvySection ? "OVY" : "SHOP"}
-          </span>
-          <h2 className="font-serif text-2xl leading-snug font-bold text-gray-900">
-            {isOvySection ? "Your whole cycle, covered." : "Everything, one tap away."}
-          </h2>
-          <div className="pt-1">
-            <Link
-              href={buttonHref}
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#016271] transition-opacity hover:opacity-80"
-            >
-              <span>{isOvySection ? "All Ovy products" : "Shop all"}</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+    <section
+      id="bestsellers"
+      className={`w-full scroll-mt-24 border-b border-gray-100 bg-[#FAF8F5] ${SECTION_Y}`}
+    >
+      <div className={CONTAINER}>
+        <div className="mb-6 flex flex-col gap-2 sm:mb-10 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+          <div className="max-w-2xl space-y-2 sm:space-y-3">
+            <span className={EYEBROW_TEAL}>Start here</span>
+            <h2 className={H2}>{title}</h2>
+            <p className={`${LEAD} hidden sm:block`}>{description}</p>
           </div>
+          <Link href="/shop" className={`${LINK_ARROW} shrink-0 self-start sm:self-auto`}>
+            Shop all
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
 
-        {/* Section Header - Desktop View (>= sm) */}
-        <div className="mb-10 hidden flex-row items-end justify-between gap-6 sm:flex md:mb-14">
-          <div className="max-w-2xl space-y-3 text-left">
-            <span className="text-xs font-bold tracking-widest text-[#016271] uppercase">
-              {sectionBadge}
-            </span>
-            <h2 className="font-serif text-4xl leading-tight font-bold text-gray-900 lg:text-5xl">
-              {sectionTitle}
-            </h2>
-            <p className="text-base leading-relaxed font-normal text-gray-600 md:text-lg">
-              {sectionDesc}
-            </p>
-          </div>
-
-          {/* Top Right Shop Button */}
-          <div className="shrink-0">
-            <Link href={buttonHref}>
-              <Button
-                variant="outline"
-                className="flex cursor-pointer items-center gap-2 rounded-full border-[#016271] px-5 py-2.5 text-sm font-semibold text-[#016271] shadow-xs transition-all duration-300 hover:bg-[#016271] hover:text-white"
-              >
-                {buttonText}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        {/* 5 Cards Grid: 2 columns on Mobile, 3 on Tablet, 5 on Desktop */}
+        {/* 2 columns on a phone (the 5th card spans both), 3 on tablet, 5 on desktop */}
         <div className="grid grid-cols-2 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5 lg:gap-5">
           {displayProducts.map((product: any, idx: number) => (
             <BestsellingCard
@@ -429,9 +223,6 @@ export default function BestsellingProducts({
               onAddToCart={(p) => handleAddToCart(p)}
             />
           ))}
-
-          {/* 5th Slot: Coming Soon Card for Ovy range */}
-          {isOvySection && <ComingSoonCard />}
         </div>
       </div>
 
@@ -443,13 +234,17 @@ export default function BestsellingProducts({
             onClick={() => setQuickViewProduct(null)}
           />
 
-          <div className="relative z-10 grid w-full max-w-2xl grid-cols-1 items-start gap-4 sm:gap-6 rounded-3xl border border-gray-100 bg-white p-4 sm:p-8 shadow-2xl sm:grid-cols-12 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto no-scrollbar sm:items-center">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={quickViewProduct.name || "Quick view"}
+            className="relative z-10 grid w-full max-w-2xl grid-cols-1 items-start gap-4 sm:gap-6 rounded-3xl border border-gray-100 bg-white p-4 sm:p-8 shadow-2xl sm:grid-cols-12 max-h-[85vh] sm:max-h-[90vh] overflow-y-auto my-auto no-scrollbar sm:items-center">
             {/* Close Button */}
             <button
               type="button"
               onClick={() => setQuickViewProduct(null)}
               aria-label="Close modal"
-              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md backdrop-blur-md transition-colors hover:bg-gray-100 cursor-pointer"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-md backdrop-blur-md transition-colors hover:bg-gray-100 cursor-pointer"
             >
               <X className="h-4 w-4" />
             </button>
@@ -475,11 +270,11 @@ export default function BestsellingProducts({
                 {quickViewProduct.badge || getDefaultBadge(quickViewProduct)}
               </span>
 
-              <h3 className="font-serif text-lg font-bold text-gray-900 sm:text-2xl leading-tight">
+              <h3 className="font-serif text-xl font-bold text-[#1F1915] sm:text-2xl leading-tight">
                 {quickViewProduct.name}
               </h3>
 
-              <p className="text-xs sm:text-sm leading-relaxed font-normal text-gray-600 line-clamp-3 sm:line-clamp-none">
+              <p className="text-sm leading-relaxed font-normal text-[#5C524D] line-clamp-3 sm:line-clamp-none">
                 {quickViewProduct.description ||
                   "Safe, organic and dermatologically tested feminine hygiene care."}
               </p>
@@ -490,9 +285,9 @@ export default function BestsellingProducts({
                   (item: string, i: number) => (
                     <li
                       key={i}
-                      className="flex items-center gap-2 text-xs font-medium text-gray-700 sm:text-sm"
+                      className="flex items-start gap-2 text-[13px] font-medium text-[#1F1915] sm:text-sm"
                     >
-                      <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-[#016271]" />
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#016271]" aria-hidden />
                       <span>{item}</span>
                     </li>
                   ),
@@ -500,8 +295,10 @@ export default function BestsellingProducts({
               </ul>
 
               <div className="flex items-baseline gap-1 pt-0.5 sm:pt-1">
-                <span className="text-xs font-normal text-gray-500">from</span>
-                <span className="text-xl sm:text-2xl font-bold text-gray-900">
+                {!selectedVariant && (
+                  <span className="text-[13px] font-normal text-[#5C524D]">from</span>
+                )}
+                <span className="text-xl sm:text-2xl font-bold text-[#1F1915]">
                   {selectedVariant
                     ? `₹${Number(selectedVariant.price || 0)}`
                     : formatProductPrice(quickViewProduct)}
@@ -509,7 +306,7 @@ export default function BestsellingProducts({
               </div>
 
               {quickViewVariants.length > 1 && (
-                <label className="flex flex-col gap-1 text-xs sm:text-sm font-semibold text-gray-700">
+                <label className="flex flex-col gap-1 text-sm font-semibold text-[#1F1915]">
                   Choose variant
                   <select
                     value={selectedVariant?.id || ""}
@@ -520,7 +317,7 @@ export default function BestsellingProducts({
                         ),
                       )
                     }
-                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-xs sm:text-sm font-normal outline-none focus:border-[#016271] cursor-pointer"
+                    className="min-h-11 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm font-normal outline-none focus:border-[#016271] cursor-pointer"
                   >
                     {quickViewVariants.map((variant) => (
                       <option key={variant.id} value={variant.id}>
@@ -538,7 +335,7 @@ export default function BestsellingProducts({
                   <button
                     type="button"
                     disabled
-                    className="flex w-full flex-1 cursor-not-allowed items-center justify-center gap-2 rounded-full px-5 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold bg-gray-200 text-gray-500 shadow-none sm:w-auto"
+                    className="flex min-h-12 w-full flex-1 cursor-not-allowed items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold bg-gray-200 text-gray-500 shadow-none sm:w-auto"
                   >
                     <span>Out of stock</span>
                   </button>
@@ -547,22 +344,20 @@ export default function BestsellingProducts({
                     type="button"
                     onClick={handleModalAdd}
                     disabled={modalAdding}
-                    className={`flex w-full flex-1 cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-2.5 sm:px-6 sm:py-3 text-xs sm:text-sm font-semibold shadow-md transition-all sm:w-auto ${
-                      modalAdded
-                        ? "bg-emerald-600 text-white"
-                        : "bg-[#016271] text-white hover:scale-[1.02] hover:bg-[#014d59]"
-                    }`}
+                    className={`${
+                      modalAdded ? `${BTN_BASE} bg-emerald-700 text-white` : BTN_PRIMARY
+                    } w-full flex-1 sm:w-auto`}
                   >
                     {modalAdded ? (
                       <>
                         <Check className="h-4 w-4" />
-                        <span>Added to cart</span>
+                        <span>Added to bag</span>
                       </>
                     ) : (
                       <>
                         <Plus className="h-4 w-4" />
                         <span>
-                          {loadingProductDetails ? "Loading..." : "Add to cart"}
+                          {loadingProductDetails ? "Loading..." : "Add to bag"}
                         </span>
                       </>
                     )}
@@ -572,9 +367,10 @@ export default function BestsellingProducts({
                 <Link
                   href={`/product-detail/${quickViewProduct.slug}`}
                   onClick={() => setQuickViewProduct(null)}
-                  className="w-full py-1 text-center text-xs font-semibold text-[#016271] hover:underline sm:w-auto sm:text-sm"
+                  className={`${LINK_ARROW} w-full justify-center sm:w-auto`}
                 >
-                  View full details →
+                  View full details
+                  <ArrowRight className="h-4 w-4" aria-hidden />
                 </Link>
               </div>
             </div>

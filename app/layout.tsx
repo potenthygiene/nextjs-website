@@ -5,6 +5,8 @@ import { AppToaster } from "./components/common/AppToaster";
 import { CatalogProvider } from "./components/common/CatalogProvider";
 import { ChatBotWidget } from "./components/common/ChatBotWidget";
 import { WhatsAppWidget } from "./components/common/homepage/WhatsAppWidget";
+import { BackToTop } from "./components/common/site/BackToTop";
+import { SamePageLinkScroll } from "./components/common/site/SamePageLinkScroll";
 import Script from "next/script";
 import {
   DEFAULT_OG_IMAGE,
@@ -129,6 +131,8 @@ export default function RootLayout({
         <AppToaster />
         <ChatBotWidget />
         <WhatsAppWidget />
+        <BackToTop />
+        <SamePageLinkScroll />
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"

@@ -555,7 +555,7 @@ export const ANSWERS: ChatAnswer[] = [
     question: "What is in the First Period Box?",
     phrasings: ["first period box", "first period gift", "beti ka pehla period", "gift for daughter first period", "period kit gift", "first period box mein kya hai", "guidebook", "gift box periods", "first period box?", "periods starter gift"],
     keywords: ["first period box", "gift", "guidebook", "milestone", "pehla period", "gift note"],
-    answer: "The **First Period Box** is a 50-piece milestone gift: 10 pads (4 L, 3 XL, 3 XL+), 4 period panties, 4 liners, 5 toilet seat covers, 10 fragrance-free wipes, 14 disposal bags, 2 warming pain-relief patches and the \"You've Got This\" guidebook, written for her. You can add a free gift note at the buy box.",
+    answer: "The **First Period Box** is a milestone gift that is coming soon, so it can't be ordered yet. It will hold 10 pads (4 L, 3 XL, 3 XL+), 4 period panties, 4 liners, 5 toilet seat covers, 10 fragrance-free wipes, 14 disposal bags and the \"You've Got This\" guidebook, written for her.",
     links: [TEEN],
     related: ["ovy-teen-which-kit", "ovy-teen-parent-help"],
   },

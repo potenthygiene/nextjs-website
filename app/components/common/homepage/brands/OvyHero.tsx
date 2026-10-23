@@ -238,7 +238,7 @@ export function OvyHero() {
                 <Check className="h-3.5 w-3.5 text-[#016271] stroke-[2.5]" /> Ships within 24 to 48 hours
               </span>
               <span className="flex items-center gap-1.5">
-                <Check className="h-3.5 w-3.5 text-[#016271] stroke-[2.5]" /> Free delivery over ₹399
+                <Check className="h-3.5 w-3.5 text-[#016271] stroke-[2.5]" /> Free delivery on orders of ₹399 and above
               </span>
               <span className="flex items-center gap-1.5">
                 <Check className="h-3.5 w-3.5 text-[#016271] stroke-[2.5]" /> Made in Jaipur

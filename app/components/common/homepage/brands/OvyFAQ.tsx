@@ -50,7 +50,7 @@ const OVY_FAQS: FAQItem[] = [
     id: 7,
     question: "How do I care for and wash the Menstrual Cup?",
     answer:
-      "Boil your Ovy Cup in water for 5–7 minutes before your first use and after each cycle. During your period, simply wash it with warm water and mild fragrance-free soap between empties.",
+      "Boil your Ovy Cup in water for 5 to 7 minutes before your first use and after each cycle. During your period, simply wash it with warm water and mild fragrance-free soap between empties.",
   },
   {
     id: 8,

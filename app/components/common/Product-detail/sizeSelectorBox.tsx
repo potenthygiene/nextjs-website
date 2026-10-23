@@ -16,9 +16,9 @@ import {
 const STORAGE_KEY = "ovy_mix_your_box_recipe";
 
 const DEFAULT_PAD_ITEMS = [
-  { name: "Ovy Soft Sanitary Pads - L (240mm)", size: "L (240mm)", price: 349 },
-  { name: "Ovy Soft Sanitary Pads - XL (280mm)", size: "XL (280mm)", price: 349 },
-  { name: "Ovy Soft Sanitary Pads - XL+ (320mm)", size: "XL+ (320mm)", price: 349 },
+  { name: "Ovy Soft Sanitary Pads - L (240mm)", size: "L (240mm)", price: 0 },
+  { name: "Ovy Soft Sanitary Pads - XL (280mm)", size: "XL (280mm)", price: 0 },
+  { name: "Ovy Soft Sanitary Pads - XL+ (320mm)", size: "XL+ (320mm)", price: 0 },
 ];
 
 interface SizeSelectorBoxProps {

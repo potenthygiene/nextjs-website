@@ -10,19 +10,19 @@ export default function HowItWorksSection() {
       num: "1",
       icon: Maximize2,
       title: "Open & use",
-      desc: "Spread the wide mouth open and go directly into the bag — for urine or vomit, standing, seated or lying down.",
+      desc: "Spread the wide mouth open and go directly into the bag, for urine or vomit, standing, seated or lying down.",
     },
     {
       num: "2",
       icon: Clock,
       title: "It solidifies",
-      desc: "The absorbent strip locks up to 700 ml of liquid into a firm gel in about 60 seconds — and controls odour at the same time.",
+      desc: "The absorbent strip locks up to 700 ml of liquid into a firm gel in about 60 seconds, and controls odour at the same time.",
     },
     {
       num: "3",
       icon: ShieldCheck,
       title: "Seal & dispose",
-      desc: "Press the sealable closure firmly until it locks — the bag is leak-proof and odour-locked — then drop it in any rubbish bin. Never flush; even recyclable material can block drains.",
+      desc: "Press the sealable closure firmly until it locks (the bag is leak-proof and odour-locked), then drop it in any rubbish bin. Never flush; even recyclable material can block drains.",
     },
   ];
 
@@ -42,7 +42,7 @@ export default function HowItWorksSection() {
 
           {/* Subtitle Description */}
           <p className="mt-2.5 sm:mt-3 text-xs sm:text-base leading-relaxed text-[#17271E]/75 font-normal max-w-2xl">
-            A super-absorbent strip — the same kind of material used inside baby diapers —
+            A super-absorbent strip (the same kind of material used inside baby diapers)
             does the heavy lifting. It turns liquid into a firm gel, so there&apos;s nothing
             left to spill, leak or smell.
           </p>
@@ -91,7 +91,7 @@ export default function HowItWorksSection() {
         <div className="mt-4 sm:mt-6 flex items-start sm:items-center gap-3 rounded-2xl border-l-4 border-l-[#0E5C3A] border border-[#E4DED0] bg-[#EBF5EF] p-3.5 sm:p-4 text-xs sm:text-sm text-[#0A4A2E] shadow-2xs">
           <div>
             <strong className="font-bold text-[#0A4A2E]">Reusable until full.</strong>{" "}
-            Each bag holds up to 700 ml across 2–3 uses. Keep it sealed between uses, and dispose of it once full or within 24 hours of first opening.
+            Each bag holds up to 700 ml across 2 to 3 uses. Keep it sealed between uses, and dispose of it once full or within 24 hours of first opening.
           </div>
         </div>
       </div>

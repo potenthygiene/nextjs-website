@@ -10,6 +10,7 @@ interface User {
   phone: string;
   email: string;
   birthday?: string;
+  anniversary?: string;
 }
 
 interface FormProps {
@@ -17,6 +18,7 @@ interface FormProps {
   isSaving: boolean;
   user: User;
   birthdayLocked?: boolean;
+  anniversaryLocked?: boolean;
   onChange: (field: keyof User, value: string) => void;
   onSubmit: () => void;
   onCancel: () => void;
@@ -27,6 +29,7 @@ export const EditAddressForm = ({
   isSaving,
   user,
   birthdayLocked,
+  anniversaryLocked,
   onChange,
   onSubmit,
   onCancel,
@@ -71,9 +74,7 @@ export const EditAddressForm = ({
       </div>
       <div className="space-y-3">
         <Label className="text-[12px] font-bold text-gray-400 uppercase ml-1">
-          {birthdayLocked
-            ? "Birthday (Locked — Set Once)"
-            : "Birthday (Earn ₹50 Birthday Credit)"}
+          {birthdayLocked ? "Birthday (set once)" : "Birthday (₹50 credit + BIRTHDAY15 in your birthday month)"}
         </Label>
         <Input
           type="date"
@@ -83,6 +84,21 @@ export const EditAddressForm = ({
           onChange={(e) => onChange("birthday", e.target.value)}
           className={`border-gray-200 rounded-xl h-12 px-4 focus-visible:ring-1 focus-visible:ring-[#1B8392] disabled:opacity-100 disabled:cursor-default ${
             birthdayLocked ? "bg-gray-50" : ""
+          }`}
+        />
+      </div>
+      <div className="space-y-3">
+        <Label className="text-[12px] font-bold text-gray-400 uppercase ml-1">
+          {anniversaryLocked ? "Anniversary (set once)" : "Anniversary, optional (ANNIVERSARY15 in that month)"}
+        </Label>
+        <Input
+          type="date"
+          disabled={!isEditing || isSaving || Boolean(anniversaryLocked)}
+          value={user.anniversary || ""}
+          max={new Date().toISOString().split("T")[0]}
+          onChange={(e) => onChange("anniversary", e.target.value)}
+          className={`border-gray-200 rounded-xl h-12 px-4 focus-visible:ring-1 focus-visible:ring-[#1B8392] disabled:opacity-100 disabled:cursor-default ${
+            anniversaryLocked ? "bg-gray-50" : ""
           }`}
         />
       </div>

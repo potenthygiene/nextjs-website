@@ -19,7 +19,7 @@ export default function NoToiletLoowaySection() {
     {
       icon: Activity,
       title: "Motion sickness",
-      desc: "Nausea in a car, bus, boat or plane — open, use, seal. No mess to clean.",
+      desc: "Nausea in a car, bus, boat or plane? Open, use, seal. No mess to clean.",
     },
     {
       icon: HeartHandshake,
@@ -48,7 +48,7 @@ export default function NoToiletLoowaySection() {
             The road from Jaipur to Jodhpur can run 300 km without a clean roadside
             toilet. A toddler who can&apos;t hold it on the highway. A night bus with a broken
             loo. A campsite with nowhere to go discreetly. These urine &amp; vomit bags are
-            built for all of it — one bag, every situation.
+            built for all of it: one bag, every situation.
           </p>
         </div>
 

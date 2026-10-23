@@ -86,7 +86,7 @@ const QUICK_QUESTIONS_DATA: Record<
   hurt: {
     title: "Will it hurt?",
     badge: "COMFORT & INSERTION",
-    shortAnswer: "No — when inserted correctly, you shouldn't feel it at all.",
+    shortAnswer: "No. When inserted correctly, you shouldn't feel it at all.",
     detailedAnswer:
       "The 100% medical-grade silicone is feather-soft and moulds to your body's natural contours. The first few times can feel unfamiliar, but relaxation is key: relax your pelvic floor, wet the rim with clean water, and use the punch-down fold for the smallest tip. Once inside and open, a cup creates a gentle seal and completely disappears from sensation.",
     sectionId: "hurt-card",
@@ -96,7 +96,7 @@ const QUICK_QUESTIONS_DATA: Record<
     badge: "MYTH BUSTING",
     shortAnswer: "It has nothing to do with virginity.",
     detailedAnswer:
-      "Virginity is about a person and their choices — never an object or hygiene product. The hymen is a soft, flexible ring of tissue with a natural opening that sports, dance, and cycles already stretch. A cup gently stretches it too, but cannot 'take' anything. Unmarried girls and teens can safely use a cup from their very first cycle.",
+      "Virginity is about a person and their choices, never an object or hygiene product. The hymen is a soft, flexible ring of tissue with a natural opening that sports, dance, and cycles already stretch. A cup gently stretches it too, but cannot 'take' anything. Unmarried girls and teens can safely use a cup from their very first cycle.",
     sectionId: "virginity-section",
   },
   size: {
@@ -110,7 +110,7 @@ const QUICK_QUESTIONS_DATA: Record<
   hostel: {
     title: "How do I clean it in a hostel?",
     badge: "HOSTELS, PGS & TRAVEL",
-    shortAnswer: "Super easy — you only need a full wash twice a day.",
+    shortAnswer: "Super easy: you only need a full wash twice a day.",
     detailedAnswer:
       "Because the Ovy Cup gives up to 12 hours of protection, you can insert in the morning before class and empty at night in privacy. In shared washrooms without a private basin, empty into the toilet, wipe with clean tissue or rinse with a small water bottle you carry in, and reinsert. Between cycles, use a travel steam steriliser or sterilising tablets without needing a shared stove.",
     sectionId: "hostel-card",
@@ -165,10 +165,9 @@ export default function MenstrualCupPageClient({
         size: "Teen (XS)",
         color: "Pink",
         image: "/ovy/cup-xs.jpg",
-        price: Number(productInfo?.price || 459),
-        strikethroughPrice: Number(
-          productInfo?.strikethroughPrice || productInfo?.mrp || 399,
-        ),
+        price: Number(productInfo?.price) || 0,
+        strikethroughPrice:
+          Number(productInfo?.strikethroughPrice || productInfo?.mrp) || 0,
       },
       {
         id: "variant-m-purple",
@@ -178,10 +177,9 @@ export default function MenstrualCupPageClient({
         size: "Medium",
         color: "Purple",
         image: "/ovy/cup-m.jpg",
-        price: Number(productInfo?.price || 459),
-        strikethroughPrice: Number(
-          productInfo?.strikethroughPrice || productInfo?.mrp || 399,
-        ),
+        price: Number(productInfo?.price) || 0,
+        strikethroughPrice:
+          Number(productInfo?.strikethroughPrice || productInfo?.mrp) || 0,
       },
       {
         id: "variant-m-rainbow",
@@ -191,10 +189,9 @@ export default function MenstrualCupPageClient({
         size: "Medium",
         color: "Rainbow",
         image: "/product-images/cup-rbw.jpg",
-        price: Number(productInfo?.price || 459),
-        strikethroughPrice: Number(
-          productInfo?.strikethroughPrice || productInfo?.mrp || 399,
-        ),
+        price: Number(productInfo?.price) || 0,
+        strikethroughPrice:
+          Number(productInfo?.strikethroughPrice || productInfo?.mrp) || 0,
       },
       {
         id: "variant-l-white",
@@ -204,10 +201,9 @@ export default function MenstrualCupPageClient({
         size: "Large",
         color: "White",
         image: "/ovy/cup-l.jpg",
-        price: Number(productInfo?.price || 459),
-        strikethroughPrice: Number(
-          productInfo?.strikethroughPrice || productInfo?.mrp || 399,
-        ),
+        price: Number(productInfo?.price) || 0,
+        strikethroughPrice:
+          Number(productInfo?.strikethroughPrice || productInfo?.mrp) || 0,
       },
     ];
   }, [productInfo]);
@@ -384,14 +380,16 @@ export default function MenstrualCupPageClient({
   };
 
   // Real Database Pricing & Rates
-  const price = Number(activeVariant?.price ?? productInfo?.price ?? 459);
-  const strikethroughPrice = Number(
-    activeVariant?.strikethroughPrice ??
-      activeVariant?.mrp ??
-      productInfo?.strikethroughPrice ??
-      productInfo?.mrp ??
-      399,
-  );
+  // Live prices only. With none, no price is shown and the cup can't be added.
+  const price = Number(activeVariant?.price || productInfo?.price) || 0;
+  const priceMissing = !(price > 0);
+  const strikethroughPrice =
+    Number(
+      activeVariant?.strikethroughPrice ??
+        activeVariant?.mrp ??
+        productInfo?.strikethroughPrice ??
+        productInfo?.mrp,
+    ) || 0;
   const discountPercent =
     strikethroughPrice > price
       ? Math.round(((strikethroughPrice - price) / strikethroughPrice) * 100)
@@ -421,11 +419,11 @@ export default function MenstrualCupPageClient({
   // Savings Calculator Formula
   const calculatedSavings = useMemo(() => {
     const totalDisposables = monthlySpend * 12 * timeframeYears;
-    const cupCost = 399;
+    const cupCost = price;
     const savings = Math.max(0, totalDisposables - cupCost);
     const padsSaved = timeframeYears === 5 ? 1200 : 2400;
     return { savings, padsSaved };
-  }, [monthlySpend, timeframeYears]);
+  }, [monthlySpend, timeframeYears, price]);
 
   // Pincode State
   const [pincode, setPincode] = useState("");
@@ -525,6 +523,10 @@ export default function MenstrualCupPageClient({
 
   // Handle Add to Cart & Buy Now
   const handleAddToCart = async () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -561,6 +563,10 @@ export default function MenstrualCupPageClient({
   };
 
   const handleBuyNow = () => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     if (isOutOfStock) {
       toast.error("This item is currently out of stock.");
       return;
@@ -919,10 +925,10 @@ export default function MenstrualCupPageClient({
 
             {/* DESCRIPTION KEY POINTS */}
             <p className="mb-6 text-sm leading-relaxed text-gray-700 sm:text-base">
-              The softest cup you'll ever use — and a{" "}
+              The softest cup you'll ever use, and a{" "}
               <b>kinder swap for your body and the planet</b>. 100%
               medical-grade silicone gives you up to 12 hours of leak-proof
-              protection that works <i>with</i> your body. No toxins, no waste —
+              protection that works <i>with</i> your body. No toxins, no waste,
               just freedom.
             </p>
 
@@ -977,7 +983,11 @@ export default function MenstrualCupPageClient({
                         )}
                       </div>
                       <p className="mt-1.5 text-xs font-bold text-[#7E4D77]">
-                        ₹{v?.price || price}
+                        {Number(v?.price) > 0
+                          ? `₹${v.price}`
+                          : priceMissing
+                            ? ""
+                            : `₹${price}`}
                       </p>
                     </button>
                   );
@@ -989,14 +999,14 @@ export default function MenstrualCupPageClient({
             <div className="border-t border-gray-200 pt-4">
               <div className="mb-2 flex items-baseline gap-3">
                 <span className="font-serif text-3xl font-bold text-gray-900">
-                  ₹{price}
+                  {priceMissing ? "Price unavailable" : `₹${price}`}
                 </span>
-                {strikethroughPrice > price && (
+                {!priceMissing && strikethroughPrice > price && (
                   <span className="text-base text-gray-400 line-through">
                     ₹{strikethroughPrice}
                   </span>
                 )}
-                {discountPercent > 0 && (
+                {!priceMissing && discountPercent > 0 && (
                   <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-bold text-emerald-700">
                     SAVE {discountPercent}%
                   </span>
@@ -1143,7 +1153,7 @@ export default function MenstrualCupPageClient({
                 <div className="flex items-center justify-between border-t border-gray-100 bg-[#FAF7F2] p-3 text-xs font-bold text-gray-700">
                   <span>TOTAL</span>
                   <span className="font-normal text-gray-500">
-                    Everything to start — one cup, reusable for years
+                    Everything to start: one cup, reusable for years
                   </span>
                 </div>
                 <div className="h-1.5 w-full bg-gradient-to-r from-[#8E5FA8] via-[#5FBF7E] to-[#FAF7F2]" />
@@ -1288,7 +1298,7 @@ export default function MenstrualCupPageClient({
             You've seen the cup. Now get to know your body.
           </h2>
           <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-gray-600 sm:text-base">
-            A cup comes with a lot of questions — and not nearly enough straight
+            A cup comes with a lot of questions, and not nearly enough straight
             answers. This is where we change that: no jargon, no shame, just
             what's really going on and what actually helps.
           </p>
@@ -1322,7 +1332,7 @@ export default function MenstrualCupPageClient({
               </div>
               <div>
                 <p className="text-sm font-bold text-gray-900">
-                  I'm all set — shop my cup
+                  I'm all set, shop my cup
                 </p>
                 <p className="text-xs text-gray-500">
                   Back to sizes, colours & checkout
@@ -1342,7 +1352,7 @@ export default function MenstrualCupPageClient({
                   Take me into the Period School
                 </p>
                 <p className="text-xs text-gray-500">
-                  15 quick topics — sizing, care, safety, savings & more
+                  15 quick topics: sizing, care, safety, savings & more
                 </p>
               </div>
             </button>
@@ -1363,12 +1373,12 @@ export default function MenstrualCupPageClient({
           <h2 className="font-serif text-3xl leading-tight font-bold text-gray-900 sm:text-4xl">
             Will a cup affect your virginity?{" "}
             <span className="font-serif font-normal text-[#7E4D77] italic">
-              No — and here's why.
+              No, and here's why.
             </span>
           </h2>
           <p className="mt-2 max-w-2xl text-sm text-gray-600 sm:text-base">
             It's the question we hear most, especially from teens and
-            first-timers. So here's the honest, gynaecologist-checked truth —
+            first-timers. So here's the honest, gynaecologist-checked truth,
             gently, and without the myths.
           </p>
         </div>
@@ -1380,7 +1390,7 @@ export default function MenstrualCupPageClient({
               waiting to break.
             </h3>
             <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-              Virginity is a personal idea — not a medical state an object can
+              Virginity is a personal idea, not a medical state an object can
               change. What's actually near the opening is a soft, stretchy ring
               of tissue called the <b>hymen</b>, with a natural gap your period
               already flows through. So let's bust the myths, one by one.
@@ -1402,7 +1412,7 @@ export default function MenstrualCupPageClient({
               a soft, elastic ring of tissue
             </p>
             <p className="mt-2 text-[10px] text-gray-400 italic">
-              It stretches to let things through — it doesn't "break".
+              It stretches to let things through. It doesn't "break".
             </p>
           </div>
         </div>
@@ -1423,7 +1433,7 @@ export default function MenstrualCupPageClient({
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
                 It's soft, elastic tissue with a <b>natural opening</b>. It
-                stretches to let things past — it doesn't snap.
+                stretches to let things past. It doesn't snap.
               </p>
             </div>
           </div>
@@ -1443,7 +1453,7 @@ export default function MenstrualCupPageClient({
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
                 The hymen can't show whether someone's had sex. It comes in{" "}
-                <b>every shape</b> — some are born with barely any.
+                <b>every shape</b>, and some are born with barely any.
               </p>
             </div>
           </div>
@@ -1483,7 +1493,7 @@ export default function MenstrualCupPageClient({
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
                 Anyone who menstruates can. Start with our softest <b>Teen</b>{" "}
-                size, breathe out, wet the rim — no rush.
+                size, breathe out, wet the rim. No rush.
               </p>
             </div>
           </div>
@@ -1494,7 +1504,7 @@ export default function MenstrualCupPageClient({
           <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
             <b>A gentle note:</b> if insertion ever feels truly impossible or
             sharply painful even when you're relaxed, it's worth a quick chat
-            with a doctor — very rarely a hymen has an unusually small opening,
+            with a doctor. Very rarely a hymen has an unusually small opening,
             which is simple to check and has nothing to do with the cup.
           </p>
         </div>
@@ -1515,7 +1525,7 @@ export default function MenstrualCupPageClient({
           </h2>
           <p className="mt-2 max-w-3xl text-xs leading-relaxed text-gray-600 sm:text-sm">
             One cup, sized to you. What matters most is{" "}
-            <b>how high your cervix sits</b> — along with your flow and whether
+            <b>how high your cervix sits</b>, along with your flow and whether
             you've had a <b>vaginal</b> birth. It's not about your body shape,
             your weight or even your age (plenty of people over 30 sit happily
             on Medium), and a <b>C-section doesn't change your size:</b> your
@@ -1585,8 +1595,8 @@ export default function MenstrualCupPageClient({
                   <td className="p-4 text-gray-600">Purple • Rainbow</td>
                   <td className="p-4 leading-relaxed text-gray-600">
                     The everyday all-rounder • average flow & cervix • no{" "}
-                    <b>vaginal</b> birth yet — C-section mums and many over-30s
-                    included
+                    <b>vaginal</b> birth yet (C-section mums and many over-30s
+                    included)
                   </td>
                 </tr>
 
@@ -1617,7 +1627,7 @@ export default function MenstrualCupPageClient({
             The 20-second cervix check
           </h3>
           <p className="mb-6 text-xs leading-relaxed text-gray-600 sm:text-sm">
-            Cervix height decides how a cup sits more than anything else — and
+            Cervix height decides how a cup sits more than anything else, and
             it's easy to find. <b>During your period,</b> wash your hands and
             slide one finger into your vagina until you feel your cervix (it's
             firm and rounded, a bit like the tip of your nose). Note how far
@@ -1646,7 +1656,7 @@ export default function MenstrualCupPageClient({
                 AVERAGE CERVIX
               </h4>
               <p className="text-xs leading-relaxed text-gray-600">
-                The most common — almost any size works. Pick by age, flow and
+                The most common: almost any size works. Pick by age, flow and
                 birth history using the table above.
               </p>
             </div>
@@ -1659,7 +1669,7 @@ export default function MenstrualCupPageClient({
                 HIGH CERVIX
               </h4>
               <p className="text-xs leading-relaxed text-gray-600">
-                You have plenty of room — keep the full stem to help you reach
+                You have plenty of room: keep the full stem to help you reach
                 the base. Medium or Large work well.
               </p>
             </div>
@@ -1688,7 +1698,7 @@ export default function MenstrualCupPageClient({
             FOR TEENS & FIRST-TIMERS
           </span>
           <h2 className="mb-2 font-serif text-3xl font-bold text-gray-900 sm:text-4xl">
-            A cup, the teen way — do's & don'ts
+            A cup, the teen way: do's & don'ts
           </h2>
           <p className="mb-8 max-w-2xl text-xs text-gray-600 sm:text-sm">
             Trying a cup as a teen is completely safe and normal. Keep these
@@ -1720,7 +1730,7 @@ export default function MenstrualCupPageClient({
                   <span className="shrink-0 font-bold text-emerald-600">✓</span>
                   <span>
                     Use the <b>Teen (XS)</b> size and the <b>punch-down fold</b>{" "}
-                    — the easiest combo for beginners.
+                    (the easiest combo for beginners).
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -1734,7 +1744,7 @@ export default function MenstrualCupPageClient({
                   <span className="shrink-0 font-bold text-emerald-600">✓</span>
                   <span>
                     Ask a parent, older sister or the school nurse if you're
-                    unsure — it's completely normal to.
+                    unsure. It's completely normal to.
                   </span>
                 </li>
               </ul>
@@ -1748,14 +1758,14 @@ export default function MenstrualCupPageClient({
                 <li className="flex items-start gap-3">
                   <span className="shrink-0 font-bold text-rose-600">✕</span>
                   <span>
-                    Don't panic if it takes two or three tries — that's normal,
+                    Don't panic if it takes two or three tries. That's normal,
                     not failure. Relax and breathe out.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="shrink-0 font-bold text-rose-600">✕</span>
                   <span>
-                    Don't pull it out by the stem alone — pinch the base first
+                    Don't pull it out by the stem alone: pinch the base first
                     to release the seal.
                   </span>
                 </li>
@@ -1769,14 +1779,14 @@ export default function MenstrualCupPageClient({
                 <li className="flex items-start gap-3">
                   <span className="shrink-0 font-bold text-rose-600">✕</span>
                   <span>
-                    Don't worry about virginity — a cup has nothing to do with
+                    Don't worry about virginity. A cup has nothing to do with
                     it.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="shrink-0 font-bold text-rose-600">✕</span>
                   <span>
-                    Don't use a cup if you have a vaginal infection — check with
+                    Don't use a cup if you have a vaginal infection. Check with
                     a doctor first.
                   </span>
                 </li>
@@ -1795,7 +1805,7 @@ export default function MenstrualCupPageClient({
           </h2>
           <p className="mb-8 max-w-2xl text-xs text-gray-600 sm:text-sm">
             Same job, three very different experiences. Here's how a cup
-            actually stacks up — no exaggeration.
+            actually stacks up, no exaggeration.
           </p>
 
           <div className="overflow-hidden rounded-3xl border border-gray-200/80 bg-white shadow-2xs">
@@ -1821,8 +1831,8 @@ export default function MenstrualCupPageClient({
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
                       Up to 12 hours
                     </td>
-                    <td className="p-4 text-gray-600">4–6 hours</td>
-                    <td className="p-4 text-gray-600">4–8 hours</td>
+                    <td className="p-4 text-gray-600">4 to 6 hours</td>
+                    <td className="p-4 text-gray-600">4 to 8 hours</td>
                   </tr>
                   <tr>
                     <td className="p-4 font-bold text-gray-900">Capacity</td>
@@ -1835,7 +1845,7 @@ export default function MenstrualCupPageClient({
                   <tr>
                     <td className="p-4 font-bold text-gray-900">Reusable</td>
                     <td className="bg-pink-50/30 p-4 font-bold text-emerald-700">
-                      Yes — years
+                      Yes, for years
                     </td>
                     <td className="p-4 text-gray-600">No</td>
                     <td className="p-4 text-gray-600">No</td>
@@ -1845,10 +1855,10 @@ export default function MenstrualCupPageClient({
                       Cost per year
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
-                      ~₹50–60*
+                      ~₹50 to 60*
                     </td>
-                    <td className="p-4 text-gray-600">₹2,000–3,000</td>
-                    <td className="p-4 text-gray-600">₹2,500–3,500</td>
+                    <td className="p-4 text-gray-600">₹2,000 to 3,000</td>
+                    <td className="p-4 text-gray-600">₹2,500 to 3,500</td>
                   </tr>
                   <tr>
                     <td className="p-4 font-bold text-gray-900">
@@ -1865,7 +1875,7 @@ export default function MenstrualCupPageClient({
                       Dryness & odour
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
-                      Collects — neither
+                      Collects, neither
                     </td>
                     <td className="p-4 text-gray-600">Can feel damp</td>
                     <td className="p-4 text-gray-600">Can dry you out</td>
@@ -1885,7 +1895,7 @@ export default function MenstrualCupPageClient({
                       Anything showing?
                     </td>
                     <td className="bg-pink-50/30 p-4 font-bold text-[#7E4D77]">
-                      Nothing — no string
+                      Nothing, no string
                     </td>
                     <td className="p-4 text-gray-600">Can be bulky</td>
                     <td className="p-4 text-gray-600">Visible string</td>
@@ -1895,7 +1905,7 @@ export default function MenstrualCupPageClient({
             </div>
             <div className="border-t border-gray-100 bg-gray-50 p-3 text-[11px] text-gray-400">
               *Cup price spread across its years of use. Disposable figures
-              assume ~₹200–250 a month.
+              assume ~₹200 to 250 a month.
             </div>
           </div>
         </div>
@@ -1928,10 +1938,10 @@ export default function MenstrualCupPageClient({
               </div>
               <div>
                 <h4 className="text-sm font-bold text-gray-900">
-                  3–5x more capacity
+                  3 to 5x more capacity
                 </h4>
                 <p className="mt-1 text-xs leading-relaxed text-gray-600">
-                  Holds far more than a pad or tampon — fewer bathroom trips on
+                  Holds far more than a pad or tampon, so fewer bathroom trips on
                   heavy days.
                 </p>
               </div>
@@ -1958,10 +1968,10 @@ export default function MenstrualCupPageClient({
               </div>
               <div>
                 <h4 className="text-sm font-bold text-gray-900">
-                  Saves ₹3,000–5,000/year
+                  Saves ₹3,000 to 5,000/year
                 </h4>
                 <p className="mt-1 text-xs leading-relaxed text-gray-600">
-                  Versus disposables — and one cup replaces years of throwaways.
+                  Versus disposables, and one cup replaces years of throwaways.
                 </p>
               </div>
             </div>
@@ -1989,7 +1999,7 @@ export default function MenstrualCupPageClient({
                   Hypoallergenic, lower TSS risk
                 </h4>
                 <p className="mt-1 text-xs leading-relaxed text-gray-600">
-                  Latex-free silicone collects rather than absorbs — TSS risk is
+                  Latex-free silicone collects rather than absorbs, so TSS risk is
                   lower than tampons, though not zero. Empty within 12 hrs.
                 </p>
               </div>
@@ -2010,7 +2020,7 @@ export default function MenstrualCupPageClient({
             The honest answers, woman to woman
           </h2>
           <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
-            The questions everyone whispers about cups — answered without
+            The questions everyone whispers about cups, answered without
             judgement, by people who get the Indian reality of shared bathrooms,
             hostels and family kitchens.
           </p>
@@ -2032,12 +2042,12 @@ export default function MenstrualCupPageClient({
                 Hurt-free when you relax & fold
               </h3>
               <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                No — when positioned correctly, you shouldn't feel it at all.
+                No. When positioned correctly, you shouldn't feel it at all.
                 Medical-grade silicone is velvety-soft and moulds to your body.
                 Relax your pelvic floor, wet the rim with clean water, and use
                 the punch-down fold. If it ever feels uncomfortable, it's simply
-                sitting too low — push it up gently. Most women feel completely
-                confident within 1–2 cycles.
+                sitting too low: push it up gently. Most women feel completely
+                confident within 1 to 2 cycles.
               </p>
             </div>
 
@@ -2056,11 +2066,11 @@ export default function MenstrualCupPageClient({
                 It has nothing to do with virginity
               </h3>
               <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                Virginity is about a person and their choices — never a product.
+                Virginity is about a person and their choices, never a product.
                 The hymen is a soft, stretchy rim of tissue that everyday things
                 like cycling, sport and yoga already stretch. A cup may gently
                 stretch it too, but it can't "take" anything.{" "}
-                <b>Unmarried girls and teens can use a cup safely</b> — start
+                <b>Unmarried girls and teens can use a cup safely</b>. Start
                 with our smallest size on a light day.
               </p>
             </div>
@@ -2102,7 +2112,7 @@ export default function MenstrualCupPageClient({
               </h3>
               <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
                 Up to 12 hours of wear means you can insert in private before
-                college and empty at night — no mid-day stall drama. One tiny
+                college and empty at night: no mid-day stall drama. One tiny
                 cup replaces a whole month of pads in your bag. For shared
                 kitchens, a fold-away travel steriliser or sterilising tablets
                 mean you never need someone else's stove.
@@ -2124,7 +2134,7 @@ export default function MenstrualCupPageClient({
                 Medical-grade silicone is non-porous, so nothing soaks in.
                 Sterilise by boiling before your first use and between periods;
                 during your period a rinse with mild, unscented soap is enough.
-                The only caveat: a cup is <b>personal</b> — never share it with
+                The only caveat: a cup is <b>personal</b>, so never share it with
                 anyone else.
               </p>
             </div>
@@ -2142,7 +2152,7 @@ export default function MenstrualCupPageClient({
               </h3>
               <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
                 You sterilise by boiling just before a period begins and once
-                after it ends — <b>not</b> at every change. Five to seven
+                after it ends, <b>not</b> at every change. Five to seven
                 minutes in any clean pot does it (keep it from touching the base
                 so it doesn't scorch). No private stove? A small steam
                 steriliser or sterilising tablet works just as well.
@@ -2161,7 +2171,7 @@ export default function MenstrualCupPageClient({
                 Your period is not impure
               </h3>
               <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                Menstrual blood is clean, healthy and completely normal —
+                Menstrual blood is clean, healthy and completely normal, and
                 there's nothing shameful about it. A cup simply lets you handle
                 your period with less waste, less cost and more comfort,
                 entirely on your own terms. That's not breaking a rule; that's
@@ -2250,7 +2260,7 @@ export default function MenstrualCupPageClient({
                   saved versus disposables
                 </p>
                 <p className="mx-auto max-w-xs text-[11px] leading-relaxed text-gray-500">
-                  That's after buying the Ovy cup — and about{" "}
+                  That's after buying the Ovy cup, and about{" "}
                   <b>{calculatedSavings.padsSaved.toLocaleString()}</b>{" "}
                   pads/tampons kept out of landfill.
                 </p>
@@ -2273,7 +2283,7 @@ export default function MenstrualCupPageClient({
                 ~₹20/mo
               </div>
               <p className="text-xs leading-relaxed text-gray-600">
-                effective cost, replacing your cup every 2–3 years for hygiene
+                effective cost, replacing your cup every 2 to 3 years for hygiene
               </p>
             </div>
             <div className="rounded-3xl border border-gray-200/80 bg-white p-6 text-center shadow-2xs">
@@ -2296,7 +2306,7 @@ export default function MenstrualCupPageClient({
             One material. Nothing hidden.
           </h2>
           <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
-            A cup is the simplest period product there is — one moulded piece,
+            A cup is the simplest period product there is: one moulded piece,
             no adhesives, no fibres, no fragrance. Here's exactly what it is,
             and what it never contains.
           </p>
@@ -2308,7 +2318,7 @@ export default function MenstrualCupPageClient({
                   MADE OF
                 </span>
                 <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
-                  <b>100% medical-grade silicone</b> (Class VI biocompatible —
+                  <b>100% medical-grade silicone</b> (Class VI biocompatible,
                   the grade used in implants & baby products)
                 </p>
               </div>
@@ -2317,7 +2327,7 @@ export default function MenstrualCupPageClient({
                   FIRMNESS
                 </span>
                 <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
-                  <b>Soft–medium</b> — gentle on the bladder, yet firm enough to
+                  <b>Soft to medium</b>: gentle on the bladder, yet firm enough to
                   pop open and seal reliably
                 </p>
               </div>
@@ -2355,7 +2365,7 @@ export default function MenstrualCupPageClient({
                   POUCH
                 </span>
                 <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
-                  <b>Breathable organic-cotton storage pouch</b> — included with
+                  <b>Breathable organic-cotton storage pouch</b>, included with
                   every cup
                 </p>
               </div>
@@ -2374,7 +2384,7 @@ export default function MenstrualCupPageClient({
                 </span>
                 <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
                   Cared for well it can last years; for best hygiene we suggest
-                  replacing every 2–3 years
+                  replacing every 2 to 3 years
                 </p>
               </div>
             </div>
@@ -2401,7 +2411,7 @@ export default function MenstrualCupPageClient({
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
                 <b>Do</b> empty the cup at least every 12 hours, and sterilise
-                by boiling 5–7 minutes between cycles.
+                by boiling 5 to 7 minutes between cycles.
               </p>
             </div>
             <div className="flex items-start gap-3">
@@ -2409,7 +2419,7 @@ export default function MenstrualCupPageClient({
                 ✓
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
-                <b>Do</b> release the seal by pinching the base before removal —
+                <b>Do</b> release the seal by pinching the base before removal,
                 never pull by the stem alone.
               </p>
             </div>
@@ -2418,7 +2428,7 @@ export default function MenstrualCupPageClient({
                 ✓
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
-                <b>Do</b> store it in the <b>breathable cotton pouch</b> — never
+                <b>Do</b> store it in the <b>breathable cotton pouch</b>, never
                 an airtight container.
               </p>
             </div>
@@ -2428,7 +2438,7 @@ export default function MenstrualCupPageClient({
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
                 <b>Don't</b> use it when you're not menstruating, or as a
-                contraceptive — it does not prevent pregnancy or STIs.
+                contraceptive. It does not prevent pregnancy or STIs.
               </p>
             </div>
             <div className="flex items-start gap-3">
@@ -2436,7 +2446,7 @@ export default function MenstrualCupPageClient({
                 ✕
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
-                <b>Don't</b> use during a vaginal infection — speak to a doctor
+                <b>Don't</b> use during a vaginal infection. Speak to a doctor
                 first. With an IUD you can usually still use a cup: pinch the
                 base to release the suction before removing, and keep your
                 threads trimmed.
@@ -2448,7 +2458,7 @@ export default function MenstrualCupPageClient({
               </span>
               <p className="text-xs leading-relaxed text-gray-700 sm:text-sm">
                 <b>Don't</b> keep using a cup with tears, cracks, flaking, a
-                sticky film or a lasting odour — replace it.
+                sticky film or a lasting odour. Replace it.
               </p>
             </div>
             <div className="flex items-start gap-3 border-t border-gray-100 pt-3">
@@ -2471,7 +2481,7 @@ export default function MenstrualCupPageClient({
           </h2>
           <p className="mb-8 max-w-2xl text-xs leading-relaxed text-gray-600 sm:text-sm">
             Caring for a cup is easier than people fear. There are really just
-            three moments — during the day, between periods, and storage.
+            three moments: during the day, between periods, and storage.
           </p>
 
           {/* 3 Top Cards Grid */}
@@ -2499,7 +2509,7 @@ export default function MenstrualCupPageClient({
                 Between periods
               </h3>
               <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
-                Sterilise by boiling in clean water for <b>5–7 minutes</b> (keep
+                Sterilise by boiling in clean water for <b>5 to 7 minutes</b> (keep
                 it from touching the hot base so it can't scorch). No private
                 stove? A steam steriliser or a sterilising tablet works just as
                 well.
@@ -2515,7 +2525,7 @@ export default function MenstrualCupPageClient({
               </h3>
               <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
                 Let it dry fully, then keep it in the{" "}
-                <b>breathable cotton pouch</b> it came with — never a plastic
+                <b>breathable cotton pouch</b> it came with, never a plastic
                 bag or airtight box, which traps moisture. Some discolouration
                 over time is normal and harmless.
               </p>
@@ -2539,7 +2549,7 @@ export default function MenstrualCupPageClient({
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="font-bold text-rose-600">✕</span> The
-                  dishwasher — and never share your cup
+                  dishwasher, and never share your cup
                 </li>
               </ul>
             </div>
@@ -2559,7 +2569,7 @@ export default function MenstrualCupPageClient({
                 </li>
                 <li className="flex items-center gap-2">
                   <Clock className="h-3.5 w-3.5 shrink-0 text-teal-600" /> For
-                  best hygiene, every 2–3 years regardless
+                  best hygiene, every 2 to 3 years regardless
                 </li>
               </ul>
             </div>
@@ -2704,7 +2714,7 @@ export default function MenstrualCupPageClient({
             {activeVariant?.size || activeVariant?.name || "Ovy Cup"}
           </span>
           <b className="font-serif text-lg font-bold text-[#1A150F]">
-            ₹{price * quantity}
+            {priceMissing ? "" : `₹${price * quantity}`}
           </b>
         </div>
         <div className="flex items-center gap-2">

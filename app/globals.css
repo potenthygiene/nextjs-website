@@ -238,6 +238,16 @@
   }
 }
 
+/* Desktop: lift the floating buttons above the product page buy bar too */
+@media screen and (min-width: 1024px) {
+  body:has(.pdp-sticky-active) .chatbot-floating-widget {
+    bottom: 96px !important;
+  }
+  body:has(.pdp-sticky-active) .whatsapp-floating-widget {
+    bottom: 168px !important;
+  }
+}
+
 /* Snappy pop-in animation on chat open/close */
 @keyframes widgetPopIn {
   0% {
@@ -359,4 +369,10 @@
 .offer-fade { animation: offerFade 0.35s ease-out both; }
 @media (prefers-reduced-motion: reduce) {
   .offer-fade { animation: none; }
+}
+
+/* Potent Saathi on short screens (small laptops, phones in landscape) */
+@media (max-height: 640px) {
+  .chat-short-hide { display: none; }
+  .chat-dock-btn { min-height: 2.25rem; flex-direction: row; gap: 0.35rem; }
 }

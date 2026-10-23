@@ -235,14 +235,14 @@ export default function PeeFunnelPageClient({
             v.price &&
             Number(v.price) > Number(v.discountPrice)
             ? v.price
-            : v.mrp || Math.round(price * 1.25),
+            : Number(v.mrp) || 0,
         );
         const funnels = name.includes("2") ? 2 : 1;
         const flag =
           name.includes("2") || index === 1 ? "Best value" : undefined;
         const sub =
           funnels === 2
-            ? "2 funnels + 2 pouches — save ₹99"
+            ? "2 funnels + 2 pouches"
             : "1 funnel + cotton pouch";
 
         map[id] = {
@@ -268,17 +268,13 @@ export default function PeeFunnelPageClient({
           id: "p1",
           name: "Pack of 1",
           funnels: 1,
-          mrp: 399,
-          price: 299,
           sub: "1 funnel + cotton pouch",
         },
         p2: {
           id: "p2",
           name: "Pack of 2",
           funnels: 2,
-          mrp: 699,
-          price: 499,
-          sub: "2 funnels + 2 pouches — save ₹99",
+          sub: "2 funnels + 2 pouches",
           flag: "Best value",
         },
       }
@@ -301,16 +297,21 @@ export default function PeeFunnelPageClient({
       id: "p1",
       name: "Pack of 1",
       funnels: 1,
-      mrp: 399,
-      price: 299,
       sub: "1 funnel + cotton pouch",
     };
 
-  const packBasePrice = selectedPack?.price || Number(product?.price) || 299;
-  const mrpPrice =
-    selectedPack?.mrp ||
-    Number(product?.mrp) ||
-    Math.round(packBasePrice * 1.25);
+  // Live prices only: with none, no price is shown and nothing can be added.
+  const packBasePrice =
+    Number(selectedPack?.price) || Number(product?.price) || 0;
+  const priceMissing = !(packBasePrice > 0);
+  const mrpPrice = Number(selectedPack?.mrp) || Number(product?.mrp) || 0;
+  const packList: any[] = Object.values(packs);
+  const singlePack = packList.find((pk: any) => pk.funnels === 1);
+  const doublePack = packList.find((pk: any) => pk.funnels === 2);
+  const pairSaving =
+    Number(singlePack?.price) > 0 && Number(doublePack?.price) > 0
+      ? Math.round(Number(singlePack.price) * 2 - Number(doublePack.price))
+      : 0;
   const unitPrice = packBasePrice;
   const totalPrice = unitPrice * quantity;
   const totalMrp = mrpPrice * quantity;
@@ -408,6 +409,10 @@ export default function PeeFunnelPageClient({
   };
 
   const handleAddToCart = async (isBuyNow = false) => {
+    if (priceMissing) {
+      toast.error("We couldn't load the price. Please refresh the page and try again.");
+      return;
+    }
     try {
       setAdding(true);
       const targetVariantId =
@@ -664,7 +669,7 @@ export default function PeeFunnelPageClient({
               {/* Lede Paragraph */}
               <p className="mt-4 max-w-xl text-xs leading-relaxed font-normal text-[#5A0E30]/75 sm:text-sm">
                 Stand up. Stay clean. Go anywhere. The Looway Pee Funnel lets
-                you pee standing up — no squatting over a filthy public toilet,
+                you pee standing up: no squatting over a filthy public toilet,
                 no undressing on a road trip, no skin ever touching a dirty
                 seat. Soft silicone, an ergonomic leak-free seal, slips into its
                 own cotton pouch. Your hygiene, your rules.
@@ -676,7 +681,7 @@ export default function PeeFunnelPageClient({
                 <span>
                   <strong>One size, shaped to fit most bodies.</strong> Nervous
                   it&apos;s tricky? One practice run at home and almost every
-                  woman nails it — a little spill while practising is completely
+                  woman nails it. A little spill while practising is completely
                   normal.
                 </span>
               </div>
@@ -687,9 +692,11 @@ export default function PeeFunnelPageClient({
                   <span className="text-xs font-extrabold tracking-wider text-[#5A0E30] uppercase">
                     CHOOSE YOUR PACK
                   </span>
-                  <span className="text-xs font-bold text-[#C21E63]">
-                    Pack of 2 saves ₹99
-                  </span>
+                  {pairSaving > 0 && (
+                    <span className="text-xs font-bold text-[#C21E63]">
+                      Pack of 2 saves ₹{pairSaving}
+                    </span>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -723,10 +730,10 @@ export default function PeeFunnelPageClient({
 
                         <div className="mt-3 flex items-baseline justify-between border-t border-[#EAD6DC]/60 pt-2">
                           <div className="font-serif text-lg font-extrabold text-[#C21E63]">
-                            ₹{pk.price}
+                            {Number(pk.price) > 0 ? `₹${pk.price}` : ""}
                           </div>
                           <div className="text-[10px] font-bold text-[#5A0E30]/50">
-                            ₹{perPrice}/funnel
+                            {Number(pk.price) > 0 ? `₹${perPrice}/funnel` : ""}
                           </div>
                         </div>
                       </button>
@@ -755,22 +762,22 @@ export default function PeeFunnelPageClient({
                 <div className="flex items-baseline justify-between">
                   <div className="flex items-baseline gap-2">
                     <span className="font-serif text-3xl font-extrabold text-[#5A0E30]">
-                      ₹{totalPrice}
+                      {priceMissing ? "Price unavailable" : `₹${totalPrice}`}
                     </span>
-                    {totalMrp > totalPrice && (
+                    {!priceMissing && totalMrp > totalPrice && (
                       <span className="text-sm font-normal text-[#5A0E30]/40 line-through">
                         ₹{totalMrp}
                       </span>
                     )}
                   </div>
-                  {totalSavings > 0 && (
+                  {!priceMissing && totalSavings > 0 && (
                     <span className="rounded-full bg-[#E6F4EA] px-3 py-1 text-xs font-bold text-[#15803D]">
                       Save ₹{totalSavings}
                     </span>
                   )}
                 </div>
 
-                <div className="mt-1 text-xs text-[#5A0E30]/60">
+                <div className={`mt-1 text-xs text-[#5A0E30]/60 ${priceMissing ? "hidden" : ""}`}>
                   ≈ ₹
                   {(
                     totalPrice / (selectedPack?.funnels * quantity || 1)
@@ -856,7 +863,11 @@ export default function PeeFunnelPageClient({
                   >
                     <ShoppingBag className="h-4 w-4" />
                     <span>
-                      {adding ? "Adding..." : `Add to Cart — ₹${totalPrice}`}
+                      {adding
+                        ? "Adding..."
+                        : priceMissing
+                          ? "Add to Cart"
+                          : `Add to Cart · ₹${totalPrice}`}
                     </span>
                   </button>
 
@@ -893,7 +904,7 @@ export default function PeeFunnelPageClient({
 
                 {/* Shipping Micro-copy */}
                 <p className="mt-3 text-center text-[11px] leading-relaxed text-[#5A0E30]/60">
-                  Free shipping over ₹399 · ships in 24 to 48 hrs · secure checkout.
+                  Free delivery on orders of ₹399 and above · ships in 24 to 48 hrs · secure checkout.
                   Questions? Email{" "}
                   <a
                     href="mailto:care@potenthygiene.com"
@@ -910,7 +921,7 @@ export default function PeeFunnelPageClient({
                     <span>
                       In the <strong>Potent Rewards Club</strong>? Your credits
                       apply at checkout. Not yet a member?{" "}
-                      <strong>Join free</strong> — earn across Ovy &amp; Looway.
+                      <strong>Join free</strong> and earn across Ovy &amp; Looway.
                     </span>
                   </div>
                   <ArrowRight className="h-4 w-4 shrink-0 text-[#C21E63]" />
@@ -932,8 +943,8 @@ export default function PeeFunnelPageClient({
                       Woman-founded · Made for India
                     </div>
                     <div className="flex items-center gap-2">
-                      <Check className="h-4 w-4 text-[#C21E63]" /> Free shipping
-                      over ₹399
+                      <Check className="h-4 w-4 text-[#C21E63]" /> Free delivery
+                      on orders of ₹399 and above
                     </div>
                   </div>
 
@@ -1068,7 +1079,7 @@ export default function PeeFunnelPageClient({
                       Reusable
                     </span>
                     <span className="font-bold text-[#5A0E30]">
-                      Yes — lasts years
+                      Yes, lasts years
                     </span>
                   </div>
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">
@@ -1092,7 +1103,7 @@ export default function PeeFunnelPageClient({
                       Size
                     </span>
                     <span className="font-bold text-[#5A0E30]">
-                      Compact — pocket-size
+                      Compact, pocket-size
                     </span>
                   </div>
                   <div className="rounded-xl bg-[#fcf8f3] p-2.5">

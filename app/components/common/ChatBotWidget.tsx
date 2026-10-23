@@ -735,6 +735,7 @@ export function ChatBotWidget() {
   const bagSubtotal = () => bagItems.reduce((sum, i) => sum + Number(i.price || 0) * Number(i.quantity || 1), 0);
   const productById = (id?: string | null) => (id ? Object.values(live().products).find((p) => p.id === id) : undefined);
   const prof = () => draftRef.current as { age?: AgeBand; who?: Who; sex?: Sex };
+  const occasionCodes = () => [...(ctx?.profile?.birthdayMonthNow ? ["BIRTHDAY15"] : []), ...(ctx?.profile?.anniversaryMonthNow ? ["ANNIVERSARY15"] : [])];
 
   // ---------- "For you": orders, repeat buys, reviews, the bag and saved items ----------
 
@@ -754,6 +755,18 @@ export function ChatBotWidget() {
       });
     }
     const credit = c?.rewards?.balance || 0;
+    // Birthday or anniversary this month: their own coupon, top of the list.
+    if (c?.profile?.birthdayMonthNow || c?.profile?.anniversaryMonthNow) {
+      const bday = c.profile.birthdayMonthNow;
+      const code = bday ? "BIRTHDAY15" : "ANNIVERSARY15";
+      rows.push({
+        key: "occasion",
+        icon: Gift,
+        title: bday ? t("Happy birthday month{n}!", nv(name)) : t("Happy anniversary month{n}!", nv(name)),
+        text: t("{code} gives you 15% off once this month, on ₹399 and above. It can't be combined with other coupons, but your Rewards credit still applies.", { code }),
+        actions: bagItems.length ? [{ label: t("Apply {code}", { code }), action: { type: "apply", code } }] : [{ label: t("Help me choose"), action: { type: "finder", id: "ovy" } }],
+      });
+    }
     if (c && awayDays >= 14) {
       rows.push({
         key: "back",
@@ -814,7 +827,7 @@ export function ChatBotWidget() {
     }
     if (bagItems.length) {
       const sub = bagSubtotal();
-      const { top, next } = bagOffers(sub, differentProductCount(bagItems), { firstOrder: c ? c.firstOrder : undefined });
+      const { top, next } = bagOffers(sub, differentProductCount(bagItems), { firstOrder: c ? c.firstOrder : undefined, occasionCodes: occasionCodes() });
       const topCode = top?.coupons.map((x) => x.coupon.code).join("+");
       rows.push({
         key: "bag",
@@ -836,6 +849,17 @@ export function ChatBotWidget() {
         title: c.referred ? t("Your friend's gift: 15% off your first order") : t("Your welcome gift: 15% off your first order"),
         text: t("Use FIRSTCARE15 on ₹399 and above, and add a Stock Up coupon on bigger bags."),
         actions: [{ label: t("Help me choose"), action: { type: "finder", id: "ovy" } }],
+      });
+    }
+    // Missing details: delivery updates need a phone; birthdays bring a coupon.
+    if (c && (c.profile?.phoneMissing || !c.profile?.birthdaySet || !c.profile?.anniversarySet)) {
+      rows.push({
+        key: "profile",
+        icon: UserRound,
+        title: c.profile?.phoneMissing ? t("Add your phone number for delivery updates") : t("Add your birthday and anniversary"),
+        text: t("Get ₹50 credit and BIRTHDAY15 in your birthday month, and ANNIVERSARY15 in your anniversary month."),
+        actions: [],
+        links: [{ label: t("Complete my profile"), href: "/dashboard/profile" }],
       });
     }
     if (c?.wishlist.length) {
@@ -892,7 +916,7 @@ export function ChatBotWidget() {
         links: [{ label: t("Sign in"), href: "/login" }],
       });
     }
-    const first = ["back", "transit", "rate", "last", "restock", "credit"];
+    const first = ["occasion", "back", "transit", "rate", "last", "restock", "credit"];
     return [...rows.filter((r) => first.includes(r.key)), ...rows.filter((r) => !first.includes(r.key))].slice(0, 4);
   };
 
@@ -959,7 +983,7 @@ export function ChatBotWidget() {
   const offersMessage = (): Reply => {
     const sub = bagSubtotal();
     const different = differentProductCount(bagItems);
-    const { top, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : true });
+    const { top, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : true, occasionCodes: occasionCodes() });
     const topCode = top?.coupons.map((x) => x.coupon.code).join("+");
     const nudgeText = !bagItems.length
       ? ""
@@ -1014,7 +1038,7 @@ export function ChatBotWidget() {
     const different = new Set(useCartStore.getState().items.map((i) => i.productId)).size;
     const items = useCartStore.getState().items;
     const sub = items.reduce((s, i) => s + Number(i.price || 0) * Number(i.quantity || 1), 0);
-    const { top, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : false });
+    const { top, next } = bagOffers(sub, different, { firstOrder: ctx ? ctx.firstOrder : false, occasionCodes: occasionCodes() });
     const freeFrom = live().offers?.freeDeliveryFrom || 399;
     const topCode = top?.coupons.map((x) => x.coupon.code).join(" + ");
     return (
@@ -1852,7 +1876,7 @@ export function ChatBotWidget() {
             aria-modal="true"
             aria-label="Potent Saathi chat"
             style={sheetStyle}
-            className="chat-sheet fixed inset-x-0 bottom-0 z-[100001] flex h-[92dvh] flex-col overflow-hidden rounded-t-[28px] bg-[#FFFAFD] shadow-[0_-20px_60px_rgba(42,26,38,0.28)] md:inset-x-auto md:bottom-24 md:right-6 md:h-[min(720px,calc(100dvh-120px))] md:w-[420px] md:rounded-[28px] md:shadow-[0_30px_80px_-20px_rgba(42,26,38,0.45)]"
+            className="chat-sheet fixed inset-x-0 bottom-0 z-[100001] flex h-[92dvh] flex-col overflow-hidden rounded-t-[28px] bg-[#FFFAFD] shadow-[0_-20px_60px_rgba(42,26,38,0.28)] md:inset-x-auto md:bottom-3 md:right-4 md:h-[min(780px,calc(100dvh-24px))] md:w-[420px] md:rounded-[28px] md:shadow-[0_30px_80px_-20px_rgba(42,26,38,0.45)]"
           >
             <header className="relative shrink-0 overflow-clip bg-gradient-to-br from-[#6E3F68] via-[#9A5C93] to-[#C98BBE] px-4 pb-3.5 pt-2.5 text-white">
               <span className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full bg-[#1A8D91]/35 blur-2xl" aria-hidden />
@@ -1910,15 +1934,19 @@ export function ChatBotWidget() {
               </div>
             )}
 
-            <div ref={scrollRef} onScroll={onChatScroll} className="relative flex-1 overflow-y-auto overscroll-contain px-4 pb-5 pt-5" aria-live="polite">
+            <div ref={scrollRef} onScroll={onChatScroll} className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-5 pt-4" aria-live="polite">
               <div className="chat-in">
-                <p className="text-[24px] font-semibold leading-tight tracking-[-0.01em] text-[#2b1c27]">
-                  {t(timeGreeting())}
-                  {name ? `, ${name}` : ""} <span aria-hidden>👋</span>
-                </p>
-                <p className="mt-2 text-[15px] leading-relaxed text-[#6d5767]">
-                  {t("I'm Saathi, your Potent companion for periods, intimate health, travel hygiene and orders. Tap a topic, or type or speak your question.")}
-                </p>
+                {messages.length === 0 && (
+                  <>
+                    <p className="text-[21px] font-semibold leading-tight tracking-[-0.01em] text-[#2b1c27]">
+                      {t(timeGreeting())}
+                      {name ? `, ${name}` : ""} <span aria-hidden>👋</span>
+                    </p>
+                    <p className="chat-short-hide mt-1.5 text-[14px] leading-relaxed text-[#6d5767]">
+                      {t("I'm Saathi, your Potent companion for periods, intimate health, travel hygiene and orders. Tap a topic, or type or speak your question.")}
+                    </p>
+                  </>
+                )}
 
                 {messages.length === 0 && (
                   <>
@@ -1988,7 +2016,7 @@ export function ChatBotWidget() {
                 )}
               </div>
 
-              <div className="mt-5 space-y-4">
+              <div className={`${messages.length ? "" : "mt-5"} space-y-4`}>
                 {messages.map((message) => {
                   const isLast = message.id === lastId;
                   if (message.role === "user") {
@@ -2198,7 +2226,7 @@ export function ChatBotWidget() {
                     type="button"
                     onClick={() => run(d.action, t(d.label))}
                     disabled={typing}
-                    className="flex min-h-11 min-w-[64px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[11px] font-semibold text-[#6d5767] transition active:bg-[#fbf1f7] disabled:opacity-60 md:hover:text-[#7E4D77]"
+                    className="chat-dock-btn flex min-h-11 min-w-[64px] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1 text-[11px] font-semibold text-[#6d5767] transition active:bg-[#fbf1f7] disabled:opacity-60 md:hover:text-[#7E4D77]"
                   >
                     <Icon className="h-[18px] w-[18px] text-[#9A5C93]" aria-hidden />
                     {t(d.label)}
@@ -2257,13 +2285,13 @@ export function ChatBotWidget() {
                   </button>
                 )}
               </div>
-              <p className="mt-2 text-center text-[11px] text-[#ab95a5]">{t("Answers from Potent's own guides · not medical advice")}</p>
+              <p className="chat-short-hide mt-1.5 text-center text-[11px] text-[#ab95a5]">{t("Answers from Potent's own guides · not medical advice")}</p>
             </form>
           </section>
         </>
       )}
 
-      <div className={`chatbot-floating-widget fixed right-4 z-50 transition-all duration-300 sm:right-6 md:bottom-6 ${hasStickyBar ? "bottom-[138px]" : "bottom-20"} ${isOpen ? "max-md:hidden" : ""}`}>
+      <div className={`chatbot-floating-widget fixed right-4 z-50 transition-all duration-300 sm:right-6 md:bottom-6 ${hasStickyBar ? "bottom-[138px]" : "bottom-20"} ${isOpen ? "hidden" : ""}`}>
         {/* Minimised with a chat going, or a first hello on a product page. */}
         {!isOpen && (messages.length > 0 || nudge) && (
           <div className="chat-in absolute bottom-0 right-[66px] w-[min(260px,calc(100vw-100px))]">

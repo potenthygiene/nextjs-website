@@ -16,6 +16,7 @@ interface User {
   phone: string;
   email: string;
   birthday?: string;
+  anniversary?: string;
   emailVerified?: boolean | null;
   createdAt?: Date | string | null;
 }
@@ -26,6 +27,7 @@ export default function ProfilePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [birthdayLocked, setBirthdayLocked] = useState(false);
+  const [anniversaryLocked, setAnniversaryLocked] = useState(false);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -36,10 +38,12 @@ export default function ProfilePage() {
           phone: data.phone,
           email: data.email,
           birthday: data.birthday || "",
+          anniversary: data.anniversary || "",
           emailVerified: data.emailVerified,
           createdAt: data.createdAt,
         });
         setBirthdayLocked(Boolean(data.birthday));
+        setAnniversaryLocked(Boolean(data.anniversary));
       } catch (error) {
         console.error("Error loading profile:", error);
       } finally {
@@ -48,10 +52,13 @@ export default function ProfilePage() {
     };
 
     fetchProfile();
+    // New Google sign-ups arrive with ?welcome=1: open the form ready to fill in.
+    if (new URLSearchParams(window.location.search).get("welcome")) setIsEditing(true);
   }, []);
 
   const handleChange = (field: keyof User, value: string) => {
     if (field === "birthday" && birthdayLocked) return;
+    if (field === "anniversary" && anniversaryLocked) return;
     setUser((prev) => (prev ? { ...prev, [field]: value } : prev));
   };
 
@@ -65,6 +72,7 @@ export default function ProfilePage() {
         fullName: user.fullName,
         phone: user.phone,
         birthday: user.birthday || "",
+        anniversary: user.anniversary || "",
       });
 
       if (updated?.birthday) {
@@ -73,10 +81,14 @@ export default function ProfilePage() {
           prev ? { ...prev, birthday: updated.birthday } : prev,
         );
       }
+      if (updated?.anniversary) {
+        setAnniversaryLocked(true);
+        setUser((prev) => (prev ? { ...prev, anniversary: updated.anniversary } : prev));
+      }
 
       if (updated?.bonusAdded) {
         toast.success(
-          "Profile updated! ₹100 Birthday Bonus added to your Rewards balance.",
+          "Profile updated! ₹50 birthday credit added to your Rewards, and BIRTHDAY15 is yours in your birthday month.",
         );
       } else {
         toast.success("Profile updated successfully");
@@ -138,8 +150,31 @@ export default function ProfilePage() {
     );
   }
 
+  const missing = [
+    !user.phone && "phone number (for delivery updates)",
+    !user.birthday && "birthday (₹50 credit + BIRTHDAY15 in your birthday month)",
+    !user.anniversary && "anniversary, if you'd like (ANNIVERSARY15 in that month)",
+  ].filter(Boolean) as string[];
+
   return (
     <div className="space-y-6">
+      {missing.length > 0 && (
+        <div className="rounded-2xl border border-[#1B8392]/25 bg-[#E9F7F9] p-4 sm:p-5">
+          <p className="text-[15px] font-bold text-[#016271]">Complete your profile</p>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-[13.5px] text-[#0b4c55]">
+            {missing.map((m) => (
+              <li key={m}>Add your {m}</li>
+            ))}
+          </ul>
+          {!isEditing && (
+            <button type="button" onClick={() => setIsEditing(true)} className="mt-3 rounded-full bg-[#016271] px-4 py-2 text-[13px] font-bold text-white">
+              Add details
+            </button>
+          )}
+          <p className="mt-2 text-[11.5px] text-[#3c6f76]">Birthday and anniversary can be set once. Birthday and anniversary coupons can&apos;t be combined with other coupons.</p>
+        </div>
+      )}
+
       <ProfileHeader isEditing={isEditing} onEdit={() => setIsEditing(true)} />
 
       <EditAddressForm
@@ -147,6 +182,7 @@ export default function ProfilePage() {
         isSaving={isSaving}
         user={user}
         birthdayLocked={birthdayLocked}
+        anniversaryLocked={anniversaryLocked}
         onChange={handleChange}
         onSubmit={handleSubmit}
         onCancel={() => setIsEditing(false)}

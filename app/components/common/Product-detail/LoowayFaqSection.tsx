@@ -21,11 +21,11 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
       items: [
         {
           q: "How does a woman use it for urinating?",
-          a: "The opening has a soft white foam rim that you spread wide with your fingers. It is cut on a slant, so one edge — the taller, soft white foam edge — sits higher (the high side). Women and girls hold the high side down, pressed close against the body so nothing escapes; men and boys hold it up. Urinate straight into the bag — the super-absorbent strip at the base turns it to gel in about 60 seconds — then press the sealable closure firmly until it locks. Every pack has a simple picture guide, and most people get it right the first time.",
+          a: "The opening has a soft white foam rim that you spread wide with your fingers. It is cut on a slant, so one edge (the taller, soft white foam edge) sits higher (the high side). Women and girls hold the high side down, pressed close against the body so nothing escapes; men and boys hold it up. Urinate straight into the bag (the super-absorbent strip at the base turns it to gel in about 60 seconds), then press the sealable closure firmly until it locks. Every pack has a simple picture guide, and most people get it right the first time.",
         },
         {
           q: "Can men and boys use it too?",
-          a: "Yes — it is completely unisex. The only difference is the angle you hold it: the soft white foam rim is cut on a slant with a taller edge (the high side), which men and boys point up and women and girls point down towards the body. The same bag works for the whole family, from young children to grandparents.",
+          a: "Yes, it is completely unisex. The only difference is the angle you hold it: the soft white foam rim is cut on a slant with a taller edge (the high side), which men and boys point up and women and girls point down towards the body. The same bag works for the whole family, from young children to grandparents.",
         },
         {
           q: "How do I use it for a baby or toddler?",
@@ -33,11 +33,11 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "Can I use it lying down, seated, or in a wheelchair?",
-          a: "Yes. The bag is designed to be used in almost any position — seated in a car, lying in bed, or in a wheelchair. For anyone with limited mobility, it turns a difficult bathroom trip into something they can manage themselves, with privacy and dignity.",
+          a: "Yes. The bag is designed to be used in almost any position: seated in a car, lying in bed, or in a wheelchair. For anyone with limited mobility, it turns a difficult bathroom trip into something they can manage themselves, with privacy and dignity.",
         },
         {
           q: "How do I use it for vomiting or motion sickness?",
-          a: "Open the bag fully and hold it close to the mouth with the opening facing forward — the soft white foam rim sits gently against your face. As soon as you are sick into it, the strip begins turning the contents to gel and locking odour in — so there is no sloshing and no smell for the rest of the journey. Seal it and bin it when you can.",
+          a: "Open the bag fully and hold it close to the mouth with the opening facing forward, the soft white foam rim sits gently against your face. As soon as you are sick into it, the strip begins turning the contents to gel and locking odour in, so there is no sloshing and no smell for the rest of the journey. Seal it and bin it when you can.",
         },
         {
           q: "Can I open the bag and keep it ready in advance?",
@@ -54,7 +54,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "Does it hurt or feel uncomfortable?",
-          a: "Not at all. Nothing is inserted into your body — it is simply a soft, flexible bag that you go into, exactly as you would over a toilet. Most people find it far more comfortable than holding it in for hours.",
+          a: "Not at all. Nothing is inserted into your body; it is simply a soft, flexible bag that you go into, exactly as you would over a toilet. Most people find it far more comfortable than holding it in for hours.",
         },
         {
           q: "Will it smell while I am using it, or afterwards?",
@@ -74,7 +74,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
           a: "The gel is safe against skin for external use, but the super-absorbent material is harmful if swallowed. Treat a used bag like any soiled hygiene product: keep it sealed, keep it away from young children and pets, and dispose of it promptly. If any is swallowed, contact a doctor.",
         },
         {
-          q: "How do I dispose of it — can I flush it?",
+          q: "How do I dispose of it? Can I flush it?",
           a: "Never flush it. Seal the bag fully and put it in any general rubbish bin. Even though the bag material is recyclable, the used contents and the gel should go to landfill waste, and flushing can block drains.",
         },
         {
@@ -98,19 +98,19 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "How much does one bag hold, and how many times can I use it?",
-          a: "Each bag holds up to 700 ml of liquid and can be used 2 to 3 times until it reaches that capacity. Keep it sealed between uses. Once it is full — or 24 hours after you first opened it — dispose of it and start a fresh bag.",
+          a: "Each bag holds up to 700 ml of liquid and can be used 2 to 3 times until it reaches that capacity. Keep it sealed between uses. Once it is full, or 24 hours after you first opened it, dispose of it and start a fresh bag.",
         },
         {
           q: "How quickly does it solidify?",
-          a: "Very fast — the liquid begins gelling on contact and is a firm gel within roughly 60 seconds. There is no waiting around and no risk of a spill while you seal it.",
+          a: "Very fast: the liquid begins gelling on contact and is a firm gel within roughly 60 seconds. There is no waiting around and no risk of a spill while you seal it.",
         },
         {
           q: "Once it turns to gel, can it leak back out as liquid?",
-          a: "No. The gel stays solid — it does not melt back into liquid — so a sealed, used bag is safe to carry in a bag or footwell until you find a bin. It simply holds its shape.",
+          a: "No. The gel stays solid (it does not melt back into liquid), so a sealed, used bag is safe to carry in a bag or footwell until you find a bin. It simply holds its shape.",
         },
         {
           q: "Does it work in very hot or cold weather?",
-          a: "Yes, it works across a wide range of temperatures — in an air-conditioned cabin or a hot car. Just store your unused bags away from direct sunlight and extreme heat so the material stays in good condition.",
+          a: "Yes, it works across a wide range of temperatures, in an air-conditioned cabin or a hot car. Just store your unused bags away from direct sunlight and extreme heat so the material stays in good condition.",
         },
         {
           q: "Is it really odour-controlling?",
@@ -118,7 +118,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "What is it actually made of?",
-          a: "A durable, leak-proof recyclable bag with a sealable locking closure, a soft white foam rim around the opening (comfortable to hold against the body or face), and an internal super-absorbent strip — the same kind of material used inside baby diapers. It is soft, light and compact enough to keep anywhere.",
+          a: "A durable, leak-proof recyclable bag with a sealable locking closure, a soft white foam rim around the opening (comfortable to hold against the body or face), and an internal super-absorbent strip, the same kind of material used inside baby diapers. It is soft, light and compact enough to keep anywhere.",
         },
       ],
     },
@@ -127,11 +127,11 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
       items: [
         {
           q: "Is it safe to use during pregnancy?",
-          a: "Yes. It is completely safe for external use during pregnancy — you use it exactly as any other adult would. Many expecting mums keep one in their bag for the nausea and frequent-loo runs that come with pregnancy travel.",
+          a: "Yes. It is completely safe for external use during pregnancy; you use it exactly as any other adult would. Many expecting mums keep one in their bag for the nausea and frequent-loo runs that come with pregnancy travel.",
         },
         {
           q: "Does using a bag instead of holding it in help avoid UTIs?",
-          a: "Doctors generally advise against holding a full bladder for hours — for some people it is linked to discomfort and a higher chance of a urinary-tract infection (UTI), and on a long journey it simply adds to the misery. With a bag you never have to hold on for hours or brave a filthy toilet: you can go the moment your body needs to, cleanly and in your own seat. It is a hygiene product, not a medical device, and does not claim to treat or prevent any condition — but many travellers find that simply not holding it in makes the whole trip far more comfortable.",
+          a: "Doctors generally advise against holding a full bladder for hours. For some people it is linked to discomfort and a higher chance of a urinary-tract infection (UTI), and on a long journey it simply adds to the misery. With a bag you never have to hold on for hours or brave a filthy toilet: you can go the moment your body needs to, cleanly and in your own seat. It is a hygiene product, not a medical device, and does not claim to treat or prevent any condition, but many travellers find that simply not holding it in makes the whole trip far more comfortable.",
         },
         {
           q: "Is it safe for children and elderly people?",
@@ -139,11 +139,11 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "Can I carry it on a flight or through airport security?",
-          a: "The bags are dry, compact and contain no liquid until used, so they travel easily in hand luggage. Rules vary by airline and airport, so check your carrier if you are unsure — but as a dry hygiene product they are treated much like tissues or nappies.",
+          a: "The bags are dry, compact and contain no liquid until used, so they travel easily in hand luggage. Rules vary by airline and airport, so check your carrier if you are unsure, but as a dry hygiene product they are treated much like tissues or nappies.",
         },
         {
           q: "Is it good for camping, treks and the outdoors?",
-          a: "Absolutely — it is one of the most popular uses. No digging a hole, no searching for privacy: use the bag, seal it, and pack it out responsibly. It is a leave-no-trace friendly way to answer nature's call where there are no facilities.",
+          a: "Absolutely, it is one of the most popular uses. No digging a hole, no searching for privacy: use the bag, seal it, and pack it out responsibly. It is a leave-no-trace friendly way to answer nature's call where there are no facilities.",
         },
         {
           q: "Can I use it for a pet on a journey?",
@@ -156,15 +156,15 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
       items: [
         {
           q: "Should I buy the pack of 10 or the pack of 20?",
-          a: "The pack of 10 is a complete supply for one trip or one person. The pack of 20 is the best value and is ideal for families, frequent travellers or caregivers — the popular approach is to keep one supply in the car and one in your travel bag so you are never caught without.",
+          a: "The pack of 10 is a complete supply for one trip or one person. The pack of 20 is the best value and is ideal for families, frequent travellers or caregivers. The popular approach is to keep one supply in the car and one in your travel bag so you are never caught without.",
         },
         {
           q: "How does Subscribe & Save work?",
-          a: "Choose Subscribe monthly (15% off) or every 2 months (12% off) at checkout and your bags arrive automatically on that schedule, with the discount applied every time. Pause or cancel in two clicks — it is built for people who want their car and bag always stocked.",
+          a: "Choose Subscribe monthly (15% off) or every 2 months (12% off) at checkout and your bags arrive automatically on that schedule, with the discount applied every time. Pause or cancel in two clicks; it is built for people who want their car and bag always stocked.",
         },
         {
           q: "Do you deliver across India, and how do I pay?",
-          a: "Yes, we deliver across India, and most orders arrive in 5 to 7 days — with free shipping over ₹399. Enter your PIN code in the delivery checker above for an estimate for your area. You can pay securely by UPI, credit or debit card, or net banking at checkout.",
+          a: "Yes, we deliver across India, and most orders arrive in 5 to 7 days, with free delivery on orders of ₹399 and above. Enter your PIN code in the delivery checker above for an estimate for your area. You can pay securely by UPI, credit or debit card, or net banking at checkout.",
         },
         {
           q: "What is your returns policy?",

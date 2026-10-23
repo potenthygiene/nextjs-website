@@ -63,7 +63,7 @@ export default function MarketComparisonSection() {
             Better than the market alternatives
           </h2>
           <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-[#17271E]/80 leading-relaxed font-semibold">
-            Everything a clean, mess-free journey needs — In one bag. Here&apos;s how Looway compares to the usual options at a glance.
+            Everything a clean, mess-free journey needs, in one bag. Here&apos;s how Looway compares to the usual options at a glance.
           </p>
         </div>
 
@@ -156,7 +156,7 @@ export default function MarketComparisonSection() {
         <div className="mt-6 text-center text-xs sm:text-sm font-bold text-[#073B24]">
           <span className="inline-flex items-center justify-center gap-1.5">
             <Check className="h-4 w-4 stroke-[3] text-[#0E5C3A] shrink-0" />
-            Looway is the only option that does all six — that&apos;s why it&apos;s built for the journey, not improvised for it.
+            Looway is the only option that does all six. That&apos;s why it&apos;s built for the journey, not improvised for it.
           </span>
         </div>
       </div>

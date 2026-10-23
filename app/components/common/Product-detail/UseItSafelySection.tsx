@@ -28,7 +28,7 @@ export default function UseItSafelySection() {
                 <strong className="font-bold text-[#0A4A2E]">
                   For external use only.
                 </strong>{" "}
-                The super-absorbent strip is harmful if swallowed — keep used bags away from young children and pets.
+                The super-absorbent strip is harmful if swallowed. Keep used bags away from young children and pets.
               </div>
             </div>
 
@@ -36,7 +36,7 @@ export default function UseItSafelySection() {
             <div className="flex items-start gap-2 sm:gap-3">
               <AlertCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-[#C05621] mt-0.5 stroke-[2.2]" />
               <div>
-                Do not let children or pets handle a used bag — the solidified contents can be harmful if chewed or ingested.
+                Do not let children or pets handle a used bag: the solidified contents can be harmful if chewed or ingested.
               </div>
             </div>
 
@@ -52,7 +52,7 @@ export default function UseItSafelySection() {
             <div className="flex items-start gap-2 sm:gap-3">
               <Check className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0 text-[#0E5C3A] stroke-[3] mt-0.5" />
               <div>
-                Never flush the bag — even recyclable material can block drains. Dispose of it in a rubbish bin.
+                Never flush the bag; even recyclable material can block drains. Dispose of it in a rubbish bin.
               </div>
             </div>
 
@@ -71,7 +71,7 @@ export default function UseItSafelySection() {
                 <strong className="font-bold text-[#0A4A2E]">
                   Pregnant women:
                 </strong>{" "}
-                completely safe for external use — use exactly as any other adult.{" "}
+                completely safe for external use. Use exactly as any other adult.{" "}
                 <strong className="font-bold text-[#0A4A2E]">Children:</strong>{" "}
                 supervise at all times.
               </div>

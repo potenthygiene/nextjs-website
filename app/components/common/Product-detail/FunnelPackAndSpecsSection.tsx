@@ -8,13 +8,13 @@ export default function FunnelPackAndSpecsSection() {
   const specs = [
     { k: "Material", v: "Soft silicone" },
     { k: "Storage pouch", v: "Cotton (included)" },
-    { k: "Reusable", v: "Yes — lasts for years with proper care" },
+    { k: "Reusable", v: "Yes, lasts for years with proper care" },
     { k: "Design", v: "Ergonomic, leak-free, body-contoured" },
-    { k: "Size", v: "Compact — fits any bag or pocket" },
-    { k: "Use type", v: "External use only — never inserted" },
+    { k: "Size", v: "Compact, fits any bag or pocket" },
+    { k: "Use type", v: "External use only, never inserted" },
     { k: "Works with", v: "Western seats, Indian squat toilets, outdoors, bottles & Looway bags" },
     { k: "Best for", v: "Road trips, treks, day trips, festivals, public & office washrooms" },
-    { k: "Suitable for", v: "Women & girls — travellers, joint pain, pregnancy, seniors, limited mobility" },
+    { k: "Suitable for", v: "Women & girls: travellers, joint pain, pregnancy, seniors, limited mobility" },
     { k: "Care", v: "Wet wipes or plain water while out; wash thoroughly at home" },
     { k: "Pack options", v: "Pack of 1 or Pack of 2" },
     { k: "Best before", v: "No fixed expiry with proper care" },
@@ -52,7 +52,7 @@ export default function FunnelPackAndSpecsSection() {
                     1 Pee Funnel
                   </h4>
                   <p className="mt-0.5 text-xs text-white/85">
-                    Soft silicone — light &amp; compact
+                    Soft silicone, light &amp; compact
                   </p>
                 </div>
               </div>
@@ -69,7 +69,7 @@ export default function FunnelPackAndSpecsSection() {
                     Cotton storage pouch
                   </h4>
                   <p className="mt-0.5 text-xs text-white/85">
-                    Breathable &amp; washable — carry it hygienically
+                    Breathable &amp; washable to carry it hygienically
                   </p>
                 </div>
               </div>

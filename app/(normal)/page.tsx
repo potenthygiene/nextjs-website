@@ -1,103 +1,61 @@
-import { Hero } from "@/app/components/common/homepage/HeroSection";
 import { pageMetadata } from "@/const/seo";
+import { Hero } from "@/app/components/common/homepage/HeroSection";
 import { BrandAccordion } from "@/app/components/common/homepage/Brand";
-import { CategoryGrid } from "@/app/components/common/homepage/CategorySection";
 import BestsellingProducts from "@/app/components/common/homepage/BestSellingProduct";
-import { OurStory } from "@/app/components/common/homepage/OurStory";
+import { CategoryGrid } from "@/app/components/common/homepage/CategorySection";
 import { WhyChooseUs } from "@/app/components/common/homepage/WhyChooseUs";
-import { Testimonials } from "@/app/components/common/homepage/Reviews";
-import { InstagramFeed } from "@/app/components/common/homepage/InstaFeed";
-import { BlogSection } from "@/app/components/common/homepage/Blogs";
-import { Newsletter } from "@/app/components/common/homepage/NewsLetter";
-import { CycleSync } from "@/app/components/common/homepage/CycleSync";
-import { HonestByDesign } from "@/app/components/common/homepage/HonestByDesign";
-import { PadSharedImpact } from "@/app/components/common/homepage/PadSharedImpact";
+import StoryTruth from "@/app/components/common/homepage/StoryTruth";
+import { OurStory } from "@/app/components/common/homepage/OurStory";
+import AboutStory from "@/app/components/common/homepage/AboutStory";
+import { YatraKitPromo } from "@/app/components/common/homepage/YatraKitPromo";
 import { JournalSection } from "@/app/components/common/homepage/JournalSection";
 import { FounderStory } from "@/app/components/common/homepage/FounderStory";
-
-import StoryTruth from "../components/common/homepage/StoryTruth";
-import AboutStory from "../components/common/homepage/AboutStory";
-import { ProductCategories } from "../components/common/homepage/ProductCategories";
-import { YatraKitPromo } from "../components/common/homepage/YatraKitPromo";
+import { PadSharedImpact } from "@/app/components/common/homepage/PadSharedImpact";
+import { InstagramFeed } from "@/app/components/common/homepage/InstaFeed";
+import { ClosingCta } from "@/app/components/common/homepage/ClosingCta";
+import { Newsletter } from "@/app/components/common/homepage/NewsLetter";
 import { OffersBand } from "@/app/components/common/offers/Offers";
 
 export const metadata = pageMetadata("home");
 
+// Homepage order, phone first. The top half is for the visitor who came to
+// buy, the bottom half for the one who came to learn:
+//   1. Hero: what we are, one primary and one secondary button, trust row
+//   2. Shop by brand (Ovy, Looway, free Period Tracker)
+//   3. Bestsellers with Add to bag (live catalogue and prices)
+//   4. Offers running now (live coupons)
+//   5. Shop by moment or by category, for the visitor who is not sure
+//   6. Why buy direct: only-here features and the claims we can prove
+//   7. Product stories, each with its own button: first period, cup,
+//      Mix Your Box with Cycle-Sync, Yatra Kit
+//   8. Learn: Journal, Period Tracker and the quiz
+//   9. Founder story, give-back, community
+//  10. Closing call to action, then the newsletter
 export default function Home() {
   return (
-    <main className="min-h-screen bg-linear-to-b from-[#E2F4F7] to-[#FFFFFF] md:bg-white">
-      <div className="flex flex-col">
-        <div className="order-1">
-          <Hero />
-        </div>
-        <div className="order-3 md:order-2">
-          <BrandAccordion />
-        </div>
-        <div className="order-2 md:order-3">
-          <BestsellingProducts
-            title="The ones everyone comes back for."
-            brand={null}
-          />
-        </div>
-      </div>
+    <main className="min-h-screen overflow-x-clip bg-white">
+      <Hero />
+      <BrandAccordion />
+      <BestsellingProducts title="The ones everyone comes back for." brand={null} />
       <OffersBand title="Offers running now" />
       <CategoryGrid />
-      <StoryTruth key={STORY_CONTENT[0].title} {...STORY_CONTENT[0]} />
-      <OurStory key={STORY_CONTENT[0].title} {...STORY_CONTENT[1]} />
-      <BestsellingProducts title="Your whole cycle, covered." brand={"ovy"} />
-      <AboutStory />
+      <WhyChooseUs />
 
-      <CycleSync />
+      <StoryTruth />
+      <OurStory />
+      <AboutStory />
       <YatraKitPromo />
 
-      <WhyChooseUs />
-      <HonestByDesign />
-      <PadSharedImpact />
+      <JournalSection />
       <FounderStory />
+      <PadSharedImpact />
       <InstagramFeed
         theme="teal"
-        title="Join Our Community"
+        title="Join our community."
         username="@potenthygiene"
       />
-      <JournalSection />
-
-      {/* <Testimonials /> */}
-      {/* <ProductCategories /> */}
+      <ClosingCta />
       <Newsletter />
-      {/* <BlogSection /> */}
     </main>
   );
 }
-
-const STORY_CONTENT = [
-  {
-    component: "StoryTruth",
-    badgeText: "Own Your Cycle",
-    title: "The",
-    highlight: "Nakd",
-    image: "/thestory.png",
-    primaryColor: "#1A8D91",
-    gradientFrom: "#016271",
-    gradientTo: "#AFE7F1",
-    bgAccent: "#E6F4F6",
-    paragraphs: [
-      "Our goal is to make hygiene conversations normal, encourage awareness and self-care, and empower everyone to make informed choices for a healthier, more confident life.",
-    ],
-  },
-  {
-    component: "OurStory",
-    badgeText: "Our Story",
-    title: "Built for Women,",
-    highlight: "By Women",
-    image: "/ourStory.png",
-    primaryColor: "#1A8D91",
-    gradientFrom: "#016271",
-    gradientTo: "#AFE7F1",
-    bgAccent: "#E6F4F6",
-    tickerText: "Potent Hygiene - Where Your Wellness Comes First",
-    paragraphs: [
-      `Ovy was created for women who seek gentle, premium care. Infused with natural lavender essence and crafted with the softest materials, every product is designed to pamper and protect.`,
-      `Today, we are proud to offer a complete range of organic, dermatologically tested products that prioritize your health and the planet. Our journey is just beginning, and we are grateful to have you with us.`,
-    ],
-  },
-];

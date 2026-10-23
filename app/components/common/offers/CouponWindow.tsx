@@ -9,7 +9,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { Check, ChevronRight, Clock, Gift, Lock, Sparkle, Tag, Users, X } from "lucide-react";
+import { Check, ChevronRight, Clock, Gift, Lock, Star, Tag, Users, X } from "lucide-react";
 import { couponByCode, COMBINED_CAP, parseCodes, stackProblem } from "@/const/coupons";
 import { type CouponWindow as WindowData, type CouponWindowItem, getCouponWindow } from "@/helper/checkout/action";
 
@@ -218,7 +218,7 @@ export function CouponWindow({ items, applied, onApply, onRemove, busy, tone = "
             className={`mt-2.5 flex w-full items-center justify-between gap-2 rounded-lg bg-white px-3 py-2 text-left text-[12.5px] ${ink}`}
           >
             <span className="flex items-center gap-1.5">
-              <Sparkle className="h-3.5 w-3.5" aria-hidden />
+              <Star className="h-3.5 w-3.5" aria-hidden />
               Best for this bag: <strong className="font-mono">{data!.best!.codes.join(" + ")}</strong> saves {rupees(data!.best!.saving)}
             </span>
             <span className="font-bold">Apply</span>
@@ -277,7 +277,7 @@ export function CouponWindow({ items, applied, onApply, onRemove, busy, tone = "
                   }}
                   className="flex w-full items-center gap-3 rounded-2xl bg-gradient-to-r from-[#7E4D77] to-[#AF71A7] p-3.5 text-left text-white"
                 >
-                  <Sparkle className="h-5 w-5 shrink-0" aria-hidden />
+                  <Star className="h-5 w-5 shrink-0" aria-hidden />
                   <span className="min-w-0 flex-1">
                     <span className="block text-[11px] font-bold uppercase tracking-[0.1em] text-white/80">Best for this bag</span>
                     <span className="block text-[14px] font-bold">

@@ -54,8 +54,8 @@ const AboutPage = () => {
               </p>
 
               <p className="text-gray-800 text-sm sm:text-base leading-relaxed">
-                Our founders, driven by personal experiences and conversations
-                with countless women, identified critical gaps in the industry —
+                Our founder, Divita Agarwal, driven by personal experiences and conversations
+                with countless women, identified critical gaps in the industry:
                 products causing rashes, discomfort, and environmental harm.
                 This sparked a mission to create a brand that truly understands
                 and addresses women&apos;s needs.

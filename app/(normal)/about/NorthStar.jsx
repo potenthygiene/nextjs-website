@@ -41,7 +41,7 @@ const NorthStar = () => {
 
           <p className="text-gray-600 text-sm leading-relaxed">
             In a country where 71% of women had no menstrual hygiene knowledge
-            at their first period, and millions use unsafe materials — we exist
+            at their first period, and millions use unsafe materials, we exist
             to change the baseline. Permanently.
           </p>
         </div>
@@ -62,7 +62,7 @@ const NorthStar = () => {
 
           <p className="text-gray-600 text-sm leading-relaxed">
             Whether in a boardroom in Bangalore, a farm in Rajasthan, or the most
-            remote corner of Bharat — her body deserves the same standard of care.
+            remote corner of Bharat, her body deserves the same standard of care.
           </p>
         </div>
 
@@ -81,7 +81,7 @@ const NorthStar = () => {
           </h3>
 
           <p className="text-gray-600 text-sm leading-relaxed">
-            Organic, dermatologically tested, pH-balanced, cruelty-free hygiene —
+            Organic, dermatologically tested, pH-balanced, cruelty-free hygiene,
             taken into communities mainstream brands never reach. Commerce with conscience.
           </p>
         </div>

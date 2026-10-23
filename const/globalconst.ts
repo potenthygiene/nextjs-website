@@ -234,7 +234,7 @@ export const brandDataMap: Record<
           gradientTo: "#F9A8D4",
           bgAccent: "#FCE7F3",
           paragraphs: [
-            `Good hygiene is not just about routine — it’s about feeling comfortable, confident, and cared for every single day. At Potent Hygiene, we believe personal care should be simple, honest, and empowering.
+            `Good hygiene is not just about routine; it’s about feeling comfortable, confident, and cared for every single day. At Potent Hygiene, we believe personal care should be simple, honest, and empowering.
 
 Our goal is to make hygiene conversations normal and accessible by providing products and information that support everyday well-being. Whether it’s daily freshness, intimate care, or overall hygiene, we focus on solutions that respect your body and your lifestyle.`,
           ],
@@ -366,7 +366,7 @@ Our goal is to make hygiene conversations normal and accessible by providing pro
           gradientTo: "#B1D7DE",
           bgAccent: "#FEF9C3",
           paragraphs: [
-            `Good hygiene is not just about routine — it’s about feeling comfortable, confident, and cared for every single day. At Potent Hygiene, we believe personal care should be simple, honest, and empowering.
+            `Good hygiene is not just about routine; it’s about feeling comfortable, confident, and cared for every single day. At Potent Hygiene, we believe personal care should be simple, honest, and empowering.
 
 Our goal is to make hygiene conversations normal and accessible by providing products and information that support everyday well-being. Whether it’s daily freshness, intimate care, or overall hygiene, we focus on solutions that respect your body and your lifestyle.`,
           ],

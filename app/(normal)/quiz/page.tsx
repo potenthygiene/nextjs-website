@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Sparkles } from "lucide-react";
+import { Heart } from "lucide-react";
 import { quizQuestions } from "@/const/globalconst";
 import { NEED_STORAGE_KEY } from "@/const/quizRules";
 import {
@@ -38,7 +38,7 @@ const Page = () => {
       <div className="w-full max-w-2xl rounded-3xl bg-white p-5 shadow-lg sm:p-10">
         <div className="mb-5 text-center">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--quiz-soft)] px-3 py-1 text-[11px] font-bold tracking-wider text-[var(--quiz-accent-dark)] uppercase">
-            <Sparkles className="h-3.5 w-3.5" /> Find what I need
+            <Heart className="h-3.5 w-3.5" /> Find what I need
           </span>
           <h1 className="mt-2 font-serif text-2xl font-bold text-[var(--quiz-ink)] sm:text-3xl">Four questions, one honest match</h1>
           <p className="mt-1.5 text-sm text-gray-600">

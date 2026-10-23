@@ -19,6 +19,7 @@ import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { getAuthSession } from "@/helper/auth/session";
 import { allowRequest } from "@/lib/requestGuard";
 import { describeRewardHistoryRow, syncAndGetUserRewards } from "@/lib/rewards";
+import { getUserOccasions, indiaMonth, monthOf } from "@/lib/occasions";
 
 // Saves a question the chat could not answer, so the team can add an answer.
 // It lands in Admin → Contact Us as "CHAT QUESTION". Emails and phone
@@ -119,6 +120,8 @@ export type ChatContext = {
   referred: boolean;
   wishlist: { slug: string; name: string }[];
   activeSubscriptions: number;
+  /** Profile gaps and this month's occasions. */
+  profile: { phoneMissing: boolean; birthdaySet: boolean; anniversarySet: boolean; birthdayMonthNow: boolean; anniversaryMonthNow: boolean };
   /** Rewards credit: balance and the latest entries, newest first. */
   rewards: { balance: number; history: { title: string; amount: string; date: string; positive: boolean }[] };
 };
@@ -238,6 +241,17 @@ export async function getChatContext(): Promise<ChatContext | null> {
       // Orders still show without the rewards part.
     }
 
+    const dates = await getUserOccasions(u.id);
+    const [phoneRow] = await db.select({ phone: users.phone }).from(users).where(eq(users.id, u.id)).limit(1);
+    const nowMonth = indiaMonth();
+    const profile = {
+      phoneMissing: !phoneRow?.phone || phoneRow.phone === "0000000000",
+      birthdaySet: !!dates.birthday,
+      anniversarySet: !!dates.anniversary,
+      birthdayMonthNow: monthOf(dates.birthday) === nowMonth,
+      anniversaryMonthNow: monthOf(dates.anniversary) === nowMonth,
+    };
+
     const first = u.name?.trim().split(/\s+/)[0];
     return {
       firstName: first ? first[0].toUpperCase() + first.slice(1) : null,
@@ -248,6 +262,7 @@ export async function getChatContext(): Promise<ChatContext | null> {
       wishlist: saved.map((s) => ({ slug: s.slug, name: s.name || s.slug })),
       activeSubscriptions: Number(subs?.n || 0),
       rewards,
+      profile,
     };
   } catch (error) {
     console.error("Chat context failed:", error);

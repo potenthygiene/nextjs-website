@@ -10,7 +10,7 @@ const promises = [
   {
     icon: "🚫",
     title: "Non-Irritant",
-    desc: "Zero irritants — no chlorine, no dioxins, no synthetic fragrances. No more rashes.",
+    desc: "Zero irritants: no chlorine, no dioxins, no synthetic fragrances. No more rashes.",
     tag: "Clinically Verified",
   },
   {
@@ -28,7 +28,7 @@ const promises = [
   {
     icon: "🌿",
     title: "Organic & Skin-Safe",
-    desc: "Plant-based, organic materials — grown without synthetic pesticides. Softer, safer, breathable.",
+    desc: "Plant-based, organic materials, grown without synthetic pesticides. Softer, safer, breathable.",
     tag: "Clean Formulation",
   },
   {
@@ -65,7 +65,7 @@ const ProductPromise = () => {
         {/* Right Description */}
         <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-xl">
           No marketing language. Every commitment we carry is backed by third-party
-          laboratory testing — because when we say skin-safe, we mean it and we can prove it.
+          laboratory testing, because when we say skin-safe, we mean it and we can prove it.
         </p>
       </div>
 

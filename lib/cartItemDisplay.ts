@@ -8,7 +8,7 @@ export function getCleanProductTitle(item: any): string {
     item?.slug === "ovy-teen-starter-pack" ||
     item?.slug === "ovy-teen-pads"
   ) {
-    return "Ovy Organic Soft Sanitary Pads — Teen";
+    return "Ovy Organic Soft Sanitary Pads: Teen";
   }
 
   // Remove trailing parentheses if they contain variant details that will be rendered in the badge
@@ -144,10 +144,10 @@ export function getCartItemVariantBadge(item: any): string | null {
   if (slug.includes("panty") || sku.includes("PNT")) {
     const raw = (extractedFromName || sku).toUpperCase();
     if (raw.includes("XXL") || raw.includes("3XL")) {
-      return "Size: XXL-XXXL (Waist 44–56 in)";
+      return "Size: XXL-XXXL (Waist 44 to 56 in)";
     }
     if (raw.includes("M-XL") || raw.includes("MXL") || raw.includes("LXL")) {
-      return "Size: M-XL (Waist 28–44 in)";
+      return "Size: M-XL (Waist 28 to 44 in)";
     }
     if (extractedFromName) return `Size: ${extractedFromName}`;
   }

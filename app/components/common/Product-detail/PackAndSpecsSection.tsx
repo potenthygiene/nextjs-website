@@ -7,22 +7,22 @@ import { Package, ShieldCheck } from "lucide-react";
 export default function PackAndSpecsSection() {
   const specs = [
     { k: "Liquid capacity", v: "Up to 700 ml per bag" },
-    { k: "Uses per bag", v: "2–3 uses until full" },
+    { k: "Uses per bag", v: "2 to 3 uses until full" },
     { k: "Solidifies in", v: "About 60 seconds" },
     { k: "Closure", v: "Sealable locking closure" },
     { k: "Pack size", v: "Pack of 10 or Pack of 20" },
-    { k: "Reusable", v: "Yes — until 700 ml capacity is reached" },
+    { k: "Reusable", v: "Yes, until 700 ml capacity is reached" },
     {
       k: "Best for",
       v: "Road trips, treks, camping, motion sickness, caregiving, hospitals, outdoor events",
     },
     {
       k: "Suitable for",
-      v: "All ages & genders — babies, children, adults, seniors, pregnant women, people with disabilities",
+      v: "All ages & genders: babies, children, adults, seniors, pregnant women, people with disabilities",
     },
     { k: "Material", v: "Recyclable material + super-absorbent strip" },
     { k: "Use type", v: "External use only" },
-    { k: "Disposal", v: "Dispose in a rubbish bin — never flush" },
+    { k: "Disposal", v: "Dispose in a rubbish bin; never flush" },
     { k: "Shelf life", v: "Best within 5 years of packaging" },
   ];
 

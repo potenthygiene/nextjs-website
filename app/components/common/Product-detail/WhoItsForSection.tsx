@@ -19,7 +19,7 @@ const AUDIENCES_DATA = [
     id: "parents",
     icon: Baby,
     title: "Parents & young kids",
-    desc: "Potty-training toddlers, sudden car-sickness or a child who needs to go NOW with no stop in sight — open a bag, done, sealed. No roadside emergencies and no ruined seats.",
+    desc: "Potty-training toddlers, sudden car-sickness or a child who needs to go NOW with no stop in sight? Open a bag, done, sealed. No roadside emergencies and no ruined seats.",
   },
   {
     id: "pregnant",
@@ -43,7 +43,7 @@ const AUDIENCES_DATA = [
     id: "caregivers",
     icon: HeartHandshake,
     title: "Caregivers",
-    desc: "Caring for a bed-ridden or elderly family member? A bedside essential for night-time needs and hospital stays — sealable, odour-locked and easy to dispose of.",
+    desc: "Caring for a bed-ridden or elderly family member? A bedside essential for night-time needs and hospital stays: sealable, odour-locked and easy to dispose of.",
   },
   {
     id: "travellers",
@@ -61,7 +61,7 @@ const AUDIENCES_DATA = [
     id: "patients",
     icon: PlusCircle,
     title: "Patients & post-surgery",
-    desc: "Reduced mobility after an operation or during an illness — relief without a difficult, painful trip to the bathroom.",
+    desc: "Reduced mobility after an operation or during an illness? Relief without a difficult, painful trip to the bathroom.",
   },
 ];
 

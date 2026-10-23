@@ -13,7 +13,7 @@ export default function FunnelHowItWorksSection() {
       desc: (
         <>
           Hold the wide opening flush against your body so the back edge sits{" "}
-          <strong className="font-bold text-[#5A0E30]">just behind where you pee</strong> — about a thumb&apos;s width back, not forward. This is the seal, and it&apos;s the whole secret.
+          <strong className="font-bold text-[#5A0E30]">just behind where you pee</strong>, about a thumb&apos;s width back, not forward. This is the seal, and it&apos;s the whole secret.
         </>
       ),
     },
@@ -52,7 +52,7 @@ export default function FunnelHowItWorksSection() {
             How it works
           </h2>
           <p className="mt-4 sm:mt-5 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
-            It&apos;s simpler than it looks. The wide, soft rim makes a gentle seal against your body, and the ergonomic shape channels the flow down and away. Get the seal right and gravity does the rest — no leaks, no mess, nothing on you.
+            It&apos;s simpler than it looks. The wide, soft rim makes a gentle seal against your body, and the ergonomic shape channels the flow down and away. Get the seal right and gravity does the rest: no leaks, no mess, nothing on you.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ export default function FunnelHowItWorksSection() {
         {/* Practice Makes It Foolproof Banner Callout */}
         <div className="mt-8 rounded-xl sm:rounded-2xl bg-[#fdeef4] border-l-4 border-[#a81a57] p-4 sm:p-5 text-xs sm:text-sm text-[#2A1620]/80 leading-relaxed font-normal">
           <strong className="text-[#a81a57] font-bold">Practice makes it foolproof.</strong>{" "}
-          One try in the shower at home and you&apos;ll never look back — almost every woman gets it on the first or second go. See the full step-by-step and the practice guide below.
+          One try in the shower at home and you&apos;ll never look back. Almost every woman gets it on the first or second go. See the full step-by-step and the practice guide below.
         </div>
       </div>
     </section>

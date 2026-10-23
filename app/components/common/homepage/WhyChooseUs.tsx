@@ -1,22 +1,15 @@
-const TICKER_ITEMS_DARK = [
-  "Rewards Club cash credits",
-  "Gift mode hides the price",
-  "Pause or cancel in two clicks",
-  "Mix Your Box",
-  "Subscribe and save",
-  "A surprise gift in every third box",
-];
+import { CONTAINER, EYEBROW_TEAL, H2, LEAD, SECTION_Y } from "./homeStyles";
 
 const WHY_CARDS = [
   {
-    badge: "ONLY HERE",
+    badge: "Only here",
     title: "Cycle-Sync delivery",
     description:
       "Your box lands about 5 days before you are due. The first period delivery in India timed to your own cycle.",
     isMint: true,
   },
   {
-    badge: "ONLY HERE",
+    badge: "Only here",
     title: "Mix Your Box",
     description:
       "One box, three pad lengths, in whatever combination your cycle actually needs. Nobody else does this.",
@@ -30,7 +23,7 @@ const WHY_CARDS = [
   {
     title: "Rewards Club",
     description:
-      "Cash credits in rupees rather than points. Earned on orders, reviews, referrals and your birthday, and applied automatically at checkout.",
+      "Credits in rupees rather than points. Earned on orders, reviews, referrals and your birthday, and applied automatically at checkout.",
   },
   {
     title: "Gift mode",
@@ -44,106 +37,48 @@ const WHY_CARDS = [
   },
 ];
 
+// Why buy direct. On a phone the cards are a swipe row the visitor controls
+// (no auto-scrolling), on desktop a 3-column grid.
 export function WhyChooseUs() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#FAF7F2] pt-0 pb-16">
-      {/* Top Ticker Strap (Dark Teal) */}
-      <div className="w-full overflow-hidden bg-[#016271] py-2.5">
-        <div className="animate-marquee flex whitespace-nowrap">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="mx-3 flex shrink-0 items-center gap-6">
-              {TICKER_ITEMS_DARK.map((item, idx) => (
-                <span
-                  key={idx}
-                  className="flex items-center gap-6 font-serif text-xs font-medium tracking-wide text-white sm:text-sm"
-                >
-                  <span>{item}</span>
-                  <span className="font-sans text-white/60">+</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Top Dashed Pattern Strip */}
-      <div
-        className="mb-8 h-3 w-full opacity-90 sm:mb-16"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='14' viewBox='0 0 24 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='2' width='10' height='10' rx='1' fill='%23016271'/%3E%3Crect x='12' y='2' width='10' height='10' rx='1' fill='%23F5BA24'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat-x",
-          backgroundSize: "24px 14px",
-        }}
-      />
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
-        {/* Section Header */}
-        <div className="mb-6 text-center sm:mb-12">
-          <span className="mb-1 block text-[11px] font-bold tracking-widest text-[#016271] uppercase sm:text-xs">
-            WHY BUY DIRECT
-          </span>
-          <h2 className="mb-2 font-serif text-2xl leading-tight font-bold text-gray-900 sm:text-4xl lg:text-5xl">
-            Better here than anywhere else.
-          </h2>
-          <p className="mx-auto max-w-xl text-xs leading-relaxed text-gray-600 sm:text-sm">
+    <section className={`relative w-full overflow-hidden bg-[#FAF7F2] ${SECTION_Y}`}>
+      <div className={CONTAINER}>
+        <div className="mb-6 space-y-2 text-center sm:mb-10 sm:space-y-3">
+          <span className={EYEBROW_TEAL}>Why buy direct</span>
+          <h2 className={H2}>Better here than anywhere else.</h2>
+          <p className={`${LEAD} mx-auto max-w-xl`}>
             The things you only get on potenthygiene.com, and the claims we can
             actually prove.
           </p>
         </div>
 
-        {/* Mobile 1-Row Continuous Marquee Loop Carousel (< lg) */}
-        <div className="mb-6 w-full overflow-hidden lg:hidden">
-          <div className="flex w-max animate-marquee gap-3.5 py-2">
-            {[...WHY_CARDS, ...WHY_CARDS, ...WHY_CARDS].map((card, idx) => (
-              <div
-                key={idx}
-                className={`w-[250px] shrink-0 rounded-2xl p-4 shadow-2xs ${
-                  card.isMint
-                    ? "border border-[#BDE3EA] bg-[#E6F4F6]"
-                    : "border border-gray-100 bg-white"
-                }`}
-              >
-                {card.badge && (
-                  <span className="mb-2 inline-block w-fit rounded-full border border-[#016271]/20 bg-white/90 px-2 py-0.5 text-[9px] font-bold tracking-wider text-[#016271] uppercase">
-                    {card.badge}
-                  </span>
-                )}
-                <h3 className="mb-1 font-serif text-sm font-bold text-gray-900">
-                  {card.title}
-                </h3>
-                <p className="text-[11px] leading-snug text-gray-600">
-                  {card.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Desktop 3-Column Grid (lg:) */}
-        <div className="mx-auto hidden max-w-6xl grid-cols-1 gap-5 sm:grid-cols-2 lg:grid lg:grid-cols-3">
-          {WHY_CARDS.map((card, idx) => (
-            <div
-              key={idx}
-              className={`flex flex-col justify-start rounded-2xl p-6 shadow-2xs transition-all hover:shadow-md ${
+        <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 sm:mx-auto sm:grid sm:max-w-6xl sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+          {WHY_CARDS.map((card) => (
+            <li
+              key={card.title}
+              className={`flex w-[78%] shrink-0 snap-start flex-col rounded-2xl p-5 shadow-2xs sm:w-auto sm:p-6 ${
                 card.isMint
                   ? "border border-[#BDE3EA] bg-[#E6F4F6]"
                   : "border border-gray-100 bg-white"
               }`}
             >
               {card.badge && (
-                <span className="mb-3 inline-block w-fit rounded-full border border-[#016271]/20 bg-white/90 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-[#016271] uppercase">
+                <span className="mb-3 inline-block w-fit rounded-full border border-[#016271]/20 bg-white/90 px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-[#016271] uppercase">
                   {card.badge}
                 </span>
               )}
-              <h3 className="mb-2 font-serif text-lg font-bold text-gray-900 sm:text-xl">
+              <h3 className="mb-1.5 font-serif text-lg font-bold text-[#1F1915] sm:text-xl">
                 {card.title}
               </h3>
-              <p className="text-xs leading-relaxed text-gray-600 sm:text-sm">
+              <p className="text-sm leading-relaxed text-[#5C524D]">
                 {card.description}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
+        <p className="mt-2 text-center text-xs text-[#5C524D] sm:hidden" aria-hidden>
+          Swipe for more
+        </p>
       </div>
     </section>
   );

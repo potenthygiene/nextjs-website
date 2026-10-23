@@ -876,7 +876,7 @@ export function describeRewardHistoryRow(item: {
 
   if (rawType === "signup_bonus" || rawType === "welcome_bonus") {
     return {
-      title: "Welcome Bonus — Joined Potent Rewards",
+      title: "Welcome Bonus: Joined Potent Rewards",
       subtitle: `₹${SIGNUP_BONUS_RUPEES} cash credit for creating your account`,
       formattedAmount,
       isPositive: true,
@@ -901,7 +901,7 @@ export function describeRewardHistoryRow(item: {
     const friendName = parts.length >= 3 ? parts.slice(2).join(":") : "";
     return {
       title: friendName
-        ? `Referral Reward — ${friendName}'s Order Delivered`
+        ? `Referral Reward: ${friendName}'s Order Delivered`
         : "Referral Reward Earned",
       subtitle: `₹${REFERRAL_EARNING_RUPEES} cash credit earned (friend's first delivered order of ₹399+)`,
       formattedAmount,
@@ -928,7 +928,7 @@ export function describeRewardHistoryRow(item: {
     const isPhotoReview = absRupees >= REVIEW_PHOTO_REWARD_RUPEES;
     return {
       title: productName
-        ? `Review Reward — ${productName}`
+        ? `Review Reward: ${productName}`
         : "Product Review Reward",
       subtitle: isPhotoReview
         ? `₹${REVIEW_PHOTO_REWARD_RUPEES} cash credit earned for product review with photo`

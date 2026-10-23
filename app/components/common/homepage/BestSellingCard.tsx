@@ -52,22 +52,13 @@ export const getProductNumericPrice = (product: any): number => {
     }
   }
 
-  const s = String(product.slug || product.name || "").toLowerCase();
-  if (s.includes("funnel")) return 299;
-  if (s.includes("cup") || s.includes("menstrual")) return 459;
-  if (s.includes("puke") || s.includes("bag")) return 549;
-  if (s.includes("seat") || s.includes("cover")) return 549;
-  if (s.includes("liner")) return 269;
-  if (s.includes("teen")) return 378;
-  if (s.includes("pad")) return 378;
-  if (s.includes("yatra")) return 549;
-
+  // No guessed prices: if the catalogue has none, the card says so.
   return 0;
 };
 
 export const formatProductPrice = (product: any): string => {
   const num = getProductNumericPrice(product);
-  return num > 0 ? `₹${num}` : "Choose variant";
+  return num > 0 ? `₹${num}` : "See price";
 };
 
 const getCompactVariantLabel = (variant: any) => {
@@ -261,7 +252,7 @@ export default function BestsellingCard({
         {/* Badge */}
         {badgeLabel && (
           <div className="absolute top-2 left-2 z-20 sm:top-3 sm:left-3">
-            <span className="rounded-full border border-white/60 bg-white/95 px-2 py-0.5 text-[9px] font-bold text-[#016271] shadow-md backdrop-blur-md sm:px-3 sm:py-1 sm:text-xs">
+            <span className="rounded-full border border-white/60 bg-white/95 px-2 py-0.5 text-[11px] font-bold text-[#016271] shadow-md backdrop-blur-md sm:px-3 sm:py-1 sm:text-xs">
               {badgeLabel}
             </span>
           </div>
@@ -279,11 +270,12 @@ export default function BestsellingCard({
           <button
             type="button"
             onClick={handleToggleWishlist}
-            aria-label="Wishlist"
-            className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-white/95 text-gray-500 shadow-md backdrop-blur-md transition-all hover:scale-105 hover:text-red-500 sm:h-9 sm:w-9"
+            aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+            aria-pressed={isWishlisted}
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/95 text-gray-600 shadow-md backdrop-blur-md transition-colors hover:text-red-500 sm:h-9 sm:w-9"
           >
             <Heart
-              className={`h-3.5 w-3.5 sm:h-4 sm:w-4 ${isWishlisted ? "fill-red-500 text-red-500" : ""}`}
+              className={`h-4 w-4 ${isWishlisted ? "fill-red-500 text-red-500" : ""}`}
             />
           </button>
 
@@ -293,9 +285,9 @@ export default function BestsellingCard({
               type="button"
               onClick={handleQuickViewClick}
               aria-label={`Quick view: ${product.name}`}
-              className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-md backdrop-blur-md transition-all hover:scale-105 hover:text-[#016271] sm:h-9 sm:w-9"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white/95 text-gray-700 shadow-md backdrop-blur-md transition-colors hover:text-[#016271] sm:h-9 sm:w-9"
             >
-              <Eye className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+              <Eye className="h-4 w-4" />
             </button>
           )}
         </div>
@@ -320,7 +312,7 @@ export default function BestsellingCard({
 
       {/* Details & Actions Section */}
       <div
-        className={`flex grow flex-col justify-between space-y-2 bg-white p-2.5 sm:space-y-3 sm:p-4 ${
+        className={`flex grow flex-col justify-between space-y-2 bg-white p-3 sm:space-y-3 sm:p-4 ${
           isFifthMobileCard ? "w-[58%] sm:w-full" : "w-full"
         }`}
       >
@@ -328,17 +320,17 @@ export default function BestsellingCard({
           href={`/product-detail/${product.slug}`}
           className="block space-y-1 sm:space-y-1.5"
         >
-          <h3 className="line-clamp-2 font-serif text-xs leading-tight font-bold text-gray-900 transition-colors group-hover:text-[#016271] sm:text-base md:text-lg">
+          <h3 className="line-clamp-2 font-serif text-sm leading-snug font-bold text-[#1F1915] transition-colors group-hover:text-[#016271] sm:text-base md:text-lg">
             {product.name}
           </h3>
 
-          <p className="line-clamp-2 min-h-[26px] text-[10px] leading-snug font-normal text-gray-600 sm:min-h-[36px] sm:text-xs md:text-sm">
+          <p className="line-clamp-2 min-h-[2.6em] text-[13px] leading-snug font-normal text-[#5C524D] sm:text-sm">
             {product.description ||
               "Safe, organic and dermatologically tested feminine hygiene care."}
           </p>
 
           {product.infoText && (
-            <p className="mt-0.5 line-clamp-1 text-[10px] font-normal text-gray-500 sm:text-xs">
+            <p className="mt-0.5 line-clamp-1 text-xs font-normal text-[#5C524D]/80">
               {product.infoText}
             </p>
           )}
@@ -365,7 +357,7 @@ export default function BestsellingCard({
                     )
                   }
                   onClick={(event) => event.stopPropagation()}
-                  className="h-9 w-full appearance-none rounded-lg border border-gray-300 bg-white py-1 pr-8 pl-2 text-[10px] font-semibold text-gray-900 outline-none transition-colors focus:border-[#016271] sm:text-xs"
+                  className="h-11 w-full appearance-none rounded-lg border border-gray-300 bg-white py-1 pr-8 pl-2 text-[13px] font-semibold text-[#1F1915] outline-none transition-colors focus:border-[#016271] sm:text-sm"
                   aria-label="Choose product variant"
                 >
                   {variants.map((variant) => (
@@ -379,7 +371,7 @@ export default function BestsellingCard({
               </div>
             )}
             {variants.length <= 1 && (
-              <span className="text-xs font-bold text-gray-900 sm:text-base">
+              <span className="text-[15px] font-bold text-[#1F1915] sm:text-base">
                 {formattedPrice}
               </span>
             )}
@@ -392,10 +384,8 @@ export default function BestsellingCard({
             <button
               type="button"
               disabled
-              className={`flex cursor-not-allowed items-center justify-center gap-1 rounded-full text-[11px] font-semibold bg-gray-200 text-gray-500 shadow-none ${
-                isFifthMobileCard
-                  ? "w-auto px-3.5 py-1.5 sm:w-full sm:px-2.5"
-                  : "w-full py-1.5 px-2.5"
+              className={`flex min-h-11 cursor-not-allowed items-center justify-center gap-1.5 rounded-full bg-gray-200 text-sm font-semibold text-gray-500 shadow-none ${
+                isFifthMobileCard ? "w-auto px-4 sm:w-full" : "w-full px-3"
               }`}
             >
               <span>Out of stock</span>
@@ -405,25 +395,19 @@ export default function BestsellingCard({
               type="button"
               onClick={handleAdd}
               disabled={isAdding}
-              className={`flex cursor-pointer items-center justify-center gap-1 rounded-full text-[11px] font-semibold shadow-xs transition-all duration-300 sm:text-sm ${
-                isFifthMobileCard
-                  ? "w-auto px-3.5 py-1.5 sm:w-full sm:px-2.5"
-                  : "w-full py-1.5 px-2.5"
-              } ${
-                added
-                  ? "bg-emerald-600 text-white"
-                  : "bg-[#016271] text-white hover:scale-105 hover:bg-[#014d59]"
-              }`}
+              className={`flex min-h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full text-sm font-semibold text-white shadow-xs transition-colors duration-300 ${
+                isFifthMobileCard ? "w-auto px-4 sm:w-full" : "w-full px-3"
+              } ${added ? "bg-emerald-700" : "bg-[#016271] hover:bg-[#004851]"}`}
             >
               {added ? (
                 <>
-                  <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                  <Check className="h-4 w-4" aria-hidden />
                   <span>Added</span>
                 </>
               ) : (
                 <>
-                  <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                  <span>Add</span>
+                  <Plus className="h-4 w-4" aria-hidden />
+                  <span>Add to bag</span>
                 </>
               )}
             </button>

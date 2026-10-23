@@ -39,12 +39,12 @@ export const CHAPTERS_DATA = [
           },
           {
             h: "1 · Place & position",
-            b: "Hold the wide opening flush against your body so the back edge sits just behind where you pee — about a thumb's width back.",
+            b: "Hold the wide opening flush against your body so the back edge sits just behind where you pee, about a thumb's width back.",
             tip: "Ensure a snug seal against your skin from front to back to prevent leaks.",
           },
           {
             h: "2 · Stand & pee",
-            b: "Tilt the spout down and away into the toilet bowl or container. Relax and pee normally — the wide funnel catches the stream smoothly.",
+            b: "Tilt the spout down and away into the toilet bowl or container. Relax and pee normally: the wide funnel catches the stream smoothly.",
             tip: "Start your stream gently until the seal feels solid, then relax.",
           },
           {
@@ -65,7 +65,7 @@ export const CHAPTERS_DATA = [
           },
           {
             h: "Gravity does the work",
-            b: "As long as the spout is angled downwards, gravity channels every drop straight out — no overflow, no mess.",
+            b: "As long as the spout is angled downwards, gravity channels every drop straight out. No overflow, no mess.",
             tip: "Keep the back edge placed snug against skin before starting your stream.",
           },
         ],
@@ -91,7 +91,7 @@ export const CHAPTERS_DATA = [
     items: [
       {
         id: "toilets",
-        title: "Any toilet — or none",
+        title: "Any toilet, or none",
         sub: "Seats, squats & outdoors",
         slides: [
           {
@@ -191,7 +191,7 @@ export const CHAPTERS_DATA = [
         slides: [
           {
             h: "Pocket-sized privacy",
-            b: "Folds compactly into the breathable cotton pouch — fits in any purse, handbag, or glovebox for total peace of mind.",
+            b: "Folds compactly into the breathable cotton pouch and fits in any purse, handbag, or glovebox for total peace of mind.",
           },
         ],
       },
@@ -254,14 +254,14 @@ export default function FunnelGuideSection() {
               Step inside the Looway guide
             </h2>
             <p className="mt-3 text-sm sm:text-base lg:text-lg text-[#2A1620]/75 leading-relaxed font-normal">
-              Quick, tappable stories — how to use it, how to get a leak-free seal, how to keep it clean, and every kind of journey it saves. Tap a circle to enter, then tap or swipe through.
+              Quick, tappable stories: how to use it, how to get a leak-free seal, how to keep it clean, and every kind of journey it saves. Tap a circle to enter, then tap or swipe through.
             </p>
           </div>
 
           {/* Top Question Pills Box */}
           <div className="rounded-2xl bg-[#fdeef4] border border-[#f8dce8] p-5 sm:p-6 mb-8 shadow-2xs">
             <p className="text-xs sm:text-sm font-semibold text-[#5A0E30] mb-3">
-              Got a question before you buy? Tap a common one — or dive into the full guide below.
+              Got a question before you buy? Tap a common one, or dive into the full guide below.
             </p>
             <div className="flex flex-wrap gap-2 mb-4">
               {ALL_STORIES_FLAT.slice(0, 5).map((story) => (
@@ -279,7 +279,7 @@ export default function FunnelGuideSection() {
               className="inline-flex items-center gap-1.5 text-xs font-bold text-[#b51e60] hover:underline cursor-pointer"
             >
               <ArrowUp className="h-3.5 w-3.5" />
-              <span>I&apos;m all set — take me to the packs</span>
+              <span>I&apos;m all set, take me to the packs</span>
             </button>
           </div>
 
@@ -297,7 +297,7 @@ export default function FunnelGuideSection() {
                   Enter the Looway guide
                 </h3>
                 <p className="text-xs sm:text-sm text-white/85">
-                  Tap to step in — 11 quick stories, swipe through in a minute
+                  Tap to step in: 11 quick stories, swipe through in a minute
                 </p>
               </div>
             </div>

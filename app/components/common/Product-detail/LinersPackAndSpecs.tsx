@@ -11,13 +11,13 @@ export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: 
   const specs = [
     { k: "Pack count", v: `${count} panty liners (${packName})` },
     { k: "Length", v: "190mm" },
-    { k: "Thickness", v: "Ultra-thin (~1mm) — invisible under clothes" },
+    { k: "Thickness", v: "Ultra-thin (~1mm), invisible under clothes" },
     { k: "Top sheet", v: "100% Breathable, cottony-soft & hypoallergenic" },
     { k: "Absorbency", v: "Daily discharge, spotting & light bladder leaks" },
     { k: "Adhesive", v: "Full-length secure stay-put adhesive strip" },
     { k: "Scent & Dyes", v: "100% Fragrance-free & dye-free" },
     { k: "Packaging", v: "Individually wrapped in soft, silent wrappers" },
-    { k: "Disposal", v: "Roll, seal in wrapper and bin — never flush" },
+    { k: "Disposal", v: "Roll, seal in wrapper and bin; never flush" },
     { k: "Recommended change", v: "Every 3 to 4 hours (or when damp)" },
   ];
 
@@ -52,7 +52,7 @@ export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: 
                   {count} Daily Liners ({packName})
                 </h4>
                 <p className="mt-0.5 text-xs text-white/85">
-                  Individually wrapped in soft silent wrappers — easy to carry
+                  Individually wrapped in soft silent wrappers, easy to carry
                 </p>
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function LinersPackAndSpecs({ activeVariant }: { activeVariant?: 
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
           <span className="w-28 flex-none font-bold text-[#1A150F]">Care</span>
           <span className="leading-relaxed text-gray-700">
-            Change every 3 to 4 hours or whenever damp; roll, wrap in its silent pouch and bin it — never flush. Not designed for period flow: use Ovy organic pads or a menstrual cup for period flow.
+            Change every 3 to 4 hours or whenever damp; roll, wrap in its silent pouch and bin it. Never flush. Not designed for period flow: use Ovy organic pads or a menstrual cup for period flow.
           </span>
         </div>
       </div>

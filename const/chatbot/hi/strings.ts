@@ -339,4 +339,13 @@ export const STRINGS_HI: Record<string, string> = {
   "Refer a friend": "दोस्त को रेफ़र करें",
   "Rewards credit": "Rewards क्रेडिट",
   "No credits earned or used yet.": "अभी तक कोई क्रेडिट नहीं कमाया या इस्तेमाल किया।",
+  "Happy birthday month{n}!": "जन्मदिन का महीना मुबारक हो{n}!",
+  "Happy anniversary month{n}!": "सालगिरह का महीना मुबारक हो{n}!",
+  "{code} gives you 15% off once this month, on ₹399 and above. It can't be combined with other coupons, but your Rewards credit still applies.":
+    "{code} से इस महीने एक बार ₹399 और उससे ऊपर पर 15% की छूट मिलती है। यह दूसरे कूपन के साथ नहीं लगता, पर आपका Rewards क्रेडिट साथ में लगता है।",
+  "Add your phone number for delivery updates": "डिलीवरी अपडेट के लिए अपना फ़ोन नंबर जोड़ें",
+  "Add your birthday and anniversary": "अपना जन्मदिन और सालगिरह जोड़ें",
+  "Get ₹50 credit and BIRTHDAY15 in your birthday month, and ANNIVERSARY15 in your anniversary month.":
+    "जन्मदिन के महीने में ₹50 क्रेडिट और BIRTHDAY15, और सालगिरह के महीने में ANNIVERSARY15 पाएँ।",
+  "Complete my profile": "मेरी प्रोफ़ाइल पूरी करें",
 };

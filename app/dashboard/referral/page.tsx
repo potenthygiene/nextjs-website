@@ -44,7 +44,7 @@ const page = async () => {
     <div className="flex flex-col gap-6">
       <RewardsReferrelHeader
         tittle="Referral Program"
-        description="Share your unique code with friends — you earn ₹100 and they get ₹100 off"
+        description="Share your unique code with friends: you earn ₹100 and they get ₹100 off"
       />
       <RewardReferrelOverview
         tittle="Total Referral Earnings"

@@ -16,7 +16,7 @@ const LAYERS: LayerInfo[] = [
   {
     id: 0,
     title: "Cottony-soft top sheet",
-    sub: "Organic, hypoallergenic fibres — rash-free, never a plastic feel.",
+    sub: "Organic, hypoallergenic fibres: rash-free, never a plastic feel.",
     dotColor: "#F3E6F0",
     bgTint: "rgba(243, 230, 240, 0.4)",
     borderColor: "#E8C8DF",
@@ -255,7 +255,7 @@ export default function WhatsInside() {
         <div className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
           <span className="w-28 flex-none font-bold text-[#1A150F]">Care</span>
           <span className="leading-relaxed text-gray-700">
-            Change every 4–8 hours; roll, seal in the biodegradable bag and bin it — never flush. For postpartum or very heavy / PCOS flow the XL+ is built for it; if you soak through an XL+ in under 2 hours, check with a doctor.
+            Change every 4 to 8 hours; roll, seal in the biodegradable bag and bin it. Never flush. For postpartum or very heavy / PCOS flow the XL+ is built for it; if you soak through an XL+ in under 2 hours, check with a doctor.
           </span>
         </div>
       </div>

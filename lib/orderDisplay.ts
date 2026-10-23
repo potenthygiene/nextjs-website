@@ -248,7 +248,7 @@ export function getOrderRefundInfo(order: any) {
       refundDescription = `Refund of ${formatPrice(order?.totalAmount)} has been processed to your original payment method.`;
     } else if (cancelStatus === "approved") {
       refundStatus = "Refund Approved";
-      refundDescription = "Refund approved. It will be credited to your original payment method in 3–5 business days.";
+      refundDescription = "Refund approved. It will be credited to your original payment method in 3 to 5 business days.";
     } else if (cancelStatus === "pending") {
       refundStatus = "Cancellation Under Review";
       refundDescription = "Your cancellation request is currently being reviewed by our support team.";

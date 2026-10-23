@@ -769,7 +769,7 @@ export function OvyShopSection({
                 Ships within 24 to 48 hours
               </h4>
               <p className="mt-0.5 text-[10px] leading-tight text-purple-200/80 sm:text-[11px]">
-                Tracked to your door, free over ₹399
+                Tracked to your door, free on orders of ₹399 and above
               </p>
             </div>
           </div>

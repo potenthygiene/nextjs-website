@@ -24,8 +24,8 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
           a: "Pull your clothing aside just far enough, hold the wide opening firmly against your body with the back edge just behind the urethra, tilt the spout down and away, start your stream slowly, then pee normally. Standing slightly forward helps. When you finish, slide it forward along the skin to catch the last drops, shake it dry and store it in the pouch.",
         },
         {
-          q: "Which toilets does it work with — including Indian squat toilets?",
-          a: "It works with all Western toilets, Indian squat toilets, public latrines, outdoor nature spots, and even into bottles or disposable urine bags while travelling. Stand over a Western seat without ever touching it, or aim directly into a squat toilet pan — no squatting and no skin contact.",
+          q: "Which toilets does it work with, including Indian squat toilets?",
+          a: "It works with all Western toilets, Indian squat toilets, public latrines, outdoor nature spots, and even into bottles or disposable urine bags while travelling. Stand over a Western seat without ever touching it, or aim directly into a squat toilet pan, with no squatting and no skin contact.",
         },
         {
           q: "Do I have to undress?",
@@ -40,11 +40,11 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
           a: "Absolutely. The soft silicone funnel folds flexibly into its compact cotton pouch. Keep it in your handbag, glove box, or jacket pocket so you can pull it out and position it within seconds whenever you find a roadside emergency or dirty restroom.",
         },
         {
-          q: "How does the bottle method work in a car — won't it overflow or back up?",
+          q: "How does the bottle method work in a car? Won't it overflow or back up?",
           a: "The wide spout of the funnel fits easily into standard bottle openings or disposable bag necks. Control your stream at a moderate pace to allow gravity to drain the liquid smoothly into the bottle without splashing back.",
         },
         {
-          q: "How much does it hold — do I have to stop partway?",
+          q: "How much does it hold? Do I have to stop partway?",
           a: "You do not need to stop partway. The funnel is an open flow-through channel with a deep basin and wide funnel neck designed to handle a full, natural bladder discharge rapidly without overflowing.",
         },
       ],
@@ -69,7 +69,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
           a: "For personal hygiene and infection prevention, we recommend each person has their own dedicated Looway funnel. That is why our Pack of 2 is popular for sisters, mothers, daughters, or travel buddies.",
         },
         {
-          q: "What if I can't rinse it at all — how long can it sit in my bag?",
+          q: "What if I can't rinse it at all? How long can it sit in my bag?",
           a: "If water or wipes aren't available, simply shake off excess drops, wipe with toilet paper if you have it, and place it in the breathable cotton pouch. The pouch allows air circulation to prevent moisture trapped inside. Wash it thoroughly as soon as you get home.",
         },
       ],
@@ -79,10 +79,10 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
       items: [
         {
           q: "Should I buy the Pack of 1 or the Pack of 2?",
-          a: "The Pack of 1 (₹299) is ideal to test out or keep in your primary handbag. The Pack of 2 (₹499) offers the best value—keep one in your daily bag and leave one permanently in your car, travel backpack, or emergency kit so you are never caught without it.",
+          a: "The Pack of 1 (₹299) is ideal to test out or keep in your primary handbag. The Pack of 2 (₹499) offers the best value: keep one in your daily bag and leave one permanently in your car, travel backpack, or emergency kit so you are never caught without it.",
         },
         {
-          q: "Do you sell the disposable Pee & Puke bags too — on subscription?",
+          q: "Do you sell the disposable Pee & Puke bags too, on subscription?",
           a: "Yes! We offer Looway Disposable Pee & Puke Bags which pair perfectly with the funnel for car rides and motion sickness. You can buy them standalone or add them to your cart during checkout.",
         },
         {
@@ -106,7 +106,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
       items: [
         {
           q: "Will I pee on myself the first time?",
-          a: "Not if you get a good seal — and that is easier than it sounds. Hold the wide end snug against your body so it covers the whole area, start your stream slowly until the seal feels solid, then relax and pee normally. We recommend one practice run in the shower at home; almost everyone gets it right on the first or second try.",
+          a: "Not if you get a good seal, and that is easier than it sounds. Hold the wide end snug against your body so it covers the whole area, start your stream slowly until the seal feels solid, then relax and pee normally. We recommend one practice run in the shower at home; almost everyone gets it right on the first or second try.",
         },
         {
           q: "What's the secret to a leak-free seal?",
@@ -117,7 +117,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
           a: "We strongly recommend trying it once or twice in the shower or over your home toilet first. It helps build confidence and muscle memory in positioning the seal so you feel 100% comfortable when using it in a public restroom or outdoors.",
         },
         {
-          q: "The funnel is soft silicone — won't it collapse or fold while I'm going?",
+          q: "The funnel is soft silicone. Won't it collapse or fold while I'm going?",
           a: "No. Looway is engineered with flexible yet structural silicone side walls and a reinforced outer rim. It yields comfortably to your body shape without collapsing inwards under normal holding pressure.",
         },
         {
@@ -131,7 +131,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
       items: [
         {
           q: "Does it hurt or feel strange?",
-          a: "It does not hurt at all. The funnel is completely external—it is held against your skin and never inserted. The medical-grade silicone is soft, smooth, and comfortable. Standing to pee for the first time may feel unusual, but after 1–2 uses it feels completely natural.",
+          a: "It does not hurt at all. The funnel is completely external: it is held against your skin and never inserted. The medical-grade silicone is soft, smooth, and comfortable. Standing to pee for the first time may feel unusual, but after 1 to 2 uses it feels completely natural.",
         },
         {
           q: "Is it discreet? Will people notice?",
@@ -156,7 +156,7 @@ const FAQ_DATA: { left: FaqGroup[]; right: FaqGroup[] } = {
         },
         {
           q: "Can teenagers and older women use it?",
-          a: "Yes. Women of all ages—from young girls and teenagers travelling for school/college to elderly women with arthritis, knee pain, or mobility restrictions—can easily use Looway.",
+          a: "Yes. Women of all ages (from young girls and teenagers travelling for school/college to elderly women with arthritis, knee pain, or mobility restrictions) can easily use Looway.",
         },
         {
           q: "Can it help me avoid dirty-seat contact and holding it in?",
