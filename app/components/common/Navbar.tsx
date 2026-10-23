@@ -52,6 +52,7 @@ const navLinks = [
   },
   { name: "Period Tracker", href: "/period-log", icon: <IconNews size={20} /> },
   { name: "Journal", href: "/blog", icon: <IconPhone size={20} /> },
+  { name: "For Business", href: "/business", icon: <IconBuildingStore size={20} /> },
 ];
 
 const dashboardLinks = [
@@ -255,12 +256,23 @@ export function Navbar() {
             <Link
               href="/blog"
               className={`transition-colors hover:text-white ${
-                pathname === "/blog"
+                pathname.startsWith("/blog")
                   ? "font-bold text-white underline underline-offset-4"
                   : ""
               }`}
             >
               Journal
+            </Link>
+
+            <Link
+              href="/business"
+              className={`transition-colors hover:text-white ${
+                pathname === "/business"
+                  ? "font-bold text-white underline underline-offset-4"
+                  : ""
+              }`}
+            >
+              For Business
             </Link>
           </div>
 
@@ -452,6 +464,14 @@ export function Navbar() {
                         className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
                       >
                         Journal
+                      </Link>
+
+                      <Link
+                        href="/business"
+                        onClick={() => setOpen(false)}
+                        className="py-3.5 border-b border-white/15 text-sm sm:text-base font-bold text-white hover:text-white/80 transition-colors"
+                      >
+                        For Business
                       </Link>
                     </div>
 

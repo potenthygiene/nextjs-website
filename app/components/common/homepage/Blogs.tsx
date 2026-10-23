@@ -5,10 +5,10 @@ import { getImageUrl } from "@/lib/imageUrl";
 import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getBlogs } from "@/helper/blog/action";
+import { getJournalPosts } from "@/helper/blog/action";
 
 export async function BlogSection() {
-  const allBlogs = await getBlogs();
+  const allBlogs = await getJournalPosts();
 
   const articles = allBlogs?.slice(0, 3) || [];
 
@@ -41,6 +41,7 @@ export async function BlogSection() {
                     alt={article?.title || "Blog Post"}
                     width={300}
                     height={300}
+                    unoptimized={String(article?.image).startsWith("/journal-cover")}
                     className="object-cover w-full h-auto object-center group-hover:scale-105 transition duration-500"
                   />
 

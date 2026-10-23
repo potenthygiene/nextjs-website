@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { getBlogs } from "@/helper/blog/action";
+import { getJournalPosts } from "@/helper/blog/action";
 
 const FALLBACK_ARTICLES = [
   {
@@ -40,7 +40,7 @@ export function JournalSection() {
   useEffect(() => {
     async function loadBlogs() {
       try {
-        const blogs = await getBlogs();
+        const blogs = await getJournalPosts();
         if (blogs && blogs.length > 0) {
           const mapped = blogs.slice(0, 4).map((b: any, idx: number) => ({
             category: (b.blogCategory || "JOURNAL").toUpperCase(),

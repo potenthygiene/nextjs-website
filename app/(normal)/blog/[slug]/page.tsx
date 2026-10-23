@@ -6,6 +6,8 @@ import { IconArrowLeft } from "@tabler/icons-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { getArticle, shareImage } from "@/const/journal";
+import ArticleView from "@/app/components/common/journal/ArticleView";
 
 export async function generateMetadata({
   params,
@@ -13,6 +15,34 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const article = getArticle(slug);
+  if (article) {
+    const path = `/blog/${slug}`;
+    const image = shareImage(slug);
+    return {
+      title: article.seoTitle,
+      description: article.description,
+      keywords: [article.primaryKeyword, ...article.keywords],
+      alternates: { canonical: path },
+      openGraph: {
+        title: article.title,
+        description: article.description,
+        url: path,
+        type: "article",
+        publishedTime: `${article.date}T09:00:00+05:30`,
+        section: article.category,
+        tags: article.tags,
+        images: [{ url: image, width: 1200, height: 630, alt: article.title }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: article.title,
+        description: article.description,
+        images: [image],
+      },
+    };
+  }
+
   const blog = await getBlogBySlug(slug);
   if (!blog) return { title: "Journal" };
 
@@ -48,6 +78,9 @@ export default async function BlogDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const article = getArticle(slug);
+  if (article) return <ArticleView article={article} />;
+
   const blog = await getBlogBySlug(slug);
 
   if (!blog) return notFound();

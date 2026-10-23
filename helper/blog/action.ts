@@ -4,6 +4,7 @@
 import { blog } from "@/db/schema";
 import { db } from "@/lib/db";
 import { getImageKey } from "@/lib/imageUrl";
+import { ARTICLES, articleAsPost, formatJournalDate } from "@/const/journal";
 
 import { and, desc, eq, ilike, or } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -43,6 +44,33 @@ export async function getBlogs(search = "") {
     console.error("Fetch Blogs Error:", error);
     return [];
   }
+}
+
+// Everything the public Journal shows: the articles written in code plus the
+// published database posts, newest first, in one shape.
+export async function getJournalPosts() {
+  const rows = (await getBlogs()).filter((b) => b.slug && b.isPublished !== false);
+  const codeSlugs = new Set(ARTICLES.map((a) => a.slug));
+  const dbPosts = rows
+    .filter((b) => !codeSlugs.has(b.slug as string))
+    .map((b) => ({
+      id: b.id,
+      slug: b.slug as string,
+      title: b.title || "",
+      blogCategory: b.blogCategory || "Journal",
+      metaDescription: b.metaDescription || "",
+      data: b.data || "",
+      image: b.image || "/placeholder.jpg",
+      date: formatJournalDate(b.createdAt),
+      isoDate: b.createdAt ? b.createdAt.toISOString().slice(0, 10) : "",
+      readMinutes: 0,
+      isPublished: true,
+      fromCode: false,
+    }));
+
+  return [...ARTICLES.map(articleAsPost), ...dbPosts].sort((a, b) =>
+    b.isoDate.localeCompare(a.isoDate),
+  );
 }
 
 const FALLBACK_BLOG_MAP: Record<string, any> = {
