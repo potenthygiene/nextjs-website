@@ -2307,7 +2307,7 @@ export default function MenstrualCupPageClient({
                   PACKAGING
                 </span>
                 <p className="text-xs leading-relaxed text-gray-800 sm:text-sm">
-                  <b>Recycled card, 100% plastic-free</b>, plain & discreet on
+                  <b>Recycled card, 100% plastic-free</b>, bold and proud on
                   the outside
                 </p>
               </div>

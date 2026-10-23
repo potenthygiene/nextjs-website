@@ -324,3 +324,29 @@
 
 
 
+
+/* Potent Help chat */
+@keyframes chatSheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes chatCardIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes chatMsgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-sheet { animation: chatSheetUp 0.34s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.chat-in { animation: chatMsgIn 0.28s ease-out both; }
+@media (min-width: 768px) {
+  .chat-sheet { animation: chatCardIn 0.26s cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
+@media (max-width: 767px) {
+  body.chatbot-open { overflow: hidden; }
+  body.chatbot-open .whatsapp-floating-widget { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-sheet, .chat-in { animation: none; }
+}

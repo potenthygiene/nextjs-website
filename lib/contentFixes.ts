@@ -14,6 +14,8 @@ const TEXT_FIXES: [RegExp, string][] = [
   [/You can change, pause or cancel any time/g, "You can pause or cancel any time"],
   // The funnel is reusable.
   [/Disposable stand-and-pee funnel/g, "Reusable stand-and-pee funnel"],
+  // Packaging is bold, not hidden.
+  [/plain (&|and) discreet on the outside/gi, "bold and proud on the outside"],
   // Leftover HTML in admin-entered text.
   [/&amp;/g, "&"],
   [/<\/?b>/g, ""],
@@ -26,6 +28,19 @@ export function fixProductText<T extends string | null | undefined>(text: T): T 
     out = out.replace(pattern, replacement);
   }
   return out as T;
+}
+
+// Short product highlights shown on cards. Claims the rules don't allow are
+// swapped for honest ones.
+const HIGHLIGHT_FIXES: Record<string, string> = {
+  flushable: "Bin after use, never flush",
+  "zero germ contact": "No direct seat contact",
+  "eco-friendly & reusable": "Reusable for years",
+  "eco-friendly and reusable": "Reusable for years",
+};
+
+export function fixHighlights(list: string[] | null | undefined): string[] {
+  return (list || []).map((h) => HIGHLIGHT_FIXES[h.trim().toLowerCase()] || fixProductText(h));
 }
 
 export function fixProductFaq<T extends { question?: string | null; answer?: string | null }>(

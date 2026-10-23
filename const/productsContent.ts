@@ -4284,7 +4284,7 @@ export const ovyCup: Record<string, any> = {
         ],
         [
           "What's included, and how is it packaged?",
-          "Every cup ships with a breathable organic cotton storage pouch, in 100% plastic-free recycled packaging that arrives discreetly — no branding on the outer box.",
+          "Every cup ships with a breathable organic cotton storage pouch, in 100% plastic-free recycled packaging that's bold and proud, because periods are nothing to hide.",
         ],
         [
           "What if it doesn't work out for me?",

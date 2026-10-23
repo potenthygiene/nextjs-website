@@ -215,7 +215,7 @@ const Page = () => {
                 Packaging and Product Safety
               </h2>
               <ul className="list-disc pl-5 mt-3 space-y-1">
-                <li>Discreet Packaging for privacy.</li>
+                <li>Bold, proud packaging: periods are nothing to hide.</li>
                 <li>Secure Wrapping to prevent damage.</li>
                 <li>Tamper-proof sealing.</li>
                 <li>Eco-friendly recyclable materials.</li>

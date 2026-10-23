@@ -86,8 +86,8 @@ const Page = () => {
     <h2 className="font-bold text-black">Order Cancellation & Refund</h2>
     <ul className="list-disc pl-6 space-y-2 mt-3">
       <li>Orders can be cancelled before dispatch</li>
-      <li>Refunds are processed after verification and approval</li>
-      <li>Damaged, defective, or incorrect items may be eligible for replacement or refund</li>
+      <li>A cancelled order is refunded in full</li>
+      <li>As personal hygiene products, items cannot be returned, refunded or replaced once delivered. If an order arrives damaged, please email care@potenthygiene.com.</li>
       <li>Refund timelines depend on payment method and bank processing</li>
     </ul>
   </div>
