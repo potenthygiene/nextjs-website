@@ -141,7 +141,7 @@ export default async function BlogPage() {
                   className="group grid grid-cols-[120px_1fr] overflow-hidden rounded-[24px] border border-[#E1ECEE] bg-white transition-shadow hover:shadow-[0_18px_40px_-20px_rgba(7,89,101,0.35)] sm:grid-cols-[170px_1fr]"
                 >
                   <div className="relative min-h-[150px]">
-                    <Image src={getImageUrl(p.image)} alt="" fill sizes="170px" className="object-cover" />
+                    <Image src={getImageUrl(p.image)} alt="" fill sizes="170px" className="object-cover object-[84%_50%]" />
                   </div>
                   <div className="flex flex-col justify-center p-4 sm:p-5">
                     <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#016271]">{p.blogCategory}</p>
