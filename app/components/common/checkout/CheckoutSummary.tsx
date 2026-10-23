@@ -90,7 +90,7 @@ export function CheckoutSummary({
     quoteLoading ||
     (isSubscriptionCheckout && !subscriptionQuote);
 
-  const loadPricing = async (couponCode?: string | null) => {
+  const loadPricing = async (couponCode?: string | null): Promise<any> => {
     let res: any;
     if (isDirectCheckout) {
       if (!directCheckoutItem) return false;
