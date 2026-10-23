@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, Plus } from "lucide-react";
-import { addToCart } from "@/store/cartActions";
 import { OvyPadsDetail } from "./OvyPadsDetail";
 import { OvyCupDetail } from "./OvyCupDetail";
 import { OvyLinersDetail } from "./OvyLinersDetail";
@@ -18,17 +17,13 @@ interface OvyUpCloseSectionProps {
 export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
   const [activeMobileTab, setActiveMobileTab] = useState<TabType>("Pads");
 
-  const handleAddCup = () => {
-    const cupProduct = productsBySlug?.["menstrual-cup"];
-    const variantId = cupProduct?.variants?.[0]?.id || cupProduct?.id || "menstrual-cup";
-    addToCart(variantId);
+  // Starting price from the live product, if it loaded.
+  const fromPrice = (slug: string) => {
+    const prices = (productsBySlug?.[slug]?.variants || []).map((v: { price?: number }) => Number(v.price || 0)).filter((p: number) => p > 0);
+    return prices.length ? Math.min(...prices) : 0;
   };
-
-  const handleAddLiners = () => {
-    const linerProduct = productsBySlug?.["ovy-daily-panty-liners"];
-    const variantId = linerProduct?.variants?.[0]?.id || linerProduct?.id || "ovy-daily-panty-liners";
-    addToCart(variantId);
-  };
+  const cupFrom = fromPrice("menstrual-cup") || fromPrice("ovy-cup");
+  const linersFrom = fromPrice("ovy-daily-panty-liners") || fromPrice("ovy-liners");
 
 
   return (
@@ -371,12 +366,12 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
             {/* Mobile Cup Action Buttons */}
             <div className="space-y-2">
               {/* Full Width Top Button */}
-              <button
-                onClick={handleAddCup}
+              <Link
+                href="/product-detail/ovy-cup#size-finder"
                 className="w-full bg-[#602E55] text-white rounded-full py-3 text-xs font-bold hover:bg-[#4A2040] transition-colors flex items-center justify-center gap-1.5 shadow-xs"
               >
-                <Plus className="w-4 h-4" /> Add, ₹459
-              </button>
+                <Plus className="w-4 h-4" /> {cupFrom ? `Choose my size, from ₹${cupFrom}` : "Choose my size"}
+              </Link>
 
               {/* Side-by-Side 2 Buttons Row */}
               <div className="grid grid-cols-2 gap-2">
@@ -527,12 +522,12 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
 
             {/* Mobile Liners Action Buttons */}
             <div className="space-y-2">
-              <button
-                onClick={handleAddLiners}
+              <Link
+                href="/product-detail/ovy-liners"
                 className="w-full bg-[#602E55] text-white rounded-full py-3 text-xs font-bold hover:bg-[#4A2040] transition-colors flex items-center justify-center gap-1.5 shadow-xs"
               >
-                <Plus className="w-4 h-4" /> Add, from ₹269
-              </button>
+                <Plus className="w-4 h-4" /> {linersFrom ? `Choose my pack, from ₹${linersFrom}` : "Choose my pack"}
+              </Link>
 
               <Link
                 href="/product-detail/ovy-liners"
