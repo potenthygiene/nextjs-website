@@ -84,9 +84,9 @@ const PAGES: Record<string, PageSeo> = {
     path: "/about",
   },
   business: {
-    title: "Bulk & Corporate Orders: Period Care and Travel Hygiene",
+    title: "B2B & Bulk Orders: Hygiene Supply for Businesses",
     description:
-      "Bulk Ovy pads, teen kits and cups, and Looway seat covers, pee and puke bags and Yatra Kits for offices, travel groups, hotels, schools, hospitals, events and CSR. Quote in one working day.",
+      "B2B supply of Ovy pads, teen kits and cups and Looway seat covers, pee and puke bags and Yatra Kits for corporates, travel operators, hotels, schools, hospitals and CSR. GST invoice, quote in one working day.",
     path: "/business",
   },
   "shipping-policy": {
