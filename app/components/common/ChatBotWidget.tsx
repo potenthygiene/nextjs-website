@@ -824,7 +824,7 @@ export function ChatBotWidget() {
       });
     }
     // Signed in with nothing else to show: their last order, one tap from buying again.
-    if (c && !rows.length && latest) {
+    if (c && latest && !rows.some((r) => ["transit", "rate", "restock"].includes(r.key))) {
       rows.push({
         key: "last",
         icon: Package,
@@ -844,7 +844,8 @@ export function ChatBotWidget() {
         links: [{ label: t("Sign in"), href: "/login" }],
       });
     }
-    return rows.slice(0, 4);
+    const first = ["transit", "rate", "last", "restock"];
+    return [...rows.filter((r) => first.includes(r.key)), ...rows.filter((r) => !first.includes(r.key))].slice(0, 4);
   };
 
   // ---------- Message builders ----------
