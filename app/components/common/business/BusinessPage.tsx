@@ -30,7 +30,10 @@ import {
 import { toast } from "sonner";
 import { submitContactMessage } from "@/helper/user/action";
 
-const NAVY = "#0B2A3C";
+// Potent brand teal (header and footer), with Ovy purple and Looway green accents.
+const NAVY = "#075965";
+const OVY = "#7E4D77";
+const LOOWAY = "#0E5C3A";
 
 const WHATSAPP =
   "https://wa.me/916375881514?text=" +
@@ -489,7 +492,7 @@ export default function BusinessPage() {
   return (
     <main className="w-full bg-white text-slate-900">
       {/* HERO */}
-      <section className="relative overflow-hidden text-white" style={{ backgroundColor: NAVY }}>
+      <section className="relative overflow-hidden text-white" style={{ background: "linear-gradient(135deg, #075965 0%, #016271 55%, #1A8D91 100%)" }}>
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.07]"
           style={{
@@ -555,10 +558,10 @@ export default function BusinessPage() {
       </section>
 
       {/* TRUST STRIP */}
-      <section className="border-b border-slate-200 bg-slate-50">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-slate-200 lg:grid-cols-4">
+      <section className="border-b border-[#CFE9EC] bg-[#E6F4F6]">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-[#CFE9EC] lg:grid-cols-4">
           {TRUST_STATS.map((s) => (
-            <div key={s.value} className="bg-slate-50 px-4 py-6 text-center sm:px-6">
+            <div key={s.value} className="bg-[#E6F4F6] px-4 py-6 text-center sm:px-6">
               <p className="text-lg font-extrabold sm:text-2xl" style={{ color: NAVY }}>{s.value}</p>
               <p className="mt-1 text-xs text-slate-600 sm:text-sm">{s.label}</p>
             </div>
@@ -586,7 +589,7 @@ export default function BusinessPage() {
       </section>
 
       {/* SOLUTIONS */}
-      <section className="bg-slate-50">
+      <section className="bg-[#FAF7F2]">
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <SectionLabel>B2B services</SectionLabel>
           <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">How we supply your organisation</h2>
@@ -613,10 +616,14 @@ export default function BusinessPage() {
         <h2 className="mt-2 text-2xl font-extrabold tracking-tight sm:text-3xl">Two brands, one supplier</h2>
         <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-2">
           {RANGE.map((g) => (
-            <div key={g.brand} className="rounded-xl border border-slate-200 p-6">
+            <div
+              key={g.brand}
+              className="rounded-xl border border-slate-200 border-t-4 p-6"
+              style={{ borderTopColor: g.brand === "Ovy" ? OVY : LOOWAY, backgroundColor: g.brand === "Ovy" ? "#FBF1FB" : "#F4F1E8" }}
+            >
               <div className="flex items-baseline justify-between gap-3 border-b border-slate-100 pb-4">
                 <div>
-                  <h3 className="text-xl font-extrabold" style={{ color: NAVY }}>{g.brand}</h3>
+                  <h3 className="text-xl font-extrabold" style={{ color: g.brand === "Ovy" ? OVY : LOOWAY }}>{g.brand}</h3>
                   <p className="text-sm text-slate-500">{g.tag}</p>
                 </div>
                 <Link href={g.href} className="text-sm font-semibold text-[#016271] hover:underline">
@@ -673,7 +680,7 @@ export default function BusinessPage() {
       </section>
 
       {/* QUOTE */}
-      <section id="quote" className="scroll-mt-28 bg-slate-50">
+      <section id="quote" className="scroll-mt-28 bg-[#E6F4F6]">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-16 sm:px-6 lg:grid-cols-12 lg:px-8">
           <div className="lg:col-span-4">
             <SectionLabel>B2B enquiry</SectionLabel>
