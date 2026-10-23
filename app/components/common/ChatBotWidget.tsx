@@ -2034,7 +2034,7 @@ export function ChatBotWidget() {
                               <Link key={o.id} href={`/dashboard/orders/${o.id}`} onClick={onNav} className="flex items-center gap-3 border-b border-[#f6ebf2] px-4 py-3 last:border-b-0 md:hover:bg-[#fff6fb]">
                                 <span className="min-w-0 flex-1">
                                   <span className="block text-[14px] font-semibold text-[#2b1c27]">
-                                    {tm(o.items === 1 ? "{date} · 1 item" : "{date} · {n} items", { date: o.date, n: o.items })}
+                                    {o.items ? tm(o.items === 1 ? "{date} · 1 item" : "{date} · {n} items", { date: o.date, n: o.items }) : o.date}
                                     {o.total ? ` · ₹${o.total.toLocaleString("en-IN")}` : ""}
                                   </span>
                                   <span className="block text-[12.5px] text-[#6d5767]">{tm("Order #{id}", { id: o.id.slice(0, 8).toUpperCase() })}</span>
