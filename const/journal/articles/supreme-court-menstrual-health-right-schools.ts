@@ -214,6 +214,13 @@ const article: Article = {
           text: "A school bag period kit is a small zip pouch she carries every day, so a first or surprise period never means panic. It needs only a few pads, a spare pair of underwear, something to wrap a used pad in, and a reminder of who to ask for help.",
         },
         {
+          type: "figure",
+          src: "/ovy/m2-school.jpg",
+          alt: "Two schoolgirls in uniform laughing together, sitting on a box of Ovy pads",
+          caption: "A first period goes better when it is talked about openly, at home and at school.",
+          tall: true,
+        },
+        {
           type: "steps",
           items: [
             {

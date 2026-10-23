@@ -214,6 +214,13 @@ const article: Article = {
           text: "A good travel hygiene kit covers three situations: a dirty Western seat, a squat toilet you'd rather not crouch over, and no toilet at all. Pack seat covers, a pee funnel, a few pee bags, soap strips and sanitiser, tissues, period products and a full water bottle in one pouch you can reach without unpacking.",
         },
         {
+          type: "figure",
+          src: "/looway/yatra.jpg",
+          alt: "A mother packing a reusable pee funnel into a travel bag while her daughter watches",
+          caption: "Pack one pouch you can reach without unpacking the whole bag.",
+          tall: true,
+        },
+        {
           type: "checklist",
           title: "Pack this in one easy-to-reach pouch",
           items: [

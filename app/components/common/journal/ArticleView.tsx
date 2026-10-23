@@ -220,8 +220,8 @@ function BlockView({ block, ink, soft }: { block: Block; ink: string; soft: stri
     }
     case "figure":
       return (
-        <figure className="my-9">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-[#FAF7F2] sm:aspect-[16/10]">
+        <figure className={`my-9 ${block.tall ? "mx-auto max-w-md" : ""}`}>
+          <div className={`relative overflow-hidden rounded-2xl bg-[#FAF7F2] ${block.tall ? "aspect-[4/5]" : "aspect-[4/3] sm:aspect-[16/10]"}`}>
             <Image src={block.src} alt={block.alt} fill sizes="(min-width: 768px) 720px, 100vw" className="object-cover" />
           </div>
           {block.caption && (

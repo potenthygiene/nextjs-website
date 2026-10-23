@@ -17,18 +17,17 @@ const article: Article = {
     "organic sanitary pads",
     "best sanitary pads for sensitive skin",
     "BIS IS 5405",
-    "ISI mark sanitary napkins",
     "how often to change pad",
     "toxic chemicals in sanitary napkins",
   ],
   date: "2026-10-05",
   cover: { theme: "ovy", icon: "shield", kicker: "Period Care, Honestly" },
   intro: [
-    "Somewhere between a forwarded message about \"toxic pads\" and a rash that flares every monsoon, many of us have started asking a fair question: are sanitary pads safe? You wear one for several days every month, for decades, against some of the most sensitive skin on your body. Wanting to know what is in it is simply good sense.",
+    "Somewhere between a forwarded message about \"toxic pads\" and a rash that flares every monsoon, many of us have started asking a fair question: are sanitary pads safe? You wear one for days every month, for decades, against very sensitive skin. Wanting to know what is in it is simply good sense.",
     "This guide explains what a pad is made of, what testing has actually found about chemicals in sanitary pads and what it cannot tell you, how to care for pad rash at home, and how to choose a pad for sensitive skin. No scare stories, and no false comfort.",
   ],
   takeaways: [
-    "Sanitary pads sold in India must meet the BIS standard IS 5405 and carry the ISI mark.",
+    "In India, sanitary pads are covered by the BIS standard IS 5405, which sets rules for size, pH, absorbency and cleanliness.",
     "A 2022 Toxics Link study found phthalates and VOCs in all 10 pads it tested, including the 4 sold as organic.",
     "Research shows these chemicals are present in pads, but it has not shown how much reaches the body in normal use or that pads cause disease.",
     "\"Organic\" describes how part of the material was grown, not its chemical content, and testing has found these chemicals in organic pads too.",
@@ -71,7 +70,7 @@ const article: Article = {
         },
         {
           type: "p",
-          text: "Phthalates and VOCs are not listed on any pack. Researchers think they come mainly from plastics, glues and fragrances, which is why they turn up in many kinds of pads, whatever the label says.",
+          text: "Chemicals such as phthalates and volatile organic compounds (VOCs) are not listed on any pack. Researchers think they come mainly from plastics, glues and fragrances, which is why they turn up in many kinds of pads, whatever the label says.",
         },
       ],
     },
@@ -120,7 +119,7 @@ const article: Article = {
             "A 2020 study found phthalates in 98% of 64 sanitary napkins tested in China. It estimated napkins made up about 8.2% of women's total phthalate exposure, with food a bigger source for several phthalates.",
             "A 2020 US study of 79 feminine hygiene products found VOCs across pads, tampons, washes and sprays, with more of some fragrance chemicals in scented products.",
             "In that study, \"organic\", \"natural\" and \"for sensitive skin\" labels did not reliably mean lower VOC levels.",
-            "Vulval tissue can absorb some chemicals more readily than ordinary skin, so researchers take this route seriously.",
+            "Vulval tissue can absorb some chemicals more readily than ordinary skin.",
           ],
         },
         { type: "h3", text: "What the research does not show" },
@@ -138,27 +137,19 @@ const article: Article = {
           title: "Why we are telling you all this",
           text: "We make sanitary pads, and we would rather give you the full picture than a slogan. Testing in India has found these chemicals across the market, including in organic pads, so it is a fair question to ask any brand, us included. If it concerns you, [contact our team](/contact) and ask exactly what our testing covers.",
         },
-        {
-          type: "p",
-          text: "Practically, you cannot see or smell phthalates. What you *can* control is fragrance (a source of VOCs and a common irritant), how long you wear each pad, and whether it carries the ISI mark.",
-        },
       ],
     },
     {
       id: "bis-is-5405",
-      heading: "BIS IS 5405: the Indian standard every pad must meet",
+      heading: "BIS IS 5405: the Indian standard for sanitary pads",
       blocks: [
         {
           type: "p",
-          text: "IS 5405 is the Bureau of Indian Standards (BIS) specification for disposable sanitary pads. Under a government Quality Control Order, pads sold in India must conform to it and carry the ISI mark under a BIS licence. It sets requirements for size, finish, pH, absorbency under pressure and microbial cleanliness.",
+          text: "IS 5405 is the Bureau of Indian Standards (BIS) specification for disposable sanitary pads. It sets requirements for size, finish, pH, how well the pad holds fluid under pressure, and microbial cleanliness.",
         },
         {
           type: "p",
-          text: "The 2025 revision also covers panty liners, maternity pads and period panties. Its BIS product manual (July 2025) adds a phthalate test on raw materials and once a year on the finished product. It lists no separate VOC test.",
-        },
-        {
-          type: "p",
-          text: "Look for the ISI mark with **IS 5405** and a licence number on the pack; you can check the number on the BIS Care app.",
+          text: "The 2025 revision also covers panty liners, maternity pads and period panties. According to the BIS product manual for it (July 2025), makers must test raw materials for phthalates, and the finished product once a year. The manual lists no separate VOC test.",
         },
       ],
     },
@@ -186,7 +177,7 @@ const article: Article = {
         },
         {
           type: "p",
-          text: "Freshly shaved or waxed skin reacts more easily. And what feels like a rash can sometimes be an infection, so one that does not settle needs a doctor.",
+          text: "What feels like a rash can sometimes be an infection, so one that does not settle needs a doctor.",
         },
       ],
     },
@@ -217,7 +208,7 @@ const article: Article = {
       blocks: [
         {
           type: "p",
-          text: "Choose an unscented, dye-free pad in the right length for your flow, with soft, breathable layers, from a brand that explains its dermatological testing and carries the ISI mark. Then change it every 4 to 6 hours, because the habit matters as much as the pad.",
+          text: "Choose an unscented, dye-free pad in the right length for your flow, with soft, breathable layers, from a brand that explains its dermatological testing. Then change it every 4 to 6 hours, because the habit matters as much as the pad.",
         },
         {
           type: "checklist",
@@ -228,7 +219,7 @@ const article: Article = {
             "**The right size** for your flow, with wings that fold fully under",
             "**Soft, breathable layers** that don't feel plasticky",
             "**Dermatologically tested**, with details stated, not just a badge",
-            "**ISI mark and IS 5405** printed on the pack",
+            "**Clear labelling**: what the pad is made of and who makes it",
           ],
         },
         { type: "h3", text: "How often to change a pad" },
@@ -289,7 +280,7 @@ const article: Article = {
   faqs: [
     {
       q: "Are sanitary pads safe to use every month?",
-      a: "For most people, yes, and pads sold in India must meet the BIS standard IS 5405. Testing has found traces of chemicals such as phthalates in pads, but research has not shown that normal use causes disease. Choosing unscented pads and changing every 4 to 6 hours are the most useful things you can do.",
+      a: "For most people, yes, and pads in India are covered by the BIS standard IS 5405. Testing has found traces of chemicals such as phthalates in pads, but research has not shown that normal use causes disease. Choosing unscented pads and changing every 4 to 6 hours are the most useful things you can do.",
     },
     {
       q: "Do sanitary pads contain harmful chemicals?",
@@ -305,7 +296,7 @@ const article: Article = {
     },
     {
       q: "What is BIS IS 5405?",
-      a: "IS 5405 is the Bureau of Indian Standards specification for disposable sanitary pads. Pads sold in India must conform to it and carry the ISI mark under a BIS licence. It covers size, finish, pH, absorbency under pressure and microbial cleanliness, and its 2025 revision adds a phthalate test. Look for the ISI mark and IS 5405 on the pack.",
+      a: "IS 5405 is the Bureau of Indian Standards specification for disposable sanitary pads. It covers size, finish, pH, how well the pad holds fluid under pressure and microbial cleanliness, and its 2025 revision includes a phthalate test.",
     },
   ],
   sources: [

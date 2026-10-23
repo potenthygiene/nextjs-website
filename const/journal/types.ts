@@ -56,7 +56,7 @@ export type Block =
       items: { value: string; label: string; source?: string }[];
     }
   | { type: "product"; product: JournalProduct; note: string }
-  | { type: "figure"; src: string; alt: string; caption?: string };
+  | { type: "figure"; src: string; alt: string; caption?: string; tall?: boolean };
 
 export type Section = {
   id: string;
