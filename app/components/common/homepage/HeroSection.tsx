@@ -275,6 +275,7 @@ export function Hero() {
                   src={slide.image}
                   alt={slide.alt}
                   fill
+                  loading="eager"
                   className="object-cover"
                   sizes="340px"
                 />
