@@ -234,18 +234,36 @@ export function isGreeting(text: string): boolean {
   );
 }
 
+/** "Yes", "haan", "open it": go ahead with what was just suggested. */
 export function isYes(text: string): boolean {
-  return /^(yes|yes please|yeah|yep|yup|ya|haan|han|haa|ha ji|haan ji|ji|ok|okay|ok please|sure|please|go|chalo|theek hai|thik hai|show me|take me there|open it|yes take me there)$/.test(
+  return /^(yes|yes please|yeah|yep|yup|ya|haan|han|haa|ha ji|haan ji|sure|go|chalo|show me|take me there|open it|open|yes take me there|yes open it|please do)$/.test(
     normalise(text),
   );
 }
 
-const NOT_NAMES =
-  /^(not|so|very|a|an|the|pregnant|having|on|in|feeling|getting|sick|okay|fine|good|late|worried|confused|looking|trying|bleeding|unable|from|here|new|back|ok|hai|thinking|using|buying|scared|married|single|a|student|teen|mom|mother|going|travelling|traveling)$/i;
+/** "Ok", "thanks", "got it": an acknowledgement, not a question. */
+export function isAck(text: string): boolean {
+  return /^(ok|okay|okk+|k|kk|ok thanks|ok thank you|thanks|thank you|thank u|thanku|thx|ty|dhanyavad|dhanyawad|shukriya|got it|cool|nice|great|fine|alright|theek hai|thik hai|accha|acha|achha|hmm+|done|perfect|awesome|super|understood|samajh gaya|samajh gayi)$/.test(
+    normalise(text),
+  );
+}
 
-/** "My name is Priya", "I am Priya", "mera naam Priya hai". */
+/** "No", "nahi", "no thanks". */
+export function isNo(text: string): boolean {
+  return /^(no|nope|nah|no thanks|no thank you|nahi|nhi|na|not now|nothing|nothing else|bas|that's all|thats all|no that's all)$/.test(
+    normalise(text).replace(/'/g, ""),
+  );
+}
+
+const NOT_NAMES =
+  /^(diabetic|pregnant|bleeding|worried|anxious|tired|sick|ill|unwell|hungry|bored|confused|lost|stuck|here|back|ready|done|sorry|single|married|divorced|not|so|very|a|an|the|pregnant|having|on|in|feeling|getting|sick|okay|fine|good|late|worried|confused|looking|trying|bleeding|unable|from|here|new|back|ok|hai|thinking|using|buying|scared|married|single|a|student|teen|mom|mother|going|travelling|traveling)$/i;
+
+/** "My name is Priya", "mera naam Priya hai", "call me Priya", or just "I'm Priya". */
 export function extractName(text: string): string | null {
-  const m = text.match(/\b(?:my name is|my name's|i am|i'm|this is|mera naam|mera nam)\s+([A-Za-z]{2,20})\b/i);
+  const t = text.trim();
+  const clear = t.match(/\b(?:my name is|my name's|mera naam|mera nam|call me|naam hai)\s+([A-Za-z]{2,20})\b/i);
+  const short = t.match(/^(?:hi|hello|hey)?[\s,!.]*(?:i am|i'm|im|main)\s+([A-Za-z]{2,20})[\s!.]*$/i);
+  const m = clear || short;
   if (!m || NOT_NAMES.test(m[1])) return null;
   return m[1][0].toUpperCase() + m[1].slice(1).toLowerCase();
 }
@@ -329,5 +347,14 @@ export function safetyCheck(text: string): SafetyResult {
 
 /** Asking for a price: the chat never quotes one, it points to the product page. */
 export function isPriceQuestion(text: string): boolean {
-  return /\b(price|prices|cost|costs|kitne ka|kitna ka|kitne ki|kitne rupay|kitne rupees|rate|mrp|kimat|keemat|daam|how much)\b/.test(normalise(text));
+  const t = normalise(text);
+  if (/\b(price|prices|pricing|mrp|kimat|keemat|daam|kitne ka|kitne ki|kitna ka|kitni ki|kitne rupay|kitne rupees|kitne rs)\b/.test(t)) return true;
+  if (/\bcost(s|ing)?\b/.test(t) && !/\bcost of living\b/.test(t)) return true;
+  return /\bhow much (is|are|does|do|for|will)\b.{0,30}\b(pad|pads|cup|cups|liner|liners|panty|panties|funnel|bag|bags|cover|covers|kit|kits|box|it|this|that|they|one)\b/.test(t);
 }
+
+/** Load and index the answers ahead of time, so the first reply is instant. */
+export function warmUp() {
+  buildIndex();
+}
+
