@@ -145,8 +145,8 @@ const REASONS = [
     text: "Combine products into kits, like a Yatra Kit for every pilgrim or a welcome kit for every guest.",
   },
   {
-    title: "A real team, fast replies",
-    text: "A person from our Jaipur team handles your order, on email or WhatsApp, Monday to Saturday.",
+    title: "GST invoices",
+    text: "Every business order comes with a proper GST invoice for your accounts.",
   },
   {
     title: "Every order gives back",
@@ -191,6 +191,10 @@ const FAQS = [
     a: "Yes. We can put together kits from our range, for example a Yatra Kit for every traveller or a period-care kit for every student. Tell us what you have in mind.",
   },
   {
+    q: "Do you provide GST invoices?",
+    a: "Yes. Every business order comes with a GST invoice. Share your GSTIN and billing name with your enquiry or when you confirm the order.",
+  },
+  {
     q: "Do you deliver outside Jaipur?",
     a: "Yes, we deliver across India, and every order is tracked. We confirm the delivery timeline with your quote.",
   },
@@ -215,6 +219,7 @@ function EnquiryForm() {
     phone: "",
     orgType: "",
     city: "",
+    gstin: "",
     quantity: "",
     message: "",
   });
@@ -248,6 +253,7 @@ function EnquiryForm() {
       `Organisation: ${form.organisation.trim()}`,
       `Type: ${form.orgType}`,
       form.city.trim() && `City: ${form.city.trim()}`,
+      form.gstin.trim() && `GSTIN: ${form.gstin.trim().toUpperCase()}`,
       interests.length > 0 && `Interested in: ${interests.join(", ")}`,
       form.quantity.trim() && `Approx. quantity: ${form.quantity.trim()}`,
       form.message.trim() && `Message: ${form.message.trim()}`,
@@ -381,6 +387,20 @@ function EnquiryForm() {
 
       <div className="mt-5 grid grid-cols-1 gap-4">
         <div>
+          <label htmlFor="b2b-gstin" className="mb-1 block text-sm font-medium text-gray-700">
+            GSTIN (optional, for your GST invoice)
+          </label>
+          <input
+            id="b2b-gstin"
+            maxLength={15}
+            autoCapitalize="characters"
+            placeholder="15-character GST number"
+            value={form.gstin}
+            onChange={(e) => setForm((f) => ({ ...f, gstin: e.target.value.toUpperCase().replace(/[^0-9A-Z]/g, "") }))}
+            className={inputClass}
+          />
+        </div>
+        <div>
           <label htmlFor="b2b-qty" className="mb-1 block text-sm font-medium text-gray-700">
             Approximate quantity or number of people
           </label>
@@ -457,7 +477,7 @@ export default function BusinessPage() {
               </a>
             </div>
             <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-700">
-              {["Reply within one working day", "Mixed kits for groups", "Tracked delivery across India"].map((t) => (
+              {["Reply within one working day", "GST invoice with every order", "Mixed kits for groups", "Tracked delivery across India"].map((t) => (
                 <li key={t} className="flex items-center gap-1.5">
                   <BadgeCheck className="h-4 w-4 text-[#016271]" /> {t}
                 </li>
