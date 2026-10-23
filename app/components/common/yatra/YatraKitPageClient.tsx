@@ -1461,7 +1461,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
 
 
       {/* Floating Section Quick-Nav Strap (Image 2 Design) */}
-      <div className="no-scrollbar fixed bottom-20 md:bottom-6 left-1/2 z-30 flex max-w-[94vw] -translate-x-1/2 items-center gap-2 overflow-x-auto rounded-full border border-[#E5DAC9] bg-[#FAF7F2]/95 px-3 py-2 shadow-xl backdrop-blur-md">
+      <div className="no-scrollbar fixed bottom-6 left-1/2 z-30 hidden max-w-[94vw] md:flex -translate-x-1/2 items-center gap-2 overflow-x-auto rounded-full border border-[#E5DAC9] bg-[#FAF7F2]/95 px-3 py-2 shadow-xl backdrop-blur-md">
         {[
           { id: "choose-kit", label: "Choose your kit" },
           { id: "every-toilet", label: "Every toilet" },
@@ -1491,7 +1491,7 @@ export default function YatraKitPageClient({ content, mappedProducts }: Props) {
       </div>
 
       {/* Phone Sticky Bottom Bar with Kit Total & Add Button */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#E5DAC9] bg-[#FAF7F2]/98 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.12)] backdrop-blur-md md:hidden">
+      <div className="pdp-sticky-active fixed bottom-[56px] left-0 right-0 z-40 border-t border-[#E5DAC9] bg-[#FAF7F2]/98 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.12)] backdrop-blur-md md:hidden">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate text-[10px] font-bold tracking-wider text-[#168A82] uppercase">

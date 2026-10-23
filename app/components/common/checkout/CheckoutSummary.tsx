@@ -108,6 +108,14 @@ export function CheckoutSummary({
     }
 
     if (!res.success) {
+      // A saved coupon that no longer fits (expired, bag changed): drop it and
+      // price the order without it, so the summary and the payment always match.
+      if (couponCode) {
+        useCartStore.getState().setAppliedCoupon(null);
+        setAppliedCoupon(null);
+        toast.error(`${String(couponCode).replace("+", " + ")} can't be used: ${res.message ?? "it doesn't fit this order"}`);
+        return (await loadPricing("")) && res;
+      }
       toast.error(res.message ?? "Failed to calculate checkout total");
       if (res.rewardsUsed !== undefined) {
         setRewardBalance(Number(res.rewardBalance || 0));

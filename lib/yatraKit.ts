@@ -479,3 +479,14 @@ export function getYatraKitData(item: any): YatraKitCartItem | null {
   return null;
 }
 
+/** Whether a variant name is the size a Yatra Kit slot asks for. */
+export function variantFits(key: string, hint: string, name: string) {
+  const n = String(name || "").toLowerCase();
+  const h = String(hint || "").toLowerCase();
+  // Pads are named L, XL and XL+; the slots use their lengths.
+  if (key.startsWith("pads")) return n.replace(/\s+/g, "") === ({ "240": "l", "280": "xl", "320": "xl+" } as Record<string, string>)[h];
+  // Panties: M-XL and XXL-XXXL.
+  if (key.startsWith("panty")) return h === "xxl" ? n.includes("xxl") : !n.includes("xxl");
+  const esc = h.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(^|[^a-z0-9])${esc}([^a-z0-9]|$)`).test(n);
+}

@@ -30,6 +30,7 @@ import { db } from "@/lib/db";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { requireUserWithRefresh } from "../user/action";
 import { calculateMixBoxPricing, type MixBoxRecipe } from "@/lib/mixYourBox";
+import { MAX_QTY, variantFits, YATRA_ITEM_LOOKUP } from "@/lib/yatraKit";
 import { getProductMaxQuantity } from "@/lib/productQuantityLimits";
 import {
   FREE_SHIPPING_THRESHOLD,
@@ -44,6 +45,95 @@ import {
 import { ensureDefaultCoupons } from "@/helper/coupon/action";
 
 const roundMoney = (amount: number) => Number(amount.toFixed(2));
+
+// Which product a Yatra Kit slot may hold, by words in the product's slug.
+const KIT_SLUG_WORDS: Record<string, string[]> = {
+  seat: ["seat"],
+  pp: ["puke", "bag"],
+  funnel: ["funnel"],
+  pads: ["pad"],
+  liner: ["liner"],
+  cup: ["cup"],
+  panty: ["pant"],
+};
+
+/**
+ * Prices every line from the database. Nothing priced in the browser is
+ * trusted: "Buy now" items and Yatra Kit pieces arrive from the browser, so
+ * their price, SKU, stock and limits are replaced with the database values,
+ * and each kit piece must really be the product its slot says.
+ */
+async function priceFromServer(rawItems: any[]): Promise<{ items: any[]; problem: string | null }> {
+  const kitOf = (it: any) => it?.yatraKit || (it?.mixBoxRecipe && it.mixBoxRecipe.type === "yatraKit" ? it.mixBoxRecipe : null);
+  const ids = new Set<string>();
+  for (const it of rawItems) {
+    if (it?.productVariantId) ids.add(String(it.productVariantId));
+    for (const k of kitOf(it)?.items || []) if (k?.productVariantId) ids.add(String(k.productVariantId));
+  }
+  const rows = ids.size
+    ? await db
+        .select({
+          id: productVariant.id,
+          price: productVariant.price,
+          name: productVariant.name,
+          sku: productVariant.sku,
+          isInStock: productVariant.isInStock,
+          productId: productVariant.productId,
+          slug: product.slug,
+          maxQuantityPurchase: product.maxQuantityPurchase,
+        })
+        .from(productVariant)
+        .leftJoin(product, eq(productVariant.productId, product.id))
+        .where(inArray(productVariant.id, [...ids]))
+    : [];
+  const byId = new Map(rows.map((r) => [String(r.id), r]));
+  let problem: string | null = null;
+
+  const items = rawItems.map((it) => {
+    const kit = kitOf(it);
+    if (kit) {
+      const pieces = (kit.items || []).map((k: any) => {
+        const v = byId.get(String(k?.productVariantId || ""));
+        const family = String(k?.key || "").split(":")[0];
+        const words = KIT_SLUG_WORDS[family] || [];
+        const lookup = (YATRA_ITEM_LOOKUP as Record<string, { variantHint: string }>)[k?.key];
+        const slugOk = !!v && words.some((w) => String(v.slug || "").includes(w));
+        const hintOk = !!v && !!lookup && variantFits(String(k.key), lookup.variantHint, String(v.name || ""));
+        if (!v || !slugOk || !hintOk) {
+          problem = "An item in your Yatra Kit couldn't be checked. Please rebuild the kit and add it again.";
+          return { ...k, price: 0, qty: 0 };
+        }
+        const max = (MAX_QTY as Record<string, number>)[k.key] ?? 10;
+        const qty = Math.max(0, Math.min(Math.floor(Number(k.qty || 0)), max));
+        return { ...k, price: Number(v.price || 0), qty, sku: v.sku, productId: v.productId };
+      });
+      const safeKit = { ...kit, items: pieces };
+      return {
+        ...it,
+        ...(it.yatraKit ? { yatraKit: safeKit } : {}),
+        ...(it.mixBoxRecipe && it.mixBoxRecipe.type === "yatraKit" ? { mixBoxRecipe: safeKit } : {}),
+      };
+    }
+    if (it?.productVariantId) {
+      const v = byId.get(String(it.productVariantId));
+      if (!v) {
+        problem = `${it.title || "An item in your bag"} is no longer available. Please remove it and add it again.`;
+        return { ...it, price: 0 };
+      }
+      return {
+        ...it,
+        productId: v.productId,
+        price: Number(v.price || 0),
+        sku: v.sku,
+        isInStock: v.isInStock,
+        maxQuantityPurchase: v.maxQuantityPurchase,
+      };
+    }
+    problem = `${it?.title || "An item in your bag"} couldn't be checked. Please remove it and add it again.`;
+    return { ...it, price: 0 };
+  });
+  return { items, problem };
+}
 
 async function getUserCartItems(userId: string) {
   const userCart = await db
@@ -338,10 +428,27 @@ export async function calculateCheckoutPricingForUser({
   couponCode?: string | null;
   customItems?: any[];
 }) {
-  const rawItems =
+  const unpricedItems =
     customItems && customItems.length > 0
       ? customItems
       : await getUserCartItems(userId);
+
+  // Every price comes from the database, never from the browser.
+  const { items: rawItems, problem: priceProblem } = await priceFromServer(unpricedItems);
+  if (priceProblem) {
+    return {
+      success: false,
+      message: priceProblem,
+      items: rawItems,
+      subtotal: 0,
+      discount: 0,
+      discountedSubtotal: 0,
+      gst: 0,
+      shipping: 0,
+      final: 0,
+      coupon: null,
+    };
+  }
 
   const items = rawItems.map((item) => {
     const isYatra = Boolean(

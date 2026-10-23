@@ -22,7 +22,7 @@ export const EmailVerificationClient = () => {
 
   React.useEffect(() => {
     if (!email) {
-      router.push("/sign-up");
+      router.push("/signup");
     }
   }, [email, router]);
 
