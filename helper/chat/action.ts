@@ -2,8 +2,8 @@
 
 import { headers } from "next/headers";
 import { db } from "@/lib/db";
-import { contactUs, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { contactUs, order, orderItem, users } from "@/db/schema";
+import { desc, eq, inArray, sql } from "drizzle-orm";
 import { getAuthSession } from "@/helper/auth/session";
 import { allowRequest } from "@/lib/requestGuard";
 
@@ -43,6 +43,41 @@ export async function getChatFirstName(): Promise<string | null> {
     const [row] = await db.select({ name: users.name }).from(users).where(eq(users.email, email)).limit(1);
     const first = row?.name?.trim().split(/\s+/)[0];
     return first ? first[0].toUpperCase() + first.slice(1) : null;
+  } catch {
+    return null;
+  }
+}
+
+/** The signed-in customer's latest orders, for "where is my order" in the chat. */
+export async function getChatOrders(): Promise<
+  { id: string; status: string; date: string; total: number | null; items: number }[] | null
+> {
+  try {
+    const session = await getAuthSession({ refresh: false });
+    const email = session.authenticated ? session.user?.email : null;
+    if (!email) return null;
+    const [u] = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).limit(1);
+    if (!u) return null;
+    const rows = await db
+      .select({ id: order.id, status: order.status, createdAt: order.createdAt, total: order.totalAmount })
+      .from(order)
+      .where(eq(order.userId, u.id))
+      .orderBy(desc(order.createdAt))
+      .limit(3);
+    const counts = rows.length
+      ? await db
+          .select({ orderId: orderItem.orderId, n: sql<number>`count(*)` })
+          .from(orderItem)
+          .where(inArray(orderItem.orderId, rows.map((r) => r.id)))
+          .groupBy(orderItem.orderId)
+      : [];
+    return rows.map((r) => ({
+      id: r.id,
+      status: r.status || "pending",
+      date: r.createdAt ? r.createdAt.toLocaleDateString("en-IN", { day: "numeric", month: "short", timeZone: "Asia/Kolkata" }) : "",
+      total: r.total,
+      items: Number(counts.find((c) => c.orderId === r.id)?.n || 0),
+    }));
   } catch {
     return null;
   }

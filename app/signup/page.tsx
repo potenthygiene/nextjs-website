@@ -201,6 +201,9 @@ const Page = () => {
           <p className="mt-1 mb-3 text-center text-sm text-[#016271]">
             Enter your details below
           </p>
+          <p className="mb-3 rounded-lg bg-[#F3FAFB] px-3 py-2 text-center text-xs text-[#016271]">
+            New customers get <strong>₹50 credit</strong> plus <strong className="font-mono">WELCOME15</strong>: 15% off the first order.
+          </p>
 
           <form onSubmit={handleSubmit} className="space-y-2">
             <div>

@@ -770,7 +770,7 @@ export const ANSWERS: ChatAnswer[] = [
     ],
     keywords: ["coupon code", "offer", "discount", "promo", "first order", "koi offer"],
     answer:
-      "I can't share codes here, but any current offer is shown on the site. You can also save through a subscription, through Potent Rewards credits on delivered orders, and through a friend's referral link on your first order. Delivery is free on orders of ₹399 and above.",
+      "Yes. Today's coupon codes show in your bag under **Available offers**, and I can list them for you: tap **See all offers**. New customers get **WELCOME15** on their first order, and buying 2 or more different products unlocks a combo coupon. One coupon per order, and coupons don't combine with Rewards credits.",
     links: [{ label: "Join Potent Rewards", href: "/signup" }],
     related: ["ord-rewards-what", "ord-referral-how", "ord-sub-saving"],
   },

@@ -6,11 +6,13 @@ import {
   cartItem,
   coupon,
   couponTransaction,
+  order,
   product,
   productVariant,
 } from "@/db/schema";
+import { BLOCKED_CODES, couponRules, isCouponLive } from "@/const/coupons";
 import { db } from "@/lib/db";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import { requireUserWithRefresh } from "../user/action";
 import { calculateMixBoxPricing, type MixBoxRecipe } from "@/lib/mixYourBox";
 import { getProductMaxQuantity } from "@/lib/productQuantityLimits";
@@ -85,17 +87,57 @@ async function getUserCartItems(userId: string) {
   });
 }
 
+// How many different products are in the bag (sizes of one product count once).
+function differentProducts(items: any[]) {
+  return new Set(items.map((i) => i.productId || i.productSlug || i.slug || i.title).filter(Boolean)).size;
+}
+
 async function getValidCoupon({
   code,
   userId,
   subtotal,
+  items = [],
 }: {
   code?: string | null;
   userId: string;
   subtotal: number;
+  items?: any[];
 }) {
   const normalizedCode = code?.trim().toUpperCase();
   if (!normalizedCode) return { couponInfo: null, error: null };
+
+  if (BLOCKED_CODES.includes(normalizedCode)) {
+    return { couponInfo: null, error: "Invalid coupon code" };
+  }
+
+  // Extra rules from const/coupons.ts: dates, bag size, first order only.
+  const rules = couponRules(normalizedCode);
+  if (rules) {
+    if (!isCouponLive(rules)) {
+      return { couponInfo: null, error: "This coupon isn't active right now" };
+    }
+    if (rules.minDifferentProducts && differentProducts(items) < rules.minDifferentProducts) {
+      return {
+        couponInfo: null,
+        error: `Add ${rules.minDifferentProducts} or more different products to use ${normalizedCode}`,
+      };
+    }
+    if (rules.firstOrderOnly && userId) {
+      const previous = await db
+        .select({ id: order.id })
+        .from(order)
+        .where(
+          and(
+            eq(order.userId, userId),
+            inArray(order.status, ["paid", "processing", "shipped", "delivered", "completed"]),
+          ),
+        )
+        .limit(1);
+      if (previous.length) {
+        return { couponInfo: null, error: `${normalizedCode} is for your first order only` };
+      }
+    }
+  }
 
   await ensureDefaultCoupons();
 
@@ -294,6 +336,7 @@ export async function calculateCheckoutPricingForUser({
     code: couponCode,
     userId,
     subtotal,
+    items,
   });
 
   if (couponError && couponCode) {
@@ -494,6 +537,7 @@ export async function validateCartCoupon({
       code: normalizedCode,
       userId,
       subtotal,
+      items,
     });
 
     if (error || !couponInfo) {

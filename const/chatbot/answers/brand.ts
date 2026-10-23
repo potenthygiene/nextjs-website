@@ -470,7 +470,7 @@ export const ANSWERS: ChatAnswer[] = [
     question: "Can I ask in Hindi or Hinglish?",
     phrasings: ["hindi mein batao", "hindi me baat karo", "can you speak hindi", "hindi please", "do you understand hinglish", "english nahi aati", "tamil?", "regional language", "apni bhasha mein", "hindi me jawab do", "speak hindi"],
     keywords: ["hindi", "hinglish", "language", "bhasha", "tamil", "marathi", "bengali", "english"],
-    answer: "Yes, you can type in English, Hinglish or Hindi in Roman letters, and I'll do my best to find the right answer. My answers are in English. If you'd rather talk it through with a person, WhatsApp us at **+91 63758 81514**, Monday to Saturday, 10 am to 7 pm.",
+    answer: "Yes. Type in English, Hinglish or Hindi, and tap **हिंदी** at the top of the chat to get my answers in Hindi. If you'd rather talk it through with a person, WhatsApp us at **+91 63758 81514**, Monday to Saturday, 10 am to 7 pm.",
     related: ["br-help", "br-talk-to-human"],
   },
   {

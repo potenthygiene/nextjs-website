@@ -243,6 +243,14 @@ export const EmailVerificationClient = () => {
                   Your email verification is successfully completed.
                 </p>
 
+                {/* Welcome offer for new customers (const/coupons.ts) */}
+                <div className="mt-4 rounded-xl border border-dashed border-[#9FD3D6] bg-[#F3FAFB] px-3 py-2.5 text-left">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[#016271]">Your welcome gift</p>
+                  <p className="mt-0.5 text-sm text-gray-700">
+                    ₹50 credit in your Rewards, plus <strong className="font-mono">WELCOME15</strong> for 15% off your first order of ₹399 or more.
+                  </p>
+                </div>
+
                 <Link href={searchParams.get("redirect") ? `/login?redirect=${encodeURIComponent(searchParams.get("redirect")!)}` : "/login"}>
                   <button className="mt-6 w-full rounded-full bg-[#016271] py-2 font-medium text-white">
                     Login

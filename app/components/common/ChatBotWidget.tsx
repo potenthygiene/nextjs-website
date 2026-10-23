@@ -40,11 +40,29 @@ import { FLOWS, isFlowResult } from "@/const/chatbot/flows";
 import { MENUS, PRODUCT_WORDS, TOPIC_MENU } from "@/const/chatbot/menus";
 import { FINDERS } from "@/const/chatbot/finders";
 import { PRODUCT_META, comboFor, productsFor, type Combo } from "@/const/chatbot/products";
-import { getChatFirstName, logChatQuestion } from "@/helper/chat/action";
-import { type LiveOffers, type LiveProduct, OffersCard, PriceDetails, type ProductPick, ProductCards, ResultCard } from "./chat/ChatCards";
+import { getChatFirstName, getChatOrders, logChatQuestion } from "@/helper/chat/action";
+import { addToCart as addToCartAction } from "@/store/cartActions";
+import { useCartStore } from "@/store/cartStore";
+import { getImageUrl } from "@/lib/imageUrl";
+import {
+  CouponList,
+  fill,
+  type LiveOffers,
+  type LiveProduct,
+  type LiveVariant,
+  OffersCard,
+  PriceDetails,
+  type ProductPick,
+  ProductCards,
+  ResultCard,
+  type Translate,
+} from "./chat/ChatCards";
 
 // Potent Saathi: answers only from Potent's approved answers (const/chatbot). No AI.
 type Engine = typeof import("@/lib/chat/engine");
+// Hindi, loaded only when someone switches the chat to हिंदी (or types in Hindi).
+type Hindi = typeof import("@/const/chatbot/hi");
+type Lang = "en" | "hi";
 
 type Action =
   | { type: "ask"; q: string }
@@ -82,8 +100,13 @@ type ChatMessage = {
   offers?: boolean;
   price?: string;
   result?: SymptomOutcome;
+  /** Show today's coupons; highlight one. */
+  coupons?: { highlight?: string };
+  orders?: { id: string; status: string; date: string; total: number | null; items: number }[];
   feedback?: { q: string; answerId: string; given?: "up" | "down" };
   tone?: "safety";
+  /** Written in Hindi, so its cards are shown in Hindi too. */
+  hi?: boolean;
 };
 
 type Profile = { name?: string; age?: string; who?: string; sex?: string };
@@ -168,13 +191,31 @@ const CHOOSE_WORDS = /\b(recommend|suggest|which product|best product|what shoul
 const TRAVEL_WORDS = /\b(travel|trip|train|toilet|yatra|trek|journey|safar|flight|bus|road)\b/;
 const TRIP_PLAN_WORDS = /\b(plan my trip|plan a trip|trip planner|trip hygiene|what to pack|packing list|kya pack karu|kya le jaun)\b/;
 
+// The same, for Hindi typing (after normalise: no nukta, chandrabindu as anusvara).
+const OFFER_HI = /(ऑफर|आफर|कूपन|डिस्काउंट|छूट|डील|सेल|कैशबैक|फ्री डिलीवरी|मुफ्त डिलीवरी|डिलीवरी चार्ज|रिवॉर्ड|क्रेडिट)/;
+const CHOOSE_HI = /(कौन सा लूं|कौनसा लूं|कौन सा लें|क्या लूं|क्या खरीदूं|सुझाव दो|सलाह दो|कौन सा प्रोडक्ट|सही प्रोडक्ट|चुनने में मदद)/;
+const TRAVEL_HI = /(सफर|यात्रा|ट्रेन|टॉयलेट|ट्रिप|ट्रेक|बस|फ्लाइट)/;
+const TRIP_PLAN_HI = /(क्या पैक|पैकिंग|सफर की तैयारी|यात्रा की तैयारी|ट्रिप की तैयारी)/;
+const SYMPTOM_HI = /(खून|ब्लीडिंग|दर्द|खुजली|जलन|बदबू|गांठ|थक्के|बुखार|रैश|लेट|स्पॉटिंग|सूजन|मिस)/;
+const PRODUCT_WORDS_HI: Record<string, string> = {
+  "पैड": "pads", "पैड्स": "pads", "सैनिटरी पैड": "pads", "लाइनर": "liners", "पैंटी लाइनर": "liners",
+  "पीरियड पैंटी": "panty", "पैंटी": "panty", "कप": "cup", "मेंस्ट्रुअल कप": "cup", "पीरियड कप": "cup",
+  "टीन किट": "teenkit", "फनल": "funnel", "पी फनल": "funnel", "सीट कवर": "seatcovers", "यात्रा किट": "yatra",
+};
+const WORDS: Record<string, string> = { ...PRODUCT_WORDS, ...PRODUCT_WORDS_HI };
+const DEVANAGARI = /[\u0900-\u097f]/;
+
 const NAME_KEY = "potent-chat-name";
+const LANG_KEY = "potent-chat-lang";
 const hiddenPathPrefixes = ["/admin", "/dashboard", "/login", "/signup", "/reset-password", "/email-verification"];
 
 function timeGreeting() {
   const h = new Date().getHours();
   return h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
 }
+
+/** Name pieces for messages: {n} ", Priya", {N} "Priya, ", {sp} " Priya". */
+const nv = (name?: string) => ({ n: name ? `, ${name}` : "", N: name ? `${name}, ` : "", sp: name ? ` ${name}` : "" });
 
 let counter = 0;
 const newId = () => `m${Date.now()}-${counter++}`;
@@ -249,7 +290,14 @@ export function ChatBotWidget() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const lastRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [lang, setLangState] = useState<Lang>("en");
+  const [langBusy, setLangBusy] = useState(false);
+  const langRef = useRef<Lang>("en");
+  const hiRef = useRef<Hindi | null>(null);
+  const hiPromise = useRef<Promise<Hindi> | null>(null);
+  const restoredLang = useRef(false);
   const name = profile.name;
+  const bagItems = useCartStore((st) => st.items);
 
   const isHidden = hiddenPathPrefixes.some((prefix) => pathname?.startsWith(prefix));
   const pageSlug = pathname?.startsWith("/product-detail/") ? pathname.split("/")[2] : null;
@@ -280,6 +328,46 @@ export function ChatBotWidget() {
     }
     return enginePromise.current;
   };
+
+  const loadHindi = () => {
+    if (!hiPromise.current) {
+      hiPromise.current = Promise.all([import("@/const/chatbot/hi"), loadEngine()])
+        .then(([h, engine]) => {
+          engine.addHindi(h.ANSWERS_HI, h.TRIGGERS_HI);
+          hiRef.current = h;
+          return h;
+        })
+        .catch((e) => {
+          hiPromise.current = null;
+          throw e;
+        });
+    }
+    return hiPromise.current;
+  };
+
+  const setLang = (l: Lang) => {
+    langRef.current = l;
+    setLangState(l);
+    try {
+      localStorage.setItem(LANG_KEY, l);
+    } catch {}
+  };
+
+  useEffect(() => {
+    if (!isOpen || restoredLang.current) return;
+    restoredLang.current = true;
+    try {
+      if (localStorage.getItem(LANG_KEY) !== "hi") return;
+    } catch {
+      return;
+    }
+    setLangBusy(true);
+    loadHindi()
+      .then(() => setLang("hi"))
+      .catch(() => {})
+      .finally(() => setLangBusy(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   // Get ready quietly once the page is idle, so the chat answers instantly.
   useEffect(() => {
@@ -382,15 +470,39 @@ export function ChatBotWidget() {
     setIsOpen(true);
   };
 
-  const reply = (msg: Reply, delay = 320) =>
-    new Promise<void>((resolve) => {
+  // Hindi when chosen and loaded; English is always the fallback.
+  const isHi = () => langRef.current === "hi" && !!hiRef.current;
+  const H = () => (isHi() ? hiRef.current : null);
+  const tOf = (hi?: boolean): Translate => (str, v) => fill((hi && hiRef.current?.STRINGS_HI[str]) || str, v);
+  const t: Translate = (str, v) => tOf(isHi())(str, v);
+  const aq = (a: ChatAnswer) => H()?.ANSWERS_HI[a.id]?.question || a.question;
+  const aa = (a: ChatAnswer) => H()?.ANSWERS_HI[a.id]?.answer || a.answer;
+  const menuTitle = (id: string) => H()?.MENUS_HI[id]?.title || MENUS[id]?.title;
+  const humanLinks = (q?: string) => HUMAN_LINKS(q).map((l) => ({ ...l, label: t(l.label) }));
+
+  const reply = (msg: Reply, delay = 320) => {
+    const hi = isHi();
+    const tc = (c: Choice) => ({ ...c, label: t(c.label) });
+    const shown: Reply = hi
+      ? {
+          ...msg,
+          chips: msg.chips?.map(tc),
+          list: msg.list?.map(tc),
+          links: msg.links?.map((l) => ({ ...l, label: t(l.label) })),
+          multi: msg.multi?.map((o) => ({ ...o, label: t(o.label) })),
+          listTitle: msg.listTitle && t(msg.listTitle),
+          productsTitle: msg.productsTitle && t(msg.productsTitle),
+        }
+      : msg;
+    return new Promise<void>((resolve) => {
       setTyping(true);
       setTimeout(() => {
         setTyping(false);
-        setMessages((m) => [...m, { id: newId(), role: "bot", ...msg }]);
+        setMessages((m) => [...m, { id: newId(), role: "bot", ...shown, hi }]);
         resolve();
       }, delay);
     });
+  };
 
   const say = (text: string) => setMessages((m) => [...m, { id: newId(), role: "user", text }]);
 
@@ -430,17 +542,18 @@ export function ChatBotWidget() {
     if (["periods", "health", "teens"].includes(id)) lead.push({ label: "Check my symptoms", action: { type: "symptoms" } });
     if (["ovy", "pads", "liners", "panty", "teenkit", "cup"].includes(id)) lead.push({ label: "Help me choose the right product", action: { type: "finder", id: "ovy" } });
     if (["looway", "travel", "yatra", "funnel", "bags", "seatcovers"].includes(id)) lead.push({ label: "Plan my trip hygiene", action: { type: "finder", id: "looway" } });
-    if (menu.flow) lead.push({ label: menu.flow.label, action: { type: "flow", node: menu.flow.node } });
+    const mh = H()?.MENUS_HI[id];
+    if (menu.flow) lead.push({ label: mh?.flowLabel || menu.flow.label, action: { type: "flow", node: menu.flow.node } });
     const questions = menu.questions
       .map((q) => engine.answerById(q))
       .filter((a): a is ChatAnswer => !!a)
-      .map((a) => ({ label: a.question, action: { type: "answer", id: a.id } as Action }));
-    const intro = name && menu.intro.startsWith("Here") ? menu.intro.replace(/\. /, `, ${name}. `) : menu.intro;
+      .map((a) => ({ label: aq(a), action: { type: "answer", id: a.id } as Action }));
+    const intro = mh?.intro || (name && menu.intro.startsWith("Here") ? menu.intro.replace(/\. /, `, ${name}. `) : menu.intro);
     const slug = menu.page?.href.startsWith("/product-detail/") ? menu.page.href.split("/")[2] : null;
     return {
       text: intro,
       list: [...lead, ...questions, ...(slug ? [{ label: "What does it cost?", action: { type: "price", slug } as Action }] : [])],
-      links: menu.page ? [menu.page] : undefined,
+      links: menu.page ? [{ ...menu.page, label: mh?.pageLabel || menu.page.label }] : undefined,
       chips: [OWN, BACK],
     };
   };
@@ -454,40 +567,67 @@ export function ChatBotWidget() {
     const picks = productsFor(answer);
     const shownLinks = (answer.links || []).filter((l) => !picks.some((k) => PRODUCT_META[k].href === l.href)).slice(0, 2);
     return {
-      text: answer.answer,
+      text: aa(answer),
       links: shownLinks,
       products: picks.map((product) => ({ product })),
       productsTitle: picks.length ? "Products that can help" : undefined,
       combo: comboFor(picks),
       listTitle: more.length ? "Related questions" : undefined,
-      list: more.map((a) => ({ label: a.question, action: { type: "answer", id: a.id } as Action })),
-      chips: [...(menu ? [{ label: `More on ${menu.title.toLowerCase()}`, action: { type: "menu", id: menu.id } as Action }] : []), BACK],
+      list: more.map((a) => ({ label: aq(a), action: { type: "answer", id: a.id } as Action })),
+      chips: [
+        ...(menu ? [{ label: t("More on {topic}", { topic: isHi() ? menuTitle(menu.id) : menu.title.toLowerCase() }), action: { type: "menu", id: menu.id } as Action }] : []),
+        BACK,
+      ],
+      // Coupon questions show today's coupons.
+      coupons: answer.id.startsWith("ord-coupon") ? {} : undefined,
       feedback: { q, answerId: answer.id },
     };
   };
 
   const topicsMessage = (text: string): Reply => ({ text, list: ALL_TOPICS, chips: [OWN, HUMAN] });
 
-  const offersMessage = (): Reply => ({
-    text: `Here's how to save at Potent${name ? `, ${name}` : ""}. Coupon codes, when we run them, go in your bag at checkout.`,
-    offers: true,
-    chips: [
-      { label: "How do subscriptions work?", action: { type: "answer", id: "ord-sub-how" } },
-      { label: "Help me choose", action: { type: "finder", id: "ovy" } },
-      BACK,
-    ],
-  });
+  const offersMessage = (): Reply => {
+    const different = new Set(bagItems.map((i) => i.productId)).size;
+    const coupons = live().offers?.coupons || [];
+    const combo = [...coupons].filter((c) => c.minDifferentProducts).sort((a, b) => b.minDifferentProducts - a.minDifferentProducts);
+    const unlocked = combo.find((c) => different >= c.minDifferentProducts);
+    const next = [...combo].reverse().find((c) => different < c.minDifferentProducts);
+    const nudge = !bagItems.length
+      ? ""
+      : unlocked
+        ? t("\n\nYour bag has {d} different products, so **{code}** works for you right now.", { d: different, code: unlocked.code })
+        : next
+          ? t(
+              next.minDifferentProducts - different > 1
+                ? "\n\nAdd {k} more different products to your bag to unlock **{code}**."
+                : "\n\nAdd {k} more different product to your bag to unlock **{code}**.",
+              { k: next.minDifferentProducts - different, code: next.code },
+            )
+          : "";
+    return {
+      text: t("Here's how to save at Potent{n}.", nv(name)) + nudge,
+      coupons: { highlight: unlocked?.code },
+      offers: true,
+      chips: [
+        { label: "How do subscriptions work?", action: { type: "answer", id: "ord-sub-how" } },
+        { label: "Help me choose", action: { type: "finder", id: "ovy" } },
+        BACK,
+      ],
+    };
+  };
 
   const priceMessage = (slug: string): Reply => {
     const info = live().products[slug];
     const key = keyForSlug(slug);
-    const nameOf = key ? PRODUCT_META[key].name : "this product";
+    const nameOf = key ? PRODUCT_META[key].name : t("this product");
     const o = live().offers;
     const subs = info?.subscription ? Math.max(info.subscription.monthly, info.subscription.everyTwoMonths) : 0;
     return {
       text: info?.variants.length
-        ? `Today's prices for **${nameOf}**, GST included.${subs ? ` Subscribe and save up to ${subs}%.` : ""}${o ? ` Delivery is free from ₹${o.freeDeliveryFrom}; below that it's ₹${o.deliveryFee}.` : ""}`
-        : `The latest price for ${nameOf} is on its page, GST included.`,
+        ? t("Today's prices for **{name}**, GST included.", { name: nameOf }) +
+          (subs ? t(" Subscribe and save up to {s}%.", { s: subs }) : "") +
+          (o ? t(" Delivery is free from ₹{f}; below that it's ₹{fee}.", { f: o.freeDeliveryFrom, fee: o.deliveryFee }) : "")
+        : t("The latest price for {name} is on its page, GST included.", { name: nameOf }),
       price: info?.variants.length ? slug : undefined,
       products: key ? [{ product: key }] : undefined,
       combo: key ? comboFor([key]) : undefined,
@@ -496,18 +636,60 @@ export function ChatBotWidget() {
   };
 
   const priceChooser = (): Reply => ({
-    text: "Which product would you like the price for?",
+    text: t("Which product would you like the price for?"),
     list: (Object.keys(PRODUCT_META) as ProductKey[])
       .filter((k) => PRODUCT_META[k].href.startsWith("/product-detail/"))
       .map((k) => ({ label: PRODUCT_META[k].name, action: { type: "price", slug: PRODUCT_META[k].href.split("/")[2] } as Action })),
     chips: [{ label: "See all offers", action: { type: "offers" } }, BACK],
   });
 
+  const addFromChat = async (slug: string, v: LiveVariant) => {
+    const info = live().products[slug];
+    if (!info || typing) return;
+    const title = `${info.name || "Potent product"}${v.name ? ` (${v.name})` : ""}`;
+    say(t("Add {title} to my bag", { title }));
+    const ok = await addToCartAction({
+      productId: info.id,
+      productVariantId: v.id,
+      sku: v.sku,
+      slug: info.dbSlug,
+      title,
+      variantName: v.name,
+      price: v.price,
+      image: getImageUrl(v.image || info.image || "/placeholder.jpg"),
+      quantity: 1,
+    } as Parameters<typeof addToCartAction>[0]);
+    const different = new Set([...useCartStore.getState().items.map((i) => i.productId)]).size;
+    const coupons = live().offers?.coupons || [];
+    const combo = coupons.filter((c) => c.minDifferentProducts && different >= c.minDifferentProducts).sort((a, b) => b.minDifferentProducts - a.minDifferentProducts)[0];
+    const o = live().offers;
+    return reply({
+      text:
+        ok === false
+          ? t("I couldn't add that just now. Please try from the product page.")
+          : t("Added **{title}** to your bag.", { title }) +
+            (combo ? t(" You now have {d} different products, so use **{code}** at checkout.", { d: different, code: combo.code }) : "") +
+            (o ? t(" Delivery is free from ₹{f}.", { f: o.freeDeliveryFrom }) : ""),
+      links: [{ label: "Go to my bag", href: "/cart" }],
+      chips: [{ label: "See all offers", action: { type: "offers" } }, { label: "Help me choose", action: { type: "finder", id: "ovy" } }, BACK],
+    });
+  };
+
+  // Signed-in customers see their latest orders when they ask about one.
+  const ORDER_ANSWERS = ["ord-track-order", "ord-delivery-delayed", "ord-marked-delivered", "ord-cancel-order", "ord-unpaid-order"];
+  const withOrders = async (msg: Reply, answerId: string): Promise<Reply> => {
+    if (!ORDER_ANSWERS.includes(answerId)) return msg;
+    const orders = await getChatOrders().catch(() => null);
+    if (!orders) return { ...msg, text: msg.text + t("\n\nSign in and I'll show your latest orders here."), links: [{ label: "Sign in", href: "/login" }, ...(msg.links || [])] };
+    if (!orders.length) return { ...msg, text: msg.text + t("\n\nI don't see any orders on your account yet.") };
+    return { ...msg, orders };
+  };
+
   // ---------- Symptom check-ins ----------
 
   const symptomMenu = (): Reply => ({
-    text: `What's bothering you${name ? `, ${name}` : ""}? I'll ask a few quick questions, then explain what it's commonly linked to, what helps and when to see a doctor.`,
-    list: engineRef.current!.SYMPTOM_FLOWS.map((f) => ({ label: f.short, action: { type: "symptom", id: f.id } as Action })),
+    text: t("What's bothering you{n}? I'll ask a few quick questions, then explain what it's commonly linked to, what helps and when to see a doctor.", nv(name)),
+    list: engineRef.current!.SYMPTOM_FLOWS.map((f) => ({ label: H()?.SYMPTOMS_HI[f.id]?.short || f.short, action: { type: "symptom", id: f.id } as Action })),
     chips: [OWN, BACK],
   });
 
@@ -519,23 +701,23 @@ export function ChatBotWidget() {
       askedNameRef.current = true;
       taskRef.current = { kind: "profile", step: "name", flowId };
       return {
-        text: "Before I guide you, a few quick details so my answer fits you. **They stay on this device for this chat only and are never saved or shared.**\n\nWhat should I call you? Type your first name, or skip.",
+        text: t("Before I guide you, a few quick details so my answer fits you. **They stay on this device for this chat only and are never saved or shared.**\n\nWhat should I call you? Type your first name, or skip."),
         chips: [{ label: "Skip", action: { type: "skip" } }],
       };
     }
     if (flow.needs.who && !p.who) {
       taskRef.current = { kind: "profile", step: "who", flowId };
-      return { text: "Who is this for?", list: WHOS.map((o) => ({ label: o.label, action: { type: "opt", value: o.id } as Action })) };
+      return { text: t("Who is this for?"), list: WHOS.map((o) => ({ label: o.label, action: { type: "opt", value: o.id } as Action })) };
     }
     if (!p.age) {
       taskRef.current = { kind: "profile", step: "age", flowId };
-      const text = p.who === "daughter" ? "How old is she?" : p.who === "someone" ? "How old are they?" : `How old are you${p.name ? `, ${p.name}` : ""}?`;
+      const text = p.who === "daughter" ? t("How old is she?") : p.who === "someone" ? t("How old are they?") : t("How old are you{n}?", nv(p.name));
       return { text, list: AGES.map((o) => ({ label: o.label, action: { type: "opt", value: o.id } as Action })) };
     }
     if (flow.needs.sex && !p.sex) {
       taskRef.current = { kind: "profile", step: "sex", flowId };
       return {
-        text: p.who && p.who !== "me" ? "Are they female or male?" : "Are you female or male?",
+        text: p.who && p.who !== "me" ? t("Are they female or male?") : t("Are you female or male?"),
         list: SEXES.map((o) => ({ label: o.label, action: { type: "opt", value: o.id } as Action })),
       };
     }
@@ -545,14 +727,18 @@ export function ChatBotWidget() {
   const askSymptomQuestion = (flowId: string, qi: number, answers: Record<string, string[]>) => {
     const flow = flowById(flowId);
     const q = flow.questions[qi];
+    const fh = H()?.SYMPTOMS_HI[flowId];
+    const qh = fh?.questions[q.id];
+    const label = (o: { id: string; label: string }) => qh?.options[o.id] || o.label;
     taskRef.current = { kind: "symptom", flowId, qi, answers };
     setMultiSel([]);
-    const intro = qi === 0 ? `Thanks${draftRef.current.name ? `, ${draftRef.current.name}` : ""}. Let's look at ${flow.title.toLowerCase()}.\n\n` : "";
+    const intro = qi === 0 ? t("Thanks{n}. Let's look at {title}.\n\n", { ...nv(draftRef.current.name), title: fh?.title || flow.title.toLowerCase() }) : "";
     const stop: Choice = { label: "Stop the check-in", action: { type: "topics" } };
+    const text = `${intro}${qh?.text || q.text}`;
     return reply(
       q.multi
-        ? { text: `${intro}${q.text}`, multi: q.options.map((o) => ({ id: o.id, label: o.label })), chips: [stop] }
-        : { text: `${intro}${q.text}`, list: q.options.map((o) => ({ label: o.label, action: { type: "opt", value: o.id } as Action })), chips: [stop] },
+        ? { text, multi: q.options.map((o) => ({ id: o.id, label: label(o) })), chips: [stop] }
+        : { text, list: q.options.map((o) => ({ label: label(o), action: { type: "opt", value: o.id } as Action })), chips: [stop] },
     );
   };
 
@@ -568,17 +754,29 @@ export function ChatBotWidget() {
 
   const finishSymptom = (flowId: string, answers: Record<string, string[]>) => {
     const engine = engineRef.current!;
-    const outcome = engine.pickOutcome(flowById(flowId), answers, draftRef.current);
+    const picked = engine.pickOutcome(flowById(flowId), answers, draftRef.current);
+    const oh = H()?.SYMPTOMS_HI[flowId]?.outcomes[picked.id];
+    const outcome: SymptomOutcome = oh
+      ? {
+          ...picked,
+          title: oh.title,
+          summary: oh.summary,
+          oftenLinkedTo: oh.oftenLinkedTo,
+          whatHelps: oh.whatHelps,
+          seeDoctor: oh.seeDoctor,
+          readMore: picked.readMore?.map((l, i) => ({ ...l, label: oh.readMore?.[i] || l.label })),
+        }
+      : picked;
     taskRef.current = null;
     setProfile((p) => ({ ...p, ...draftRef.current }));
     const urgent = outcome.urgency === "emergency";
     return reply(
       {
-        text: `Here's what I can tell you${draftRef.current.name ? `, ${draftRef.current.name}` : ""}:`,
+        text: t("Here's what I can tell you{n}:", nv(draftRef.current.name)),
         result: outcome,
         products: urgent ? undefined : (outcome.products || []).slice(0, 2).map((product) => ({ product })),
         productsTitle: !urgent && outcome.products?.length ? "Products that may make it easier" : undefined,
-        links: [...(outcome.readMore || []).slice(0, 1), ...(outcome.urgency === "selfcare" ? [] : [HUMAN_LINKS()[0]])],
+        links: [...(outcome.readMore || []).slice(0, 1), ...(outcome.urgency === "selfcare" ? [] : [humanLinks()[0]])],
         chips: [{ label: "Check another symptom", action: { type: "symptoms" } }, BACK, HUMAN],
       },
       450,
@@ -593,13 +791,16 @@ export function ChatBotWidget() {
     while (i < finder.steps.length && finder.skip?.(finder.steps[i].id, answers)) i++;
     if (i >= finder.steps.length) return finishFinder(id, answers);
     const step = finder.steps[i];
+    const sh = H()?.FINDERS_HI[id]?.steps[step.id];
+    const label = (o: { id: string; label: string }) => sh?.options[o.id] || o.label;
     taskRef.current = { kind: "finder", id, si: i, answers };
     setMultiSel([]);
-    const intro = si === 0 ? `Let's find your best match${name ? `, ${name}` : ""}. ` : "";
+    const intro = si === 0 ? t("Let's find your best match{n}. ", nv(name)) : "";
+    const text = `${intro}${sh?.text || step.text}`;
     return reply(
       step.multi
-        ? { text: `${intro}${step.text}`, multi: step.options, chips: [BACK] }
-        : { text: `${intro}${step.text}`, list: step.options.map((o) => ({ label: o.label, action: { type: "opt", value: o.id } as Action })), chips: [BACK] },
+        ? { text, multi: step.options.map((o) => ({ id: o.id, label: label(o) })), chips: [BACK] }
+        : { text, list: step.options.map((o) => ({ label: label(o), action: { type: "opt", value: o.id } as Action })), chips: [BACK] },
     );
   };
 
@@ -608,10 +809,20 @@ export function ChatBotWidget() {
     taskRef.current = null;
     const o = live().offers;
     const keys = res.picks.map((p) => p.product);
+    // Finder results in Hindi: whole sentences, with the size filled in after.
+    const ft = (str: string) => H()?.FINDER_TEXT_HI[str] || str;
+    const why = (p: ProductPick) => {
+      if (!p.why || !H()) return p.why;
+      if (H()!.FINDER_TEXT_HI[p.why]) return ft(p.why);
+      return p.size ? ft(p.why.replace(p.size, "{size}")).replace("{size}", ft(p.size)) : p.why;
+    };
+    const picks = res.picks.map((p) => ({ ...p, why: why(p), size: p.size && ft(p.size) }));
     return reply(
       {
-        text: `**${res.title}**\n${res.intro}${res.tip ? `\n\n${res.tip}` : ""}${o ? `\n\nDelivery is free from ₹${o.freeDeliveryFrom}; below that it's ₹${o.deliveryFee}.` : ""}`,
-        products: res.picks,
+        text:
+          `**${ft(res.title)}**\n${ft(res.intro)}${res.tip ? `\n\n${ft(res.tip)}` : ""}` +
+          (o ? t("\n\nDelivery is free from ₹{f}; below that it's ₹{fee}.", { f: o.freeDeliveryFrom, fee: o.deliveryFee }) : ""),
+        products: picks,
         combo: keys.length === 1 ? comboFor(keys) : undefined,
         chips: [{ label: "Start again", action: { type: "finder", id } }, { label: "See all offers", action: { type: "offers" } }, BACK],
       },
@@ -623,29 +834,33 @@ export function ChatBotWidget() {
 
   async function respondTo(question: string) {
     const engine = engineRef.current || (await loadEngine());
+    // Typing in Hindi switches the chat to Hindi.
+    if (DEVANAGARI.test(question) && langRef.current !== "hi") {
+      try {
+        await loadHindi();
+        setLang("hi");
+      } catch {}
+    }
 
     const safety = engine.safetyCheck(question);
     if (safety) {
       taskRef.current = null;
-      const text =
+      const text = t(
         safety.kind === "crisis"
           ? "I'm really sorry you're feeling this way. You deserve support right now. Please call **Tele MANAS on 14416** (free, 24 hours, in Indian languages), or **112** if you are in danger. If you can, tell someone you trust who is near you."
           : safety.kind === "abuse"
             ? "I'm so sorry this happened. It is not your fault. If you are in danger, call **112**. You can call the **Women Helpline on 181**, and if you are under 18, **Childline on 1098**. Both are free and confidential."
-            : "This sounds like it needs a doctor now. Please call **112** or go to the nearest emergency department straight away.";
-      const links =
-        safety.kind === "crisis"
-          ? [{ label: "Call 14416", href: "tel:14416" }, { label: "Call 112", href: "tel:112" }]
-          : safety.kind === "abuse"
-            ? [{ label: "Call 181", href: "tel:181" }, { label: "Call 112", href: "tel:112" }]
-            : [{ label: "Call 112", href: "tel:112" }];
+            : "This sounds like it needs a doctor now. Please call **112** or go to the nearest emergency department straight away.",
+      );
+      const call = (n: string) => ({ label: t("Call {n}", { n }), href: `tel:${n}` });
+      const links = safety.kind === "crisis" ? [call("14416"), call("112")] : safety.kind === "abuse" ? [call("181"), call("112")] : [call("112")];
       return reply({ text, links, tone: "safety" }, 200);
     }
 
     // Typing a first name during the details step.
     const task = taskRef.current;
     if (task?.kind === "profile" && task.step === "name") {
-      const first = question.trim().split(/\s+/)[0].replace(/[^A-Za-z]/g, "").slice(0, 20);
+      const first = question.trim().split(/\s+/)[0].replace(/[^A-Za-z\u0900-\u097f]/g, "").slice(0, 20);
       if (first.length >= 2) rememberName(first[0].toUpperCase() + first.slice(1).toLowerCase());
       return continueProfileOrStart(task.flowId);
     }
@@ -655,50 +870,54 @@ export function ChatBotWidget() {
     const told = engine.extractName(question);
     if (told) {
       rememberName(told);
-      return reply(topicsMessage(`Lovely to meet you, ${told}! What would you like help with?`));
+      return reply(topicsMessage(t("Lovely to meet you, {name}! What would you like help with?", { name: told })));
     }
 
-    if (engine.isGreeting(question)) return reply(topicsMessage(`Hello${name ? ` ${name}` : ""}! What would you like help with today?`));
+    if (engine.isGreeting(question)) return reply(topicsMessage(t("Hello{sp}! What would you like help with today?", nv(name))));
 
     if (engine.isYes(question)) {
       const target = lastBot()?.links?.find((l) => !l.href.startsWith("tel:"));
       if (target) {
-        reply({ text: `Opening ${target.label} for you.` });
+        reply({ text: t("Opening {label} for you.", { label: target.label }) });
         return goTo(target.href);
       }
     }
     if (engine.isAck(question) || engine.isYes(question)) {
-      return reply({ text: `Glad I could help${name ? `, ${name}` : ""}! Anything else you'd like to know?`, chips: [OWN, BACK] });
+      return reply({ text: t("Glad I could help{n}! Anything else you'd like to know?", nv(name)), chips: [OWN, BACK] });
     }
-    if (engine.isNo(question)) return reply({ text: "No problem. I'm right here whenever you need me.", chips: [BACK, HUMAN] });
+    if (engine.isNo(question)) return reply({ text: t("No problem. I'm right here whenever you need me."), chips: [BACK, HUMAN] });
 
     const bare = engine.normalise(question);
 
     // Prices: today's prices for the product named, or ask which one.
     if (engine.isPriceQuestion(question)) {
-      const named = Object.keys(PRODUCT_WORDS)
+      const named = Object.keys(WORDS)
         .sort((x, y) => y.length - x.length)
         .find((w) => ` ${bare} `.includes(` ${w} `));
-      const page = named ? MENUS[PRODUCT_WORDS[named]]?.page?.href : undefined;
+      const page = named ? MENUS[WORDS[named]]?.page?.href : undefined;
       const slug = page?.startsWith("/product-detail/") ? page.split("/")[2] : null;
       return reply(slug ? priceMessage(slug) : priceChooser());
     }
 
-    if (OFFER_WORDS.test(bare)) return reply(offersMessage());
+    if (OFFER_WORDS.test(bare) || OFFER_HI.test(bare)) return reply(offersMessage());
 
-    if (TRIP_PLAN_WORDS.test(bare)) return askFinderStep("looway", 0, {});
-    if (CHOOSE_WORDS.test(bare)) return askFinderStep(TRAVEL_WORDS.test(bare) ? "looway" : "ovy", 0, {});
+    if (TRIP_PLAN_WORDS.test(bare) || TRIP_PLAN_HI.test(bare)) return askFinderStep("looway", 0, {});
+    if (CHOOSE_WORDS.test(bare) || CHOOSE_HI.test(bare)) return askFinderStep(TRAVEL_WORDS.test(bare) || TRAVEL_HI.test(bare) ? "looway" : "ovy", 0, {});
 
     // Describing a symptom: offer the guided check-in first.
     // Product questions ("which pad for heavy flow") get answers, unless they
     // also describe a real symptom.
-    const mentionsProduct = Object.keys(PRODUCT_WORDS).some((w) => ` ${bare} `.includes(` ${w} `));
-    const strongSymptom = /\b(bleed|bleeding|blood|pain|dard|itch|itching|burn|burning|smell|lump|clot|clots|fever|rash|late|missed|spotting|sore|swelling)\b/.test(bare);
+    const mentionsProduct = Object.keys(WORDS).some((w) => ` ${bare} `.includes(` ${w} `));
+    const strongSymptom =
+      /\b(bleed|bleeding|blood|pain|dard|itch|itching|burn|burning|smell|lump|clot|clots|fever|rash|late|missed|spotting|sore|swelling)\b/.test(bare) || SYMPTOM_HI.test(bare);
     const flow = !mentionsProduct || strongSymptom ? engine.findSymptomFlow(question) : null;
     if (flow) {
       const quick = engine.findAnswer(question);
       return reply({
-        text: `I'm sorry you're dealing with this${name ? `, ${name}` : ""}. I can guide you much better with a few quick questions about ${flow.title.toLowerCase()}. It takes under a minute.`,
+        text: t("I'm sorry you're dealing with this{n}. I can guide you much better with a few quick questions about {title}. It takes under a minute.", {
+          ...nv(name),
+          title: H()?.SYMPTOMS_HI[flow.id]?.title || flow.title.toLowerCase(),
+        }),
         list: [
           { label: "Yes, check my symptoms", action: { type: "symptom", id: flow.id } },
           ...(quick.kind === "answer" ? [{ label: "Just give me a quick answer", action: { type: "answer", id: quick.answer.id } as Action }] : []),
@@ -707,31 +926,35 @@ export function ChatBotWidget() {
       });
     }
 
-    if (PRODUCT_WORDS[bare]) {
-      const msg = menuMessage(PRODUCT_WORDS[bare]);
+    if (WORDS[bare]) {
+      const msg = menuMessage(WORDS[bare]);
       if (msg) return reply(msg);
     }
 
     const nav = engine.findNavigation(question);
     if (nav) {
-      reply({ text: `Opening ${nav.label} for you.`, links: [{ label: `Open ${nav.label}`, href: nav.href }] });
+      const label = isHi() ? nav.label.replace(/^(the|your) /, "") : nav.label;
+      reply({ text: t("Opening {label} for you.", { label }), links: [{ label: t("Open {label}", { label }), href: nav.href }] });
       return goTo(nav.href);
     }
 
     const result = engine.findAnswer(question);
-    if (result.kind === "answer") return reply(answerMessage(result.answer, question, result.alternatives));
+    if (result.kind === "answer") return reply(await withOrders(answerMessage(result.answer, question, result.alternatives), result.answer.id));
     if (result.kind === "unsure") {
       return reply({
-        text: "I want to get this right. Did you mean one of these?",
-        list: result.options.map((a) => ({ label: a.question, action: { type: "answer", id: a.id } as Action })),
+        text: t("I want to get this right. Did you mean one of these?"),
+        list: result.options.map((a) => ({ label: aq(a), action: { type: "answer", id: a.id } as Action })),
         chips: [{ label: "None of these", action: { type: "human" } }, BACK],
       });
     }
 
     logChatQuestion(question, pathname || "/").catch(() => {});
     return reply({
-      text: `Sorry${name ? ` ${name}` : ""}, I don't have an answer for that yet, so I've passed your question to our team. For a quick reply, message us on WhatsApp (Monday to Saturday, 10 am to 7 pm) or email care@potenthygiene.com.`,
-      links: HUMAN_LINKS(question),
+      text: t(
+        "Sorry{sp}, I don't have an answer for that yet, so I've passed your question to our team. For a quick reply, message us on WhatsApp (Monday to Saturday, 10 am to 7 pm) or email care@potenthygiene.com.",
+        nv(name),
+      ),
+      links: humanLinks(question),
       chips: [OWN, BACK],
     });
   }
@@ -763,49 +986,54 @@ export function ChatBotWidget() {
         const step = FINDERS[task.id].steps[task.si];
         return askFinderStep(task.id, task.si + 1, { ...task.answers, [step.id]: [action.value] });
       }
-      return reply(topicsMessage("What would you like help with?"));
+      return reply(topicsMessage(t("What would you like help with?")));
     }
 
     taskRef.current = null;
     if (action.type === "ask") return respondTo(action.q);
-    if (action.type === "topics") return reply(topicsMessage("What would you like help with?"));
+    if (action.type === "topics") return reply(topicsMessage(t("What would you like help with?")));
     if (action.type === "offers") return reply(offersMessage());
     if (action.type === "price") return reply(priceMessage(action.slug));
     if (action.type === "symptoms") return reply(symptomMenu());
     if (action.type === "symptom") return startSymptom(action.id);
     if (action.type === "finder") return askFinderStep(action.id, 0, {});
     if (action.type === "nav") {
-      reply({ text: `Opening ${action.label} for you.` });
+      reply({ text: t("Opening {label} for you.", { label: action.label }) });
       return goTo(action.href);
     }
     if (action.type === "human") {
       return reply({
-        text: "Our team is on WhatsApp and phone (+91 63758 81514) Monday to Saturday, 10 am to 7 pm, and on email any time. For bulk orders, write to info@potenthygiene.com.",
-        links: HUMAN_LINKS(),
+        text: t("Our team is on WhatsApp and phone (+91 63758 81514) Monday to Saturday, 10 am to 7 pm, and on email any time. For bulk orders, write to info@potenthygiene.com."),
+        links: humanLinks(),
         chips: [BACK],
       });
     }
     if (action.type === "flow") {
       const node = FLOWS[action.node];
       if (!node) return;
+      const fh = H()?.FLOWS_HI[action.node];
       if (isFlowResult(node)) {
         const cup = action.node.startsWith("cup");
         const product: ProductKey = cup ? "ovy-cup" : "ovy-pads";
         return reply({
-          text: node.text,
+          text: fh?.text || node.text,
           products: [{ product }],
           combo: comboFor([product]),
           chips: [{ label: "Start again", action: { type: "flow", node: cup ? "cup:start" : "pad:start" } }, { label: "What does it cost?", action: { type: "price", slug: product } }, BACK],
         });
       }
-      return reply({ text: node.text, list: node.options.map((o) => ({ label: o.label, action: { type: "flow", node: o.next } as Action })), chips: [BACK] });
+      return reply({
+        text: fh?.text || node.text,
+        list: node.options.map((o) => ({ label: fh?.options?.[o.label] || fh?.options?.[o.next] || o.label, action: { type: "flow", node: o.next } as Action })),
+        chips: [BACK],
+      });
     }
     if (action.type === "menu") {
       const msg = menuMessage(action.id);
       return msg ? reply(msg) : respondTo(label);
     }
     const answer = engine.answerById(action.id);
-    return answer ? reply(answerMessage(answer, label)) : respondTo(label);
+    return answer ? reply(await withOrders(answerMessage(answer, label), answer.id)) : respondTo(label);
   }
 
   // Pick-several questions: tick options, then Done.
@@ -835,7 +1063,11 @@ export function ChatBotWidget() {
     setMessages((all) => all.map((m) => (m.id === msg.id && m.feedback ? { ...m, feedback: { ...m.feedback, given: up ? "up" : "down" } } : m)));
     if (!up && msg.feedback) {
       logChatQuestion(`NOT HELPFUL: "${msg.feedback.q}" got answer ${msg.feedback.answerId}`, pathname || "/").catch(() => {});
-      reply({ text: "Thanks for telling me. I've passed this to the team so we can improve it. Would you like to talk to a person?", links: HUMAN_LINKS(msg.feedback.q), chips: [OWN, BACK] });
+      reply({
+        text: t("Thanks for telling me. I've passed this to the team so we can improve it. Would you like to talk to a person?"),
+        links: humanLinks(msg.feedback.q),
+        chips: [OWN, BACK],
+      });
     }
   };
 
@@ -852,7 +1084,7 @@ export function ChatBotWidget() {
     const Ctor = speechCtor();
     if (!Ctor || listening) return;
     const rec = new Ctor();
-    rec.lang = "en-IN";
+    rec.lang = langRef.current === "hi" ? "hi-IN" : "en-IN";
     rec.interimResults = false;
     rec.onresult = (e) => {
       const text = e.results[0][0].transcript.trim();
@@ -867,6 +1099,27 @@ export function ChatBotWidget() {
     rec.start();
   };
 
+  // EN | हिंदी in the header. New replies follow the choice; earlier ones stay as they were.
+  const switchLang = async () => {
+    if (langBusy || typing) return;
+    const next: Lang = langRef.current === "hi" ? "en" : "hi";
+    if (next === "hi") {
+      setLangBusy(true);
+      try {
+        await loadHindi();
+      } catch {
+        setLangBusy(false);
+        return;
+      }
+      setLangBusy(false);
+    }
+    setLang(next);
+    if (messages.length) {
+      taskRef.current = null;
+      reply(topicsMessage(next === "hi" ? t("From now on I'll reply in Hindi. What would you like help with?") : "From now on I'll reply in English. What would you like help with?"), 200);
+    }
+  };
+
   const restartChat = () => {
     setMessages([]);
     taskRef.current = null;
@@ -878,7 +1131,7 @@ export function ChatBotWidget() {
     if (isPhone()) close();
   };
   const RichNav = ({ text }: { text: string }) => <Rich text={text} onNavigate={onNav} />;
-  const pageMenuTitle = pageMenu ? MENUS[pageMenu]?.title : null;
+  const pageMenuTitle = pageMenu ? menuTitle(pageMenu) : null;
 
   const linkButton = (l: ChatLink, primary: boolean) => {
     const cls = primary
@@ -912,7 +1165,7 @@ export function ChatBotWidget() {
             style={sheetStyle}
             className="chat-sheet fixed inset-x-0 bottom-0 z-[100001] flex h-[92dvh] flex-col overflow-hidden rounded-t-[28px] bg-[#FFFAFD] shadow-[0_-20px_60px_rgba(42,26,38,0.28)] md:inset-x-auto md:bottom-24 md:right-6 md:h-[min(700px,calc(100dvh-120px))] md:w-[410px] md:rounded-[28px] md:shadow-[0_30px_80px_-20px_rgba(42,26,38,0.45)]"
           >
-            <header className="relative shrink-0 overflow-hidden bg-gradient-to-br from-[#6E3F68] via-[#9A5C93] to-[#C98BBE] px-5 pb-4 pt-2.5 text-white">
+            <header className="relative shrink-0 overflow-clip bg-gradient-to-br from-[#6E3F68] via-[#9A5C93] to-[#C98BBE] px-5 pb-4 pt-2.5 text-white">
               <span className="pointer-events-none absolute -right-10 -top-16 h-44 w-44 rounded-full bg-[#1A8D91]/35 blur-2xl" aria-hidden />
               <span className="pointer-events-none absolute -bottom-20 left-10 h-36 w-36 rounded-full bg-white/15 blur-2xl" aria-hidden />
               <div className="relative mx-auto mb-2 h-1.5 w-10 rounded-full bg-white/40 md:hidden" aria-hidden />
@@ -924,10 +1177,20 @@ export function ChatBotWidget() {
                   </div>
                   <div className="min-w-0">
                     <h2 className="truncate text-[17px] font-semibold leading-tight">Potent Saathi</h2>
-                    <p className="truncate text-[12.5px] text-white/85">Your Ovy &amp; Looway companion</p>
+                    <p className="truncate text-[12.5px] text-white/85">{t("Your Ovy & Looway companion")}</p>
                   </div>
                 </div>
                 <div className="flex shrink-0 items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={switchLang}
+                    disabled={langBusy}
+                    lang={lang === "hi" ? "en" : "hi"}
+                    className="flex h-9 min-w-[64px] items-center justify-center rounded-full bg-white/15 px-3 text-[13px] font-semibold ring-1 ring-white/30 transition hover:bg-white/25 disabled:opacity-60"
+                    aria-label={lang === "hi" ? "Switch the chat to English" : "चैट हिंदी में करें"}
+                  >
+                    {langBusy ? "…" : lang === "hi" ? "English" : "हिंदी"}
+                  </button>
                   {messages.length > 0 && (
                     <button type="button" onClick={restartChat} className="flex h-10 w-10 items-center justify-center rounded-full transition hover:bg-white/15" aria-label="Start a new chat">
                       <RotateCcw className="h-[18px] w-[18px]" aria-hidden />
@@ -944,11 +1207,11 @@ export function ChatBotWidget() {
             <div ref={scrollRef} className="relative flex-1 overflow-y-auto overscroll-contain px-4 pb-5 pt-5" aria-live="polite">
               <div className="chat-in">
                 <p className="text-[24px] font-semibold leading-tight tracking-[-0.01em] text-[#2b1c27]">
-                  {timeGreeting()}
+                  {t(timeGreeting())}
                   {name ? `, ${name}` : ""} <span aria-hidden>👋</span>
                 </p>
                 <p className="mt-2 text-[15px] leading-relaxed text-[#6d5767]">
-                  I&apos;m Saathi, your Potent companion for periods, intimate health, travel hygiene and orders. Tap a topic, or type or speak your question.
+                  {t("I'm Saathi, your Potent companion for periods, intimate health, travel hygiene and orders. Tap a topic, or type or speak your question.")}
                 </p>
 
                 {messages.length === 0 && (
@@ -956,48 +1219,48 @@ export function ChatBotWidget() {
                     {pageMenu && pageMenuTitle && (
                       <button
                         type="button"
-                        onClick={() => run({ type: "menu", id: pageMenu }, `Questions about ${pageMenuTitle}`)}
+                        onClick={() => run({ type: "menu", id: pageMenu }, t("Questions about {title}?", { title: pageMenuTitle }))}
                         className="mt-4 flex w-full items-center gap-3 rounded-2xl bg-gradient-to-r from-[#7E4D77] to-[#AF71A7] px-4 py-3.5 text-left text-white shadow-[0_10px_24px_-12px_rgba(126,77,119,0.7)] transition active:scale-[0.98]"
                       >
                         <span className="min-w-0 flex-1">
-                          <span className="block text-[11.5px] font-semibold uppercase tracking-[0.1em] text-white/80">On this page</span>
-                          <span className="block text-[15px] font-semibold">Questions about {pageMenuTitle}?</span>
+                          <span className="block text-[11.5px] font-semibold uppercase tracking-[0.1em] text-white/80">{t("On this page")}</span>
+                          <span className="block text-[15px] font-semibold">{t("Questions about {title}?", { title: pageMenuTitle })}</span>
                         </span>
                         <ChevronRight className="h-5 w-5 shrink-0" aria-hidden />
                       </button>
                     )}
 
                     <div className="mt-4 grid grid-cols-2 gap-2.5">
-                      {TILES.map((t) => {
-                        const Icon = t.icon;
+                      {TILES.map((tile) => {
+                        const Icon = tile.icon;
                         return (
                           <button
-                            key={t.label}
+                            key={tile.label}
                             type="button"
-                            onClick={() => run(t.action, t.label)}
+                            onClick={() => run(tile.action, t(tile.label))}
                             className="flex min-h-[84px] flex-col items-start justify-between rounded-2xl border border-[#f0e0ea] bg-white p-3.5 text-left shadow-[0_2px_10px_-4px_rgba(63,39,56,0.10)] transition active:scale-[0.97] md:hover:-translate-y-0.5 md:hover:shadow-[0_10px_24px_-12px_rgba(126,77,119,0.4)]"
                           >
-                            <span className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: t.bg, color: t.ink }}>
+                            <span className="flex h-9 w-9 items-center justify-center rounded-xl" style={{ backgroundColor: tile.bg, color: tile.ink }}>
                               <Icon className="h-[18px] w-[18px]" aria-hidden />
                             </span>
-                            <span className="mt-2.5 text-[14px] font-semibold leading-tight text-[#2b1c27]">{t.label}</span>
+                            <span className="mt-2.5 text-[14px] font-semibold leading-tight text-[#2b1c27]">{t(tile.label)}</span>
                           </button>
                         );
                       })}
                     </div>
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {MORE_TOPICS.map((t) => {
-                        const Icon = t.icon;
+                      {MORE_TOPICS.map((tile) => {
+                        const Icon = tile.icon;
                         return (
                           <button
-                            key={t.label}
+                            key={tile.label}
                             type="button"
-                            onClick={() => run(t.action, t.label)}
+                            onClick={() => run(tile.action, t(tile.label))}
                             className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-[#ecd9e6] bg-white px-3.5 text-[13.5px] font-medium text-[#5e4458] transition active:scale-[0.97] md:hover:border-[#AF71A7]"
                           >
                             <Icon className="h-4 w-4 text-[#9A5C93]" aria-hidden />
-                            {t.label}
+                            {t(tile.label)}
                           </button>
                         );
                       })}
@@ -1008,8 +1271,8 @@ export function ChatBotWidget() {
                         <MessageCircleHeart className="h-[18px] w-[18px]" aria-hidden />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block text-[14px] font-semibold">Talk to a person on WhatsApp</span>
-                        <span className="block text-[12.5px] text-[#2f7a50]">Monday to Saturday, 10 am to 7 pm</span>
+                        <span className="block text-[14px] font-semibold">{t("Talk to a person on WhatsApp")}</span>
+                        <span className="block text-[12.5px] text-[#2f7a50]">{t("Monday to Saturday, 10 am to 7 pm")}</span>
                       </span>
                       <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden />
                     </a>
@@ -1031,6 +1294,7 @@ export function ChatBotWidget() {
                   }
                   const info = message.price ? live().products[message.price] : undefined;
                   const offers = live().offers;
+                  const tm = tOf(message.hi);
                   return (
                     <div key={message.id} ref={isLast ? lastRef : undefined} data-role="bot" className="chat-in flex w-full items-start gap-2">
                       <span className="mt-0.5"><Avatar /></span>
@@ -1043,21 +1307,39 @@ export function ChatBotWidget() {
                           <RichNav text={message.text} />
                         </div>
 
-                        {message.result && <div className="mt-3"><ResultCard outcome={message.result} Rich={RichNav} /></div>}
-                        {info && <PriceDetails info={info} />}
-                        {message.offers && offers && <OffersCard offers={offers} subscriptionSave={bestSaving()} />}
+                        {message.result && <div className="mt-3"><ResultCard outcome={message.result} Rich={RichNav} t={tm} /></div>}
+                        {info && <PriceDetails info={info} onAdd={(v) => addFromChat(message.price!, v)} t={tm} />}
+                        {message.coupons && <CouponList coupons={offers?.coupons || []} highlight={message.coupons.highlight} hindi={message.hi} t={tm} />}
+                        {message.orders?.length ? (
+                          <div className="mt-3 overflow-hidden rounded-2xl border border-[#f0e0ea] bg-white">
+                            <p className="border-b border-[#f6ebf2] px-4 pb-2 pt-3 text-[11.5px] font-semibold uppercase tracking-[0.08em] text-[#a3899b]">{tm("Your latest orders")}</p>
+                            {message.orders.map((o) => (
+                              <Link key={o.id} href={`/dashboard/orders/${o.id}`} onClick={onNav} className="flex items-center gap-3 border-b border-[#f6ebf2] px-4 py-3 last:border-b-0 md:hover:bg-[#fff6fb]">
+                                <span className="min-w-0 flex-1">
+                                  <span className="block text-[14px] font-semibold text-[#2b1c27]">
+                                    {tm(o.items === 1 ? "{date} · 1 item" : "{date} · {n} items", { date: o.date, n: o.items })}
+                                    {o.total ? ` · ₹${o.total.toLocaleString("en-IN")}` : ""}
+                                  </span>
+                                  <span className="block text-[12.5px] text-[#6d5767]">{tm("Order #{id}", { id: o.id.slice(0, 8).toUpperCase() })}</span>
+                                </span>
+                                <span className="shrink-0 rounded-full bg-[#E6F4F6] px-2.5 py-1 text-[12px] font-semibold capitalize text-[#075965]">{tm(o.status)}</span>
+                              </Link>
+                            ))}
+                          </div>
+                        ) : null}
+                        {message.offers && offers && <OffersCard offers={offers} subscriptionSave={bestSaving()} t={tm} />}
 
                         {message.products?.length ? (
                           <>
                             {message.productsTitle && <p className="mt-3 text-[11.5px] font-semibold uppercase tracking-[0.08em] text-[#a3899b]">{message.productsTitle}</p>}
-                            <ProductCards picks={message.products} live={live().products} onNavigate={onNav} />
+                            <ProductCards picks={message.products} live={live().products} onNavigate={onNav} t={tm} />
                           </>
                         ) : null}
 
                         {message.combo && (
                           <div className="mt-2.5 rounded-2xl border border-dashed border-[#dcc0d4] bg-[#FFF7FB] px-4 py-3 text-[13.5px] leading-snug text-[#5e4458]">
-                            <span className="font-semibold text-[#7E4D77]">Popular combo: {message.combo.title}. </span>
-                            {message.combo.why}
+                            <span className="font-semibold text-[#7E4D77]">{tm("Popular combo: {title}. ", { title: tm(message.combo.title) })}</span>
+                            {tm(message.combo.why)}
                           </div>
                         )}
 
@@ -1065,7 +1347,7 @@ export function ChatBotWidget() {
 
                         {isLast && message.multi?.length ? (
                           <div className="mt-3 overflow-hidden rounded-2xl border border-[#f0e0ea] bg-white">
-                            <p className={boxTitleCls}>Pick all that apply</p>
+                            <p className={boxTitleCls}>{tm("Pick all that apply")}</p>
                             {message.multi.map((o) => {
                               const on = multiSel.includes(o.id);
                               return (
@@ -1084,7 +1366,7 @@ export function ChatBotWidget() {
                                 disabled={!multiSel.length || typing}
                                 className="min-h-11 w-full rounded-full bg-gradient-to-r from-[#7E4D77] to-[#AF71A7] text-[14.5px] font-semibold text-white transition active:scale-[0.98] disabled:opacity-40"
                               >
-                                Done
+                                {tm("Done")}
                               </button>
                             </div>
                           </div>
@@ -1105,10 +1387,10 @@ export function ChatBotWidget() {
                         {message.feedback && (
                           <div className="mt-2 flex items-center gap-1 text-[12px] text-[#a3899b]">
                             {message.feedback.given ? (
-                              <span>{message.feedback.given === "up" ? "Thanks for the feedback!" : "Thanks, noted."}</span>
+                              <span>{message.feedback.given === "up" ? tm("Thanks for the feedback!") : tm("Thanks, noted.")}</span>
                             ) : (
                               <>
-                                <span className="mr-1">Was this helpful?</span>
+                                <span className="mr-1">{tm("Was this helpful?")}</span>
                                 <button type="button" onClick={() => giveFeedback(message, true)} className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-[#f6e9f2]" aria-label="Helpful">
                                   <ThumbsUp className="h-4 w-4" aria-hidden />
                                 </button>
@@ -1166,11 +1448,11 @@ export function ChatBotWidget() {
                       type="button"
                       onClick={() => {
                         setInput("");
-                        run({ type: "answer", id: a.id }, a.question);
+                        run({ type: "answer", id: a.id }, aq(a));
                       }}
                       className="shrink-0 rounded-full border border-[#ecd9e6] bg-[#FFFAFD] px-3 py-1.5 text-[12.5px] font-medium text-[#5e4458] active:scale-[0.97]"
                     >
-                      {a.question}
+                      {aq(a)}
                     </button>
                   ))}
                 </div>
@@ -1180,7 +1462,7 @@ export function ChatBotWidget() {
                   ref={inputRef}
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
-                  placeholder={listening ? "Listening…" : name ? `Ask me anything, ${name}…` : "Type your question…"}
+                  placeholder={listening ? t("Listening…") : name ? t("Ask me anything, {name}…", { name }) : t("Type your question…")}
                   maxLength={300}
                   enterKeyHint="send"
                   autoComplete="off"
@@ -1207,7 +1489,7 @@ export function ChatBotWidget() {
                   </button>
                 )}
               </div>
-              <p className="mt-2 text-center text-[11px] text-[#ab95a5]">Answers from Potent&apos;s own guides · not medical advice</p>
+              <p className="mt-2 text-center text-[11px] text-[#ab95a5]">{t("Answers from Potent's own guides · not medical advice")}</p>
             </form>
           </section>
         </>

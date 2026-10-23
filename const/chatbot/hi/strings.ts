@@ -1,0 +1,221 @@
+// Hindi for the chat's own buttons, cards and messages. Keys are the exact
+// English text used in ChatBotWidget.tsx and chat/ChatCards.tsx; {name} style
+// placeholders are filled in after translation. A missing key shows English.
+
+export const STRINGS_HI: Record<string, string> = {
+  // ---- Topic tiles and shortcuts
+  "Check my symptoms": "मेरे लक्षण जाँचें",
+  "Help me choose": "चुनने में मदद करें",
+  "Period questions": "पीरियड के सवाल",
+  "Travel hygiene": "सफ़र में हाइजीन",
+  "Ovy products": "Ovy प्रोडक्ट",
+  "Looway products": "Looway प्रोडक्ट",
+  "Orders & delivery": "ऑर्डर और डिलीवरी",
+  "Offers & deals": "ऑफ़र और डील",
+  "Find my pad size": "मेरा पैड साइज़",
+  "Find my cup size": "मेरा कप साइज़",
+  "Plan my trip hygiene": "सफ़र की हाइजीन प्लान करें",
+  Subscriptions: "सब्सक्रिप्शन",
+  "First periods & teens": "पहला पीरियड और टीन",
+  "Women's health": "महिलाओं की सेहत",
+  "Account & rewards": "अकाउंट और रिवॉर्ड",
+  "Bulk orders": "बल्क ऑर्डर",
+  "Back to topics": "सारे विषय",
+  "Ask my own question": "अपना सवाल पूछें",
+  "Talk to a person": "किसी इंसान से बात करें",
+
+  // ---- Details for a check-in
+  "Under 13": "13 से कम",
+  "13 to 17": "13 से 17",
+  "18 to 29": "18 से 29",
+  "30 to 39": "30 से 39",
+  "40 to 49": "40 से 49",
+  "50 or older": "50 या उससे ज़्यादा",
+  Me: "मेरे लिए",
+  "My daughter": "मेरी बेटी",
+  "Someone else": "कोई और",
+  Female: "महिला",
+  Male: "पुरुष",
+  "Other or prefer not to say": "अन्य, या नहीं बताना चाहते",
+  Skip: "छोड़ें",
+  "Before I guide you, a few quick details so my answer fits you. **They stay on this device for this chat only and are never saved or shared.**\n\nWhat should I call you? Type your first name, or skip.":
+    "आपको सही सलाह देने के लिए पहले कुछ छोटी-सी जानकारी। **यह सिर्फ़ इस चैट के लिए इसी डिवाइस पर रहती है, कभी सेव या शेयर नहीं होती।**\n\nमैं आपको किस नाम से बुलाऊँ? अपना पहला नाम लिखें, या छोड़ दें।",
+  "Who is this for?": "यह किसके लिए है?",
+  "How old is she?": "उसकी उम्र कितनी है?",
+  "How old are they?": "उनकी उम्र कितनी है?",
+  "How old are you{n}?": "{N}आपकी उम्र कितनी है?",
+  "Are they female or male?": "वे महिला हैं या पुरुष?",
+  "Are you female or male?": "आप महिला हैं या पुरुष?",
+
+  // ---- Check-ins
+  "What's bothering you{n}? I'll ask a few quick questions, then explain what it's commonly linked to, what helps and when to see a doctor.":
+    "{N}क्या परेशानी है? मैं कुछ छोटे सवाल पूछूँगी, फिर बताऊँगी कि यह अक्सर किससे जुड़ा होता है, क्या मदद करता है और डॉक्टर को कब दिखाना चाहिए।",
+  "Thanks{n}. Let's look at {title}.\n\n": "शुक्रिया{n}। चलिए देखते हैं: {title}।\n\n",
+  "Stop the check-in": "जाँच रोकें",
+  "Here's what I can tell you{n}:": "{N}मैं आपको यह बता सकती हूँ:",
+  "Products that may make it easier": "ये प्रोडक्ट आराम दे सकते हैं",
+  "Check another symptom": "कोई और लक्षण जाँचें",
+  "Pick all that apply": "जो-जो लागू हों, सब चुनें",
+  Done: "हो गया",
+  "I'm sorry you're dealing with this{n}. I can guide you much better with a few quick questions about {title}. It takes under a minute.":
+    "{N}मुझे अफ़सोस है कि आपको यह परेशानी हो रही है। कुछ छोटे सवालों के बाद मैं आपको बेहतर बता पाऊँगी ({title})। इसमें एक मिनट से भी कम लगेगा।",
+  "Yes, check my symptoms": "हाँ, मेरे लक्षण जाँचें",
+  "Just give me a quick answer": "बस छोटा सा जवाब दें",
+
+  // ---- Menus and answers
+  "Help me choose the right product": "सही प्रोडक्ट चुनने में मदद करें",
+  "What does it cost?": "इसकी कीमत क्या है?",
+  "Products that can help": "ये प्रोडक्ट मदद कर सकते हैं",
+  "Related questions": "इससे जुड़े सवाल",
+  "More on {topic}": "{topic}: और सवाल",
+  "Popular combo: {title}. ": "लोकप्रिय कॉम्बो: {title}। ",
+  "Was this helpful?": "क्या इससे मदद मिली?",
+  "Thanks for the feedback!": "आपकी राय के लिए शुक्रिया!",
+  "Thanks, noted.": "शुक्रिया, नोट कर लिया।",
+  "Thanks for telling me. I've passed this to the team so we can improve it. Would you like to talk to a person?":
+    "बताने के लिए शुक्रिया। मैंने यह टीम तक पहुँचा दिया है ताकि हम इसे बेहतर बना सकें। क्या आप किसी इंसान से बात करना चाहेंगे?",
+  "I want to get this right. Did you mean one of these?": "मैं सही जवाब देना चाहती हूँ। क्या आपका मतलब इनमें से कोई है?",
+  "None of these": "इनमें से कोई नहीं",
+  "Sorry{sp}, I don't have an answer for that yet, so I've passed your question to our team. For a quick reply, message us on WhatsApp (Monday to Saturday, 10 am to 7 pm) or email care@potenthygiene.com.":
+    "माफ़ कीजिए{sp}, इसका जवाब अभी मेरे पास नहीं है, इसलिए मैंने आपका सवाल हमारी टीम तक पहुँचा दिया है। जल्दी जवाब के लिए हमें WhatsApp करें (सोमवार से शनिवार, सुबह 10 से शाम 7 बजे) या care@potenthygiene.com पर ईमेल करें।",
+
+  // ---- Conversation
+  "What would you like help with?": "बताइए, किसमें मदद करूँ?",
+  "Lovely to meet you, {name}! What would you like help with?": "आपसे मिलकर अच्छा लगा, {name}! बताइए, किसमें मदद करूँ?",
+  "Hello{sp}! What would you like help with today?": "नमस्ते{sp}! आज किसमें मदद करूँ?",
+  "Opening {label} for you.": "{label} खोल रही हूँ।",
+  "Open {label}": "{label} खोलें",
+  "Glad I could help{n}! Anything else you'd like to know?": "खुशी हुई कि मदद कर पाई{n}! और कुछ जानना है?",
+  "No problem. I'm right here whenever you need me.": "कोई बात नहीं। जब भी ज़रूरत हो, मैं यहीं हूँ।",
+  "Our team is on WhatsApp and phone (+91 63758 81514) Monday to Saturday, 10 am to 7 pm, and on email any time. For bulk orders, write to info@potenthygiene.com.":
+    "हमारी टीम WhatsApp और फ़ोन (+91 63758 81514) पर सोमवार से शनिवार, सुबह 10 से शाम 7 बजे तक, और ईमेल पर कभी भी मिलती है। बल्क ऑर्डर के लिए info@potenthygiene.com पर लिखें।",
+  "WhatsApp us": "WhatsApp करें",
+  "Email care@": "care@ पर ईमेल करें",
+  "From now on I'll reply in Hindi. What would you like help with?": "अब से मैं हिंदी में जवाब दूँगी। बताइए, किसमें मदद करूँ?",
+
+  // ---- Safety
+  "I'm really sorry you're feeling this way. You deserve support right now. Please call **Tele MANAS on 14416** (free, 24 hours, in Indian languages), or **112** if you are in danger. If you can, tell someone you trust who is near you.":
+    "मुझे बहुत अफ़सोस है कि आप ऐसा महसूस कर रहे हैं। इस वक़्त आपको सहारा मिलना चाहिए। कृपया **Tele MANAS को 14416** पर कॉल करें (मुफ़्त, 24 घंटे, भारतीय भाषाओं में), या अगर आप खतरे में हैं तो **112** पर। हो सके तो पास में किसी भरोसेमंद इंसान को बताएँ।",
+  "I'm so sorry this happened. It is not your fault. If you are in danger, call **112**. You can call the **Women Helpline on 181**, and if you are under 18, **Childline on 1098**. Both are free and confidential.":
+    "मुझे बहुत अफ़सोस है कि आपके साथ ऐसा हुआ। इसमें आपकी कोई गलती नहीं है। अगर आप खतरे में हैं, तो **112** पर कॉल करें। आप **Women Helpline 181** पर कॉल कर सकते हैं, और अगर आपकी उम्र 18 से कम है, तो **Childline 1098** पर। दोनों मुफ़्त और गोपनीय हैं।",
+  "This sounds like it needs a doctor now. Please call **112** or go to the nearest emergency department straight away.":
+    "लगता है इसके लिए अभी डॉक्टर की ज़रूरत है। कृपया तुरंत **112** पर कॉल करें या सबसे पास के इमरजेंसी विभाग में जाएँ।",
+  "Call {n}": "{n} पर कॉल करें",
+
+  // ---- Prices, offers, bag and orders
+  "Here's how to save at Potent{n}.": "{N}Potent पर ऐसे बचत करें।",
+  "\n\nYour bag has {d} different products, so **{code}** works for you right now.": "\n\nआपके बैग में {d} अलग-अलग प्रोडक्ट हैं, इसलिए **{code}** अभी आपके लिए लगेगा।",
+  "\n\nAdd {k} more different product to your bag to unlock **{code}**.": "\n\n**{code}** पाने के लिए बैग में {k} और अलग प्रोडक्ट जोड़ें।",
+  "\n\nAdd {k} more different products to your bag to unlock **{code}**.": "\n\n**{code}** पाने के लिए बैग में {k} और अलग प्रोडक्ट जोड़ें।",
+  "How do subscriptions work?": "सब्सक्रिप्शन कैसे काम करता है?",
+  "See all offers": "सारे ऑफ़र देखें",
+  "Today's prices for **{name}**, GST included.": "**{name}** की आज की कीमतें, GST सहित।",
+  " Subscribe and save up to {s}%.": " सब्सक्राइब करें और {s}% तक बचाएँ।",
+  " Delivery is free from ₹{f}; below that it's ₹{fee}.": " ₹{f} और उससे ऊपर डिलीवरी मुफ़्त है; उससे कम पर ₹{fee}।",
+  "\n\nDelivery is free from ₹{f}; below that it's ₹{fee}.": "\n\n₹{f} और उससे ऊपर डिलीवरी मुफ़्त है; उससे कम पर ₹{fee}।",
+  "The latest price for {name} is on its page, GST included.": "{name} की ताज़ा कीमत उसके पेज पर है, GST सहित।",
+  "this product": "इस प्रोडक्ट",
+  "Which product would you like the price for?": "आप किस प्रोडक्ट की कीमत जानना चाहेंगे?",
+  "Add {title} to my bag": "{title} मेरे बैग में डालें",
+  "I couldn't add that just now. Please try from the product page.": "अभी यह बैग में नहीं जुड़ पाया। कृपया प्रोडक्ट पेज से कोशिश करें।",
+  "Added **{title}** to your bag.": "**{title}** आपके बैग में जुड़ गया।",
+  " You now have {d} different products, so use **{code}** at checkout.": " अब आपके बैग में {d} अलग-अलग प्रोडक्ट हैं, तो चेकआउट पर **{code}** लगाएँ।",
+  " Delivery is free from ₹{f}.": " ₹{f} और उससे ऊपर डिलीवरी मुफ़्त है।",
+  "Go to my bag": "मेरे बैग पर जाएँ",
+  "\n\nSign in and I'll show your latest orders here.": "\n\nसाइन इन करें, तो आपके हाल के ऑर्डर यहीं दिख जाएँगे।",
+  "\n\nI don't see any orders on your account yet.": "\n\nआपके अकाउंट में अभी कोई ऑर्डर नहीं दिख रहा।",
+  "Sign in": "साइन इन करें",
+  "Your latest orders": "आपके हाल के ऑर्डर",
+  "{date} · {n} items": "{date} · {n} आइटम",
+  "{date} · 1 item": "{date} · 1 आइटम",
+  "Order #{id}": "ऑर्डर #{id}",
+  pending: "पेंडिंग",
+  paid: "पेमेंट हो गया",
+  processing: "तैयार हो रहा है",
+  shipped: "भेज दिया गया",
+  delivered: "डिलीवर हो गया",
+  completed: "पूरा हुआ",
+  cancelled: "कैंसिल",
+  returned: "लौटाया गया",
+  failed: "पेमेंट नहीं हुआ",
+
+  // ---- Finders
+  "Let's find your best match{n}. ": "{N}चलिए आपके लिए सबसे सही चीज़ ढूँढते हैं। ",
+  "Start again": "फिर से शुरू करें",
+
+  // ---- Welcome screen and input
+  "Good morning": "सुप्रभात",
+  "Good afternoon": "नमस्ते",
+  "Good evening": "शुभ संध्या",
+  "I'm Saathi, your Potent companion for periods, intimate health, travel hygiene and orders. Tap a topic, or type or speak your question.":
+    "मैं Saathi हूँ, पीरियड, इंटिमेट हेल्थ, सफ़र की हाइजीन और ऑर्डर में आपकी Potent साथी। कोई विषय चुनें, या अपना सवाल लिखें या बोलें।",
+  "On this page": "इस पेज पर",
+  "Questions about {title}?": "{title} के बारे में सवाल?",
+  "Talk to a person on WhatsApp": "WhatsApp पर किसी इंसान से बात करें",
+  "Monday to Saturday, 10 am to 7 pm": "सोमवार से शनिवार, सुबह 10 से शाम 7 बजे तक",
+  "Your Ovy & Looway companion": "आपकी Ovy और Looway साथी",
+  "Answers from Potent's own guides · not medical advice": "Potent की अपनी गाइड से जवाब · यह मेडिकल सलाह नहीं है",
+  "Type your question…": "अपना सवाल लिखें…",
+  "Ask me anything, {name}…": "{name}, कुछ भी पूछें…",
+  "Listening…": "सुन रही हूँ…",
+
+  // ---- Cards
+  "Free tool": "मुफ़्त टूल",
+  "From {price}": "{price} से",
+  "Out of stock": "स्टॉक में नहीं",
+  "Save {n}% on subscription": "सब्सक्रिप्शन पर {n}% बचत",
+  "Add to bag": "बैग में डालें",
+  "Coupons you can use today": "आज के कूपन",
+  Copy: "कॉपी",
+  Copied: "कॉपी हो गया",
+  "One coupon per order. Tap Apply in your bag, under Available offers.": "एक ऑर्डर पर एक कूपन। अपने बैग में Available offers के नीचे Apply पर टैप करें।",
+  "Free delivery from {a}": "{a} और उससे ऊपर मुफ़्त डिलीवरी",
+  "Orders below {a} have a flat {fee} delivery charge. Prices include GST.": "{a} से कम के ऑर्डर पर {fee} डिलीवरी चार्ज लगता है। कीमतों में GST शामिल है।",
+  "Save up to {n}% on subscriptions": "सब्सक्रिप्शन पर {n}% तक बचत",
+  "Monthly and every-2-months plans, plus Cycle Sync on pads, teen kits and panties. Pause or cancel in two clicks.":
+    "हर महीने और हर 2 महीने के प्लान, साथ में पैड, टीन किट और पैंटी पर Cycle Sync। दो क्लिक में रोकें या कैंसिल करें।",
+  "{j} welcome credit + {p}% back": "{j} वेलकम क्रेडिट + {p}% वापस",
+  "Join Potent Rewards free. Earn {p}% back on delivered orders, {b} on your birthday and up to {r} for an approved review. Use up to {mp}% of an order, at most {mx}.":
+    "Potent Rewards से मुफ़्त जुड़ें। डिलीवर हुए ऑर्डर पर {p}% वापस, जन्मदिन पर {b}, और अप्रूव हुए रिव्यू पर {r} तक पाएँ। एक ऑर्डर के {mp}% तक, ज़्यादा से ज़्यादा {mx}, इस्तेमाल कर सकते हैं।",
+  "Refer a friend: {you} for you, {friend} off for them": "दोस्त को रेफ़र करें: आपको {you}, उन्हें {friend} की छूट",
+  "On their first order of {min} or more. Have a coupon? Apply it in your bag (coupons and credits don't combine).":
+    "उनके {min} या उससे ज़्यादा के पहले ऑर्डर पर। कूपन है? उसे अपने बैग में लगाएँ (कूपन और क्रेडिट साथ नहीं लगते)।",
+  "See a doctor today": "आज ही डॉक्टर को दिखाएँ",
+  "See a doctor soon": "जल्द डॉक्टर को दिखाएँ",
+  "Book a check-up": "चेक-अप करवाएँ",
+  "Usually fine to manage at home": "आमतौर पर घर पर संभल जाता है",
+  "Often linked to": "अक्सर इनसे जुड़ा होता है",
+  "What helps": "क्या मदद करता है",
+  "When to see a doctor: ": "डॉक्टर को कब दिखाएँ: ",
+  "Emergency? Call 112": "इमरजेंसी? 112 पर कॉल करें",
+  "General guidance from trusted health sources, not a diagnosis. A doctor can tell you what is really going on.":
+    "भरोसेमंद हेल्थ सोर्स से सामान्य जानकारी, यह निदान नहीं है। असल में क्या हो रहा है, यह डॉक्टर ही बता सकते हैं।",
+
+  // ---- Product lines (const/chatbot/products.ts)
+  "L, XL and XL+ · BIS certified · rash-free": "L, XL और XL+ · BIS सर्टिफ़ाइड · रैश-फ़्री",
+  "Thin, breathable · dermatologically tested": "पतले, हवादार · डर्मेटोलॉजिकली टेस्टेड",
+  "Leak-proof · for heavy days and nights": "लीक-प्रूफ़ · भारी दिनों और रातों के लिए",
+  "Soft teen pads and kits for first periods": "पहले पीरियड के लिए नरम टीन पैड और किट",
+  "Medical-grade silicone · Teen, Medium, Large": "मेडिकल-ग्रेड सिलिकॉन · Teen, Medium, Large",
+  "Pee standing up, anywhere · washable": "कहीं भी खड़े होकर पेशाब · धोकर दोबारा इस्तेमाल",
+  "Leak-proof · turns liquid to gel": "लीक-प्रूफ़ · तरल को जेल बना देता है",
+  "Biodegradable paper · use, fold and bin": "बायोडिग्रेडेबल पेपर · इस्तेमाल करें, मोड़ें और डस्टबिन में डालें",
+  "Build one travel hygiene kit for the trip": "सफ़र के लिए अपनी एक हाइजीन किट बनाएँ",
+  "See your next periods in seconds": "अगले पीरियड की तारीख़ सेकंडों में देखें",
+
+  // ---- Combos
+  "Day and night cover": "दिन और रात की सुरक्षा",
+  "XL by day and XL+ at night, in one Mix Your Box.": "दिन में XL और रात में XL+, एक ही Mix Your Box में।",
+  "Pads + liners": "पैड + लाइनर",
+  "Pads for your period, liners for the light days and discharge in between.": "पीरियड के लिए पैड, और हल्के दिनों और बीच के डिस्चार्ज के लिए लाइनर।",
+  "Heavy-night set": "भारी रातों का सेट",
+  "XL+ pads for the day, a leak-proof period panty for the night.": "दिन के लिए XL+ पैड, रात के लिए लीक-प्रूफ़ पीरियड पैंटी।",
+  "Cup + liner backup": "कप + लाइनर बैकअप",
+  "A reusable cup, with a liner as backup while you learn.": "दोबारा इस्तेमाल होने वाला कप, और सीखते समय बैकअप के लिए लाइनर।",
+  "School-ready teen set": "स्कूल के लिए टीन सेट",
+  "A teen kit for her bag, seat covers for school toilets.": "उसके बैग के लिए टीन किट, और स्कूल के टॉयलेट के लिए सीट कवर।",
+  "Travel trio": "सफ़र की तिकड़ी",
+  "Seat covers, a pee funnel and pee bags: every toilet on the trip, sorted.": "सीट कवर, पी फ़नल और पी बैग: सफ़र का हर टॉयलेट, बेफ़िक्र।",
+  "Periods on the go": "चलते-फिरते पीरियड",
+  "Pads and seat covers in one pouch for trains and highways.": "ट्रेन और हाईवे के लिए एक ही पाउच में पैड और सीट कवर।",
+};

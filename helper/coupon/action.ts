@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { paginate } from "@/lib/pagination";
 import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { STORE_COUPONS } from "@/const/coupons";
 
 interface GetCouponsOptions {
   page?: number;
@@ -125,6 +126,8 @@ export async function ensureDefaultCoupons() {
       existing.map((c) => String(c.code || "").trim().toUpperCase()),
     );
 
+    // The store coupons from const/coupons.ts (plus the original teen
+    // coupon). Old test coupons are no longer created and are blocked at checkout.
     const defaults = [
       {
         name: "Teen First 10%",
@@ -137,28 +140,17 @@ export async function ensureDefaultCoupons() {
         maximumDiscountAmount: 500,
         useOnce: false,
       },
-      {
-        name: "Test Flat ₹50 Off",
-        code: "TEST50",
-        description: "Flat ₹50 discount test coupon",
-        isDiscountPercentage: false,
-        discountPercentage: null,
-        discountFixedAmount: 50,
-        minimumOrderValue: 0,
-        maximumDiscountAmount: 50,
-        useOnce: false,
-      },
-      {
-        name: "Test 20% Off",
-        code: "TEST20",
-        description: "20% off test coupon",
-        isDiscountPercentage: true,
-        discountPercentage: 20,
-        discountFixedAmount: null,
-        minimumOrderValue: 0,
-        maximumDiscountAmount: 500,
-        useOnce: false,
-      },
+      ...STORE_COUPONS.map((c) => ({
+        name: c.name,
+        code: c.code,
+        description: c.description,
+        isDiscountPercentage: c.percent !== undefined,
+        discountPercentage: c.percent ?? null,
+        discountFixedAmount: c.percent !== undefined ? null : (c.flat ?? 0),
+        minimumOrderValue: c.minimumOrderValue,
+        maximumDiscountAmount: c.maximumDiscountAmount,
+        useOnce: c.useOnce,
+      })),
     ];
 
     for (const item of defaults) {

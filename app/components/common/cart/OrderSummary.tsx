@@ -11,6 +11,7 @@ import {
   FREE_SHIPPING_THRESHOLD,
 } from "@/lib/shippingConfig";
 import { validateCartCoupon } from "@/helper";
+import { couponConditions, liveCoupons } from "@/const/coupons";
 import { toast } from "sonner";
 import Image from "next/image";
 import { getImageUrl } from "@/lib/imageUrl";
@@ -89,8 +90,9 @@ export function OrderSummary() {
 
   const freeShippingDiff = FREE_SHIPPING_THRESHOLD - discountedSubtotal;
 
-  const handleApplyCoupon = async () => {
-    const code = couponInput.trim().toUpperCase();
+  const handleApplyCoupon = async (picked?: string) => {
+    const code = (picked || couponInput).trim().toUpperCase();
+    if (picked) setCouponInput(code);
     if (!code) {
       toast.error("Please enter a coupon code");
       return;
@@ -293,7 +295,7 @@ export function OrderSummary() {
           ) : (
             <Button
               type="button"
-              onClick={handleApplyCoupon}
+              onClick={() => handleApplyCoupon()}
               disabled={couponLoading || !couponInput.trim()}
               className="h-10 px-4 text-xs font-bold bg-[#016271] hover:bg-[#014d59] text-white"
             >
@@ -301,6 +303,32 @@ export function OrderSummary() {
             </Button>
           )}
         </div>
+
+        {/* Offers running today, tap to apply (rules in const/coupons.ts) */}
+        {!appliedCoupon && liveCoupons().length > 0 && (
+          <div className="rounded-lg border border-dashed border-[#9FD3D6] bg-[#F3FAFB] p-2.5">
+            <p className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-[#016271]">Available offers</p>
+            <div className="divide-y divide-[#D6ECEE]">
+              {liveCoupons().map((c) => (
+                <button
+                  key={c.code}
+                  type="button"
+                  onClick={() => handleApplyCoupon(c.code)}
+                  disabled={couponLoading}
+                  className="flex w-full items-center justify-between gap-3 py-2 text-left"
+                >
+                  <span className="min-w-0">
+                    <span className="block text-xs text-gray-800">
+                      <strong className="font-mono tracking-wide">{c.code}</strong> · {c.description}
+                    </span>
+                    <span className="block text-[11px] text-gray-500">{couponConditions(c)}</span>
+                  </span>
+                  <span className="shrink-0 text-xs font-bold text-[#016271]">Apply</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {appliedCoupon && discount > 0 && (
           <div className="rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800 flex items-center justify-between">

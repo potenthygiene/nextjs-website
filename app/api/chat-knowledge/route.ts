@@ -5,6 +5,7 @@ import { product, productFaq, productVariant } from "@/db/schema";
 import { fixHighlights } from "@/lib/contentFixes";
 import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_FEE } from "@/lib/shippingConfig";
 import * as R from "@/lib/rewards";
+import { couponConditions, couponConditionsHi, liveCoupons } from "@/const/coupons";
 import { FAQ_GROUPS } from "@/const/generalFaqs";
 import { ARTICLES } from "@/const/journal";
 import { fixProductFaq } from "@/lib/contentFixes";
@@ -74,18 +75,30 @@ async function liveProducts() {
   const [products, variants] = await Promise.all([
     db.select().from(product),
     db
-      .select({ productId: productVariant.productId, name: productVariant.name, price: productVariant.price, inStock: productVariant.isInStock })
+      .select({
+        id: productVariant.id,
+        productId: productVariant.productId,
+        name: productVariant.name,
+        sku: productVariant.sku,
+        price: productVariant.price,
+        inStock: productVariant.isInStock,
+        image: productVariant.bannerImage,
+      })
       .from(productVariant),
   ]);
   return products.map((p) => {
     const vs = variants.filter((v) => v.productId === p.id && Number(v.price) > 0);
     const prices = vs.map((v) => Number(v.price));
     return {
+      id: p.id,
+      dbSlug: p.slug,
+      image: p.bannerImage,
+      isMixBox: !!p.isMixBox,
       slug: resolveCanonicalSlug(p.slug),
       name: p.name,
       brand: p.brand === "loway" ? "Looway" : "Ovy",
       fromPrice: prices.length ? Math.min(...prices) : null,
-      variants: vs.map((v) => ({ name: v.name, price: Number(v.price), inStock: v.inStock !== false })),
+      variants: vs.map((v) => ({ id: v.id, sku: v.sku, image: v.image, name: v.name, price: Number(v.price), inStock: v.inStock !== false })),
       inStock: vs.length ? vs.some((v) => v.inStock !== false) : true,
       highlights: fixHighlights(p.highlights).slice(0, 3),
       subscription: p.allowSubscription ? { monthly: p.subscribeMonthlyDiscount || 0, everyTwoMonths: p.subscribeBiMontlyDiscount || 0 } : null,
@@ -132,7 +145,22 @@ export async function GET() {
   }
 
   return NextResponse.json(
-    { answers: [...products, ...general, ...journal], products: catalog, offers: OFFERS },
+    {
+      answers: [...products, ...general, ...journal],
+      products: catalog,
+      offers: {
+        ...OFFERS,
+        coupons: liveCoupons().map((c) => ({
+          code: c.code,
+          description: c.description,
+          conditions: couponConditions(c),
+          descriptionHi: c.descriptionHi,
+          conditionsHi: couponConditionsHi(c),
+          minDifferentProducts: c.minDifferentProducts || 0,
+          firstOrderOnly: !!c.firstOrderOnly,
+        })),
+      },
+    },
     { headers: { "Cache-Control": "public, max-age=600, s-maxage=3600" } },
   );
 }
