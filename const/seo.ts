@@ -17,7 +17,13 @@ export const SOCIAL_LINKS = [
   MARKETPLACE_LINKS.myntra,
 ];
 
-type PageSeo = { title: string; description: string; path: string };
+type PageSeo = {
+  title: string;
+  description: string;
+  path: string;
+  /** When this page's content last really changed (YYYY-MM-DD). Update it with every edit. */
+  updated?: string;
+};
 
 // One entry per public page. Titles get " | Potent Hygiene" added by the
 // root layout's title template, except the homepage, which is absolute.
@@ -28,89 +34,104 @@ const PAGES: Record<string, PageSeo> = {
     description:
       "Ovy rash-free organic sanitary pads, teen kits, liners and menstrual cups, and Looway pee funnels, toilet seat covers and travel bags. Made in Jaipur. Free delivery on ₹399+.",
     path: "/",
+    updated: "2026-10-22",
   },
   shop: {
     title: "Shop Period Care & Travel Hygiene Products",
     description:
       "Shop Ovy organic sanitary pads, teen kits, panty liners and menstrual cups, and Looway travel hygiene essentials. Subscribe and save up to 15%. Free delivery on ₹399+.",
     path: "/shop",
+    updated: "2026-10-22",
   },
   ovy: {
     title: "Ovy Organic Period Care: Pads, Teen Kits, Cups & Liners",
     description:
       "Ovy is period care made for Indian bodies: rash-free, dermatologically tested organic pads in L, XL and XL+, teen kits, daily liners and medical-grade menstrual cups.",
     path: "/ovy",
+    updated: "2026-10-22",
   },
   looway: {
     title: "Looway Travel Hygiene: Pee Funnel, Seat Covers & Travel Bags",
     description:
       "Looway makes Indian toilets and journeys easier: a reusable female pee funnel, disposable toilet seat covers and leak-proof urine and vomit bags for travel.",
     path: "/looway",
+    updated: "2026-10-22",
   },
   "yatra-kit": {
     title: "Looway Yatra Kit: Build Your Travel Hygiene Kit",
     description:
       "Build a travel hygiene kit for treks, pilgrimages, road trips and flights: Looway seat covers, pee and puke bags and a reusable pee funnel in one kit.",
     path: "/looway-yatra-kit",
+    updated: "2026-10-22",
   },
   "period-log": {
     title: "Free Period Tracker & Period Calculator",
     description:
       "Enter your last period date and cycle length to see your next periods. A free, simple period tracker from Ovy by Potent Hygiene.",
     path: "/period-log",
+    updated: "2026-10-22",
   },
   blog: {
     title: "Health & Hygiene Journal: Period, Women's & Travel Guides",
     description:
       "Sourced guides on periods, pad rash, discharge, PMDD, perimenopause, dengue, pollution, handwashing and public toilet hygiene, written for India by Potent Hygiene.",
     path: "/blog",
+    updated: "2026-10-23",
   },
   faq: {
     title: "FAQs: Orders, Delivery, Subscriptions & Products",
     description:
       "Answers to common questions about Ovy and Looway products, delivery, subscriptions, Cycle Sync, payments and cancellations.",
     path: "/faq",
+    updated: "2026-10-22",
   },
   contact: {
     title: "Contact Us",
     description:
       "Call, WhatsApp or email Potent Hygiene, Monday to Saturday, 10 am to 7 pm. Customer care: care@potenthygiene.com. Business and bulk orders: info@potenthygiene.com.",
     path: "/contact",
+    updated: "2026-10-22",
   },
   about: {
     title: "About Us: India's Scenario-Based Hygiene Brand",
     description:
       "Potent Hygiene is a woman-founded brand from Jaipur, building Ovy period care and Looway travel hygiene for Indian bodies, Indian toilets and Indian journeys.",
     path: "/about",
+    updated: "2026-10-22",
   },
   business: {
     title: "B2B & Bulk Orders: Hygiene Supply for Businesses",
     description:
       "B2B supply of Ovy pads, teen kits and cups and Looway seat covers, pee and puke bags and Yatra Kits for corporates, travel operators, hotels, schools, hospitals and CSR. GST invoice, quote in one working day.",
     path: "/business",
+    updated: "2026-10-23",
   },
   "shipping-policy": {
     title: "Shipping Policy",
     description:
       "How and when Potent Hygiene orders ship across India, delivery times and free delivery on orders of ₹399 and above.",
     path: "/shipping-policy",
+    updated: "2026-10-22",
   },
   "refund-policy": {
     title: "Refund & Cancellation Policy",
     description:
       "Potent Hygiene's cancellation and refund policy for personal hygiene products.",
     path: "/refund-policy",
+    updated: "2026-10-22",
   },
   "privacy-policy": {
     title: "Privacy Policy",
     description:
       "How Potent Hygiene collects, uses and protects your personal data.",
     path: "/privacy-policy",
+    updated: "2026-10-15",
   },
   "terms-condition": {
     title: "Terms & Conditions",
     description: "Terms and conditions for using potenthygiene.com.",
     path: "/terms-condition",
+    updated: "2026-10-22",
   },
 };
 
@@ -190,6 +211,9 @@ export function productMetadata(slug: string): Metadata {
   if (!seo) return {};
   return build({ ...seo, path: `/product-detail/${slug}` });
 }
+
+/** Public pages with the date their content last changed, for the sitemap. */
+export const PUBLIC_PAGES = Object.values(PAGES).map((p) => ({ path: p.path, updated: p.updated }));
 
 export const PUBLIC_PATHS = [
   ...Object.values(PAGES).map((p) => p.path),
