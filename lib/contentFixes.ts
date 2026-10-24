@@ -16,6 +16,11 @@ const TEXT_FIXES: [RegExp, string][] = [
   [/Disposable stand-and-pee funnel/g, "Reusable stand-and-pee funnel"],
   // Packaging is bold, not hidden.
   [/plain (&|and) discreet on the outside/gi, "bold and proud on the outside"],
+  // Orders are dispatched within 24 to 48 hours.
+  [/\b(ship|ships|shipped|dispatch|dispatched|sent out|packed)( \w+)? within 24 hours\b(?! to)/gi, "$1$2 within 24 to 48 hours"],
+  // No long dashes in customer-facing text. Number ranges read "to"; elsewhere a comma reads the same.
+  [/(\d)\s*[\u2013\u2014]\s*(\d)/g, "$1 to $2"],
+  [/\s*[\u2013\u2014]\s*/g, ", "],
   // Leftover HTML in admin-entered text.
   [/&amp;/g, "&"],
   [/<\/?b>/g, ""],

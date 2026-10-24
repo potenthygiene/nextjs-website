@@ -74,7 +74,7 @@ async function queryCatalogCategories() {
 
 export const getCachedCatalogProducts = unstable_cache(
   queryCatalogProducts,
-  ["catalog-products-with-categories-v6-priority-desc-no-variants-starting-price-textfix-highlights-cupname"],
+  ["catalog-products-with-categories-v6-priority-desc-no-variants-starting-price-textfix-highlights-cupname-dashes"],
   {
     tags: ["catalog-products", "products", "categories"],
     revalidate: 60 * 60 * 24,
