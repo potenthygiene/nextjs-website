@@ -29,10 +29,10 @@ const SETTINGS: { name: string; what: string }[] = [
   { name: "RAZORPAY_KEY_SECRET", what: "Razorpay secret (server)" },
   { name: "NEXT_PUBLIC_RAZORPAY_KEY_ID", what: "Razorpay key (payment window)" },
   { name: "RAZORPAY_WEBHOOK_SECRET", what: "Razorpay webhook secret: without it, Razorpay's payment and renewal messages are refused" },
-  { name: "SES_AWS_ACCESS_KEY_ID", what: "Amazon SES email key" },
-  { name: "SES_AWS_SECRET_ACCESS_KEY", what: "Amazon SES email secret" },
+  { name: "SES_AWS_ACCESS_KEY_ID", what: "Amazon SES email key (optional: the main AWS key is used if missing)" },
+  { name: "SES_AWS_SECRET_ACCESS_KEY", what: "Amazon SES email secret (optional, as above)" },
   { name: "AWS_REGION", what: "Amazon region" },
-  { name: "EMAIL_FROM", what: "Email sender address" },
+  { name: "EMAIL_FROM", what: "Email sender address (optional: care@potenthygiene.com is used if missing)" },
   { name: "SHIPROCKET_EMAIL", what: "Shiprocket login email" },
   { name: "SHIPROCKET_PASSWORD", what: "Shiprocket login password" },
   { name: "SHIPROCKET_PICKUP_PINCODE", what: "Warehouse pincode for delivery checks" },
@@ -209,7 +209,7 @@ export default async function HealthPage() {
           ))}
         </div>
         <p className="mt-3 text-sm">
-          Email sender: <b>{process.env.EMAIL_FROM || "not set"}</b>. It should be <b>Potent Hygiene &lt;care@potenthygiene.com&gt;</b>.
+          Email sender: <b>{process.env.EMAIL_FROM || "Potent Hygiene <care@potenthygiene.com> (the default)"}</b>.
         </p>
       </Section>
 

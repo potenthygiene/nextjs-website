@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+import { fixDashes } from "@/lib/contentFixes";
 
 import { requireAdmin } from "@/helper/auth/guard";
 import { blog } from "@/db/schema";
@@ -58,10 +59,10 @@ export async function getJournalPosts() {
     .map((b) => ({
       id: b.id,
       slug: b.slug as string,
-      title: b.title || "",
+      title: fixDashes(b.title || ""),
       blogCategory: normaliseTopic(b.blogCategory),
-      metaDescription: b.metaDescription || "",
-      data: b.data || "",
+      metaDescription: fixDashes(b.metaDescription || ""),
+      data: fixDashes(b.data || ""),
       image: b.image || "/placeholder.jpg",
       date: formatJournalDate(b.createdAt),
       isoDate: b.createdAt ? b.createdAt.toISOString().slice(0, 10) : "",
@@ -127,7 +128,13 @@ export async function getBlogBySlug(slug: string) {
       .limit(1);
 
     if (result[0]) {
-      return normalizeBlog(result[0]);
+      const post = normalizeBlog(result[0]);
+      return {
+        ...post,
+        title: fixDashes(post.title),
+        metaDescription: fixDashes(post.metaDescription),
+        data: fixDashes(post.data),
+      };
     }
 
     if (FALLBACK_BLOG_MAP[slug]) {

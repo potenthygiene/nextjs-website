@@ -10,6 +10,9 @@ import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 import fs from "fs";
 import path from "path";
 
+// Every site email comes from care@ unless Vercel sets another sender.
+const DEFAULT_FROM = "Potent Hygiene <care@potenthygiene.com>";
+
 type SendEmailParams = {
   to: string;
   subject: string;
@@ -60,7 +63,7 @@ function renderTemplate(template: string, data: TemplateData = {}) {
 
 export const sendEmail = async ({ to, subject, html }: SendEmailParams) => {
   const command = new SendEmailCommand({
-    Source: EMAIL_FROM,
+    Source: EMAIL_FROM || DEFAULT_FROM,
     Destination: {
       ToAddresses: [to],
     },

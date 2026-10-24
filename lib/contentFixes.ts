@@ -88,3 +88,10 @@ export function fixProductFaq<T extends { question?: string | null; answer?: str
         : answer,
   };
 }
+
+// Long dashes in older database text (journal posts): number ranges read
+// "to", anywhere else a comma.
+export function fixDashes<T extends string | null | undefined>(text: T): T {
+  if (!text) return text;
+  return text.replace(/(\d)\s*[\u2013\u2014]\s*(\d)/g, "$1 to $2").replace(/\s*[\u2013\u2014]\s*/g, ", ") as T;
+}
