@@ -22,6 +22,7 @@ import {
   CONTAINER,
   EYEBROW_TEAL,
   H2,
+  H2_CARD,
   LEAD,
   SECTION_Y,
 } from "./homeStyles";
@@ -47,10 +48,13 @@ type Props = {
   bgAccent?: string;
   tickerColor?: string;
   tickerText?: string;
+  /** "card" renders a compact card with a small photo, for the homepage,
+   * where it sits beside the Mix Your Box card. */
+  variant?: "band" | "card";
 };
 
-export function OurStory(_props: Props) {
-  void _props;
+export function OurStory({ variant = "band" }: Props) {
+  const isCard = variant === "card";
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
   const [cupProduct, setCupProduct] = useState<CupProduct | null>(null);
@@ -121,6 +125,140 @@ export function OurStory(_props: Props) {
     }
   };
 
+  const lead = (
+    <p className={`${LEAD} max-w-xl ${isCard ? "mb-4" : "mb-5 sm:mb-6"}`}>
+      Up to 12 hours between changes, even overnight. 100% medical-grade
+      silicone, latex-free and BPA-free. The product page has a
+      30-second size finder and a 20-second cervix check, so you get the
+      size right first time.
+    </p>
+  );
+
+  const metricTile = `flex flex-col justify-start rounded-2xl border border-[#BDE3EA] p-3 sm:p-4 ${
+    isCard ? "bg-white" : "bg-[#E6F4F6]"
+  }`;
+
+  // 3 metric tiles (3 columns on phone and desktop)
+  const metrics = (
+    <div className={`grid grid-cols-3 gap-2 sm:gap-3.5 ${isCard ? "mb-5" : "mb-6"}`}>
+      <div className={metricTile}>
+        <span className="mb-0.5 block font-serif text-base font-bold text-[#016271] sm:text-xl">
+          12 hrs
+        </span>
+        <span className="text-xs leading-snug text-[#5C524D] sm:text-sm">
+          between changes, even overnight
+        </span>
+      </div>
+
+      <div className={metricTile}>
+        <span className="mb-0.5 block font-serif text-base font-bold text-[#016271] sm:text-xl">
+          Years
+        </span>
+        <span className="text-xs leading-snug text-[#5C524D] sm:text-sm">
+          of use from one cup, replacing thousands of disposables
+        </span>
+      </div>
+
+      <div className={metricTile}>
+        <span className="mb-0.5 block font-serif text-base font-bold text-[#016271] sm:text-xl">
+          3 sizes
+        </span>
+        <span className="text-xs leading-snug text-[#5C524D] sm:text-sm">
+          Teen XS, Medium and Large, in four colours
+        </span>
+      </div>
+    </div>
+  );
+
+  // One primary (add to bag), one secondary (size finder)
+  const actions = (
+    <>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+        {cupLoadFailed ? (
+          // Live price did not load: send her to the product page instead.
+          <Link href="/product-detail/ovy-cup" className={`${BTN_PRIMARY} w-full sm:w-auto`}>
+            Shop the cup <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            disabled={adding || !canAddToCart}
+            className={`${
+              added
+                ? `${BTN_BASE} bg-emerald-700 text-white`
+                : canAddToCart
+                  ? BTN_PRIMARY
+                  : `${BTN_BASE} bg-gray-200 text-ink-muted`
+            } w-full sm:w-auto`}
+          >
+            {added ? (
+              <>
+                <Check className="h-4 w-4" aria-hidden />
+                <span>Added to bag</span>
+              </>
+            ) : (
+              <>
+                <Plus className="h-4 w-4" aria-hidden />
+                <span>
+                  {cupPrice > 0 ? `Add to bag, ₹${cupPrice}` : "Loading price"}
+                </span>
+              </>
+            )}
+          </button>
+        )}
+
+        <Link
+          href="/product-detail/ovy-cup?scroll=size-finder#size-finder"
+          className={`${BTN_SECONDARY} w-full sm:w-auto`}
+        >
+          Find my size
+        </Link>
+      </div>
+
+      <p className="mt-3 text-[13px] text-[#5C524D]">
+        {cupVariant ? `Adds ${getOvyVariantLabel(cupVariant)}. ` : ""}
+        <Link
+          href="/product-detail/ovy-cup"
+          className="inline-flex items-center gap-1 py-2 font-semibold text-[#016271] underline-offset-4 hover:underline"
+        >
+          See every size and colour
+          <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+        </Link>
+      </p>
+    </>
+  );
+
+  if (isCard) {
+    return (
+      <article className="flex h-full flex-col rounded-3xl border border-[#BDE3EA] bg-[#F1FAF9] p-5 sm:p-7">
+        <div className="mb-3 flex items-center gap-4">
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-2xl border border-white bg-white shadow-sm sm:h-24 sm:w-24">
+            <Image
+              src={cupImage}
+              alt="Potent Hygiene Menstrual Cup"
+              fill
+              className="object-cover object-center"
+              sizes="96px"
+            />
+          </div>
+          <div className="min-w-0">
+            <span className={`${EYEBROW_TEAL} mb-1.5`}>
+              Potent Hygiene menstrual cup
+            </span>
+            <h2 className={H2_CARD}>
+              <span className="block">One cup.</span>
+              <span className="block text-[#016271]">Years of freedom.</span>
+            </h2>
+          </div>
+        </div>
+        {lead}
+        {metrics}
+        <div className="mt-auto">{actions}</div>
+      </article>
+    );
+  }
+
   return (
     <section className={`w-full overflow-hidden bg-white ${SECTION_Y}`}>
       <div className={CONTAINER}>
@@ -151,97 +289,9 @@ export function OurStory(_props: Props) {
               </span>
             </h2>
 
-            <p className={`${LEAD} mb-5 max-w-xl sm:mb-6`}>
-              Up to 12 hours between changes, even overnight. 100% medical-grade
-              silicone, latex-free and BPA-free. The product page has a
-              30-second size finder and a 20-second cervix check, so you get the
-              size right first time.
-            </p>
-
-            {/* 3 Metric Cards (3 Columns on Mobile & Desktop) */}
-            <div className="mb-6 grid grid-cols-3 gap-2 sm:gap-3.5">
-              <div className="flex flex-col justify-start rounded-2xl border border-[#BDE3EA] bg-[#E6F4F6] p-3 sm:p-4">
-                <span className="mb-0.5 block font-serif text-base font-bold text-[#016271] sm:text-xl">
-                  12 hrs
-                </span>
-                <span className="text-xs leading-snug text-[#5C524D] sm:text-sm">
-                  between changes, even overnight
-                </span>
-              </div>
-
-              <div className="flex flex-col justify-start rounded-2xl border border-[#BDE3EA] bg-[#E6F4F6] p-3 sm:p-4">
-                <span className="mb-0.5 block font-serif text-base font-bold text-[#016271] sm:text-xl">
-                  Years
-                </span>
-                <span className="text-xs leading-snug text-[#5C524D] sm:text-sm">
-                  of use from one cup, replacing thousands of disposables
-                </span>
-              </div>
-
-              <div className="flex flex-col justify-start rounded-2xl border border-[#BDE3EA] bg-[#E6F4F6] p-3 sm:p-4">
-                <span className="mb-0.5 block font-serif text-base font-bold text-[#016271] sm:text-xl">
-                  3 sizes
-                </span>
-                <span className="text-xs leading-snug text-[#5C524D] sm:text-sm">
-                  Teen XS, Medium and Large, in four colours
-                </span>
-              </div>
-            </div>
-
-            {/* One primary (add to bag), one secondary (size finder) */}
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-              {cupLoadFailed ? (
-                // Live price did not load: send her to the product page instead.
-                <Link href="/product-detail/ovy-cup" className={`${BTN_PRIMARY} w-full sm:w-auto`}>
-                  Shop the cup <ArrowRight className="h-4 w-4" aria-hidden />
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  disabled={adding || !canAddToCart}
-                  className={`${
-                    added
-                      ? `${BTN_BASE} bg-emerald-700 text-white`
-                      : canAddToCart
-                        ? BTN_PRIMARY
-                        : `${BTN_BASE} bg-gray-200 text-ink-muted`
-                  } w-full sm:w-auto`}
-                >
-                  {added ? (
-                    <>
-                      <Check className="h-4 w-4" aria-hidden />
-                      <span>Added to bag</span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="h-4 w-4" aria-hidden />
-                      <span>
-                        {cupPrice > 0 ? `Add to bag, ₹${cupPrice}` : "Loading price"}
-                      </span>
-                    </>
-                  )}
-                </button>
-              )}
-
-              <Link
-                href="/product-detail/ovy-cup?scroll=size-finder#size-finder"
-                className={`${BTN_SECONDARY} w-full sm:w-auto`}
-              >
-                Find my size
-              </Link>
-            </div>
-
-            <p className="mt-3 text-[13px] text-[#5C524D]">
-              {cupVariant ? `Adds ${getOvyVariantLabel(cupVariant)}. ` : ""}
-              <Link
-                href="/product-detail/ovy-cup"
-                className="inline-flex items-center gap-1 py-2 font-semibold text-[#016271] underline-offset-4 hover:underline"
-              >
-                See every size and colour
-                <ArrowRight className="h-3.5 w-3.5" aria-hidden />
-              </Link>
-            </p>
+            {lead}
+            {metrics}
+            {actions}
           </div>
         </div>
       </div>

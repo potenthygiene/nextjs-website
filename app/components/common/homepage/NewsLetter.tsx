@@ -22,6 +22,8 @@ type Props = {
   outerBgColor?: string;
   inputBgColor?: string;
   inputBorderColor?: string;
+  /** Homepage spacing: tighter padding around and inside the card. */
+  compact?: boolean;
 };
 
 export function Newsletter({
@@ -45,6 +47,7 @@ export function Newsletter({
   outerBgColor = "#FFFFFF",
   inputBgColor,
   inputBorderColor,
+  compact = false,
 }: Props) {
   const [email, setEmail] = useState("");
   const [agreed, setAgreed] = useState(false);
@@ -84,10 +87,10 @@ export function Newsletter({
   };
 
   return (
-    <section id="newsletter-section" className="py-8 sm:py-12 md:py-16" style={{ backgroundColor: outerBgColor }}>
+    <section id="newsletter-section" className={compact ? "py-8 sm:py-10 md:py-12" : "py-8 sm:py-12 md:py-16"} style={{ backgroundColor: outerBgColor }}>
       <div className="container mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         <div
-          className="relative overflow-hidden rounded-2xl px-6 py-8 shadow-xl sm:px-10 sm:py-12 md:rounded-3xl lg:px-14 lg:py-14"
+          className={`relative overflow-hidden rounded-2xl px-6 py-8 shadow-xl sm:px-10 md:rounded-3xl lg:px-14 ${compact ? "sm:py-10 lg:py-10" : "sm:py-12 lg:py-14"}`}
           style={{ backgroundColor: actualCardBg }}
         >
           {/* OPTIONAL BACKGROUND IMAGES IF PROVIDED */}

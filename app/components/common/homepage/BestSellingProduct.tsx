@@ -18,6 +18,8 @@ import {
   CONTAINER,
   EYEBROW_TEAL,
   H2,
+  HOME_HEAD_MB,
+  HOME_Y,
   LEAD,
   LINK_ARROW,
   SECTION_Y,
@@ -28,6 +30,8 @@ type Props = {
   brand?: "ovy" | "loway" | string | null;
   buttonColor?: string;
   description?: string;
+  /** Homepage spacing: tighter padding above and below. */
+  compact?: boolean;
 };
 
 export default function BestsellingProducts({
@@ -35,6 +39,7 @@ export default function BestsellingProducts({
   description = "Across both ranges. Between them they cover most of what a month and a journey can throw at you.",
   brand = null,
   buttonColor = "#016271",
+  compact = false,
 }: Props) {
   const [quickViewProduct, setQuickViewProduct] = useState<any | null>(null);
   const [quickViewVariants, setQuickViewVariants] = useState<any[]>([]);
@@ -195,10 +200,10 @@ export default function BestsellingProducts({
   return (
     <section
       id="bestsellers"
-      className={`w-full scroll-mt-24 border-b border-gray-100 bg-[#FAF8F5] ${SECTION_Y}`}
+      className={`w-full scroll-mt-24 border-b border-gray-100 bg-[#FAF8F5] ${compact ? HOME_Y : SECTION_Y}`}
     >
       <div className={CONTAINER}>
-        <div className="mb-6 flex flex-col gap-2 sm:mb-10 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+        <div className={`${compact ? HOME_HEAD_MB : "mb-6 sm:mb-10"} flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-6`}>
           <div className="max-w-2xl space-y-2 sm:space-y-3">
             <span className={EYEBROW_TEAL}>Start here</span>
             <h2 className={H2}>{title}</h2>
@@ -218,6 +223,7 @@ export default function BestsellingProducts({
               product={product}
               index={idx}
               isFifthMobileCard={idx === 4}
+              compact={compact}
               buttonColor={buttonColor}
               onQuickView={openQuickView}
               onAddToCart={(p) => handleAddToCart(p)}

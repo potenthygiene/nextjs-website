@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getImageUrl } from "@/lib/imageUrl";
-import { CONTAINER, EYEBROW_TEAL, H2, LEAD, SECTION_Y } from "./homeStyles";
+import { CONTAINER, EYEBROW_TEAL, H2, HOME_HEAD_MB, HOME_Y, LEAD } from "./homeStyles";
 import { useCatalogStore } from "@/store/catalogStore";
 
 const MOMENTS = [
@@ -61,12 +61,12 @@ export function CategoryGrid({
 
   return (
     <section
-      className={`w-full scroll-mt-24 border-b border-gray-100 bg-white ${SECTION_Y}`}
+      className={`w-full scroll-mt-24 border-b border-gray-100 bg-white ${HOME_Y}`}
       id="shop-by"
     >
       <div className={CONTAINER}>
         {/* Section Header */}
-        <div className="mb-6 space-y-2 text-center sm:mb-10 sm:space-y-3">
+        <div className={`${HOME_HEAD_MB} space-y-2 text-center sm:space-y-3`}>
           <span className={EYEBROW_TEAL}>Find yours</span>
           <h2 className={H2}>{title}</h2>
           <p className={`${LEAD} mx-auto max-w-xl`}>
@@ -75,7 +75,7 @@ export function CategoryGrid({
         </div>
 
         {/* Tab Toggle Bar */}
-        <div className="mb-6 flex justify-center sm:mb-10">
+        <div className="mb-5 flex justify-center sm:mb-6">
           <div
             role="tablist"
             aria-label="Browse by"
@@ -112,7 +112,7 @@ export function CategoryGrid({
 
         {/* Tab Panel 1: Shop by Moment */}
         {activeTab === "moment" && (
-          <div className="animate-fadeIn grid grid-cols-3 gap-2.5 sm:grid-cols-2 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+          <div className="animate-fadeIn grid grid-cols-3 gap-2.5 sm:grid-cols-2 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-4">
             {MOMENTS.map((m) => (
               <Link
                 key={m.label}

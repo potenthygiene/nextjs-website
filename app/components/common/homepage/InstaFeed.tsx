@@ -50,6 +50,8 @@ type Props = {
   gradientTo?: string;
   textColor?: string;
   buttonColor?: string;
+  /** Homepage spacing: smaller tiles and tighter padding. */
+  compact?: boolean;
 };
 
 export function InstagramFeed({
@@ -63,6 +65,7 @@ export function InstagramFeed({
   buttonTextColor,
   buttonHoverBg,
   buttonHoverText,
+  compact = false,
 }: Props) {
   const isPink = theme === "pink";
 
@@ -78,14 +81,14 @@ export function InstagramFeed({
 
   return (
     <section
-      className={`w-full overflow-hidden py-12 sm:py-16 lg:py-20 ${
+      className={`w-full overflow-hidden ${compact ? "py-9 sm:py-12 lg:py-14" : "py-12 sm:py-16 lg:py-20"} ${
         sectionBg.startsWith("#") ? "" : sectionBg
       }`}
       style={sectionBg.startsWith("#") ? { backgroundColor: sectionBg } : undefined}
     >
       <div className="w-full text-center">
         {/* HEADER */}
-        <div className="mb-8 sm:mb-10 space-y-2">
+        <div className={`${compact ? "mb-4 sm:mb-5" : "mb-8 sm:mb-10"} space-y-2`}>
           <span
             className={`block text-[11px] font-bold tracking-[0.14em] uppercase sm:text-xs ${kickerCls}`}
           >
@@ -111,7 +114,7 @@ export function InstagramFeed({
                 href="https://www.instagram.com/potenthygiene/"
                 target="_blank"
                 rel="noreferrer"
-                className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs border border-white/70 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 aspect-square w-44 sm:w-60 md:w-64 shrink-0 group block cursor-pointer"
+                className={`relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xs border border-white/70 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 aspect-square ${compact ? "w-36 sm:w-48 md:w-52" : "w-44 sm:w-60 md:w-64"} shrink-0 group block cursor-pointer`}
               >
                 <Image
                   src={img.src}
@@ -126,7 +129,7 @@ export function InstagramFeed({
         </div>
 
         {/* BUTTON */}
-        <div className="flex justify-center pt-8 sm:pt-10">
+        <div className={`flex justify-center ${compact ? "pt-5 sm:pt-6" : "pt-8 sm:pt-10"}`}>
           <Link
             href="https://www.instagram.com/potenthygiene/"
             target="_blank"

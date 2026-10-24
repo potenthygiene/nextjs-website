@@ -7,13 +7,13 @@ import {
   CONTAINER,
   EYEBROW_TEAL,
   H2,
+  HOME_Y,
   LEAD,
-  SECTION_Y,
 } from "./homeStyles";
 
 export function FounderStory() {
   return (
-    <section className={`bg-[#F8F6F1] ${SECTION_Y}`}>
+    <section className={`bg-[#F8F6F1] ${HOME_Y}`}>
       <div className={CONTAINER}>
         {/* Mobile Header Layout (< lg): Circular Avatar Left + Header Right */}
         <div className="mb-4 flex items-start gap-4 lg:hidden">
@@ -34,22 +34,22 @@ export function FounderStory() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-12 lg:gap-12">
           {/* Desktop Left Image (lg:block, hidden on mobile < lg) */}
-          <div className="hidden lg:col-span-5 lg:block">
-            <div className="relative mx-auto max-w-md overflow-hidden rounded-3xl shadow-sm lg:max-w-none">
+          <div className="hidden lg:col-span-4 lg:block">
+            <div className="relative aspect-[5/6] w-full overflow-hidden rounded-3xl shadow-sm">
               <Image
                 src="/divitaji.jpg"
                 alt="Divita Agarwal, founder of Potent Hygiene"
-                width={600}
-                height={700}
-                className="h-auto w-full rounded-3xl object-cover"
+                fill
+                className="rounded-3xl object-cover object-top"
+                sizes="400px"
               />
             </div>
           </div>
 
           {/* Content Container */}
-          <div className="space-y-3 sm:space-y-5 lg:col-span-7">
+          <div className="space-y-3 sm:space-y-4 lg:col-span-8">
             {/* Desktop Header Badge & Title (hidden on mobile < lg) */}
             <div className="hidden lg:block">
               <span className={`${EYEBROW_TEAL} mb-3`}>Our story</span>

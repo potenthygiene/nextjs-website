@@ -16,11 +16,11 @@ const TRIP_TAGS = [
 
 export function YatraKitPromo() {
   return (
-    <section className="relative w-full overflow-hidden bg-[#FAF7F2] pt-0 pb-12 sm:pb-16 lg:pb-20">
+    <section className="relative w-full overflow-hidden bg-[#FAF7F2] pt-0 pb-9 sm:pb-12 lg:pb-14">
       
       {/* Looway checkerboard */}
       <div 
-        className="mb-10 h-3 w-full opacity-90 sm:mb-14"
+        className="mb-8 h-3 w-full opacity-90 sm:mb-10"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='24' height='14' viewBox='0 0 24 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='2' width='10' height='10' rx='1' fill='%23016271'/%3E%3Crect x='12' y='2' width='10' height='10' rx='1' fill='%23F5BA24'/%3E%3C/svg%3E")`,
           backgroundRepeat: "repeat-x",
@@ -29,7 +29,7 @@ export function YatraKitPromo() {
       />
 
       <div className={CONTAINER}>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-center">
           
           {/* LEFT CONTENT */}
           <div className="lg:col-span-6 flex flex-col justify-center text-left">
@@ -46,7 +46,7 @@ export function YatraKitPromo() {
             </p>
 
             {/* Trip presets: tap one to open that kit */}
-            <ul className="mb-6 flex max-w-md flex-wrap gap-2 sm:mb-8">
+            <ul className="mb-6 flex max-w-md flex-wrap gap-2">
               {TRIP_TAGS.map((tag) => (
                 <li key={tag.kit}>
                   <Link
@@ -69,7 +69,7 @@ export function YatraKitPromo() {
 
           {/* RIGHT IMAGE */}
           <div className="lg:col-span-6 flex justify-center">
-            <div className="group relative aspect-[16/10] w-full max-w-md overflow-hidden rounded-3xl border border-white/80 shadow-xl sm:aspect-square lg:max-w-lg">
+            <div className="group relative aspect-[16/10] w-full max-w-md overflow-hidden rounded-3xl border border-white/80 shadow-xl sm:aspect-[4/3] lg:max-w-lg">
               <Image
                 src="/yatra_mom_daughter.jpg"
                 alt="Mother and daughter camping with Looway Yatra Kit"

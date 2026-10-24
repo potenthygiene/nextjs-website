@@ -115,6 +115,7 @@ const TRUST_ITEMS = [
   "Cruelty-free",
   "Ships in 24 to 48 hours",
   "Free delivery on ₹399 and above",
+  "Prices include GST",
 ];
 
 const SLIDE_INTERVAL_MS = 7000;
@@ -203,7 +204,7 @@ export function Hero() {
   return (
     <section className="relative w-full overflow-hidden" aria-roledescription="carousel" aria-label="Featured">
       <div
-        className={`w-full px-4 pt-5 pb-6 transition-colors duration-700 sm:px-8 sm:py-12 md:py-16 lg:px-16 ${TINT_BG[slide.tint]}`}
+        className={`w-full px-4 pt-5 pb-6 transition-colors duration-700 sm:px-8 sm:py-10 md:py-12 lg:px-16 ${TINT_BG[slide.tint]}`}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
@@ -259,7 +260,7 @@ export function Hero() {
         <div className="mx-auto hidden max-w-7xl grid-cols-12 items-center gap-12 lg:grid">
           {/* Image stage. Lazy: on a phone this block is hidden and never loads. */}
           <div className="relative order-2 col-span-5 flex w-full items-center justify-center">
-            <div className="relative aspect-[1/1.02] w-full max-w-[420px]">
+            <div className="relative aspect-[1/1.02] w-full max-w-[380px]">
               <div className="absolute bottom-[6%] left-0 z-10 aspect-[4/5] w-[40%] -rotate-6 transform overflow-hidden rounded-[22px] border-4 border-white/90 bg-white shadow-lg">
                 <Image
                   src={slide.image2}
@@ -331,7 +332,7 @@ export function Hero() {
 
       {/* Trust row: static, so nothing moves under the first buttons */}
       <div className="w-full border-b border-gray-100 bg-white px-4 py-3.5">
-        <ul className="mx-auto grid max-w-7xl grid-cols-2 gap-x-3 gap-y-2 text-[13px] font-medium text-[#1F1915] sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-6 sm:text-sm">
+        <ul className="mx-auto grid max-w-7xl grid-cols-2 gap-x-3 gap-y-2 text-[13px] font-medium text-[#1F1915] sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-4 sm:text-sm">
           {TRUST_ITEMS.map((item) => (
             <li key={item} className="flex items-start gap-1.5 sm:items-center">
               <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#016271] sm:mt-0" aria-hidden />

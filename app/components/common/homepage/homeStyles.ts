@@ -6,6 +6,14 @@
 /** Vertical rhythm for a full-width band. */
 export const SECTION_Y = "py-12 sm:py-16 lg:py-20";
 
+/** Tighter rhythm used on the homepage only, so the page stays short.
+ * Shared bands take it through their `sectionY` prop, so the brand pages
+ * keep SECTION_Y. */
+export const HOME_Y = "py-9 sm:py-12 lg:py-14";
+
+/** Gap under a band's heading block on the homepage. */
+export const HOME_HEAD_MB = "mb-5 sm:mb-7";
+
 /** Page-width container with a 16px phone gutter. */
 export const CONTAINER = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 
@@ -18,6 +26,10 @@ export const EYEBROW_OVY = `${EYEBROW} text-[#7E4D77]`;
 /** Section heading (h2). */
 export const H2 =
   "font-serif text-[26px] font-bold leading-[1.15] text-[#1F1915] sm:text-4xl lg:text-[44px]";
+
+/** Section heading (h2) inside a half-width homepage card. */
+export const H2_CARD =
+  "font-serif text-[24px] font-bold leading-[1.15] text-[#1F1915] sm:text-3xl lg:text-[32px]";
 
 /** Card heading (h3). */
 export const H3 =

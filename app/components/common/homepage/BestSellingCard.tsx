@@ -21,6 +21,8 @@ type Props = {
   onQuickView?: (product: any) => void;
   onAddToCart?: (product: any) => Promise<boolean | void> | boolean | void;
   isFifthMobileCard?: boolean;
+  /** Square photo on desktop instead of 4:5, for the homepage. */
+  compact?: boolean;
 };
 
 const CARD_TINTS = [
@@ -93,6 +95,7 @@ export default function BestsellingCard({
   onQuickView,
   onAddToCart,
   isFifthMobileCard = false,
+  compact = false,
 }: Props) {
   const [isAdding, setIsAdding] = useState(false);
   const [added, setAdded] = useState(false);
@@ -245,8 +248,8 @@ export default function BestsellingCard({
       <div
         className={`relative overflow-hidden ${bgTint} ${
           isFifthMobileCard
-            ? "w-[42%] sm:w-full aspect-square sm:aspect-[4/5] shrink-0"
-            : "aspect-[4/5] w-full"
+            ? `w-[42%] sm:w-full aspect-square sm:aspect-[4/5] shrink-0 ${compact ? "lg:aspect-square" : ""}`
+            : `aspect-[4/5] w-full ${compact ? "lg:aspect-square" : ""}`
         }`}
       >
         {/* Badge */}

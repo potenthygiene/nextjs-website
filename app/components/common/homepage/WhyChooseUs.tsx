@@ -1,4 +1,4 @@
-import { CONTAINER, EYEBROW_TEAL, H2, LEAD, SECTION_Y } from "./homeStyles";
+import { CONTAINER, EYEBROW_TEAL, H2, HOME_HEAD_MB, HOME_Y, LEAD } from "./homeStyles";
 
 const WHY_CARDS = [
   {
@@ -41,9 +41,9 @@ const WHY_CARDS = [
 // (no auto-scrolling), on desktop a 3-column grid.
 export function WhyChooseUs() {
   return (
-    <section className={`relative w-full overflow-hidden bg-[#FAF7F2] ${SECTION_Y}`}>
+    <section className={`relative w-full overflow-hidden bg-[#FAF7F2] ${HOME_Y}`}>
       <div className={CONTAINER}>
-        <div className="mb-6 space-y-2 text-center sm:mb-10 sm:space-y-3">
+        <div className={`${HOME_HEAD_MB} space-y-2 text-center sm:space-y-3`}>
           <span className={EYEBROW_TEAL}>Why buy direct</span>
           <h2 className={H2}>Better here than anywhere else.</h2>
           <p className={`${LEAD} mx-auto max-w-xl`}>
@@ -52,24 +52,27 @@ export function WhyChooseUs() {
           </p>
         </div>
 
-        <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 sm:mx-auto sm:grid sm:max-w-6xl sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 lg:grid-cols-3">
+        <ul className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 sm:mx-auto sm:grid sm:max-w-6xl sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 lg:grid-cols-3">
           {WHY_CARDS.map((card) => (
             <li
               key={card.title}
-              className={`flex w-[78%] shrink-0 snap-start flex-col rounded-2xl p-5 shadow-2xs sm:w-auto sm:p-6 ${
+              className={`flex w-[78%] shrink-0 snap-start flex-col rounded-2xl p-5 shadow-2xs sm:w-auto ${
                 card.isMint
                   ? "border border-[#BDE3EA] bg-[#E6F4F6]"
                   : "border border-gray-100 bg-white"
               }`}
             >
-              {card.badge && (
-                <span className="mb-3 inline-block w-fit rounded-full border border-[#016271]/20 bg-white/90 px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-[#016271] uppercase">
-                  {card.badge}
-                </span>
-              )}
-              <h3 className="mb-1.5 font-serif text-lg font-bold text-[#1F1915] sm:text-xl">
-                {card.title}
-              </h3>
+              {/* The "Only here" badge sits beside the title, not above it */}
+              <div className="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                <h3 className="font-serif text-lg font-bold text-[#1F1915] sm:text-xl">
+                  {card.title}
+                </h3>
+                {card.badge && (
+                  <span className="inline-block w-fit rounded-full border border-[#016271]/20 bg-white/90 px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-[#016271] uppercase">
+                    {card.badge}
+                  </span>
+                )}
+              </div>
               <p className="text-sm leading-relaxed text-[#5C524D]">
                 {card.description}
               </p>
