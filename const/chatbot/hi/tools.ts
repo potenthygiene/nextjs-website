@@ -374,8 +374,8 @@ export const TOOL_TEXT_HI: Record<string, string> = {
     "स्पॉटिंग और पीरियड के आख़िर के हल्के दिनों के लिए।",
   "Reusable, with up to 12 hours of wear and nothing to bin, if you've already practised at home.":
     "दोबारा इस्तेमाल होने वाला, 12 घंटे तक पहन सकते हैं और कुछ फेंकना नहीं पड़ता, अगर आप घर पर पहले से प्रैक्टिस कर चुकी हैं।",
-  "The Ovy option made for swimming, if you've already practised with it at home.":
-    "तैराकी के लिए बना Ovy विकल्प, अगर आप घर पर पहले से इसकी प्रैक्टिस कर चुकी हैं।",
+  "The option made for swimming, if you've already practised with it at home.":
+    "तैराकी के लिए बना विकल्प, अगर आप घर पर पहले से इसकी प्रैक्टिस कर चुकी हैं।",
   "Discharge often increases in pregnancy: thin liners keep you fresh on long days.":
     "प्रेग्नेंसी में डिस्चार्ज अक्सर बढ़ जाता है: पतले लाइनर लंबे दिनों में ताज़गी बनाए रखते हैं।",
 

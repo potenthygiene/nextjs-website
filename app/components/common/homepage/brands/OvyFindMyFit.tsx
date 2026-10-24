@@ -96,7 +96,7 @@ export function OvyFindMyFit({ productsBySlug }: { productsBySlug: Record<string
       const size = CUP_SIZES[r.size];
       return {
         title: size.title,
-        productName: product?.name || "Ovy Reusable Menstrual Cup",
+        productName: product?.name || "Potent Hygiene Menstrual Cup",
         sizeLabel: `${size.name}, ${size.cap}${variant?.color ? ` · ${variant.color}` : ""}`,
         description: size.why,
         image: variant?.bannerImage || variant?.image ? getImageUrl(variant.bannerImage || variant.image || "") : CUP_IMAGES[r.size],

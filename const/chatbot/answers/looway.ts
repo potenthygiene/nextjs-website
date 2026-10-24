@@ -90,7 +90,7 @@ export const ANSWERS: ChatAnswer[] = [
     question: "Can I use the pee funnel during my period?",
     phrasings: ["can i use funnel on my period", "period mein funnel use kar sakte hai", "funnel during periods", "pee funnel with menstrual cup", "funnel with pad", "periods ke time funnel", "mc mein funnel chalega", "use funnel while menstruating", "funnel on period days"],
     keywords: ["period", "periods", "menstrual", "mc", "cup", "pad"],
-    answer: "Yes, it works exactly the same on your period. It pairs well with an Ovy menstrual cup or pad, and standing to pee means you don't have to lower yourself onto a dirty seat on heavy days. Rinse it as usual afterwards and wash it with soap at home.",
+    answer: "Yes, it works exactly the same on your period. It pairs well with a menstrual cup or an Ovy pad, and standing to pee means you don't have to lower yourself onto a dirty seat on heavy days. Rinse it as usual afterwards and wash it with soap at home.",
     links: [{ label: "Pee Funnel", href: "/product-detail/looway-pee-funnel" }, { label: "Ovy period care", href: "/ovy" }],
     related: ["lw-seat-pregnancy-period", "lw-kit-period-products", "lw-funnel-cleaning"],
   },

@@ -1,6 +1,7 @@
 // @ts-nocheck
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+import { requireAdmin } from "@/helper/auth/guard";
 import { db } from "@/db";
 import {
   order,
@@ -15,7 +16,9 @@ import { revalidatePath } from "next/cache";
 import { requireUserWithRefresh } from "../user/action";
 import { ORDER_STATUS, isUUID } from "@/const/globalconst";
 
-import { syncAndGetUserRewards, REVIEW_REWARD_RUPEES } from "@/lib/rewards";
+import { syncAndGetUserRewards } from "@/lib/rewards";
+import { REVIEW_PHOTO_REWARD_RUPEES, REVIEW_TEXT_REWARD_RUPEES } from "@/lib/rewardsRules";
+import { NOT_A_BUYER_MESSAGE, hasReceivedProduct, receivedPairs } from "@/lib/reviewEligibility";
 import { getImageUrl } from "@/lib/imageUrl";
 
 export async function createReview(reviewData: any) {
@@ -29,6 +32,7 @@ export async function createReview(reviewData: any) {
       );
     }
 
+    let hadPhoto = false;
     await db.transaction(async (tx) => {
       let resolvedProductId: string | null = null;
 
@@ -51,6 +55,12 @@ export async function createReview(reviewData: any) {
 
         if (!itemRow || itemRow.orderStatus === ORDER_STATUS.CANCELED) {
           throw new Error("Order item not found or order was cancelled");
+        }
+        if (
+          itemRow.orderStatus !== ORDER_STATUS.DELIVERED &&
+          itemRow.orderStatus !== ORDER_STATUS.COMPLETED
+        ) {
+          throw new Error("You can review this once your order is delivered.");
         }
 
         resolvedProductId = itemRow.productId ?? null;
@@ -77,6 +87,10 @@ export async function createReview(reviewData: any) {
         throw new Error("Could not resolve product for this review");
       }
 
+      if (!(await hasReceivedProduct(userId, resolvedProductId))) {
+        throw new Error(NOT_A_BUYER_MESSAGE);
+      }
+
       const [existingReview] = await tx
         .select({ id: review.id })
         .from(review)
@@ -89,7 +103,7 @@ export async function createReview(reviewData: any) {
         .limit(1);
 
       if (existingReview) {
-        throw new Error("Review already submitted for this product");
+        throw new Error("You have already reviewed this product. Thank you!");
       }
 
       const userInfo = await tx.query.users.findFirst({
@@ -117,10 +131,9 @@ export async function createReview(reviewData: any) {
       });
 
       const primaryImageUrl = normalizedMedia[0] || null;
-      if (!primaryImageUrl) {
-        throw new Error(
-          "Please attach at least 1 photo of the product to earn ₹50",
-        );
+      hadPhoto = !!primaryImageUrl;
+      if (!String(message || "").trim()) {
+        throw new Error("Please write a few words about the product.");
       }
 
       const mediaJson =
@@ -129,7 +142,7 @@ export async function createReview(reviewData: any) {
       await tx.insert(review).values({
         userId,
         productId: resolvedProductId,
-        name: userInfo?.name || "Verified Buyer",
+        name: userInfo?.name || "Potent customer",
         rating: Number(rating),
         message,
         varient: mediaJson,
@@ -151,8 +164,7 @@ export async function createReview(reviewData: any) {
       pendingApproval: true,
       rewardAdded: 0,
       balance: synced.balance,
-      message:
-        "Review submitted! ₹50 will be credited to your Rewards balance once approved by our team.",
+      message: `Review submitted! ₹${hadPhoto ? REVIEW_PHOTO_REWARD_RUPEES : REVIEW_TEXT_REWARD_RUPEES} will be added to your Rewards once our team approves it.`,
     };
   } catch (error) {
     console.error("Failed to create review:", error);
@@ -186,7 +198,6 @@ export async function getProductReviews(slug: string | any) {
         rating: review.rating,
         userId: review.userId,
         name: review.name,
-        email: users.email,
         message: review.message,
         varient: review.varient,
         imageUrl: review.imageUrl,
@@ -198,7 +209,12 @@ export async function getProductReviews(slug: string | any) {
       .where(and(eq(review.productId, v.id), eq(review.isAdminApproved, true)))
       .orderBy(desc(review.createdAt));
 
-    return reviews.map((r) => {
+    const buyers = await receivedPairs(
+      reviews.map((r) => ({ userId: r.userId, productId: r.productId })),
+    );
+
+    return reviews.map(({ userId: reviewerId, ...r }) => {
+      const verifiedBuyer = !!reviewerId && buyers.has(`${reviewerId}:${r.productId}`);
       let media: any[] = [];
       if (r.imageUrl) {
         media.push({ mediaURL: getImageUrl(r.imageUrl) });
@@ -231,7 +247,7 @@ export async function getProductReviews(slug: string | any) {
           }
         }
       }
-      return { ...r, media };
+      return { ...r, media, verifiedBuyer };
     });
   } catch (error) {
     return [];
@@ -239,6 +255,7 @@ export async function getProductReviews(slug: string | any) {
 }
 
 export async function toggleApproveReview(id: string) {
+  await requireAdmin();
   try {
     if (!id) throw new Error("Review id missing");
 
@@ -287,10 +304,12 @@ export async function toggleApproveReview(id: string) {
 }
 
 export async function rejectReview(id: string) {
+  await requireAdmin();
   return deleteReview(id);
 }
 
 export async function deleteReview(id: string) {
+  await requireAdmin();
   try {
     if (!id) throw new Error("Review id missing");
 
@@ -334,6 +353,7 @@ export async function deleteReview(id: string) {
 }
 
 export async function getReviewStats() {
+  await requireAdmin();
   try {
     const [data] = await db
       .select({

@@ -1,4 +1,6 @@
-"use server";
+// Server-only email senders. This is deliberately NOT a "use server" file:
+// those functions can be called from any browser, and these must only be
+// called by our own server code (webhook, order updates, sign-up).
 
 import { userSubjects } from "@/emails/subjects/userSubjects";
 import { sendTemplateEmail } from "@/lib/email";

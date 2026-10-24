@@ -10,6 +10,9 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { referralCoinHistory, rewardCoinsHistory, users } from "@/db/schema";
 import { setAuthCookies } from "@/helper/auth/session";
+import { cognito, refreshCognitoSession } from "@/helper/cognito";
+import { AdminUpdateUserAttributesCommand } from "@aws-sdk/client-cognito-identity-provider";
+import { USER_POOL_ID } from "@/env";
 import { generateUniqueReferralCode } from "@/lib/referralCode";
 import { REFERRAL_EARNING_RUPEES, REFERRAL_FRIEND_BONUS_RUPEES, SIGNUP_BONUS_RUPEES } from "@/lib/rewards";
 
@@ -44,7 +47,14 @@ export async function GET(req: Request) {
   const tokens = (await tokenRes.json()) as { id_token?: string; access_token?: string; refresh_token?: string };
   if (!tokens.id_token || !tokens.access_token) return fail("google_failed");
 
-  const claims = (jwt.decode(tokens.id_token) || {}) as { email?: string; name?: string; given_name?: string; sub?: string };
+  const claims = (jwt.decode(tokens.id_token) || {}) as {
+    email?: string;
+    name?: string;
+    given_name?: string;
+    sub?: string;
+    "cognito:username"?: string;
+    "custom:user_id"?: string;
+  };
   const email = String(claims.email || "").toLowerCase();
   if (!email || !claims.sub) return fail("google_no_email");
 
@@ -80,6 +90,32 @@ export async function GET(req: Request) {
         newUserId: user.id,
         type: "referral",
       });
+    }
+  }
+
+  // The site finds the customer by the account id stored on the sign-in. A
+  // Google sign-in doesn't have it the first time, so store it and fetch
+  // fresh tokens that carry it.
+  const username = claims["cognito:username"];
+  if (claims["custom:user_id"] !== user.id && username) {
+    try {
+      await cognito.send(
+        new AdminUpdateUserAttributesCommand({
+          UserPoolId: USER_POOL_ID,
+          Username: username,
+          UserAttributes: [{ Name: "custom:user_id", Value: user.id }],
+        }),
+      );
+      if (tokens.refresh_token) {
+        const fresh = await refreshCognitoSession({ refreshToken: tokens.refresh_token, username });
+        if (fresh.accessToken && fresh.idToken) {
+          tokens.access_token = fresh.accessToken;
+          tokens.id_token = fresh.idToken;
+        }
+      }
+    } catch (e) {
+      console.error("Google sign-in: could not link the account id", e);
+      return fail("google_failed");
     }
   }
 

@@ -159,7 +159,7 @@ const PRODUCTS_DATA: ProductCardConfig[] = [
   {
     id: "ovy-cup",
     slug: "ovy-cup",
-    badge: "OVY",
+    badge: "POTENT HYGIENE",
     borderColor: "#C42B5B",
     fallbackImage: "/product-images/cup-rbw.jpg",
   },

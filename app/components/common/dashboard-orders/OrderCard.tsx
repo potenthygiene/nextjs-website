@@ -477,7 +477,7 @@ export const OrderCard = ({
               onClick={() => reviewHandler()}
               className="flex h-9 sm:h-11 shrink-0 items-center gap-1.5 rounded-xl bg-[#1D4E4E] px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-white hover:bg-[#153939] whitespace-nowrap cursor-pointer sm:shrink sm:flex-1"
             >
-              Review (+₹50)
+              Review (earn up to ₹50)
             </Button>
           )}
 

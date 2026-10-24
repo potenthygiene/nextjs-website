@@ -10,7 +10,7 @@ import { and, eq } from "drizzle-orm";
 export async function POST(req: Request) {
   const body = await req.json();
   const { couponCode, addressId, directItem, isGift, giftNote } = body;
-  const { userId } = await requireUserWithRefresh();
+  const { userId, email } = await requireUserWithRefresh();
   const customItems = directItem ? [directItem] : undefined;
   const pricing = await calculateCheckoutPricingForUser({
     userId,
@@ -64,10 +64,30 @@ export async function POST(req: Request) {
       return NextResponse.json(pendingOrder, { status: 400 });
     }
 
+    // So every payment in the Razorpay dashboard shows whose order it is.
+    const customer = {
+      name: String(shippingAddress.fullName || "").slice(0, 80),
+      phone: String(shippingAddress.phone || "").slice(0, 20),
+      email: String(email || "").slice(0, 120),
+    };
+    try {
+      await razorpay.orders.edit(order.id, {
+        notes: {
+          order_number: String(pendingOrder.orderId),
+          customer_name: customer.name,
+          customer_phone: customer.phone,
+          customer_email: customer.email,
+        },
+      });
+    } catch (e) {
+      console.error("Could not add notes to the Razorpay order:", e);
+    }
+
     return NextResponse.json({
       ...order,
       checkout: pricing,
       localOrderId: pendingOrder.orderId,
+      customer,
     });
   } catch (error: unknown) {
     console.error("Razorpay order creation failed:", error);

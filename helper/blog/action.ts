@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { requireAdmin } from "@/helper/auth/guard";
 import { blog } from "@/db/schema";
 import { db } from "@/lib/db";
 import { getImageKey } from "@/lib/imageUrl";
@@ -141,6 +142,7 @@ export async function getBlogBySlug(slug: string) {
 }
 
 export async function createBlog(blogData: any) {
+  await requireAdmin();
   try {
     const slug = blogData.title
       .toLowerCase()
@@ -172,6 +174,7 @@ export async function createBlog(blogData: any) {
   }
 }
 export async function updateBlog(blogId: string, blogData: any) {
+  await requireAdmin();
   try {
     const slug = blogData.title
       .toLowerCase()
@@ -206,6 +209,7 @@ export async function updateBlog(blogId: string, blogData: any) {
 }
 
 export async function deleteBlog(id: string) {
+  await requireAdmin();
   try {
     await db.delete(blog).where(eq(blog.id, id));
     revalidatePath("/admin/blog");
@@ -217,6 +221,7 @@ export async function deleteBlog(id: string) {
   }
 }
 export async function getBlogById(id: string) {
+  await requireAdmin();
   try {
     const result = await db
       .select()

@@ -32,21 +32,21 @@ const PAGES: Record<string, PageSeo> = {
     title:
       "Potent Hygiene | Organic Period Care & Travel Hygiene, Made in India",
     description:
-      "Ovy rash-free organic sanitary pads, teen kits, liners and menstrual cups, and Looway pee funnels, toilet seat covers and travel bags. Made in Jaipur. Free delivery on ₹399+.",
+      "Ovy rash-free organic sanitary pads, teen kits and liners, the Potent Hygiene menstrual cup, and Looway pee funnels, toilet seat covers and travel bags. Made in Jaipur. Free delivery on ₹399+.",
     path: "/",
     updated: "2026-10-22",
   },
   shop: {
     title: "Shop Period Care & Travel Hygiene Products",
     description:
-      "Shop Ovy organic sanitary pads, teen kits, panty liners and menstrual cups, and Looway travel hygiene essentials. Subscribe and save up to 15%. Free delivery on ₹399+.",
+      "Shop Ovy organic sanitary pads, teen kits and panty liners, the Potent Hygiene menstrual cup, and Looway travel hygiene essentials. Subscribe and save up to 15%. Free delivery on ₹399+.",
     path: "/shop",
     updated: "2026-10-22",
   },
   ovy: {
-    title: "Ovy Organic Period Care: Pads, Teen Kits, Cups & Liners",
+    title: "Ovy Organic Period Care: Pads, Teen Kits & Liners",
     description:
-      "Ovy is period care made for Indian bodies: rash-free, dermatologically tested organic pads in L, XL and XL+, teen kits, daily liners and medical-grade menstrual cups.",
+      "Ovy is period care made for Indian bodies: rash-free, dermatologically tested organic pads in L, XL and XL+, teen kits and daily liners, alongside the Potent Hygiene menstrual cup.",
     path: "/ovy",
     updated: "2026-10-22",
   },
@@ -81,7 +81,7 @@ const PAGES: Record<string, PageSeo> = {
   quiz: {
     title: "Period Care Quiz: Find What Suits You",
     description:
-      "Answer four quick questions about your flow, cramps and skin to find the Ovy period care that suits you: pads, a menstrual cup or period panties.",
+      "Answer four quick questions about your flow, cramps and skin to find the period care that suits you: Ovy pads, Ovy period panties or the Potent Hygiene menstrual cup.",
     path: "/quiz",
     updated: "2026-10-24",
   },
@@ -109,7 +109,7 @@ const PAGES: Record<string, PageSeo> = {
   business: {
     title: "B2B & Bulk Orders: Hygiene Supply for Businesses",
     description:
-      "B2B supply of Ovy pads, teen kits and cups and Looway seat covers, pee and puke bags and Yatra Kits for corporates, travel operators, hotels, schools, hospitals and CSR. GST invoice, quote in one working day.",
+      "B2B supply of Ovy pads and teen kits, Potent Hygiene menstrual cups, and Looway seat covers, pee and puke bags and Yatra Kits for corporates, travel operators, hotels, schools, hospitals and CSR. GST invoice, quote in one working day.",
     path: "/business",
     updated: "2026-10-23",
   },
@@ -118,7 +118,7 @@ const PAGES: Record<string, PageSeo> = {
     description:
       "How and when Potent Hygiene orders ship across India, delivery times and free delivery on orders of ₹399 and above.",
     path: "/shipping-policy",
-    updated: "2026-10-22",
+    updated: "2026-10-24",
   },
   "refund-policy": {
     title: "Refund & Cancellation Policy",
@@ -165,7 +165,7 @@ export const PRODUCT_SEO: Record<string, Omit<PageSeo, "path">> = {
       "Soft, organic teen pads and kits that make a first period calm: the Starter Pack and the Pro-Active Pack for sporty teens. Subscribe or use Cycle Sync.",
   },
   "ovy-cup": {
-    title: "Ovy Menstrual Cup: Medical-Grade Silicone, 3 Sizes",
+    title: "Potent Hygiene Menstrual Cup: Medical-Grade Silicone, 3 Sizes",
     description:
       "A soft, medical-grade silicone menstrual cup in Teen (XS), Medium and Large, up to 12 hours of wear and years of use. Find your size with our quick size finder.",
   },

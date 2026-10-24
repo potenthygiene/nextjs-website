@@ -1,4 +1,5 @@
 import { Star, User } from "lucide-react";
+import { REVIEW_PHOTO_REWARD_RUPEES as PHOTO_RS, REVIEW_TEXT_REWARD_RUPEES as TEXT_RS } from "@/lib/rewardsRules";
 import Image from "next/image";
 import { getImageUrl } from "@/lib/imageUrl";
 
@@ -41,7 +42,7 @@ export const MyReviewCard = ({ review }: { review: any }) => (
           </span>
           {review.isAdminApproved ? (
             <span className="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">
-              +₹50 Reward Earned
+              +₹{review.imageUrl || review.media?.length ? PHOTO_RS : TEXT_RS} reward added
             </span>
           ) : (
             <span className="text-xs bg-amber-50 text-amber-700 font-medium px-2 py-0.5 rounded-full">

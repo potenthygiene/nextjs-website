@@ -73,9 +73,9 @@ export const MENUS_HI: Record<string, { title: string; intro: string; pageLabel?
     pageLabel: "Ovy Teen खोलें",
   },
   cup: {
-    title: "Ovy मेंस्ट्रुअल कप",
+    title: "Potent Hygiene मेंस्ट्रुअल कप",
     intro: "Teen, Medium और Large में मेडिकल-ग्रेड सिलिकॉन। आप क्या जानना चाहेंगे?",
-    pageLabel: "Ovy कप खोलें",
+    pageLabel: "Potent Hygiene कप खोलें",
     flowLabel: "मेरा कप साइज़ खोजें",
   },
   funnel: {
@@ -164,11 +164,11 @@ export const FLOWS_HI: Record<string, { text: string; options?: Record<string, s
   },
   "cup:teen": {
     text: "**Teen (XS, 16 ml)** सबसे नरम और सबसे छोटा है, जो पहली बार इस्तेमाल करने वालों, किशोरियों और नीचे सर्विक्स वालों के लिए बना है। आसान शुरुआत के लिए पंच-डाउन फ़ोल्ड आज़माएँ।",
-    links: { "See Ovy cup": "Ovy कप देखें" },
+    links: { "See Potent Hygiene cup": "Potent Hygiene कप देखें" },
   },
   "cup:medium": {
     text: "**Medium (25 ml)** रोज़ के लिए हर तरह से ठीक है, 30 की उम्र के बाद की कई महिलाओं और सिज़ेरियन वाली माँओं के लिए भी। इसे 12 घंटे तक पहना जा सकता है।",
-    links: { "See Ovy cup": "Ovy कप देखें" },
+    links: { "See Potent Hygiene cup": "Potent Hygiene कप देखें" },
   },
   "cup:medium-heavy": {
     text: "**Medium (25 ml)** से शुरू करें और भारी दिनों में इसे जल्दी-जल्दी खाली करें। अगर आपका सर्विक्स ऊँचा है, तो **Large (35 ml)** में ज़्यादा जगह है। दोबारा पक्का करने के लिए कप पेज पर 4 सवालों का साइज़ क्विज़ है।",
@@ -176,7 +176,7 @@ export const FLOWS_HI: Record<string, { text: string; options?: Record<string, s
   },
   "cup:large": {
     text: "**Large (35 ml)** आम तौर पर नॉर्मल डिलीवरी के बाद सबसे अच्छा फ़िट होता है, जब आपके डॉक्टर अंदर लगाने वाले प्रोडक्ट फिर से इस्तेमाल करने की इजाज़त दे दें। इसे 12 घंटे तक पहना जा सकता है।",
-    links: { "See Ovy cup": "Ovy कप देखें" },
+    links: { "See Potent Hygiene cup": "Potent Hygiene कप देखें" },
   },
 };
 

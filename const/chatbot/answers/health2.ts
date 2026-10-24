@@ -1113,7 +1113,7 @@ export const ANSWERS: ChatAnswer[] = [
     question: "What is a tampon? Is it safe?",
     phrasings: ["what is a tampon", "tampon kya hota hai", "is tampon safe", "tampon vs cup", "tampon kaise use kare", "can teenagers use tampons", "tampon overnight", "do you sell tampons"],
     keywords: ["tampon", "tampons", "applicator", "internal"],
-    answer: "A tampon is a small plug of absorbent material worn inside the vagina to soak up flow. Used correctly it's safe: choose the lowest absorbency you need, change it every 4 to 8 hours, never leave one in longer than 8 hours, and remove it for sudden fever, rash or vomiting. Ovy doesn't make tampons; our reusable cup is the internal option.",
+    answer: "A tampon is a small plug of absorbent material worn inside the vagina to soak up flow. Used correctly it's safe: choose the lowest absorbency you need, change it every 4 to 8 hours, never leave one in longer than 8 hours, and remove it for sudden fever, rash or vomiting. We don't make tampons; our reusable Potent Hygiene cup is the internal option.",
     links: [CUP],
     related: ["hl-tss", "hl-swimming", "hx-hymen-myth"],
   },

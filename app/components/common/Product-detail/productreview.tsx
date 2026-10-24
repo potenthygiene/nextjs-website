@@ -126,7 +126,7 @@ export default function ProductReviews({ reviews, product, themeColor }: any) {
                         style={{ backgroundColor: lightColor, color: textColor }}
                         className="text-xs px-2 py-0.5 rounded-full font-medium"
                       >
-                        Checked review
+                        {review.verifiedBuyer ? "Verified buyer" : "Checked review"}
                       </span>
                     </div>
 

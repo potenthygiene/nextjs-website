@@ -16,7 +16,6 @@ export {
   getCouponsPagination,
   getCouponById,
   deleteCoupon,
-  ensureDefaultCoupons,
 } from "./coupon/action";
 
 export {
@@ -30,11 +29,9 @@ export {
 export {
   fetchOrders,
   fetchOrderDetails,
-  changeOrderStatus,
   updateOrderStatus,
   createOrder,
   createPendingCheckoutOrder,
-  checkUserFirstOrder,
   createCancelRequest,
   createReturnRequest,
   updateCancelRequestStatus,
@@ -106,25 +103,10 @@ export {
   getReviewableProducts,
 } from "./review/action";
 
-export {
-  sendOrderConfirmationEmail,
-  sendFirstPurchaseEmail,
-  sendNewsletterEmail,
-  sendUserExperienceEmail,
-  sendShippingConfirmationEmail,
-  sendrefillReminderEmail,
-  sendRefillReminderEmail,
-  sendDeliveryConfirmationEmail,
-  sendCartAbandonmentEmail,
-  sendOrderStatusUpdateEmail,
-  sendWelcomeEmail
-} from "./emailTemplates/action";
+
 
 
 export {
-  createSubscription,
-  createPaymentGatewayPlan,
-  CreatePaymentGatewaySubscription,
   getUserSubscriptions,
   pauseUserSubscription,
   resumeUserSubscription,

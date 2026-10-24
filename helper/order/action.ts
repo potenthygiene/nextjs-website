@@ -2,6 +2,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { requireAdmin, requireSelf } from "@/helper/auth/guard";
+import Razorpay from "razorpay";
+import { RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET } from "@/env";
 import { paginate } from "@/lib/pagination";
 import { and, or, sql, eq, ne, desc, inArray, notInArray } from "drizzle-orm";
 import { db } from "@/lib/db";
@@ -57,6 +60,7 @@ export const fetchOrders = async ({
   search?: string;
   status?: string;
 } = {}) => {
+  await requireAdmin();
   const currentPage = Number.isFinite(page) && page > 0 ? page : 1;
   const limit = Number.isFinite(pageSize) && pageSize > 0 ? pageSize : 10;
   const offset = (currentPage - 1) * limit;
@@ -195,6 +199,7 @@ export const fetchOrders = async ({
 };
 
 export const fetchOrderDetails = async (orderId: string) => {
+  await requireAdmin();
   try {
     const orderInfo = await db
       .select({
@@ -286,7 +291,7 @@ async function sendOrderStatusMail(orderId: string, status: string) {
       orderId,
       firstName,
       orderLink,
-      "FedEx",
+      "our courier partner",
     );
     return;
   }
@@ -317,7 +322,7 @@ async function sendOrderStatusMail(orderId: string, status: string) {
   );
 }
 
-export const changeOrderStatus = async (id: string, status: string) => {
+const changeOrderStatus = async (id: string, status: string) => {
   if (!VALID_ORDER_STATUSES.includes(status as any)) {
     throw new Error("Invalid order status");
   }
@@ -386,6 +391,7 @@ export const changeOrderStatus = async (id: string, status: string) => {
 };
 
 export async function updateOrderStatus(id: string, status: string | any) {
+  await requireAdmin();
   const updated = await changeOrderStatus(id, status);
   revalidatePath("/admin/order");
   revalidatePath(`/admin/order/${id}`);
@@ -846,6 +852,7 @@ export async function updateCancelRequestStatus(
   status: "approved" | "rejected",
   adminReason?: string,
 ) {
+  await requireAdmin();
   try {
     // In database order_request_status enum: values are 'pending', 'cancelled', 'approved', 'refunded'
     const dbStatus = status === "rejected" ? "cancelled" : status;
@@ -881,6 +888,7 @@ export async function updateReturnRequestStatus(
   status: "approved" | "rejected",
   adminReason?: string,
 ) {
+  await requireAdmin();
   try {
     const dbStatus = status === "rejected" ? "cancelled" : status;
     const [updated] = await db
@@ -1045,6 +1053,8 @@ export async function createPendingCheckoutOrder({
   isGift?: boolean;
   giftNote?: string;
 }) {
+  // Always the signed-in customer, whatever id was sent.
+  userId = await requireSelf(userId);
   try {
     const pricing = await calculateCheckoutPricingForUser({
       userId,
@@ -1054,6 +1064,22 @@ export async function createPendingCheckoutOrder({
 
     if (!pricing.success || pricing.items.length === 0) {
       throw new Error(pricing.message ?? "Invalid checkout total");
+    }
+
+    // The Razorpay order must be new and for exactly this amount, so a cheap
+    // payment can never be attached to a more expensive order.
+    const [alreadyUsed] = await db
+      .select({ id: payment.id })
+      .from(payment)
+      .where(eq(payment.gatewayOrderId, String(razorpayOrderId)))
+      .limit(1);
+    if (alreadyUsed) throw new Error("This payment was already started. Please try again from your bag.");
+    const rzpOrder: any = await new Razorpay({
+      key_id: RAZORPAY_KEY_ID!,
+      key_secret: RAZORPAY_KEY_SECRET!,
+    }).orders.fetch(String(razorpayOrderId));
+    if (Number(rzpOrder?.amount) !== Math.round(Number(pricing.final) * 100)) {
+      throw new Error("Your total changed. Please review your bag and try again.");
     }
 
     const checkoutItems = pricing.items;
@@ -1248,7 +1274,7 @@ export async function createPendingCheckoutOrder({
   }
 }
 
-export async function checkUserFirstOrder(userId: string) {
+async function checkUserFirstOrder(userId: string) {
   try {
     const existingOrder = await db
       .select()
@@ -1657,7 +1683,7 @@ function enrichOrderItems(
   });
 }
 
-export async function getOrderById(orderId: string) {
+async function getOrderById(orderId: string) {
   const rows = await db
     .select({
       order: order,

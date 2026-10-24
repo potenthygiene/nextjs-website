@@ -71,11 +71,11 @@ export const FLOWS: Record<string, FlowStep | FlowResult> = {
   },
   "cup:teen": {
     text: "**Teen (XS, 16 ml)** is the softest and shortest, made for first-timers, teens and a lower cervix. Try the punch-down fold for an easy first go.",
-    links: [{ label: "See Ovy cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "See Potent Hygiene cup", href: "/product-detail/ovy-cup" }],
   },
   "cup:medium": {
     text: "**Medium (25 ml)** is the everyday all-rounder, including many over-30s and C-section mums. It's worn for up to 12 hours.",
-    links: [{ label: "See Ovy cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "See Potent Hygiene cup", href: "/product-detail/ovy-cup" }],
   },
   "cup:medium-heavy": {
     text: "Start with **Medium (25 ml)** and empty it more often on heavy days. If your cervix sits high, **Large (35 ml)** gives more room. The cup page has a 4-question size quiz to double-check.",
@@ -83,7 +83,7 @@ export const FLOWS: Record<string, FlowStep | FlowResult> = {
   },
   "cup:large": {
     text: "**Large (35 ml)** usually fits best after a vaginal birth, once your doctor has cleared you to use internal products again. It's worn for up to 12 hours.",
-    links: [{ label: "See Ovy cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "See Potent Hygiene cup", href: "/product-detail/ovy-cup" }],
   },
 };
 

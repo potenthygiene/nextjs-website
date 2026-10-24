@@ -210,7 +210,7 @@ export const CUP_SIZES: Record<CupSize, { name: string; cap: string; label: stri
     cap: "16 ml",
     label: "Teen (XS), 16 ml",
     title: "Your size: Teen (XS), 16 ml",
-    why: "The smallest, softest Ovy cup, made for teens, first-timers and a low cervix, with light to average flow.",
+    why: "Our smallest, softest cup, made for teens, first-timers and a low cervix, with light to average flow.",
   },
   m: {
     name: "Medium",
@@ -412,15 +412,15 @@ export const TEEN_KITS: Record<TeenKit, { label: string; title: string; why: str
   FIRST: {
     label: "First Period Box (coming soon)",
     title: "Her kit: First Period Box",
-    why: "The 50-piece milestone gift box is coming soon. Until it's here, the kit above covers her first cycle.",
-    altWhy: "The 50-piece First Period Box gift set is coming soon: tap to get notified.",
+    why: "The milestone gift box is coming soon. Until it's here, the kit above covers her first cycle.",
+    altWhy: "The First Period Box gift set is coming soon: tap to get notified.",
     contents: [
-      "14 Large (L) pads, 240mm",
-      "14 Extra Large (XL) pads, 280mm",
-      "14 Extra Large+ (XL+) pads, 320mm",
-      "8 soft panty liners",
-      "50 biodegradable disposal bags",
-      "1 period panty, seat covers, wipes and a guidebook",
+      "10 organic pads: 4 L (240mm), 3 XL (280mm), 3 XL+ (320mm)",
+      "4 soft panty liners",
+      "4 reusable period panties (L-XL)",
+      "5 disposable toilet seat covers",
+      "10 fragrance-free wipes and 14 disposal bags",
+      "A \"You've Got This\" guidebook written for her",
     ],
   },
 };
@@ -483,7 +483,7 @@ export const TEEN_TIPS = {
   bin: "Wrap used pads in the disposal bags and bin them. Never flush.",
   irregular: "Periods are often irregular for the first year or two. That's normal.",
   doctor: "See a doctor if she soaks through a pad every 1 to 2 hours, bleeds for more than 7 days, or feels faint or dizzy.",
-  gift: "Here's the kit that fits her. The 50-piece First Period Box gift set is coming soon, and this kit is ready now.",
+  gift: "Here's the kit that fits her. The First Period Box gift set is coming soon, and this kit is ready now.",
 };
 
 export function teenQuizResult(a: QuizAnswers): TeenQuizResult {
@@ -690,7 +690,7 @@ export type NeedPick = { product: NeedProduct; why: string; size?: string; padPi
 export type NeedResult = { title: string; intro: string; picks: NeedPick[]; reasons: string[]; tips: string[]; warnings: string[]; cupQuiz: boolean };
 
 export const NEED_TEXT = {
-  cupTitle: "Your fit: the Ovy Menstrual Cup",
+  cupTitle: "Your fit: the Potent Hygiene Menstrual Cup",
   pantyTitle: "Your fit: Ovy Period Panties",
   cupWhy: "Medical-grade silicone, up to 12 hours between changes, and reusable for years. The cup size quiz picks Teen, Medium or Large for you.",
   cupSize: "Teen, Medium or Large",

@@ -1,4 +1,5 @@
 "use client";
+import { REVIEW_PHOTO_REWARD_RUPEES as PHOTO_RS, REVIEW_TEXT_REWARD_RUPEES as TEXT_RS } from "@/lib/rewardsRules";
 
 import { useState } from "react";
 import Image from "next/image";
@@ -66,7 +67,7 @@ export const WriteReviewModal = ({
       if (cloudFrontUrl) {
         setPhotoKey(cloudFrontUrl);
         setPhotoPreview(cloudFrontUrl);
-        toast.success("Photo uploaded! Eligible for ₹50 reward upon approval.");
+        toast.success(`Photo added. This review can earn ₹${PHOTO_RS} once approved.`);
       } else {
         toast.error("Failed to upload photo");
       }
@@ -83,11 +84,6 @@ export const WriteReviewModal = ({
   const submitReview = async () => {
     if (!comment.trim()) {
       toast.error("Please write your review");
-      return;
-    }
-
-    if (!photoKey) {
-      toast.error("Please attach at least 1 product photo to earn ₹50");
       return;
     }
 
@@ -114,7 +110,7 @@ export const WriteReviewModal = ({
 
       if (response.ok) {
         toast.success(
-          "Review submitted! ₹50 cash credit will be added once approved.",
+          data?.message || `Review submitted! ₹${photoKey ? PHOTO_RS : TEXT_RS} will be added once approved.`,
         );
         setComment("");
         setUserName("");
@@ -165,7 +161,7 @@ export const WriteReviewModal = ({
         <div className="my-1 rounded-xl bg-[#E9F7F9] p-3 text-xs">
           <p className="font-bold text-ink">{productName}</p>
           <p className="font-semibold text-[#016271] mt-0.5">
-            Earn ₹50 on review (credited on approval) • 1 photo required
+            Earn ₹{TEXT_RS} for a review, or ₹{PHOTO_RS} with a photo (added once approved)
           </p>
         </div>
 

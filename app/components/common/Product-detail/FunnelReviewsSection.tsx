@@ -46,6 +46,7 @@ export default function FunnelReviewsSection({
           stars: getReviewRating(r) as number,
           quote: r.message || "",
           media: r.media || [],
+          verifiedBuyer: !!r.verifiedBuyer,
         })),
     [submittedReviews],
   );
@@ -123,7 +124,7 @@ export default function FunnelReviewsSection({
 
               <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#15803D]">
                 <CheckCircle2 className="h-4 w-4 text-[#15803D]" />
-                <span>Every review is checked before it goes live</span>
+                <span>Reviews come from customers who received the product, and each one is checked before it goes live</span>
               </div>
 
               {/* Write a review button hidden on PDP as requested */}
@@ -257,7 +258,7 @@ export default function FunnelReviewsSection({
                       {rev.stage}
                     </span>
                     <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#15803D]">
-                      <Check className="h-3 w-3 stroke-[3]" /> Checked review
+                      <Check className="h-3 w-3 stroke-[3]" /> {rev.verifiedBuyer ? "Verified buyer" : "Checked review"}
                     </span>
                   </div>
                 </div>

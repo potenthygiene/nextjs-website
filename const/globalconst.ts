@@ -617,7 +617,7 @@ export const YATRA_KIT_CATALOG = [
   },
   {
     id: "cup",
-    name: "Ovy Menstrual Cup",
+    name: "Potent Hygiene Menstrual Cup",
     unit: "1 reusable",
     price: 399,
     max: 2,

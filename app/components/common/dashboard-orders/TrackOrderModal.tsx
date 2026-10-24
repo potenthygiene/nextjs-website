@@ -162,9 +162,6 @@ export const TrackOrderModal = ({
               </span>
             </div>
             <p className="text-gray-700">
-              Courier Partner: <strong>FedEx / Express Logistics</strong>
-            </p>
-            <p className="text-gray-700">
               Dispatched On: <strong>{updatedDate || orderDate}</strong>
             </p>
             <p className="text-gray-600 text-[11px]">

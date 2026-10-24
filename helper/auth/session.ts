@@ -12,6 +12,7 @@ export type AuthUser = {
   username?: string;
   groups?: string[];
   role?: string | null;
+  emailVerified?: boolean;
 };
 
 export type AuthSession = {
@@ -61,6 +62,7 @@ export function decodeAuthUser(idToken?: string): AuthUser | null {
     username: decoded["cognito:username"] || decoded.email,
     groups,
     role: decoded["custom:role"] || decoded.role || null,
+    emailVerified: decoded.email_verified === true || decoded.email_verified === "true",
   };
 }
 
@@ -84,14 +86,12 @@ export function isAdminUser(user?: AuthUser | null): boolean {
     if (hasAdminGroup) return true;
   }
 
-  // 2. Check role attribute
-  if (user.role && user.role.toLowerCase() === "admin") {
-    return true;
-  }
+  // Email-based admin access only for an email Cognito has confirmed.
+  if (!user.emailVerified) return false;
 
   const emailLower = user.email.toLowerCase().trim();
 
-  // 3. Check environment admin emails if configured
+  // 2. Admin emails set in Vercel (ADMIN_EMAILS), if any
   const envAdminEmails = (process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL || "")
     .split(",")
     .map((e) => e.trim().toLowerCase())
@@ -101,16 +101,18 @@ export function isAdminUser(user?: AuthUser | null): boolean {
     return true;
   }
 
-  // 4. Default admin accounts & domain matching
+  // 3. Named admin accounts, and any mailbox on our own domain (only the
+  // founder can create those). Emails in the sign-in token are confirmed by
+  // Cognito, so they can't be claimed by someone else.
   const knownAdminEmails = [
-    "care@potenthygiene.com",
+    "divita.agarwal@gmail.com",
     "nikhilkumawat002@gmail.com",
   ];
   if (knownAdminEmails.includes(emailLower)) {
     return true;
   }
 
-  if (emailLower.endsWith("@potenthygiene.com") || emailLower.startsWith("admin@")) {
+  if (emailLower.endsWith("@potenthygiene.com")) {
     return true;
   }
 

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { product, productFaq, productVariant } from "@/db/schema";
-import { fixHighlights } from "@/lib/contentFixes";
+import { fixHighlights, fixProductName } from "@/lib/contentFixes";
 import { FREE_SHIPPING_THRESHOLD, STANDARD_SHIPPING_FEE } from "@/lib/shippingConfig";
 import * as R from "@/lib/rewards";
 import { couponConditions, couponConditionsHi, liveCoupons } from "@/const/coupons";
@@ -89,16 +89,18 @@ async function liveProducts() {
   return products.map((p) => {
     const vs = variants.filter((v) => v.productId === p.id && Number(v.price) > 0);
     const prices = vs.map((v) => Number(v.price));
+    const slug = resolveCanonicalSlug(p.slug);
     return {
       id: p.id,
       dbSlug: p.slug,
       image: p.bannerImage,
       isMixBox: !!p.isMixBox,
-      slug: resolveCanonicalSlug(p.slug),
-      name: p.name,
-      brand: p.brand === "loway" ? "Looway" : "Ovy",
+      slug,
+      name: fixProductName(p.name),
+      // The menstrual cup is a Potent Hygiene product, not an Ovy one.
+      brand: slug === "ovy-cup" ? "Potent Hygiene" : p.brand === "loway" ? "Looway" : "Ovy",
       fromPrice: prices.length ? Math.min(...prices) : null,
-      variants: vs.map((v) => ({ id: v.id, sku: v.sku, image: v.image, name: v.name, price: Number(v.price), inStock: v.inStock !== false })),
+      variants: vs.map((v) => ({ id: v.id, sku: v.sku, image: v.image, name: fixProductName(v.name), price: Number(v.price), inStock: v.inStock !== false })),
       inStock: vs.length ? vs.some((v) => v.inStock !== false) : true,
       highlights: fixHighlights(p.highlights).slice(0, 3),
       subscription: p.allowSubscription ? { monthly: p.subscribeMonthlyDiscount || 0, everyTwoMonths: p.subscribeBiMontlyDiscount || 0 } : null,

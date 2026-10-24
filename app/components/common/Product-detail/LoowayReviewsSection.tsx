@@ -46,6 +46,7 @@ export default function LoowayReviewsSection({
           stars: getReviewRating(r) as number,
           quote: r.message || "",
           media: r.media || [],
+          verifiedBuyer: !!r.verifiedBuyer,
         })),
     [submittedReviews],
   );
@@ -123,7 +124,7 @@ export default function LoowayReviewsSection({
 
               <div className="mt-2.5 sm:mt-3 inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-[#0E5C3A]">
                 <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#0E5C3A]" />
-                <span>Every review is checked before it goes live</span>
+                <span>Reviews come from customers who received the product, and each one is checked before it goes live</span>
               </div>
 
               {/* Write a review button hidden on PDP as requested */}
@@ -258,7 +259,7 @@ export default function LoowayReviewsSection({
                       {rev.stage}
                     </span>
                     <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
-                      <Check className="h-3 w-3 stroke-[3]" /> Checked review
+                      <Check className="h-3 w-3 stroke-[3]" /> {rev.verifiedBuyer ? "Verified buyer" : "Checked review"}
                     </span>
                   </div>
                 </div>

@@ -207,10 +207,10 @@ export const MENUS: Record<string, ChatMenu> = {
   },
   cup: {
     id: "cup",
-    title: "Ovy menstrual cup",
+    title: "Potent Hygiene menstrual cup",
     intro: "Medical-grade silicone in Teen, Medium and Large. What would you like to know?",
     questions: ["ovy-cup-which-size", "ovy-cup-first-time", "ovy-cup-insert", "ovy-cup-remove", "ovy-cup-clean", "ovy-cup-wear-time", "ovy-cup-virginity"],
-    page: { label: "Open Ovy cup", href: "/product-detail/ovy-cup" },
+    page: { label: "Open Potent Hygiene cup", href: "/product-detail/ovy-cup" },
     flow: { label: "Find my cup size", node: "cup:start" },
   },
   funnel: {
@@ -274,7 +274,7 @@ export const PRODUCT_WORDS: Record<string, string> = {
   liner: "liners", liners: "liners", "panty liners": "liners",
   "period panty": "panty", "period panties": "panty", panty: "panty", panties: "panty",
   teen: "teenkit", "teen kit": "teenkit", "teen kits": "teenkit", "first period kit": "teenkit",
-  cup: "cup", "menstrual cup": "cup", "ovy cup": "cup",
+  cup: "cup", "menstrual cup": "cup", "ovy cup": "cup", "potent cup": "cup", "potent hygiene cup": "cup", "potent hygiene menstrual cup": "cup",
   funnel: "funnel", "pee funnel": "funnel", stp: "funnel",
   "pee bags": "bags", "vomit bags": "bags", "puke bags": "bags", "pee puke bags": "bags", "urine bags": "bags", bags: "bags",
   "seat covers": "seatcovers", "seat cover": "seatcovers", "toilet seat covers": "seatcovers",

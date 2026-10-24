@@ -18,11 +18,12 @@ export function GET() {
 
   const body = `# Potent Hygiene
 
-> Potent Hygiene is a woman-founded Indian personal hygiene brand from Jaipur. It makes two brands: **Ovy** (period care) and **Looway** (travel and toilet hygiene), designed for Indian bodies, Indian toilets and Indian journeys. Products are sold at ${SITE_URL}, with delivery across India.
+> Potent Hygiene is a woman-founded Indian personal hygiene brand from Jaipur. It makes two brands, **Ovy** (period care) and **Looway** (travel and toilet hygiene), plus the **Potent Hygiene Menstrual Cup**, all designed for Indian bodies, Indian toilets and Indian journeys. Products are sold at ${SITE_URL}, with delivery across India.
 
 ## Brands
 
-- **Ovy**: organic sanitary pads in L, XL and XL+, teen first-period kits, daily panty liners, super slim disposable period panties and medical-grade silicone menstrual cups (Teen, Medium, Large). Ovy pads are BIS certified. Ovy pads and liners are dermatologically tested, rash-free, non-irritant and cruelty-free.
+- **Ovy**: organic sanitary pads in L, XL and XL+, teen first-period kits, daily panty liners and super slim disposable period panties. Ovy pads are BIS certified. Ovy pads and liners are dermatologically tested, rash-free, non-irritant and cruelty-free.
+- **Potent Hygiene Menstrual Cup**: a medical-grade silicone menstrual cup in Teen, Medium and Large, sold under the Potent Hygiene name (not Ovy).
 - **Looway**: a reusable, washable female pee funnel; wet-proof disposable toilet seat covers (not flushable, bin after use); leak-proof urine and vomit bags that turn liquid into gel; and the Yatra Kit, a build-your-own travel hygiene kit. Looway products are hygiene and comfort products, not medical devices.
 
 ## Who it helps

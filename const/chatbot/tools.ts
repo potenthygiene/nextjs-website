@@ -303,7 +303,7 @@ const tripPlanner: Tool = {
       if (W && !postpartum && pr("eco")) {
         add(ovy, "ovy-cup", "Reusable, with up to 12 hours of wear and nothing to bin, if you've already practised at home.");
       } else if (W && !postpartum && pl("beach")) {
-        add(ovy, "ovy-cup", "The Ovy option made for swimming, if you've already practised with it at home.");
+        add(ovy, "ovy-cup", "The option made for swimming, if you've already practised with it at home.");
       }
     }
     if (P) add(ovy, "ovy-liners", "Discharge often increases in pregnancy: thin liners keep you fresh on long days.");

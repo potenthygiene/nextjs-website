@@ -251,7 +251,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
                 <div className="relative h-full w-full overflow-hidden rounded-2xl bg-white">
                   <Image
                     src="/ovy/m2-swim.jpg"
-                    alt="Ovy Menstrual Cup Swim Model"
+                    alt="Potent Hygiene Menstrual Cup swim model"
                     fill
                     className="object-cover"
                     priority
@@ -263,7 +263,7 @@ export function OvyUpCloseSection({ productsBySlug }: OvyUpCloseSectionProps) {
             {/* Title Block */}
             <div>
               <span className="text-[11px] font-bold tracking-widest text-[#602E55] uppercase block mb-1">
-                OVY MENSTRUAL CUP
+                POTENT HYGIENE MENSTRUAL CUP
               </span>
               <h2 className="font-serif text-2xl font-bold text-[#1F1915] leading-snug">
                 Three sizes. One right fit.

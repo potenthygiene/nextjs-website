@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/db";
 import { referralCoinHistory, rewardCoinsHistory, users } from "@/db/schema";
-import { cognitoAdminGetUser, cognitoSignUp } from "@/helper/cognito";
+import { cognito, cognitoAdminGetUser, cognitoSignUp } from "@/helper/cognito";
+import { AdminDeleteUserCommand } from "@aws-sdk/client-cognito-identity-provider";
+import { USER_POOL_ID } from "@/env";
+import { allowRequest, clientIp } from "@/lib/requestGuard";
 import { generateUniqueReferralCode } from "@/lib/referralCode";
 import {
   REFERRAL_EARNING_RUPEES,
@@ -9,9 +12,54 @@ import {
   SIGNUP_BONUS_RUPEES,
 } from "@/lib/rewards";
 import { NextResponse } from "next/server";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
+
+// Nothing about an account is trusted until its email is confirmed with the
+// code. If an unconfirmed account already exists for this email (an earlier
+// attempt that was never finished, or someone else typing this email), the
+// person signing up now takes it over: fresh code, their own name, phone and
+// referral. So nobody can lock the real owner out or squat their email.
+const BAD_REF = "This referral code can't be used for this account.";
+
+async function findReferrer(ref: string) {
+  const cleanRef = ref.trim();
+  let found = await db
+    .select()
+    .from(users)
+    .where(sql`lower(${users.referralCode}) = lower(${cleanRef})`);
+  if (
+    !found.length &&
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanRef)
+  ) {
+    found = await db.select().from(users).where(eq(users.id, cleanRef));
+  }
+  return found[0] || null;
+}
+
+async function addReferral(newUser: any, referrer: any, name: string) {
+  await db.insert(rewardCoinsHistory).values({
+    userId: newUser.id,
+    coins: REFERRAL_FRIEND_BONUS_RUPEES,
+    type: "referral_welcome",
+  });
+  // The referrer's ₹100 is paid once this friend's first order is delivered.
+  await db.insert(referralCoinHistory).values({
+    userId: referrer.id,
+    coins: REFERRAL_EARNING_RUPEES,
+    newUserName: name,
+    newUserId: newUser.id,
+    type: "referral",
+  });
+}
 
 export async function POST(req: Request) {
+  if (!allowRequest(`signup:${clientIp(req)}`, 10, 10 * 60 * 1000)) {
+    return NextResponse.json(
+      { message: "Too many attempts. Please wait a few minutes and try again." },
+      { status: 429 },
+    );
+  }
+
   const body = await req.json();
   const { email, password, name, phone, ref } = body;
 
@@ -22,169 +70,99 @@ export async function POST(req: Request) {
     );
   }
 
-  let refUser: any;
-
   try {
+    let referrer: any = null;
     if (ref && typeof ref === "string" && ref.trim()) {
-      const cleanRef = ref.trim();
-      // Look up by short referralCode first (case-insensitive)
-      let foundUsers = await db
-        .select()
-        .from(users)
-        .where(sql`lower(${users.referralCode}) = lower(${cleanRef})`);
-
-      // Fallback for legacy UUID referral links
-      if (!foundUsers.length) {
-        const isUuid =
-          /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
-            cleanRef,
-          );
-        if (isUuid) {
-          foundUsers = await db
-            .select()
-            .from(users)
-            .where(eq(users.id, cleanRef));
-        }
-      }
-
-      if (foundUsers?.length) {
-        // Strict self-referral check: cannot use own referral code
-        if (
-          foundUsers[0].email?.toLowerCase() === email?.toLowerCase() ||
-          (phone && foundUsers[0].phone === phone) ||
-          (name &&
-            foundUsers[0].name?.trim().toLowerCase() ===
-              String(name).trim().toLowerCase())
-        ) {
-          return NextResponse.json(
-            { message: "You cannot use your own referral code." },
-            { status: 400 },
-          );
-        }
-
-        refUser = foundUsers;
-      } else {
-        return NextResponse.json(
-          { message: "Referral code is invalid." },
-          { status: 400 },
-        );
+      referrer = await findReferrer(ref);
+      const isSelf =
+        referrer &&
+        (referrer.email?.toLowerCase() === String(email).toLowerCase() ||
+          (phone && referrer.phone === phone));
+      if (!referrer || isSelf) {
+        return NextResponse.json({ message: BAD_REF }, { status: 400 });
       }
     }
-    const existingUser = await cognitoAdminGetUser({ email });
 
-    if (existingUser?.UserStatus === "CONFIRMED") {
+    let existing: any = null;
+    try {
+      existing = await cognitoAdminGetUser({ email });
+    } catch (error: any) {
+      if (error?.__type !== "UserNotFoundException" && error?.name !== "UserNotFoundException") throw error;
+    }
+
+    if (existing?.UserStatus === "CONFIRMED" || existing?.UserStatus === "EXTERNAL_PROVIDER") {
       return NextResponse.json(
-        { message: "User already exists. Please login." },
+        { message: "An account with this email already exists. Please sign in." },
         { status: 409 },
       );
     }
 
-    await cognitoSignUp({
+    if (existing) {
+      await cognito.send(new AdminDeleteUserCommand({ UserPoolId: USER_POOL_ID, Username: email }));
+    }
+
+    const cognitoRes = await cognitoSignUp({
       email,
       password,
       userAttribute: [{ Name: "email", Value: email }],
     });
+    const cognitoId = cognitoRes.UserSub;
+    if (!cognitoId) throw new Error("Sign-up failed. Please try again.");
+
+    const safeName = String(name || "New User").trim().slice(0, 80);
+    const safePhone = String(phone || "0000000000").slice(0, 15);
+
+    const [dbUser] = await db.select().from(users).where(eq(users.email, email));
+    let userRow: any = dbUser;
+
+    if (!dbUser) {
+      const generatedCode = await generateUniqueReferralCode(db, safeName);
+      [userRow] = await db
+        .insert(users)
+        .values({
+          name: safeName,
+          email,
+          phone: safePhone,
+          cognitoId,
+          referralCode: generatedCode,
+          rewardOrderCoins: SIGNUP_BONUS_RUPEES + (referrer ? REFERRAL_FRIEND_BONUS_RUPEES : 0),
+          referralCoins: 0,
+        })
+        .returning();
+      await db.insert(rewardCoinsHistory).values({
+        userId: userRow.id,
+        coins: SIGNUP_BONUS_RUPEES,
+        type: "signup_bonus",
+      });
+      if (referrer && referrer.id !== userRow.id) await addReferral(userRow, referrer, safeName);
+    } else if (!dbUser.isEmailVerified) {
+      // An unfinished sign-up: replace whatever it held with this person's details.
+      [userRow] = await db
+        .update(users)
+        .set({ name: safeName, phone: safePhone, cognitoId, updatedAt: new Date() })
+        .where(eq(users.id, dbUser.id))
+        .returning();
+      await db
+        .delete(rewardCoinsHistory)
+        .where(and(eq(rewardCoinsHistory.userId, dbUser.id), eq(rewardCoinsHistory.type, "referral_welcome")));
+      await db.delete(referralCoinHistory).where(eq(referralCoinHistory.newUserId, dbUser.id));
+      if (referrer && referrer.id !== dbUser.id) await addReferral(userRow, referrer, safeName);
+    } else {
+      await db.update(users).set({ cognitoId }).where(eq(users.id, dbUser.id));
+    }
 
     return NextResponse.json(
       {
-        message: "OTP resent to your email.",
-        data: { email },
+        message: "We've sent a code to your email.",
+        data: { userId: userRow.id, email },
       },
-      { status: 200 },
+      { status: 201 },
     );
   } catch (error: any) {
-    if (error.__type === "UserNotFoundException") {
-      try {
-        const cognitoRes = await cognitoSignUp({
-          email,
-          password,
-          userAttribute: [{ Name: "email", Value: email }],
-        });
-
-        const cognitoId = cognitoRes.UserSub;
-        if (!cognitoId) throw new Error("Cognito User ID missing");
-
-        const safeName = (name || "New User").trim();
-        const safePhone = phone || "0000000000";
-
-        const [existingDbUser] = await db
-          .select()
-          .from(users)
-          .where(eq(users.email, email));
-
-        let userRes;
-
-        if (!existingDbUser) {
-          const referredUser = refUser?.[0];
-          const isValidReferral =
-            referredUser &&
-            referredUser.email?.toLowerCase() !== email?.toLowerCase();
-
-          const initialRewardRupees =
-            SIGNUP_BONUS_RUPEES +
-            (isValidReferral ? REFERRAL_FRIEND_BONUS_RUPEES : 0);
-
-          const generatedCode = await generateUniqueReferralCode(db, safeName);
-          [userRes] = await db
-            .insert(users)
-            .values({
-              name: safeName,
-              email,
-              phone: safePhone,
-              cognitoId,
-              referralCode: generatedCode,
-              rewardOrderCoins: initialRewardRupees,
-              referralCoins: 0,
-            })
-            .returning();
-
-          // 1. Credit ₹50 Welcome Bonus for joining
-          await db.insert(rewardCoinsHistory).values({
-            userId: userRes.id,
-            coins: SIGNUP_BONUS_RUPEES,
-            type: "signup_bonus",
-          });
-
-          // 2. If signed up with a valid friend's referral code, record referral and friend bonus
-          if (isValidReferral && referredUser.id !== userRes.id) {
-            await db.insert(rewardCoinsHistory).values({
-              userId: userRes.id,
-              coins: REFERRAL_FRIEND_BONUS_RUPEES,
-              type: "referral_welcome",
-            });
-
-            // Record referral link (referrer gets ₹100 credited when friend's first order of ₹399+ is delivered)
-            await db.insert(referralCoinHistory).values({
-              userId: referredUser.id,
-              coins: REFERRAL_EARNING_RUPEES,
-              newUserName: safeName,
-              newUserId: userRes.id,
-              type: "referral",
-            });
-          }
-        } else {
-          userRes = existingDbUser;
-        }
-
-        return NextResponse.json(
-          {
-            message: "Signup successful. OTP sent to email.",
-            data: {
-              userId: userRes.id,
-              email,
-            },
-          },
-          { status: 201 },
-        );
-      } catch (signupError: any) {
-        console.error("Signup error:", signupError);
-
-        return NextResponse.json(
-          { message: signupError.message },
-          { status: 500 },
-        );
-      }
-    }
-    return NextResponse.json({ message: error.message }, { status: 500 });
+    console.error("Signup error:", error);
+    return NextResponse.json(
+      { message: error?.message || "Sign-up failed. Please try again." },
+      { status: 500 },
+    );
   }
 }

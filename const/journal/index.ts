@@ -50,7 +50,7 @@ export const COVER_THEMES: Record<
 
 export const JOURNAL_PRODUCTS: Record<
   JournalProduct,
-  { name: string; brand: "Ovy" | "Looway" | "Potent"; href: string; image: string; line: string }
+  { name: string; brand: "Ovy" | "Looway" | "Potent Hygiene" | "Potent"; href: string; image: string; line: string }
 > = {
   "ovy-pads": {
     name: "Ovy Organic Sanitary Pads",
@@ -81,8 +81,8 @@ export const JOURNAL_PRODUCTS: Record<
     line: "Soft teen pads and kits that make a first period calm.",
   },
   "ovy-cup": {
-    name: "Ovy Menstrual Cup",
-    brand: "Ovy",
+    name: "Potent Hygiene Menstrual Cup",
+    brand: "Potent Hygiene",
     href: "/product-detail/ovy-cup",
     image: "/product-images/cup.jpg",
     line: "Medical-grade silicone in Teen, Medium and Large.",

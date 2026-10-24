@@ -18,7 +18,9 @@ function productJsonLd(product: any, slug: string) {
   const url = `${SITE_URL}/product-detail/${slug}`;
   const seo = PRODUCT_SEO[slug];
   const variants: any[] = (product.productVariants || []).filter((v: any) => Number(v.price) > 0);
-  const brand = product.brand === "loway" ? "Looway" : "Ovy";
+  // The menstrual cup is a Potent Hygiene product, not an Ovy one.
+  const isCup = slug === "ovy-cup";
+  const brand = isCup ? "Potent Hygiene" : product.brand === "loway" ? "Looway" : "Ovy";
   const images = [
     product.bannerImage,
     ...(product.productMediaRes || []).map((m: any) => m.mediaURL),
@@ -103,17 +105,20 @@ function productJsonLd(product: any, slug: string) {
       brand: { "@type": "Brand", name: brand },
       manufacturer: seller,
       countryOfOrigin: "IN",
-      category: brand === "Ovy" ? "Feminine hygiene > Period care" : "Personal hygiene > Travel hygiene",
+      category: brand === "Looway" ? "Personal hygiene > Travel hygiene" : "Feminine hygiene > Period care",
       offers,
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
+      // The cup page's breadcrumb is Home / Shop / product, with no brand step.
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
         { "@type": "ListItem", position: 2, name: "Shop", item: `${SITE_URL}/shop` },
-        { "@type": "ListItem", position: 3, name: brand, item: `${SITE_URL}/${brand.toLowerCase()}` },
-        { "@type": "ListItem", position: 4, name: seo?.title || product.name, item: url },
+        ...(isCup
+          ? []
+          : [{ "@type": "ListItem", position: 3, name: brand, item: `${SITE_URL}/${brand.toLowerCase()}` }]),
+        { "@type": "ListItem", position: isCup ? 3 : 4, name: seo?.title || product.name, item: url },
       ],
     },
   ];

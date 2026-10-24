@@ -259,7 +259,7 @@ export const ANSWERS: ChatAnswer[] = [
     phrasings: ["what is tss", "toxic shock syndrome", "tss from menstrual cup", "can a cup cause tss", "tampon left in too long", "cup kitni der rakh sakte hain", "is tss common", "tss symptoms"],
     keywords: ["tss", "toxic shock", "tampon", "cup", "12 hours", "rash"],
     answer: "Toxic shock syndrome is very rare but serious, and mostly linked to tampons. A menstrual cup carries a lower risk, but not zero. Empty a cup within 12 hours, wash your hands before and after, and sterilise it between periods. If you suddenly get a high fever, a sunburn-like rash, vomiting, diarrhoea or dizziness while using one, remove it and get medical help straight away.",
-    links: [{ label: "Ovy menstrual cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "Potent Hygiene Menstrual Cup", href: "/product-detail/ovy-cup" }],
     related: ["hl-fever-pain", "hl-handwashing", "hl-change-pad"],
   },
   // ───────────── Heavy bleeding, clots, spotting ─────────────
@@ -449,7 +449,7 @@ export const ANSWERS: ChatAnswer[] = [
     phrasings: ["swimming on period", "periods mein swimming", "can i go in the pool on my period", "pad in swimming pool", "beach on my period", "period panty for swimming", "swim during mc", "water park periods"],
     keywords: ["swim", "swimming", "pool", "beach", "water park"],
     answer: "Yes. Pads and period panties are not for swimming, because they soak up water. Use a menstrual cup or a tampon instead, then change into a fresh pad afterwards. A cup can be worn for up to 12 hours, so it suits a pool day. If you are new to cups, practise for a cycle or two before the swim.",
-    links: [{ label: "Ovy menstrual cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "Potent Hygiene Menstrual Cup", href: "/product-detail/ovy-cup" }],
     related: ["hl-exercise", "hl-tss", "hl-bath-hair-wash"],
   },
   {
@@ -708,7 +708,7 @@ export const ANSWERS: ChatAnswer[] = [
     phrasings: ["pads for pcos", "pcod ke liye konsa pad", "best pad for pcos heavy flow", "can i use cup with pcos", "pcos unpredictable periods product", "pcod mein cup use kar sakte hain", "pcos period products"],
     keywords: ["pcos", "pcod", "product", "cup", "xl+", "period panty"],
     answer: "With PCOS the flow can be unpredictable, absent for weeks then heavy, so keep more than one size at home. The XL+ pad suits flood days, a period panty gives full coverage overnight, and a Large menstrual cup with volume markings lets you measure your flow to show your doctor. A cup is completely fine to use with PCOS. Keep seeing your doctor for the condition itself.",
-    links: [{ label: "Ovy pads", href: "/product-detail/ovy-pads" }, { label: "Ovy menstrual cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "Ovy pads", href: "/product-detail/ovy-pads" }, { label: "Potent Hygiene Menstrual Cup", href: "/product-detail/ovy-cup" }],
     related: ["hl-pcos", "hl-heavy-bleeding", "hl-period-tracker"],
   },
   {

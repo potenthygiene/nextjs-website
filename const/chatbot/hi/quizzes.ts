@@ -310,7 +310,7 @@ export const QUIZ_TEXT_HI: Record<string, string> = {
   "Here's the pad size that fits your answers.": "आपके जवाबों के हिसाब से यह पैड साइज़ सही है।",
 
   // ---- find what I need (/quiz)
-  "Your fit: the Ovy Menstrual Cup": "आपके लिए सही: Ovy मेंस्ट्रुअल कप",
+  "Your fit: the Potent Hygiene Menstrual Cup": "आपके लिए सही: Potent Hygiene मेंस्ट्रुअल कप",
   "Your fit: Ovy Period Panties": "आपके लिए सही: Ovy पीरियड पैंटी",
   "Medical-grade silicone, up to 12 hours between changes, and reusable for years. The cup size quiz picks Teen, Medium or Large for you.":
     "मेडिकल-ग्रेड सिलिकॉन, 12 घंटे तक बिना बदले, और सालों तक दोबारा इस्तेमाल। कप साइज़ क्विज़ आपके लिए Teen, Medium या Large चुनता है।",
@@ -369,8 +369,8 @@ export const QUIZ_TEXT_HI: Record<string, string> = {
   "Your size: Teen (XS), 16 ml": "आपका साइज़: Teen (XS), 16 ml",
   "Your size: Medium, 25 ml": "आपका साइज़: Medium, 25 ml",
   "Your size: Large, 35 ml": "आपका साइज़: Large, 35 ml",
-  "The smallest, softest Ovy cup, made for teens, first-timers and a low cervix, with light to average flow.":
-    "सबसे छोटा और नरम Ovy कप, टीन, पहली बार इस्तेमाल करने वालों और नीची सर्विक्स के लिए, हल्के से औसत फ़्लो के साथ।",
+  "Our smallest, softest cup, made for teens, first-timers and a low cervix, with light to average flow.":
+    "हमारा सबसे छोटा और नरम कप, टीन, पहली बार इस्तेमाल करने वालों और नीची सर्विक्स के लिए, हल्के से औसत फ़्लो के साथ।",
   "The everyday all-rounder for average flow and cervix, if you haven't had a vaginal birth. C-section mums and many over-30s use Medium.":
     "औसत फ़्लो और सर्विक्स के लिए रोज़ का ऑल-राउंडर, अगर आपकी नॉर्मल (वजाइनल) डिलीवरी नहीं हुई है। सी-सेक्शन वाली माँएँ और 30 से ज़्यादा उम्र की कई महिलाएँ Medium इस्तेमाल करती हैं।",
   "The largest cup, made for after a vaginal birth, heavier or longer days, and a higher cervix.":
@@ -416,8 +416,8 @@ export const QUIZ_TEXT_HI: Record<string, string> = {
   "7 Extra Large (XL) pads, 280mm": "7 Extra Large (XL) पैड, 280mm",
   "7 Extra Large+ (XL+) pads, 320mm": "7 Extra Large+ (XL+) पैड, 320mm",
   "Here's the kit that fits her.": "यह किट उसके लिए सही है।",
-  "Here's the kit that fits her. The 50-piece First Period Box gift set is coming soon, and this kit is ready now.":
-    "यह किट उसके लिए सही है। 50 चीज़ों वाला First Period Box गिफ़्ट सेट जल्द आ रहा है, और यह किट अभी तैयार है।",
+  "Here's the kit that fits her. The First Period Box gift set is coming soon, and this kit is ready now.":
+    "यह किट उसके लिए सही है। First Period Box गिफ़्ट सेट जल्द आ रहा है, और यह किट अभी तैयार है।",
   "Pop the kit in her school bag before her period starts, so she's ready wherever she is.":
     "पीरियड शुरू होने से पहले ही किट उसके स्कूल बैग में रख दें, ताकि वह जहाँ भी हो, तैयार रहे।",
   "Show her how to change a pad every 4 to 6 hours, even on light days.": "उसे बताएँ कि हर 4 से 6 घंटे में पैड बदलना है, हल्के दिनों में भी।",

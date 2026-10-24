@@ -10,6 +10,7 @@ import {
 } from "@/app/components/common/dashboard-review/ReviewHeader";
 import { getReviewableProducts, getUserAllReviews } from "@/helper";
 import { Skeleton } from "@/components/ui/skeleton";
+import { REVIEW_PHOTO_REWARD_RUPEES as PHOTO_RS, REVIEW_TEXT_REWARD_RUPEES as TEXT_RS } from "@/lib/rewardsRules";
 
 export default function ReviewPage() {
   const [reviews, setReviews] = useState<any[]>([]);
@@ -80,7 +81,7 @@ export default function ReviewPage() {
               Write a Review
             </h3>
             <span className="text-xs font-semibold text-[#1B8392] bg-[#E9F7F9] px-3 py-1 rounded-full">
-              Earn ₹50 Reward (1 photo required)
+              Earn ₹{TEXT_RS}, or ₹{PHOTO_RS} with a photo
             </span>
           </div>
           <div className="space-y-3">
@@ -104,7 +105,7 @@ export default function ReviewPage() {
           ))
         ) : (
           <p className="text-sm text-gray-500 py-4">
-            You haven&apos;t submitted any reviews yet. Write a review to earn ₹50 in your Rewards balance!
+            You haven&apos;t written any reviews yet. Once an order is delivered, its products appear above for you to review.
           </p>
         )}
       </div>

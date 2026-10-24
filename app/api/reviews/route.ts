@@ -2,7 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/src/db";
 import { product, review, users } from "@/src/db/schema";
 import { getCurrentUser } from "@/helper/user/action";
-import { syncAndGetUserRewards, REVIEW_REWARD_RUPEES } from "@/lib/rewards";
+import { syncAndGetUserRewards } from "@/lib/rewards";
+import { REVIEW_PHOTO_REWARD_RUPEES, REVIEW_TEXT_REWARD_RUPEES } from "@/lib/rewardsRules";
+import { NOT_A_BUYER_MESSAGE, hasReceivedProduct } from "@/lib/reviewEligibility";
 import { getImageUrl } from "@/lib/imageUrl";
 import { and, desc, eq, ilike } from "drizzle-orm";
 
@@ -13,8 +15,17 @@ const UUID_REGEX =
 export async function GET() {
   try {
     const data = await db
-      .select()
+      .select({
+        id: review.id,
+        productId: review.productId,
+        name: review.name,
+        rating: review.rating,
+        message: review.message,
+        imageUrl: review.imageUrl,
+        createdAt: review.createdAt,
+      })
       .from(review)
+      .where(eq(review.isAdminApproved, true))
       .orderBy(desc(review.createdAt));
 
     return NextResponse.json(data);
@@ -35,7 +46,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error:
-            "Please log in to submit a review and earn ₹50 cash credit.",
+            `Please sign in to write a review and earn ₹${REVIEW_TEXT_REWARD_RUPEES}, or ₹${REVIEW_PHOTO_REWARD_RUPEES} with a photo.`,
         },
         { status: 401 },
       );
@@ -93,14 +104,17 @@ export async function POST(req: NextRequest) {
     }
 
     if (!resolvedProductId) {
-      const [firstProduct] = await db
-        .select({ id: product.id })
-        .from(product)
-        .limit(1);
-      resolvedProductId = firstProduct?.id ?? null;
+      return NextResponse.json(
+        { error: "Please choose the product you are reviewing." },
+        { status: 400 },
+      );
     }
 
-    if (resolvedProductId) {
+    if (!(await hasReceivedProduct(dbUser.id, resolvedProductId))) {
+      return NextResponse.json({ error: NOT_A_BUYER_MESSAGE }, { status: 403 });
+    }
+
+    {
       const [existing] = await db
         .select({ id: review.id })
         .from(review)
@@ -114,14 +128,14 @@ export async function POST(req: NextRequest) {
 
       if (existing) {
         return NextResponse.json(
-          { error: "You have already reviewed this product." },
+          { error: "You have already reviewed this product. Thank you!" },
           { status: 400 },
         );
       }
     }
 
     const reviewerName =
-      String(body.name || "").trim() || dbUser.name || "Verified Buyer";
+      String(body.name || "").trim() || dbUser.name || "Potent customer";
 
     const mediaList = Array.isArray(body.media)
       ? body.media
@@ -139,12 +153,6 @@ export async function POST(req: NextRequest) {
         return getImageUrl(raw);
       });
     const primaryImageUrl = normalizedMedia[0] || null;
-    if (!primaryImageUrl) {
-      return NextResponse.json(
-        { error: "Please attach at least 1 photo of the product to earn ₹50." },
-        { status: 400 },
-      );
-    }
 
     const mediaJson = normalizedMedia.length > 0 ? JSON.stringify(normalizedMedia) : null;
 
@@ -170,8 +178,7 @@ export async function POST(req: NextRequest) {
       pendingApproval: true,
       rewardAdded: 0,
       balance: synced.balance,
-      message:
-        "Review submitted! ₹50 will be added to your balance once approved.",
+      message: `Review submitted! ₹${primaryImageUrl ? REVIEW_PHOTO_REWARD_RUPEES : REVIEW_TEXT_REWARD_RUPEES} will be added to your Rewards once our team approves it.`,
     });
   } catch (error) {
     console.error("Failed to create review:", error);

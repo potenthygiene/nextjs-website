@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { requireAdmin } from "@/helper/auth/guard";
 import { db } from "@/lib/db";
 
 import slugify from "slugify";
@@ -23,6 +24,7 @@ interface GetCategoriesOptions {
   category: any;
 }
 export async function createCategory(categoryData: any) {
+  await requireAdmin();
   try {
     const { name, description, parentId, bannerImage } = categoryData;
     const slug = await generateUniqueSlug(db, name, category.slug);
@@ -43,6 +45,7 @@ export async function createCategory(categoryData: any) {
 }
 
 export async function updateCategory(categoryData: any) {
+  await requireAdmin();
   try {
     const { id, name, description, parentId, bannerImage } =
       categoryData;
@@ -72,6 +75,7 @@ export const attachProductCategory = async (
   productId: string,
   categoryId: string,
 ) => {
+  await requireAdmin();
   try {
     return { success: true };
   } catch (error) {
@@ -81,6 +85,7 @@ export const attachProductCategory = async (
 };
 
 export async function getProductCategory(productId: string) {
+  await requireAdmin();
   try {
     return [];
   } catch (error) {
@@ -92,6 +97,7 @@ export async function updateProductCategory(
   productId: string,
   categoryId: string,
 ) {
+  await requireAdmin();
   try {
     return { success: true };
   } catch (error) {
@@ -106,6 +112,7 @@ export async function getCategoriesPagination({
   search = "",
   category: categorySlug,
 }: GetCategoriesOptions) {
+  await requireAdmin();
   const filters = [];
 
   if (search.trim() !== "") {
@@ -133,6 +140,7 @@ export async function getCategoriesPagination({
   };
 }
 export async function deleteCategory(id: string) {
+  await requireAdmin();
   try {
     await db.delete(category).where(eq(category.id, id));
 

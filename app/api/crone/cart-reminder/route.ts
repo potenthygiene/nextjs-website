@@ -1,5 +1,6 @@
 import { cart, cartItem, product, users } from "@/db/schema";
-import { getProfile, sendCartAbandonmentEmail } from "@/helper";
+import { getProfile } from "@/helper";
+import { sendCartAbandonmentEmail } from "@/helper/emailTemplates/action";
 import { db } from "@/lib/db";
 import { and, eq, gt, lt } from "drizzle-orm";
 import { isCronRequest } from "@/lib/requestGuard";

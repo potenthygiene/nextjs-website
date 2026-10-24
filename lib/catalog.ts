@@ -3,7 +3,7 @@ import { asc, desc, eq } from "drizzle-orm";
 
 import { db } from "@/lib/db";
 import { category, product } from "@/db/schema";
-import { fixHighlights, fixProductText } from "@/lib/contentFixes";
+import { fixHighlights, fixProductName, fixProductText } from "@/lib/contentFixes";
 
 export type CatalogCategory = {
   id: string;
@@ -49,6 +49,7 @@ async function queryCatalogProducts() {
 
   return rows.map((row) => ({
     ...row.product,
+    name: fixProductName(row.product.name),
     description: fixProductText(row.product.description),
     highlights: fixHighlights(row.product.highlights),
     category: row.category,
@@ -73,7 +74,7 @@ async function queryCatalogCategories() {
 
 export const getCachedCatalogProducts = unstable_cache(
   queryCatalogProducts,
-  ["catalog-products-with-categories-v5-priority-desc-no-variants-starting-price-textfix-highlights"],
+  ["catalog-products-with-categories-v6-priority-desc-no-variants-starting-price-textfix-highlights-cupname"],
   {
     tags: ["catalog-products", "products", "categories"],
     revalidate: 60 * 60 * 24,

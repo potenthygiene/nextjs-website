@@ -54,7 +54,7 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
         productVariantId: cupVariantId,
         sku: cupVariant?.sku,
         slug: cupProduct?.slug || "ovy-cup",
-        title: `${cupProduct?.name || "Ovy Menstrual Cup"} - ${getOvyVariantLabel(cupVariant)}`,
+        title: `${cupProduct?.name || "Potent Hygiene Menstrual Cup"} - ${getOvyVariantLabel(cupVariant)}`,
         image: getImageUrl(cupImage || "/placeholder.jpg"),
         price: cupPrice,
         quantity: 1,
@@ -105,7 +105,7 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
                 <div className="relative h-full w-full overflow-hidden rounded-2xl bg-white">
                   <Image
                     src="/ovy/m2-swim.jpg"
-                    alt="Ovy Menstrual Cup Swim Model"
+                    alt="Potent Hygiene Menstrual Cup swim model"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 450px"
@@ -121,7 +121,7 @@ export function OvyCupDetail({ productsBySlug }: OvyCupDetailProps) {
             {/* Header Section Inside Right Column */}
             <div>
               <span className="mb-1.5 block text-[11px] font-bold tracking-widest text-[#602E55] uppercase">
-                OVY MENSTRUAL CUP
+                POTENT HYGIENE MENSTRUAL CUP
               </span>
               <h2 className="font-serif text-3xl leading-snug font-bold text-[#1F1915] sm:text-4xl lg:text-5xl">
                 Three sizes. One right fit.

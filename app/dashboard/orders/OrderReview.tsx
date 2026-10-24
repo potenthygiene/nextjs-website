@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { REVIEW_PHOTO_REWARD_RUPEES as PHOTO_RS, REVIEW_TEXT_REWARD_RUPEES as TEXT_RS } from "@/lib/rewardsRules";
 import { Calendar, ChevronRight, Loader2, Star, Upload } from "lucide-react";
 import React, { useState } from "react";
 
@@ -104,11 +105,6 @@ export const OrderReview = ({
       imageUrl: productMedia[0] || null,
     };
 
-    if (!productMedia || productMedia.length === 0) {
-      toast.error("Please attach at least 1 photo of the product to earn ₹50");
-      return;
-    }
-
     try {
       if (reviewData.rating > 0 && reviewData.message !== "") {
         setLoadingProduct(productVarientId);
@@ -117,7 +113,7 @@ export const OrderReview = ({
 
         if (response.success) {
           toast.success(
-            "Review submitted! ₹50 will be credited once approved by our team.",
+            response.message || `Review submitted! ₹${productMedia.length ? PHOTO_RS : TEXT_RS} will be added once our team approves it.`,
           );
 
           setRatings((prev) => ({ ...prev, [productVarientId]: 0 }));
@@ -309,7 +305,7 @@ export const OrderReview = ({
 
                         <div className="space-y-1.5">
                           <p className="text-xs font-semibold text-[#016271]">
-                            Attach Product Photo <span className="text-red-500">*</span> (1 photo required to earn ₹50)
+                            Add a photo (optional): earns ₹{PHOTO_RS} instead of ₹{TEXT_RS}
                           </p>
                           <div className="grid grid-cols-3 gap-2">
                             {[1, 2, 3, 4, 5].map((index: number) => {
@@ -388,7 +384,7 @@ export const OrderReview = ({
                                 : loadingProduct === variantId &&
                                   loadingProduct !== null
                                 ? "Submitting..."
-                                : "Submit Review (+₹50)"}
+                                : "Submit review"}
                             </Button>
                           );
                         })()}

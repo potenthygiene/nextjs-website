@@ -4,9 +4,10 @@
 export const SIGNUP_BONUS_RUPEES = 50; // ₹50 welcome credit when an account is created
 export const REFERRAL_EARNING_RUPEES = 100; // ₹100 credit for the referrer once the friend's first order is delivered
 export const REFERRAL_FRIEND_BONUS_RUPEES = 100; // ₹100 extra credit for a friend who joins with a referral link
-export const REVIEW_TEXT_REWARD_RUPEES = 50; // ₹50 for review
-export const REVIEW_PHOTO_REWARD_RUPEES = 50; // ₹50 for review with photo
-export const REVIEW_REWARD_RUPEES = 50;
+export const REVIEW_TEXT_REWARD_RUPEES = 25; // ₹25 for a written review
+export const REVIEW_PHOTO_REWARD_RUPEES = 50; // ₹50 for a review with a photo
+export const REVIEW_REWARD_RUPEES = REVIEW_PHOTO_REWARD_RUPEES; // the most a review earns
+export const REVIEW_REWARD_LINE = `₹${REVIEW_TEXT_REWARD_RUPEES} for a review, ₹${REVIEW_PHOTO_REWARD_RUPEES} with a photo, once it is approved`;
 export const BIRTHDAY_REWARD_RUPEES = 50; // ₹50 annual birthday credit (valid for 3 months)
 export const ORDER_REWARD_RATE = 0.05; // 5% of amount paid for products (delivered)
 export const REFERRAL_MIN_ORDER_AMOUNT = 399; // Friend's first order must be ₹399 or more

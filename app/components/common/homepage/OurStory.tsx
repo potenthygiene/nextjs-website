@@ -103,7 +103,7 @@ export function OurStory(_props: Props) {
         productVariantId: cupVariantId,
         sku: cupVariant?.sku,
         slug: cupProduct?.slug || "ovy-cup",
-        title: `${cupProduct?.name || "Ovy Menstrual Cup"} - ${getOvyVariantLabel(cupVariant)}`,
+        title: `${cupProduct?.name || "Potent Hygiene Menstrual Cup"} - ${getOvyVariantLabel(cupVariant)}`,
         image: cupImage,
         price: cupPrice,
         quantity: 1,
@@ -130,7 +130,7 @@ export function OurStory(_props: Props) {
             <div className="group relative aspect-[16/10] w-full max-w-md overflow-hidden rounded-3xl border border-gray-100/80 shadow-xl sm:aspect-square sm:rounded-[2.5rem] lg:max-w-lg">
               <Image
                 src={cupImage}
-                alt="Ovy Menstrual Cup"
+                alt="Potent Hygiene Menstrual Cup"
                 fill
                 className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 500px"
@@ -141,7 +141,7 @@ export function OurStory(_props: Props) {
           {/* RIGHT CONTENT */}
           <div className="flex flex-col text-left lg:col-span-7">
             <span className={`${EYEBROW_TEAL} mb-2 sm:mb-3`}>
-              Ovy menstrual cup
+              Potent Hygiene menstrual cup
             </span>
 
             <h2 className={`${H2} mb-3 sm:mb-4`}>

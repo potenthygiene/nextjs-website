@@ -4,7 +4,7 @@ import type { ProductKey } from "./symptomTypes";
 // Product details the chat shows on cards. Live prices, sizes and offers
 // come from /api/chat-knowledge; these are the fixed parts.
 
-export const PRODUCT_META: Record<ProductKey, { name: string; brand: "Ovy" | "Looway" | "Potent"; href: string; image: string; line: string }> = {
+export const PRODUCT_META: Record<ProductKey, { name: string; brand: "Ovy" | "Looway" | "Potent Hygiene" | "Potent"; href: string; image: string; line: string }> = {
   "ovy-pads": {
     name: "Ovy Organic Sanitary Pads",
     brand: "Ovy",
@@ -34,8 +34,8 @@ export const PRODUCT_META: Record<ProductKey, { name: string; brand: "Ovy" | "Lo
     line: "Soft teen pads and kits for first periods",
   },
   "ovy-cup": {
-    name: "Ovy Menstrual Cup",
-    brand: "Ovy",
+    name: "Potent Hygiene Menstrual Cup",
+    brand: "Potent Hygiene",
     href: "/product-detail/ovy-cup",
     image: "/product-images/cup.jpg",
     line: "Medical-grade silicone · Teen, Medium, Large",

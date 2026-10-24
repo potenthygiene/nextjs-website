@@ -1,9 +1,15 @@
 {
-  "regions": ["bom1"],
+  "regions": [
+    "bom1"
+  ],
   "crons": [
     {
       "path": "/api/crone/cart-reminder",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/renew-subscription",
+      "schedule": "30 4 * * *"
     }
   ]
 }

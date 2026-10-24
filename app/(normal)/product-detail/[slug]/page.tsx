@@ -110,7 +110,7 @@ export default async function Page({ params }: any) {
   if (canonicalSlug === "ovy-cup") {
     return (
       <MenstrualCupPageClient
-        product={product || { slug: "ovy-cup", name: "Ovy Reusable Menstrual Cup" }}
+        product={product || { slug: "ovy-cup", name: "Potent Hygiene Menstrual Cup" }}
         reviewWithMedia={reviewWithMedia}
         content={ovyCup}
       />

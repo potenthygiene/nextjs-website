@@ -1,11 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import {
-  createPaymentGatewayPlan,
-  CreatePaymentGatewaySubscription,
-  createSubscription,
-} from "@/helper";
-import { getCurrentUser } from "@/helper/user/action";
 
 declare global {
   interface Window {
@@ -154,60 +148,10 @@ export const initiateRazorpaySubscription = async ({
     throw new Error("Razorpay SDK failed to load");
   }
 
-  const subscriptionItems = items.filter(
-    (item: any) =>
-      (item.isTypeSubscription === true || item.isSubscribed === true) &&
-      item.subscriptionType !== "cycle_sync",
-  );
-
-  let localSubscriptions: any[] = [];
+  // Subscriptions never go in the bag: they use the subscription checkout,
+  // which prices them on the server. Refuse any that slip through.
   if (items.some((item: any) => item.isTypeSubscription === true || item.isSubscribed === true)) {
-    const { userId }: any = await getCurrentUser()
-    const subscriptionResult: any = await createSubscription({ userId, items });
-    localSubscriptions = subscriptionResult?.subscriptions ?? [];
-  }
-
-  if (subscriptionItems.length > 0) {
-    const { userId }: any = await getCurrentUser()
-    const plan = await fetch("/api/razorpay/plans", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount, items }),
-    });
-
-    const planData = await plan.json();
-
-    if (!Array.isArray(planData) || planData.length === 0) {
-      throw new Error("Plan creation failed");
-    }
-
-    await createPaymentGatewayPlan(planData);
-
-    const subscriptions = await Promise.all(
-      planData.map(async (p: any, index: number) => {
-        const res = await fetch("/api/razorpay/subscriptions", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ planId: p.id }),
-        });
-
-        const data = await res.json();
-
-        if (!data?.id) {
-          throw new Error("Subscription creation failed");
-        }
-
-        return {
-          ...data,
-          productId: p.productId,
-          subscriptionId: localSubscriptions[index]?.id,
-          userId,
-        };
-      }),
-    );
-
-    await CreatePaymentGatewaySubscription(subscriptions);
-
+    throw new Error("Subscriptions are bought from the product page. Please remove it from your bag and subscribe there.");
   }
 
   // 1️⃣ Create Razorpay Order (ONLY amount here)
@@ -237,9 +181,17 @@ export const initiateRazorpaySubscription = async ({
       name,
       description,
       order_id: order.id,
+      prefill: {
+        name: order.customer?.name || undefined,
+        email: order.customer?.email || undefined,
+        contact: order.customer?.phone || undefined,
+      },
       ...(paymentMethod
         ? {
             prefill: {
+              name: order.customer?.name || undefined,
+              email: order.customer?.email || undefined,
+              contact: order.customer?.phone || undefined,
               method: paymentMethod,
             },
             config: {

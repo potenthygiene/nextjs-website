@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { requireAdmin } from "@/helper/auth/guard";
 import { db } from "@/lib/db";
 
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -18,7 +19,13 @@ import {
   sql,
 } from "drizzle-orm";
 import { generateUniqueSlug } from "../slug/generateUniqueSlug";
-import { fixProductFaq, fixProductText, fixHighlights } from "@/lib/contentFixes";
+import {
+  fixProductFaq,
+  fixProductText,
+  fixHighlights,
+  fixProductName,
+  fixVariantNames,
+} from "@/lib/contentFixes";
 
 import {
   category,
@@ -35,6 +42,12 @@ function deduplicateProducts(rows: any[]) {
     seen.add(row.id);
     return true;
   });
+}
+
+// Storefront lists show product names with the read-time fixes applied
+// (lib/contentFixes.ts). The admin list keeps the names as stored.
+function withFixedNames<T extends { name?: string | null }>(rows: T[]): T[] {
+  return rows.map((row) => ({ ...row, name: fixProductName(row.name) }));
 }
 import { getImageKey } from "@/lib/imageUrl";
 import { bestSellingSlug, isUUID } from "@/const/globalconst";
@@ -372,6 +385,7 @@ interface VariantInput {
 // }
 
 export async function createProduct(formData: FormData): Promise<void> {
+  await requireAdmin();
   try {
     const categoryId = formData
       .getAll("category[]")
@@ -436,6 +450,7 @@ export async function createProduct(formData: FormData): Promise<void> {
 }
 
 export async function updateProduct(formData: FormData): Promise<void> {
+  await requireAdmin();
   try {
     const productId = formData.get("id") as string;
     if (!productId) throw new Error("Product ID missing");
@@ -574,14 +589,17 @@ export async function getFullProductDetails(identifier: string) {
         ? productVariantsRes.some((v) => v.isInStock !== false)
         : true;
 
+    const variantsFixed = fixVariantNames(productVariantsRes);
+
     return {
       ...productDeails,
+      name: fixProductName(productDeails.name),
       description: fixProductText(productDeails.description),
       highlights: fixHighlights(productDeails.highlights),
       isInStock,
       hasVarientBox: productDeails.isMixBox,
-      prodcutVarientBoxRes: productVariantsRes,
-      productVariants: productVariantsRes,
+      prodcutVarientBoxRes: variantsFixed,
+      productVariants: variantsFixed,
       categoryRes,
       productAttributeRes: [],
       productFaqRes: productFaqRes.map(fixProductFaq),
@@ -595,6 +613,7 @@ export async function getFullProductDetails(identifier: string) {
 }
 
 export async function getFullProduct(identifier: string) {
+  await requireAdmin();
   try {
     if (!identifier) throw new Error("Missing product identifier");
 
@@ -696,13 +715,14 @@ export async function getProductSimilarProducts(slug: string | any) {
       .where(and(eq(product.brand, v.brand), ne(product.id, v.id)))
       .limit(30);
 
-    return deduplicateProducts(similarVariants).slice(0, 10);
+    return withFixedNames(deduplicateProducts(similarVariants).slice(0, 10));
   } catch (error) {
     console.error("getProductSimilarProducts failed:", error);
   }
 }
 
 export async function deleteProduct(id: string) {
+  await requireAdmin();
   try {
     await db.transaction(async (tx) => {
       const variants = await tx
@@ -835,7 +855,7 @@ export async function getUserProduct() {
       .from(product)
       .leftJoin(productVariant, eq(product.id, productVariant.productId))
       .orderBy(desc(product.createdAt));
-    return deduplicateProducts(rows);
+    return withFixedNames(deduplicateProducts(rows));
   } catch (error) {
     console.log(error);
   }
@@ -934,7 +954,8 @@ export async function getProductsForCart(productIds: string[]) {
 
     return products.map((p) => ({
       ...p,
-      variants: variants.filter((variant) => variant.productId === p.id),
+      name: fixProductName(p.name),
+      variants: fixVariantNames(variants.filter((variant) => variant.productId === p.id)),
       media: mediaMap.get(p.id) ?? [],
     }));
   } catch (error) {
@@ -944,6 +965,7 @@ export async function getProductsForCart(productIds: string[]) {
 }
 
 export async function saveProductAttributes(productId: string, payload: any) {
+  await requireAdmin();
   // Deprecated in favor of nested  handling in updateProduct
   return { success: true };
 }
@@ -978,7 +1000,7 @@ export async function getBestSellingProducts() {
       .orderBy(desc(product.createdAt))
       .limit(20);
 
-    return deduplicateProducts(products).slice(0, 4);
+    return withFixedNames(deduplicateProducts(products).slice(0, 4));
   } catch (error) {
     console.error(error);
     return [];
@@ -1002,7 +1024,7 @@ export async function getBrandBestSellingProducts(slug: any) {
       .leftJoin(productVariant, eq(product.id, productVariant.productId))
       .where(eq(product.brand, slug))
       .limit(20);
-    return deduplicateProducts(brandProducts).slice(0, 4);
+    return withFixedNames(deduplicateProducts(brandProducts).slice(0, 4));
   } catch (error) {
     console.error(error);
     return [];
@@ -1027,7 +1049,7 @@ export async function getBrandNewArrivalProducts(slug: any) {
       .where(eq(product.brand, slug))
       .orderBy(desc(product.createdAt))
       .limit(20);
-    return deduplicateProducts(brandProducts).slice(0, 4);
+    return withFixedNames(deduplicateProducts(brandProducts).slice(0, 4));
   } catch (error) {
     console.error(error);
     return [];
@@ -1055,7 +1077,7 @@ export async function getProductsByBrand(brand: "ovy" | "loway") {
       .orderBy(desc(product.createdAt))
       .limit(50);
 
-    return deduplicateProducts(brandProducts);
+    return withFixedNames(deduplicateProducts(brandProducts));
   } catch (error) {
     console.error(error);
     return [];

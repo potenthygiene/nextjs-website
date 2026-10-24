@@ -1,3 +1,5 @@
+import { fixProductName } from "@/lib/contentFixes";
+
 export function formatOrderStage(status?: string | null, isUnpaid?: boolean): string {
   const s = String(status || "").toLowerCase().trim();
 
@@ -155,7 +157,7 @@ export function getItemDisplayDetails(item: any) {
     rawVarName.toLowerCase().includes("mix")
   );
 
-  let productName = item.product?.name || item.productName;
+  let productName = fixProductName(item.product?.name || item.productName);
 
   if (isYatraKit) {
     productName = "Looway Yatra Kit";
@@ -169,7 +171,7 @@ export function getItemDisplayDetails(item: any) {
     } else if (rawSku.includes("PUKE") || rawSku.includes("BAG") || rawVarName.toLowerCase().includes("puke")) {
       productName = "Looway Pee & Puke Bags";
     } else if (rawSku.includes("CUP") || rawVarName.toLowerCase().includes("cup")) {
-      productName = "Ovy Reusable Menstrual Cup";
+      productName = "Potent Hygiene Menstrual Cup";
     } else if (rawSku.includes("TEEN") || rawVarName.toLowerCase().includes("teen")) {
       productName = "Ovy Organic Cotton Teen Pads";
     } else if (rawSku.includes("LINER") || rawVarName.toLowerCase().includes("liner")) {

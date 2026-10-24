@@ -1,5 +1,8 @@
+import { fixProductName } from "@/lib/contentFixes";
+
 export function getCleanProductTitle(item: any): string {
-  let title = item?.title || "Product";
+  // Older bag items may carry a name saved before a name fix.
+  let title = fixProductName(item?.title || "Product");
 
   // Normalize known DB titles that look internal or generic
   if (
@@ -70,7 +73,7 @@ export function getCartItemVariantBadge(item: any): string | null {
       return "Starter Pack (25-piece kit)";
     }
     if (raw.includes("FIRST") || raw.includes("FPB")) {
-      return "First Period Box (50-piece milestone kit)";
+      return "First Period Box (milestone gift kit)";
     }
     if (extractedFromName) return extractedFromName;
   }
@@ -126,7 +129,7 @@ export function getCartItemVariantBadge(item: any): string | null {
     if (extractedFromName) return extractedFromName;
   }
 
-  // 7. Ovy Menstrual Cup
+  // 7. Menstrual cup
   if (slug.includes("cup") || sku.includes("CUP")) {
     if (extractedFromName) {
       return extractedFromName;

@@ -191,59 +191,73 @@ const KITS_DATA: Record<string, any> = {
   FIRST: {
     key: "FIRST",
     label: "First Period Box",
-    pieces: "50-piece milestone kit",
+    pieces: "Milestone gift kit",
     flow: "Complete First Period Gift Box",
     name: "Ovy Organic Teen Pads: First Period Box",
     isComingSoon: true,
-    badge: "Coming Soon · 50-piece milestone kit",
+    badge: "Coming Soon · Milestone gift kit",
     image: "/product-images/teen_model.jpg",
     short:
-      "The ultimate first-period milestone gift box. Packed with 50 premium organic pads across three sizes, panty liners, period panty, toilet seat covers, wipes and a friendly step-by-step guidebook. Coming soon: it can't be ordered yet.",
+      "The first-period milestone gift box: organic pads in all three sizes, panty liners, reusable period panties, toilet seat covers, wipes, disposal bags and a friendly step-by-step guidebook. Coming soon: it can't be ordered yet.",
     box: [
       {
-        item: "14 Large (L) Pads",
+        item: "4 Large (L) Pads",
         mm: "240mm",
         for: "Lighter flow & school days",
         tag: "L",
         bg: "bg-[#E8C8DF]",
       },
       {
-        item: "14 Extra Large (XL) Pads",
+        item: "3 Extra Large (XL) Pads",
         mm: "280mm",
         for: "Regular flow & full days",
         tag: "XL",
         bg: "bg-[#9A5B90]",
       },
       {
-        item: "14 Extra Large+ (XL+) Pads",
+        item: "3 Extra Large+ (XL+) Pads",
         mm: "320mm",
         for: "Heavy flow & peaceful night sleep",
         tag: "XL+",
         bg: "bg-[#7E4D77]",
       },
       {
-        item: "8 Soft Panty Liners",
+        item: "4 Soft Panty Liners",
         mm: "190mm",
-        for: "Daily freshness & spotting",
+        for: "Spotting & the in-between days",
         tag: "LINER",
-        bg: "bg-[#F3E6F0]",
+        bg: "bg-[#9A5B90]",
       },
       {
-        item: "50 Biodegradable Disposal Bags",
-        mm: "Pads & liners",
-        for: "Hassle-free private disposal",
-        tag: "BAG",
-        bg: "bg-[#E4F1F1]",
+        item: "4 Reusable Period Panties",
+        mm: "L-XL",
+        for: "Leak-proof backup for school, sleep & sport",
+        tag: "PANTY",
+        bg: "bg-[#7E4D77]",
       },
       {
-        item: "1 Period Panty & Extras",
-        mm: "Complete Kit",
-        for: "Seat covers, wipes & guidebook",
-        tag: "GIFT",
-        bg: "bg-[#FBF1DA]",
+        item: "5 Toilet Seat Covers",
+        mm: "Disposable",
+        for: "Hygienic changes in school washrooms",
+        tag: "SEAT",
+        bg: "bg-[#016271]",
+      },
+      {
+        item: "10 Wet Wipes & 14 Disposal Bags",
+        mm: "Fragrance-free",
+        for: "Quick, private clean-up anywhere",
+        tag: "CARE",
+        bg: "bg-[#1A8D91]",
+      },
+      {
+        item: "1 \"You've Got This\" Guidebook",
+        mm: "Written for her",
+        for: "Answers the questions she may be shy to ask",
+        tag: "GUIDE",
+        bg: "bg-[#B8860B]",
       },
     ],
-    total: "50 pieces + Complete Period Readiness Kit",
+    total: "Everything for her first cycle, in one gift box",
   },
 };
 
@@ -372,11 +386,11 @@ export default function OvyTeenPageClient({
   const routineCardConfigs = [
     {
       slug: "ovy-cup",
-      fallbackTitle: "Ovy Menstrual Cup",
+      fallbackTitle: "Potent Hygiene Menstrual Cup",
       fallbackDesc: "Organic & rash-free menstrual hygiene care.",
       fallbackImg: "/product-images/cup-rbw.jpg",
       bg: "bg-[#F3E6F0]",
-      tag: "OVY",
+      tag: "POTENT HYGIENE",
     },
     {
       slug: "ovy-pads",
@@ -1508,7 +1522,7 @@ export default function OvyTeenPageClient({
                     First Period Box: Coming Soon
                   </h3>
                   <p className="mx-auto max-w-sm text-xs leading-relaxed text-ink/70 sm:text-sm">
-                    Our 50-piece milestone gift box is currently being prepared
+                    Our milestone gift box is currently being prepared
                     and will be launching soon. Nothing is available to buy yet.
                   </p>
                   <div className="pt-2">
@@ -2492,7 +2506,7 @@ export default function OvyTeenPageClient({
             {[
               {
                 q: "What is the difference between the three kits?",
-                a: "All are organic pad kits for teens. The Starter Pack (25 pcs) is a two-size start for first or early periods. The Pro-Active Pack (25 pcs) adds the XL+ size and sport wings for active or travelling teens. The First Period Box (50 pcs) is the complete milestone gift box — pads in all sizes, period panty, seat covers, wipes, pain patch and guidebook.",
+                a: "All are organic pad kits for teens. The Starter Pack (25 pcs) is a two-size start for first or early periods. The Pro-Active Pack (25 pcs) adds the XL+ size and sport wings for active or travelling teens. The First Period Box (coming soon) is the complete milestone gift box: pads in all sizes, reusable period panties, seat covers, wipes, disposal bags and a guidebook.",
               },
               {
                 q: "Is this a good first-period kit?",

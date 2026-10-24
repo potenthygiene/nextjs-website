@@ -1,6 +1,7 @@
 // @ts-nocheck
 "use server";
 
+import { requireAdmin } from "@/helper/auth/guard";
 import { db } from "@/lib/db";
 import {
   category,
@@ -40,6 +41,7 @@ export async function fetchAdminUsers({
   pageSize = 10,
   search = "",
 }: ListingOptions) {
+  await requireAdmin();
   const currentPage = normalizePage(page);
   const limit = normalizePageSize(pageSize);
   const offset = (currentPage - 1) * limit;
@@ -94,6 +96,7 @@ export async function fetchAdminContactMessages({
   pageSize = 10,
   search = "",
 }: ListingOptions) {
+  await requireAdmin();
   const currentPage = normalizePage(page);
   const limit = normalizePageSize(pageSize);
   const offset = (currentPage - 1) * limit;
@@ -146,6 +149,7 @@ export async function fetchAdminPayments({
   pageSize = 10,
   search = "",
 }: ListingOptions) {
+  await requireAdmin();
   const currentPage = normalizePage(page);
   const limit = normalizePageSize(pageSize);
   const offset = (currentPage - 1) * limit;
@@ -208,6 +212,7 @@ export async function fetchAdminFeaturedProducts({
   pageSize = 10,
   search = "",
 }: ListingOptions) {
+  await requireAdmin();
   return {
     data: [],
     meta: {
@@ -224,6 +229,7 @@ export async function fetchAdminFeaturedCategories({
   pageSize = 10,
   search = "",
 }: ListingOptions) {
+  await requireAdmin();
   return {
     data: [],
     meta: {
@@ -240,6 +246,7 @@ export async function fetchAdminCancelRequests({
   pageSize = 10,
   search = "",
 }: ListingOptions) {
+  await requireAdmin();
   const currentPage = normalizePage(page);
   const limit = normalizePageSize(pageSize);
   const offset = (currentPage - 1) * limit;
@@ -309,6 +316,7 @@ export async function fetchAdminReturnRequests({
   pageSize = 10,
   search = "",
 }: ListingOptions) {
+  await requireAdmin();
   const currentPage = normalizePage(page);
   const limit = normalizePageSize(pageSize);
   const offset = (currentPage - 1) * limit;
@@ -455,6 +463,7 @@ export async function fetchAdminReturnRequests({
 }
 
 export async function fetchAdminDashboardStats() {
+  await requireAdmin();
   try {
     const [
       [{ totalOrders }],
@@ -519,6 +528,7 @@ export async function fetchAdminDashboardStats() {
 }
 
 export async function fetchFeaturedProductOptions() {
+  await requireAdmin();
   return db
     .select({
       value: product.id,
@@ -531,6 +541,7 @@ export async function fetchFeaturedProductOptions() {
 }
 
 export async function fetchFeaturedCategoryOptions() {
+  await requireAdmin();
   return db
     .select({
       value: category.id,
@@ -542,17 +553,21 @@ export async function fetchFeaturedCategoryOptions() {
 }
 
 export async function addFeaturedProduct(productId: string) {
+  await requireAdmin();
   return { success: false, message: "Featured products are not available in the current schema" };
 }
 
 export async function removeFeaturedProduct(id: string) {
+  await requireAdmin();
   return { success: false, message: "Featured products are not available in the current schema" };
 }
 
 export async function addFeaturedCategory(categoryId: string) {
+  await requireAdmin();
   return { success: false, message: "Featured categories are not available in the current schema" };
 }
 
 export async function removeFeaturedCategory(id: string) {
+  await requireAdmin();
   return { success: false, message: "Featured categories are not available in the current schema" };
 }

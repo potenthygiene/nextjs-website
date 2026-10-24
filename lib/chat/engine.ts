@@ -360,7 +360,7 @@ const NAV: { label: string; href: string; words: string[] }[] = [
   { label: "Ovy liners", href: "/product-detail/ovy-liners", words: ["liners", "liner", "panty liners"] },
   { label: "Ovy period panties", href: "/product-detail/ovy-panty", words: ["period panty", "period panties", "panties"] },
   { label: "Ovy Teen kits", href: "/product-detail/ovy-teen", words: ["teen", "teen kit", "teen kits", "first period kit"] },
-  { label: "the Ovy cup", href: "/product-detail/ovy-cup", words: ["cup", "menstrual cup", "ovy cup", "size quiz", "cup size quiz"] },
+  { label: "the Potent Hygiene cup", href: "/product-detail/ovy-cup", words: ["cup", "menstrual cup", "ovy cup", "potent cup", "potent hygiene cup", "size quiz", "cup size quiz"] },
   { label: "the pee funnel", href: "/product-detail/looway-pee-funnel", words: ["funnel", "pee funnel"] },
   { label: "the urine and vomit bags", href: "/product-detail/looway-pee-puke", words: ["pee bags", "vomit bags", "puke bags", "urine bags", "pee puke bags"] },
   { label: "the toilet seat covers", href: "/product-detail/looway-toilet-seat-covers", words: ["seat covers", "toilet seat covers", "seat cover"] },

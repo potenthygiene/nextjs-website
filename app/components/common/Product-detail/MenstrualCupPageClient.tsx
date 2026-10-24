@@ -113,7 +113,7 @@ const QUICK_QUESTIONS_DATA: Record<
     badge: "HOSTELS, PGS & TRAVEL",
     shortAnswer: "Super easy: you only need a full wash twice a day.",
     detailedAnswer:
-      "Because the Ovy Cup gives up to 12 hours of protection, you can insert in the morning before class and empty at night in privacy. In shared washrooms without a private basin, empty into the toilet, wipe with clean tissue or rinse with a small water bottle you carry in, and reinsert. Between cycles, use a travel steam steriliser or sterilising tablets without needing a shared stove.",
+      "Because the cup gives up to 12 hours of protection, you can insert in the morning before class and empty at night in privacy. In shared washrooms without a private basin, empty into the toilet, wipe with clean tissue or rinse with a small water bottle you carry in, and reinsert. Between cycles, use a travel steam steriliser or sterilising tablets without needing a shared stove.",
     sectionId: "hostel-card",
   },
   teens: {
@@ -478,7 +478,7 @@ export default function MenstrualCupPageClient({
         await addToWishlistAction({
           ...productInfo,
           productId: targetId,
-          name: productInfo?.name || "Ovy Reusable Menstrual Cup",
+          name: productInfo?.name || "Potent Hygiene Menstrual Cup",
           selectedVariant: activeVariant,
           price: price,
           image: currentDisplayImage || "/product-images/cup.jpg",
@@ -542,7 +542,7 @@ export default function MenstrualCupPageClient({
         ? variantLabel
           ? `${productInfo.name} (${variantLabel})`
           : productInfo.name
-        : variantLabel || "Ovy Reusable Menstrual Cup";
+        : variantLabel || "Potent Hygiene Menstrual Cup";
 
       const success = await addToCartAction({
         productId: pId,
@@ -580,7 +580,7 @@ export default function MenstrualCupPageClient({
       ? variantLabel
         ? `${productInfo.name} (${variantLabel})`
         : productInfo.name
-      : variantLabel || "Ovy Reusable Menstrual Cup";
+      : variantLabel || "Potent Hygiene Menstrual Cup";
 
     const directItem = {
       productId: pId,
@@ -736,7 +736,7 @@ export default function MenstrualCupPageClient({
           </Link>
           <span>/</span>
           <span className="font-semibold text-ink">
-            {productInfo?.name || "Ovy Reusable Menstrual Cup"}
+            {productInfo?.name || "Potent Hygiene Menstrual Cup"}
           </span>
         </nav>
 
@@ -793,7 +793,7 @@ export default function MenstrualCupPageClient({
               <div className="relative h-full w-full">
                 <Image
                   src={currentDisplayImage}
-                  alt={activeVariant?.name || productInfo?.name || "Ovy Menstrual Cup"}
+                  alt={activeVariant?.name || productInfo?.name || "Potent Hygiene Menstrual Cup"}
                   fill
                   className="object-contain p-4 transition-all duration-300"
                   priority
@@ -878,7 +878,7 @@ export default function MenstrualCupPageClient({
             {/* Kicker */}
             <div className="mb-2 flex items-center gap-2">
               <span className="text-xs font-extrabold tracking-widest text-[#7E4D77] uppercase">
-                {productInfo?.brand?.toUpperCase() || "OVY BY POTENT HYGIENE"}
+                POTENT HYGIENE
               </span>
               <span className="text-xs text-gray-400">•</span>
               <span className="font-serif text-sm text-[#1A8D91] italic">
@@ -1122,7 +1122,7 @@ export default function MenstrualCupPageClient({
                 <div className="divide-y divide-gray-100 text-xs sm:text-sm">
                   <div className="flex items-center justify-between p-3.5">
                     <span className="font-bold text-ink">
-                      1 Ovy menstrual cup
+                      1 Potent Hygiene menstrual cup
                     </span>
                     <span className="font-semibold text-[#7E4D77]">
                       {activeVariant?.size || activeVariant?.name || "Medium"}
@@ -1819,7 +1819,7 @@ export default function MenstrualCupPageClient({
                   <tr className="border-b border-gray-200">
                     <th className="w-1/4 p-4 font-semibold text-gray-400"></th>
                     <th className="w-1/4 bg-[#B076A8] p-4 text-xs font-bold tracking-wider text-white uppercase">
-                      OVY CUP
+                      POTENT HYGIENE CUP
                     </th>
                     <th className="w-1/4 p-4 text-xs font-semibold tracking-wider text-ink-muted uppercase">
                       PADS
@@ -2264,7 +2264,7 @@ export default function MenstrualCupPageClient({
                   saved versus disposables
                 </p>
                 <p className="mx-auto max-w-xs text-[12px] leading-relaxed text-ink-muted">
-                  That's after buying the Ovy cup, and about{" "}
+                  That's after buying the cup, and about{" "}
                   <b>{calculatedSavings.padsSaved.toLocaleString()}</b>{" "}
                   pads/tampons kept out of landfill.
                 </p>
@@ -2619,7 +2619,7 @@ export default function MenstrualCupPageClient({
               <QuizResult
                 eyebrow="Perfect match found"
                 title={CUP_SIZES[size].title}
-                productName={productInfo?.name || "Ovy Reusable Menstrual Cup"}
+                productName={productInfo?.name || "Potent Hygiene Menstrual Cup"}
                 sizeLabel={`${CUP_SIZES[size].name}, ${CUP_SIZES[size].cap}${colour}`}
                 image={v?.bannerImage || v?.image ? getImageUrl(v.bannerImage || v.image) : CUP_SIZE_IMAGES[size]}
                 price={cupVariantPrice(v)}
@@ -2715,7 +2715,7 @@ export default function MenstrualCupPageClient({
       >
         <div>
           <span className="block text-[11px] font-bold text-[#7E4D77] uppercase">
-            {activeVariant?.size || activeVariant?.name || "Ovy Cup"}
+            {activeVariant?.size || activeVariant?.name || "Menstrual Cup"}
           </span>
           <b className="font-serif text-lg font-bold text-ink">
             {priceMissing ? "" : `₹${price * quantity}`}

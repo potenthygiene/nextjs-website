@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 // Old addresses (from the earlier Shopify store, and common guesses) that
 // should land on the matching page instead of a 404.
 const OLD_ADDRESS_REDIRECTS = [
+  // The old separate admin sign-in never worked; admins sign in normally.
+  { source: "/admin/login", destination: "/login" },
+  { source: "/admin/verify-otp", destination: "/login" },
   { source: "/register", destination: "/signup" },
   { source: "/b2b", destination: "/business" },
   { source: "/bulk-orders", destination: "/business" },

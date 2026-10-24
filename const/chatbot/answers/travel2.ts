@@ -109,7 +109,7 @@ export const ANSWERS: ChatAnswer[] = [
     phrasings: ["first time cup on trip", "trip pe pehli baar cup", "start menstrual cup before travel", "cup for travel beginner", "kya trip pe cup try karu", "new to cup going on holiday", "cup or pads for first trip", "cup practice before trip"],
     keywords: ["cup", "first time", "pehli baar", "beginner", "practise", "trip", "menstrual cup"],
     answer: "Better not. Give yourself **a cycle or two at home** to learn folding, inserting and removing before you rely on a cup on the road. Once you're confident, it's brilliant for travel: up to 12 hours of wear and nothing to bin. On your first trip with it, carry a few pads as backup too.",
-    links: [{ label: "Ovy Menstrual Cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "Potent Hygiene Menstrual Cup", href: "/product-detail/ovy-cup" }],
     related: ["tx-how-many-pads-trip", "tx-period-trek-altitude", "tx-beach-period"],
   },
 
@@ -172,8 +172,8 @@ export const ANSWERS: ChatAnswer[] = [
     question: "Going to the beach on my period. Any tips?",
     phrasings: ["beach on my period", "goa trip periods", "beach pe periods mein kya kare", "swim in sea on period", "beach holiday pad", "periods mein beach jana", "swimsuit on periods", "beach shack toilet", "beach period?"],
     keywords: ["beach", "goa", "sea", "swimsuit", "swim", "shack", "holiday"],
-    answer: "If you want to swim, a **menstrual cup** is the Ovy option made for water; pads and period panties soak it up. Insert it at your hotel before you leave, since beach shack toilets can be basic. Carry a fresh pad and dry underwear for afterwards, plus wipes, water and a disposal bag. Bin everything properly and never leave pads in the sand.",
-    links: [{ label: "Ovy Menstrual Cup", href: "/product-detail/ovy-cup" }],
+    answer: "If you want to swim, a **menstrual cup** is the option made for water; pads and period panties soak it up. Insert it at your hotel before you leave, since beach shack toilets can be basic. Carry a fresh pad and dry underwear for afterwards, plus wipes, water and a disposal bag. Bin everything properly and never leave pads in the sand.",
+    links: [{ label: "Potent Hygiene Menstrual Cup", href: "/product-detail/ovy-cup" }],
     related: ["tx-cup-first-time-trip", "tx-hotel-bathroom", "tx-dispose-no-bin"],
   },
   {
@@ -215,7 +215,7 @@ export const ANSWERS: ChatAnswer[] = [
     phrasings: ["menstrual cup airport security", "pee funnel in hand luggage", "cup allowed in flight", "airport pe cup rokenge kya", "pads in cabin bag", "can i carry sanitiser in flight", "intimate wash in hand luggage", "seat covers in carry on", "security check funnel", "airport security?"],
     keywords: ["airport", "security", "hand luggage", "cabin bag", "carry on", "sanitiser", "liquid", "cup", "funnel"],
     answer: "Generally yes. Pads, liners, a menstrual cup, the pee funnel, seat covers and unused pee bags are dry personal items, not liquids, so they usually go through in hand luggage like tissues. Keep the cup and funnel in their pouches. **Hand sanitiser and intimate wash count as liquids**, so carry travel sizes. Rules vary by airline and airport, so check with yours if unsure.",
-    links: [{ label: "Pee Funnel", href: "/product-detail/looway-pee-funnel" }, { label: "Ovy Menstrual Cup", href: "/product-detail/ovy-cup" }],
+    links: [{ label: "Pee Funnel", href: "/product-detail/looway-pee-funnel" }, { label: "Potent Hygiene Menstrual Cup", href: "/product-detail/ovy-cup" }],
     related: ["tx-flight-toilet", "tx-period-flight", "tx-international-trip"],
   },
 

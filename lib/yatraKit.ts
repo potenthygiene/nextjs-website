@@ -144,25 +144,25 @@ export const YATRA_ITEM_LOOKUP: Record<
     slug: "ovy-cup",
     variantHint: "Teen",
     unit: "piece",
-    label: "Ovy Menstrual Cup (Teen XS Pink)",
+    label: "Potent Hygiene Menstrual Cup (Teen XS Pink)",
   },
   "cup:xs": {
     slug: "ovy-cup",
     variantHint: "Teen",
     unit: "piece",
-    label: "Ovy Menstrual Cup (Teen XS Pink)",
+    label: "Potent Hygiene Menstrual Cup (Teen XS Pink)",
   },
   "cup:m": {
     slug: "ovy-cup",
     variantHint: "Medium",
     unit: "piece",
-    label: "Ovy Menstrual Cup (Medium Purple)",
+    label: "Potent Hygiene Menstrual Cup (Medium Purple)",
   },
   "cup:l": {
     slug: "ovy-cup",
     variantHint: "Large",
     unit: "piece",
-    label: "Ovy Menstrual Cup (Large White)",
+    label: "Potent Hygiene Menstrual Cup (Large White)",
   },
 };
 
@@ -234,7 +234,7 @@ export const YATRA_VARIANT_GROUPS: Record<
   },
   cup: {
     group: "cup",
-    title: "Ovy Menstrual Cup",
+    title: "Potent Hygiene Menstrual Cup",
     options: [
       { key: "cup:xs", label: "Teen (XS)", badge: "Pink", shortDesc: "For teens & first-time users" },
       { key: "cup:m", label: "Medium", badge: "Purple", shortDesc: "Regular flow & adult fit" },

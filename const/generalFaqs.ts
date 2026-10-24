@@ -216,7 +216,7 @@ export const FAQ_GROUPS: FaqGroup[] = [
       {
         id: "ovy-looway",
         q: "What is the difference between Ovy and Looway?",
-        a: "Ovy is period and everyday intimate care: pads, teen kits, period panties, menstrual cups and daily liners. Looway is travel and toilet hygiene: the pee funnel, pee and puke bags, toilet seat covers and the Yatra Kit.",
+        a: "Ovy is period and everyday intimate care: pads, teen kits, period panties and daily liners. Our menstrual cup carries the Potent Hygiene name. Looway is travel and toilet hygiene: the pee funnel, pee and puke bags, toilet seat covers and the Yatra Kit.",
         links: [
           { label: "Shop Ovy", href: "/ovy" },
           { label: "Shop Looway", href: "/looway" },

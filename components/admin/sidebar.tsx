@@ -13,8 +13,7 @@ import {
   IndianRupee,
   XCircle,
   PhoneCall,
-  AlertCircle,
-} from "lucide-react";
+  AlertCircle, Activity } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutGrid },
@@ -30,6 +29,7 @@ const navItems = [
   { label: "Cancel Requests", href: "/admin/cancel-requests", icon: XCircle },
   { label: "Issues & Returns", href: "/admin/return-requests", icon: AlertCircle },
   { label: "Coupon", href: "/admin/coupon", icon: Code },
+  { label: "Site health", href: "/admin/health", icon: Activity },
 ];
 
 export function Sidebar() {

@@ -155,7 +155,7 @@ export default async function RewardsHistory() {
           <p>• <strong>Checkout Usage:</strong> Credits are applied automatically at checkout for one-time orders. Use up to 20% of the product total, and at most ₹150 per order (whichever is lower). Credits work together with coupons (up to 20% of what is left after coupons, at most ₹150) and do not pay for delivery. Unused credits remain in your wallet.</p>
           <p>• <strong>Orders:</strong> Earn 5% cash credit on the product amount paid when your order is delivered (delivery charges and credit-paid portions excluded).</p>
           <p>• <strong>Birthday:</strong> ₹50 birthday credit on your birthday (valid for 3 months). Set once; changes go through support.</p>
-          <p>• <strong>Reviews:</strong> ₹25 for text review, ₹50 with a photo, credited once approved by our team.</p>
+          <p>• <strong>Reviews:</strong> ₹25 for a review, ₹50 with a photo, for products you have received, added once our team approves it.</p>
           <p>• <strong>Referrals:</strong> {REFERRAL_FRIEND_LINE} {REFERRAL_REFERRER_LINE} Up to {MAX_REFERRALS_PER_MONTH} referrals a month.</p>
         </CardContent>
       </Card>

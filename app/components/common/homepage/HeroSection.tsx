@@ -90,7 +90,7 @@ const HERO_SLIDES: HeroSlide[] = [
     cta2: { label: "Find my size", href: "/product-detail/ovy-cup?scroll=size-finder#size-finder" },
     image: "/product-images/cup-rbw.jpg",
     image2: "/product-images/cup.jpg",
-    alt: "Ovy reusable menstrual cup with its carry pouch",
+    alt: "Potent Hygiene reusable menstrual cup with its carry pouch",
     stickers: ["Up to 12 hours", "Reusable for years"],
     tint: "teal",
   },

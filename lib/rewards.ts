@@ -11,6 +11,7 @@ import {
   users,
 } from "@/src/db/schema";
 import { desc, eq, inArray, sql } from "drizzle-orm";
+import { receivedPairs, reviewReward } from "@/lib/reviewEligibility";
 
 // Amounts live in lib/rewardsRules.ts (no database code, safe for client
 // components). Re-exported here so existing imports keep working.
@@ -55,6 +56,29 @@ export const REFERRAL_EARNING_COINS = REFERRAL_EARNING_RUPEES;
 export const REFERRAL_FRIEND_BONUS_COINS = REFERRAL_FRIEND_BONUS_RUPEES;
 export const REVIEW_REWARD_COINS = REVIEW_REWARD_RUPEES;
 export const BIRTHDAY_REWARD_COINS = BIRTHDAY_REWARD_RUPEES;
+// The only kinds of credit our rules give. Rows of any other kind are left
+// over from the old coins system: they stay in the database but never count
+// towards a balance (founder, Oct 2026: old coins do not become rupees).
+const COUNTED_REWARD_TYPES = new Set([
+  "signup_bonus",
+  "welcome_bonus",
+  "referral_welcome",
+  "referral",
+  "order_payment",
+  "subscription_charge",
+  "purchase",
+  "order_cancelled",
+  "checkout_redeem",
+  "checkout_redeem_refund",
+  "review_reward",
+  "birthday_reward",
+]);
+
+export function isCountedRewardType(type?: string | null) {
+  const t = String(type || "").trim();
+  return COUNTED_REWARD_TYPES.has(t.split(":")[0]) || t.startsWith("referral_bonus:");
+}
+
 export function coinsToRupees(coins: number): number {
   return Number(coins || 0);
 }
@@ -286,6 +310,7 @@ export async function syncAndGetUserRewards(userId: string) {
         productName: product.name,
         isAdminApproved: review.isAdminApproved,
         varient: review.varient,
+        imageUrl: review.imageUrl,
       })
       .from(review)
       .leftJoin(product, eq(review.productId, product.id))
@@ -446,17 +471,21 @@ export async function syncAndGetUserRewards(userId: string) {
     }
   }
 
-  // Helper for reviews: ₹25 for text, ₹50 with photo, only once approved by admin
+  // Reviews: ₹25 written, ₹50 with a photo, once approved, and only from
+  // someone who has received the product.
   const validApprovedReviewMap = new Map<
     string,
     { id: string; reward: number; name: string }
   >();
+  const buyerPairs = await receivedPairs(
+    userReviews.map((r) => ({ userId, productId: r.productId })),
+  );
 
   for (const rev of userReviews) {
-    if (rev.isAdminApproved) {
+    if (rev.isAdminApproved && buyerPairs.has(`${userId}:${rev.productId}`)) {
       validApprovedReviewMap.set(rev.id, {
         id: rev.id,
-        reward: REVIEW_PHOTO_REWARD_RUPEES,
+        reward: reviewReward(rev),
         name: (rev.productName || "Potent Product").trim(),
       });
     }
@@ -820,13 +849,15 @@ export async function syncAndGetUserRewards(userId: string) {
   }
 
   // 5. Fetch clean final history and compute exact rupee balance
-  const finalHistory = mutated
-    ? await db
-        .select()
-        .from(rewardCoinsHistory)
-        .where(eq(rewardCoinsHistory.userId, userId))
-        .orderBy(desc(rewardCoinsHistory.createdAt))
-    : existingHistory;
+  const finalHistory = (
+    mutated
+      ? await db
+          .select()
+          .from(rewardCoinsHistory)
+          .where(eq(rewardCoinsHistory.userId, userId))
+          .orderBy(desc(rewardCoinsHistory.createdAt))
+      : existingHistory
+  ).filter((h) => isCountedRewardType(h.type));
 
   const rawSum = finalHistory.reduce(
     (sum, item) => sum + Number(item.coins || 0),

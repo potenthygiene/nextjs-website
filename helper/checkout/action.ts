@@ -1,6 +1,7 @@
 // @ts-nocheck
 "use server";
 
+import { requireSelf } from "@/helper/auth/guard";
 import {
   cart,
   cartItem,
@@ -42,7 +43,7 @@ import {
   MAX_REWARD_REDEEM_PER_ORDER,
   syncAndGetUserRewards,
 } from "@/lib/rewards";
-import { ensureDefaultCoupons } from "@/helper/coupon/action";
+import { ensureDefaultCoupons } from "@/lib/couponSeed";
 
 const roundMoney = (amount: number) => Number(amount.toFixed(2));
 
@@ -428,6 +429,7 @@ export async function calculateCheckoutPricingForUser({
   couponCode?: string | null;
   customItems?: any[];
 }) {
+  if (userId) await requireSelf(userId);
   const unpricedItems =
     customItems && customItems.length > 0
       ? customItems

@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
+import { requireAdmin } from "@/helper/auth/guard";
 import { coupon, couponTransaction } from "@/db/schema";
 import { db } from "@/lib/db";
 import { paginate } from "@/lib/pagination";
 import { and, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { RETIRED_CODES, STORE_COUPONS } from "@/const/coupons";
+import { ensureDefaultCoupons } from "@/lib/couponSeed";
 
 interface GetCouponsOptions {
   page?: number;
@@ -66,6 +67,7 @@ function validateCouponData(data: ReturnType<typeof normalizeCouponData>) {
 }
 
 export async function createCoupon(couponData: any) {
+  await requireAdmin();
   try {
     const data = normalizeCouponData(couponData);
     const validationError = validateCouponData(data);
@@ -90,6 +92,7 @@ export async function createCoupon(couponData: any) {
 }
 
 export async function updateCoupon(couponData: any) {
+  await requireAdmin();
   try {
     const data = normalizeCouponData(couponData);
     const validationError = validateCouponData(data);
@@ -114,62 +117,14 @@ export async function updateCoupon(couponData: any) {
   }
 }
 
-let hasEnsuredDefaultCoupons = false;
 
-export async function ensureDefaultCoupons() {
-  if (hasEnsuredDefaultCoupons) return;
-  try {
-    const existing = await db
-      .select({ code: coupon.code })
-      .from(coupon);
-    const existingCodes = new Set(
-      existing.map((c) => String(c.code || "").trim().toUpperCase()),
-    );
-
-    // The 12 store coupons from const/coupons.ts.
-    const defaults = STORE_COUPONS.map((c) => ({
-      name: c.name,
-      code: c.code,
-      description: c.description,
-      isDiscountPercentage: c.percent !== undefined,
-      discountPercentage: c.percent ?? null,
-      discountFixedAmount: c.percent !== undefined ? null : (c.flat ?? 0),
-      minimumOrderValue: c.minimumOrderValue,
-      maximumDiscountAmount: c.maximumDiscountAmount,
-      useOnce: c.useOnce,
-    }));
-
-    for (const item of defaults) {
-      if (!existingCodes.has(item.code)) {
-        await db.insert(coupon).values(item);
-      }
-    }
-
-    // Old test coupons and replaced versions: remove the ones never used.
-    // Used ones stay for order history; checkout refuses them anyway.
-    const retired = await db
-      .select({ id: coupon.id, code: coupon.code })
-      .from(coupon)
-      .where(inArray(coupon.code, RETIRED_CODES));
-    for (const row of retired) {
-      const [used] = await db
-        .select({ id: couponTransaction.id })
-        .from(couponTransaction)
-        .where(eq(couponTransaction.couponId, row.id))
-        .limit(1);
-      if (!used) await db.delete(coupon).where(eq(coupon.id, row.id));
-    }
-    hasEnsuredDefaultCoupons = true;
-  } catch (err) {
-    console.error("ensureDefaultCoupons error:", err);
-  }
-}
 
 export async function getCouponsPagination({
   page = 1,
   pageSize = 10,
   search = "",
 }: GetCouponsOptions) {
+  await requireAdmin();
   await ensureDefaultCoupons();
 
   const filters = [];
@@ -196,11 +151,13 @@ export async function getCouponsPagination({
 }
 
 export async function getCouponById(id: string) {
+  await requireAdmin();
   const result = await db.select().from(coupon).where(eq(coupon.id, id));
   return result[0] ?? null;
 }
 
 export async function deleteCoupon(id: string) {
+  await requireAdmin();
   try {
     const usage = await db
       .select({ count: sql<number>`count(*)` })

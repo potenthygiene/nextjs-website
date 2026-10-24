@@ -1,11 +1,18 @@
 import { Sidebar } from "@/components/admin/sidebar";
 import { MobileSidebar } from "@/components/admin/mobileSidebar";
+import { redirect } from "next/navigation";
+import { isAdminSession } from "@/helper/auth/guard";
 
-export default function AdminLayout({
+export const dynamic = "force-dynamic";
+
+// Only admins see the Admin. Everyone else is sent to the home page. (Each
+// admin action also checks on its own, so this is not the only lock.)
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  if (!(await isAdminSession())) redirect("/");
 
   return (
     <div className="bg-muted/40 flex h-screen overflow-hidden">

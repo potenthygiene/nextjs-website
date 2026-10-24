@@ -21,13 +21,40 @@ const TEXT_FIXES: [RegExp, string][] = [
   [/<\/?b>/g, ""],
 ];
 
+// The menstrual cup is a Potent Hygiene product, not an Ovy one. Older admin
+// text calls it "Ovy Menstrual Cup" or "Ovy Cup"; it reads "Potent Hygiene
+// Menstrual Cup" everywhere it is shown. Capitals are kept as they were.
+const OVY_CUP = /\bOvy(\s+reusable)?(\s+menstrual)?\s+(cups?)\b/gi;
+
+function cupBrand(match: string, reusable?: string, menstrual?: string, cup = "Cup"): string {
+  const upper = match === match.toUpperCase();
+  const capital = /^[A-Z]/.test(cup);
+  const word = menstrual ? menstrual.trim() : capital ? "Menstrual" : "menstrual";
+  const out = `Potent Hygiene${reusable ? ` ${reusable.trim()}` : ""} ${word} ${cup}`;
+  return upper ? out.toUpperCase() : out;
+}
+
 export function fixProductText<T extends string | null | undefined>(text: T): T {
   if (!text) return text;
   let out: string = text;
   for (const [pattern, replacement] of TEXT_FIXES) {
     out = out.replace(pattern, replacement);
   }
+  out = out.replace(OVY_CUP, cupBrand);
   return out as T;
+}
+
+// Product and variant names from the database, for cards, the product page,
+// the bag, orders and the chat.
+export function fixProductName<T extends string | null | undefined>(name: T): T {
+  if (!name) return name;
+  return name.replace(OVY_CUP, cupBrand) as T;
+}
+
+// Fixes the name of a product and of each of its variants, leaving everything
+// else as it came from the database.
+export function fixVariantNames<V extends { name?: string | null }>(variants: V[]): V[] {
+  return variants.map((v) => ({ ...v, name: fixProductName(v.name) }));
 }
 
 // Short product highlights shown on cards. Claims the rules don't allow are

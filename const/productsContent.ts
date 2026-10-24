@@ -445,7 +445,7 @@ export const loowayPeeFunnel: Record<string, any> = {
         ],
         [
           "Can I use it during my period?",
-          "Yes. It works exactly the same during your period, and it pairs naturally with a menstrual cup or a pad from our sister brand Ovy for a completely fuss-free day out.",
+          "Yes. It works exactly the same during your period, and it pairs naturally with our menstrual cup or an Ovy pad for a completely fuss-free day out.",
         ],
         [
           "Is it comfortable for larger or smaller body types?",
@@ -3145,7 +3145,7 @@ export const loowayYatraKit: Record<string, any> = {
     },
     {
       id: "cup",
-      name: "Ovy Menstrual Cup",
+      name: "Potent Hygiene Menstrual Cup",
       unit: "1 reusable",
       max: 2,
       art: "cup",
@@ -3440,7 +3440,7 @@ export const loowayYatraKit: Record<string, any> = {
         ],
         [
           "Is any of it reusable?",
-          "The Pee Funnel and the Ovy Menstrual Cup are reusable: rinse, dry and use them again. Everything else (the Ovy Super Slim Period Panties, pads, seat covers, bags, liners and wipes) is single-use: use it, then bin it (never flush).",
+          "The Pee Funnel and the Potent Hygiene Menstrual Cup are reusable: rinse, dry and use them again. Everything else (the Ovy Super Slim Period Panties, pads, seat covers, bags, liners and wipes) is single-use: use it, then bin it (never flush).",
         ],
       ],
     ],
@@ -4267,7 +4267,7 @@ export const ovyLiners: Record<string, any> = {
     },
     {
       id: "cup",
-      name: "Ovy Menstrual Cup",
+      name: "Potent Hygiene Menstrual Cup",
       desc: "Reusable, up to 12 hours of protection, a one-time buy.",
       tint: "var(--tint-teal)",
       glyph: "cup",
@@ -4717,7 +4717,7 @@ export const ovyPads: Record<string, any> = {
     },
     {
       id: "cup",
-      name: "Ovy Menstrual Cup",
+      name: "Potent Hygiene Menstrual Cup",
       desc: "Reusable, up to 12 hours of protection, a one-time buy.",
       tint: "var(--tint-teal)",
       glyph: "cup",
@@ -5293,7 +5293,7 @@ export const ovyPanty: Record<string, any> = {
     },
     {
       id: "cup",
-      name: "Ovy Menstrual Cup",
+      name: "Potent Hygiene Menstrual Cup",
       desc: "Reusable, up to 12 hours of protection, a one-time buy.",
       tint: "var(--tint-teal)",
       glyph: "cup",
@@ -5886,7 +5886,7 @@ export const ovyTeen: Record<string, any> = {
     },
     {
       id: "cup",
-      name: "Ovy Menstrual Cup: XS (teen)",
+      name: "Potent Hygiene Menstrual Cup: XS (teen)",
       desc: "Reusable XS cup sized for teens: up to 12 hours of protection, a one-time buy.",
       tint: "var(--tint-teal)",
       glyph: "cup",
